@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lib.dao.DeletedLogMapper">
+    <resultMap id="BaseResultMap" type="com.lib.model.DeletedLog">
+        <id property="logId" column="log_id" jdbcType="BIGINT"/>
+        <result property="dataClass" column="data_class" jdbcType="VARCHAR"/>
+        <result property="dataId" column="data_id" jdbcType="INTEGER"/>
+        <result property="data" column="data" jdbcType="VARCHAR"/>
+        <result property="elapsedTime" column="elapse_time" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+
+    </resultMap>
+    <insert id="create" parameterType="com.lib.model.Payload" keyProperty="entity.logId" keyColumn="log_id"
+            useGeneratedKeys="true">
+        insert into delete_log(data_class, data_id, data, elapsed_time, create_time, create_by)
+        values (#{entity.dataClass}, #{entity.dataId}, #{entity.data}, 0, NOW(), #{entity.createBy})
+    </insert>
+    <update id="update" parameterType="com.lib.model.Payload">
+        update delete_log
+        <set>
+            <if test="entity.data != null and entity.data != ''">
+                data = #{entity.data},
+            </if>
+            <if test="entity.elapsedTime != null">
+                elapsed_time = #{entity.elapsedTime},
+            </if>
+        </set>
+        where log_id = #{entity.logId}
+    </update>
+    <delete id="delete">
+    </delete>
+    <select id="getBy" resultType="com.lib.model.DeletedLog" >
+    </select>
+    <select id="getById" resultType="com.lib.model.DeletedLog">
+    </select>
+
+    <select id="getByUpdate" resultMap="BaseResultMap">
+    </select>
+</mapper>

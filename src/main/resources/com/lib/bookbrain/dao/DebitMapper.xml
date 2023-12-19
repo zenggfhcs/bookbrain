@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lib.dao.DebitMapper">
+    <resultMap id="BaseResultMap" type="com.lib.model.Debit">
+        <id column="debit_id" jdbcType="INTEGER" property="debitId"/>
+        <result column="return_deadline" jdbcType="DATE" property="returnDeadline"/>
+        <result column="return_date" jdbcType="DATE" property="returnDate"/>
+        <result column="create_by" jdbcType="INTEGER" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="INTEGER" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="revision" jdbcType="INTEGER" property="revision"/>
+        <association property="book" javaType="com.lib.model.Book" column="{id=book_id}"
+                     select="com.lib.dao.BookMapper.getById"/>
+    </resultMap>
+    <select id="getBy" resultMap="BaseResultMap">
+        select distinct d.`debit_id`,
+                        d.`book_id`,
+                        d.`return_deadline`,
+                        d.`return_date`,
+                        d.`create_by`,
+                        d.`create_time`,
+                        d.`update_by`,
+                        d.`update_time`,
+                        d.`revision`
+        from debit d
+    </select>
+
+    <select id="getById" parameterType="com.lib.model.Payload" resultMap="BaseResultMap">
+        select distinct d.`debit_id`,
+                        d.`book_id`,
+                        d.`return_deadline`,
+                        d.`return_date`,
+                        d.`create_by`,
+                        d.`create_time`,
+                        d.`update_by`,
+                        d.`update_time`,
+                        d.`revision`
+        from debit d
+        where d.`debit_id` = #{id}
+    </select>
+
+    <delete id="delete" parameterType="com.lib.model.Payload">
+        delete
+        from debit d
+        where d.`debit_id` = #{id}
+    </delete>
+
+    <insert id="create" parameterType="com.lib.model.Payload" useGeneratedKeys="true" keyColumn="entity.debitId">
+        insert into debit (`book_id`, `return_deadline`,
+                           `return_date`, `create_by`, `create_time`,
+                           `update_by`, `update_time`, `revision`)
+        values (#{entity.book.bookId}, #{entity.returnDeadline},
+                #{entity.returnDate}, #{entity.createBy}, NOW(),
+                #{entity.updateBy}, NOW(), #{entity.revision})
+    </insert>
+
+    <update id="update" parameterType="com.lib.model.Payload">
+        update debit d
+        <set>
+            <if test="entity.book != null and entity.book.bookId != null">
+                d.`book_id` = #{entity.book.bookId,jdbcType=INTEGER},
+            </if>
+            <if test="entity.returnDeadline != null">
+                d.`return_deadline` = #{entity.returnDeadline,jdbcType=DATE},
+            </if>
+            <if test="entity.returnDate != null">
+                d.`return_date` = #{entity.returnDate,jdbcType=DATE},
+            </if>
+            <if test="entity.updateBy != null">
+                d.`update_by` = #{entity.updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="entity.updateTime != null">
+                d.`update_time` = NOW(),
+            </if>
+            <if test="entity.revision != null">
+                d.`revision` = #{entity.revision,jdbcType=INTEGER},
+            </if>
+        </set>
+        where d.`debit_id` = #{id}
+    </update>
+
+    <select id="getByUpdate" resultMap="BaseResultMap">
+    </select>
+</mapper>

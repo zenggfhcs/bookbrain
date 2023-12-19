@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lib.dao.UpdatedLogMapper">
+    <resultMap id="BaseResultMap" type="com.lib.model.UpdatedLog">
+        <id property="logId" column="log_id" jdbcType="BIGINT"/>
+        <result property="dataClass" column="class_name" jdbcType="VARCHAR"/>
+        <result property="dataId" column="data_id" jdbcType="INTEGER"/>
+        <result property="oldData" column="payload" jdbcType="VARCHAR"/>
+        <result property="newData" column="return_value" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="create" parameterType="com.lib.model.Payload" keyProperty="entity.logId" keyColumn="log_id"
+            useGeneratedKeys="true">
+        insert into update_log(data_class, data_id, old_data, new_data, elapsed_time, create_time, create_by)
+        values (#{entity.dataClass}, #{entity.dataId}, #{entity.oldData}, #{entity.newData}, #{entity.elapsedTime},
+                NOW(),
+                #{entity.createBy})
+    </insert>
+    <update id="update">
+        update update_log u
+        <set>
+            <if test="entity.oldData != null and entity.oldData != ''">
+                u.old_data = #{entity.oldData},
+            </if>
+            <if test="entity.elapsedTime != null">
+                u.elapsed_time = #{entity.elapsedTime},
+            </if>
+        </set>
+        where log_id = #{entity.logId}
+    </update>
+
+    <select id="getBy" resultMap="BaseResultMap">
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+    </select>
+
+    <delete id="delete">
+    </delete>
+
+    <select id="getByUpdate" resultMap="BaseResultMap">
+    </select>
+</mapper>
