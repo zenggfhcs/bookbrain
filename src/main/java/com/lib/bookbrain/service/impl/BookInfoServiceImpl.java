@@ -1,11 +1,11 @@
-package com.lib.service.impl;
+package com.lib.bookbrain.service.impl;
 
-import com.lib.anno.AroundDelete;
-import com.lib.anno.AroundGet;
-import com.lib.anno.AroundUpdate;
-import com.lib.dao.BookInfoMapper;
-import com.lib.model.*;
-import com.lib.service.BookInfoService;
+import com.lib.bookbrain.anno.AroundDelete;
+import com.lib.bookbrain.anno.AroundGet;
+import com.lib.bookbrain.anno.AroundUpdate;
+import com.lib.bookbrain.dao.BookInfoMapper;
+import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.service.BookInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

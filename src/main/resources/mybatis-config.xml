@@ -16,6 +16,6 @@
     <!--    </environments>-->
 
     <mappers>
-        <mapper resource="com/lib/dao/UserMapper.xml"/>
+        <mapper resource="com/lib/bookbrain/dao/UserMapper.xml"/>
     </mappers>
 </configuration>

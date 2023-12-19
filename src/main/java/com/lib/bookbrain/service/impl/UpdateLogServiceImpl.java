@@ -1,11 +1,11 @@
-package com.lib.service.impl;
+package com.lib.bookbrain.service.impl;
 
-import com.lib.dao.UpdatedLogMapper;
-import com.lib.model.Filter;
-import com.lib.model.Payload;
-import com.lib.model.Response;
-import com.lib.model.UpdatedLog;
-import com.lib.service.UpdateLogService;
+import com.lib.bookbrain.dao.UpdatedLogMapper;
+import com.lib.bookbrain.model.Filter;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.UpdatedLog;
+import com.lib.bookbrain.service.UpdateLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

@@ -1,8 +1,8 @@
-package com.lib.web.controller;
+package com.lib.bookbrain.controller;
 
-import com.lib.anno.AroundConduct;
-import com.lib.model.*;
-import com.lib.service.GetLogService;
+import com.lib.bookbrain.anno.AroundConduct;
+import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.service.GetLogService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

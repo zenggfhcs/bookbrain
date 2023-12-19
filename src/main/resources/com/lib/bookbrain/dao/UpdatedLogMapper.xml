@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lib.dao.UpdatedLogMapper">
-    <resultMap id="BaseResultMap" type="com.lib.model.UpdatedLog">
+<mapper namespace="com.lib.bookbrain.dao.UpdatedLogMapper">
+    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.UpdatedLog">
         <id property="logId" column="log_id" jdbcType="BIGINT"/>
         <result property="dataClass" column="class_name" jdbcType="VARCHAR"/>
         <result property="dataId" column="data_id" jdbcType="INTEGER"/>
@@ -12,7 +12,7 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="createBy" column="create_by" jdbcType="INTEGER"/>
     </resultMap>
-    <insert id="create" parameterType="com.lib.model.Payload" keyProperty="entity.logId" keyColumn="log_id"
+    <insert id="create" parameterType="com.lib.bookbrain.model.Payload" keyProperty="entity.logId" keyColumn="log_id"
             useGeneratedKeys="true">
         insert into update_log(data_class, data_id, old_data, new_data, elapsed_time, create_time, create_by)
         values (#{entity.dataClass}, #{entity.dataId}, #{entity.oldData}, #{entity.newData}, #{entity.elapsedTime},

@@ -1,6 +1,6 @@
-package com.lib.web.config;
+package com.lib.bookbrain.config;
 
-import com.lib.web.interceptor.Interceptor;
+import com.lib.bookbrain.interceptor.Interceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

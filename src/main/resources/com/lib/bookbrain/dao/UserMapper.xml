@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lib.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="com.lib.model.User">
+<mapper namespace="com.lib.bookbrain.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.User">
         <id property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="authenticationString" column="authentication_string" jdbcType="VARCHAR"/>
         <result property="displayName" column="display_name" jdbcType="VARCHAR"/>
@@ -22,7 +22,7 @@
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="revision" column="revision" jdbcType="INTEGER"/>
     </resultMap>
-    <insert id="create" useGeneratedKeys="true" keyProperty="entity.userId" parameterType="com.lib.model.Payload">
+    <insert id="create" useGeneratedKeys="true" keyProperty="entity.userId" parameterType="com.lib.bookbrain.model.Payload">
         insert into user(authentication_string, display_name, user_email, user_phone_number, state, authority,
                          surname, name, age, sex, last_login_time, create_by, create_time, update_by, update_time,
                          revision)
@@ -31,7 +31,7 @@
                 #{entity.state}, #{entity.authority}, #{entity.surname}, #{entity.name}, #{entity.age}, #{entity.sex},
                 #{entity.lastLoginTime}, #{entity.createBy}, now(), #{entity.updateBy}, now(), 0);
     </insert>
-    <update id="update" parameterType="com.lib.model.Payload">
+    <update id="update" parameterType="com.lib.bookbrain.model.Payload">
         update user u
         <set>
             <if test="entity.authenticationString != null and entity.authenticationString != ''">
@@ -76,12 +76,12 @@
         </set>
         where user_id = #{id}
     </update>
-    <update id="delete" parameterType="com.lib.model.Payload">
+    <update id="delete" parameterType="com.lib.bookbrain.model.Payload">
         update user u
         set u.state = #{entity.state}
         where u.user_id = #{entity.userId};
     </update>
-    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.model.Payload">
+    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
         select u.user_id,
                u.`display_name`,
                u.`user_email`,
@@ -101,13 +101,13 @@
         from user u
         where u.`user_id` = #{id};
     </select>
-    <select id="login" resultType="java.lang.Integer" parameterType="com.lib.model.Payload">
+    <select id="login" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
         select count(*)
         from user u
         where u.user_id = #{entity.userId}
           and u.authentication_string = MD5(#{entity.authenticationString});
     </select>
-    <select id="has" resultType="java.lang.Integer" parameterType="com.lib.model.Payload">
+    <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
         select count(*)
         from user u
         where user_id = #{id};

@@ -1,7 +1,7 @@
-package com.lib.error;
+package com.lib.bookbrain.error;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.lib.model.Response;
+import com.lib.bookbrain.model.Response;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -26,8 +26,8 @@ public Response jwtEx() {
    return Response.error("token parsing(or create) error");
 }
 
-@ExceptionHandler(Exception.class)
-public Response tokenEx(Exception e) {
-   return Response.error("请求失败:" + e.getMessage());
-}
+//@ExceptionHandler(Exception.class)
+//public Response tokenEx(Exception e) {
+//   return Response.error("请求失败:" + e.getMessage());
+//}
 }

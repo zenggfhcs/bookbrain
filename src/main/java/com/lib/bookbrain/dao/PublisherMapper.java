@@ -1,8 +1,8 @@
-package com.lib.dao;
+package com.lib.bookbrain.dao;
 
-import com.lib.model.Filter;
-import com.lib.model.Payload;
-import com.lib.model.Publisher;
+import com.lib.bookbrain.model.Filter;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.Publisher;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

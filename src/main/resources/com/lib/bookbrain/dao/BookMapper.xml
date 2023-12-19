@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lib.dao.BookMapper">
-    <resultMap id="BaseResultMap" type="com.lib.model.Book">
+<mapper namespace="com.lib.bookbrain.dao.BookMapper">
+    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.Book">
         <id column="book_id" jdbcType="INTEGER" property="bookId"/>
         <result column="book_damage_level" jdbcType="TINYINT" property="bookDamageLevel"/>
         <result column="borrowable" jdbcType="BIT" property="borrowable"/>
@@ -12,18 +12,18 @@
         <result column="update_by" jdbcType="INTEGER" property="updateBy"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="revision" jdbcType="INTEGER" property="revision"/>
-        <association column="{id=book_info_id}" property="bookInfo" javaType="com.lib.model.BookInfo"
-                     select="com.lib.dao.BookInfoMapper.getById"/>
+        <association column="{id=book_info_id}" property="bookInfo" javaType="com.lib.bookbrain.model.BookInfo"
+                     select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
     </resultMap>
     <insert id="create" useGeneratedKeys="true" keyColumn="entity.bookId"
-            parameterType="com.lib.model.Payload">
+            parameterType="com.lib.bookbrain.model.Payload">
         insert into book (book_damage_level, borrowable, book_info_id, create_by, create_time, update_by,
                           update_time, revision)
         VALUES (#{entity.bookDamageLevel}, #{entity.borrowable}, #{entity.bookInfo.bookInfoId}, #{entity.createBy},
                 now(),
                 #{entity.updateBy}, now(), #{entity.revision})
     </insert>
-    <update id="update" parameterType="com.lib.model.Payload">
+    <update id="update" parameterType="com.lib.bookbrain.model.Payload">
         update book b
         <set>
             <if test="entity.bookDamageLevel != null">
@@ -48,7 +48,7 @@
         where b.`book_id` = #{id}
         and b.`revision` = #{entity.revision}
     </update>
-    <delete id="delete" parameterType="com.lib.model.Payload">
+    <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
         delete
         from book
         where book_id = #{id}
@@ -67,7 +67,7 @@
         <where>
         </where>
     </select>
-    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.model.Payload">
+    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
         select b.`book_id`,
                b.`book_damage_level`,
                b.`borrowable`,

@@ -1,20 +1,17 @@
-package com.lib.aop;
+package com.lib.bookbrain.aop;
 
-import com.lib.model.*;
-import com.lib.service.DeleteLogService;
-import com.lib.service.GetLogService;
-import com.lib.service.UpdateLogService;
-import com.lib.utils.Json;
-import com.lib.utils.Jwt;
-import com.lib.utils.Parse;
+import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.service.DeleteLogService;
+import com.lib.bookbrain.service.GetLogService;
+import com.lib.bookbrain.service.UpdateLogService;
+import com.lib.bookbrain.utils.Json;
+import com.lib.bookbrain.utils.Jwt;
+import com.lib.bookbrain.utils.Parse;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 @Aspect
@@ -37,12 +34,12 @@ public AroundOperation(GetLogService getLogService, UpdateLogService updateLogSe
  * @return 方法的返回值（代理对象执行）
  * @throws Throwable 方法执行的异常
  */
-@Around("@annotation(com.lib.anno.AroundGet)")
+@Around("@annotation(com.lib.bookbrain.anno.AroundGet)")
 public Object logGet(ProceedingJoinPoint point) throws Throwable {
    /* -------- 前 -------- */
    // 解析参数
    Object[] args = point.getArgs();
-   Payload<BaseEntity> _payload = argsToParameter(args);
+   Payload<BaseEntity> _payload = getOrNew(args[0]);
    
    GetLog _getLog = GetLog.create();
    {
@@ -96,12 +93,12 @@ public Object logGet(ProceedingJoinPoint point) throws Throwable {
  * @return 方法的返回值（代理对象执行）
  * @throws Throwable 方法执行的异常
  */
-@Around("@annotation(com.lib.anno.AroundUpdate)")
+@Around("@annotation(com.lib.bookbrain.anno.AroundUpdate)")
 public Object logUpdate(ProceedingJoinPoint point) throws Throwable {
    /* -------- 前 -------- */
    // 解析参数 => parameter
    Object[] args = point.getArgs();
-   Payload<BaseEntity> _payload = argsToParameter(args);
+   Payload<BaseEntity> _payload = getOrNew(args[0]);
    UpdatedLog _updatedLog = new UpdatedLog();
    {
       _updatedLog.setDataClass(Parse.serviceToDataClass(point.getSignature().getDeclaringType().getName()));
@@ -134,12 +131,12 @@ public Object logUpdate(ProceedingJoinPoint point) throws Throwable {
    return _res;
 }
 
-@Around("@annotation(com.lib.anno.AroundDelete)")
+@Around("@annotation(com.lib.bookbrain.anno.AroundDelete)")
 public Object logDelete(ProceedingJoinPoint point) throws Throwable {
    /* -------- 前 -------- */
    // 解析参数 => parameter
    Object[] args = point.getArgs();
-   Payload<BaseEntity> _payload = argsToParameter(args);
+   Payload<BaseEntity> _payload = getOrNew(args[0]);
    DeletedLog _deletedLog = new DeletedLog();
    {
       _deletedLog.setDataClass(Parse.serviceToDataClass(point.getSignature().getDeclaringType().getName()));
@@ -177,7 +174,7 @@ public Object logDelete(ProceedingJoinPoint point) throws Throwable {
  *
  * @param point service-method
  */
-@Around("@within(com.lib.anno.AroundConduct)")
+@Around("@within(com.lib.bookbrain.anno.AroundConduct)")
 public Object aroundConduct(ProceedingJoinPoint point) throws Throwable {
    // 预期参数为 { parameter, token, id }
    Object[] args = point.getArgs();
@@ -197,8 +194,6 @@ private Payload<BaseEntity> argsToParameter(Object[] args) {
    _payload.setTokenBody(tokenBody);
    if (args.length == 3 && args[2].getClass() == Integer.class) {
       _payload.setId(Integer.parseInt(args[2].toString()));
-      Map<String, String> map = new HashMap<>();
-      map.getOrDefault("1", "a");
    }
    return _payload;
 }

@@ -1,4 +1,4 @@
-package com.lib.aop;
+package com.lib.bookbrain.aop;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,8 @@
-package com.lib.service.impl;
+package com.lib.bookbrain.service.impl;
 
-import com.lib.dao.GetLogMapper;
-import com.lib.model.*;
-import com.lib.service.GetLogService;
+import com.lib.bookbrain.dao.GetLogMapper;
+import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.service.GetLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

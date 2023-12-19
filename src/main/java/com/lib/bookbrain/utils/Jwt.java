@@ -1,12 +1,12 @@
-package com.lib.utils;
+package com.lib.bookbrain.utils;
 
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.lib.model.TokenBody;
-import com.lib.model.User;
+import com.lib.bookbrain.model.TokenBody;
+import com.lib.bookbrain.model.User;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

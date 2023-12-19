@@ -1,8 +1,8 @@
-package com.lib.service.impl;
+package com.lib.bookbrain.service.impl;
 
-import com.lib.dao.BaseMapper;
-import com.lib.model.*;
-import com.lib.service.BaseService;
+import com.lib.bookbrain.dao.BaseMapper;
+import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.service.BaseService;
 
 import java.util.List;
 

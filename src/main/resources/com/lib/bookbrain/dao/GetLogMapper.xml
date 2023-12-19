@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lib.dao.GetLogMapper">
-    <resultMap id="BaseResultMap" type="com.lib.model.GetLog">
+<mapper namespace="com.lib.bookbrain.dao.GetLogMapper">
+    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.GetLog">
         <id property="logId" column="log_id" jdbcType="BIGINT"/>
         <result property="method" column="method" jdbcType="VARCHAR"/>
         <result property="className" column="class_name" jdbcType="VARCHAR"/>
@@ -14,12 +14,12 @@
         <result property="createBy" column="create_by" jdbcType="INTEGER"/>
     </resultMap>
     <insert id="create" useGeneratedKeys="true" keyProperty="entity.logId" keyColumn="log_id"
-            parameterType="com.lib.model.Payload">
+            parameterType="com.lib.bookbrain.model.Payload">
         insert into get_log(method, class_name, payload, return_value, elapsed_time, create_time, create_by)
         values (#{entity.method}, #{entity.className}, #{entity.payload}, #{entity.returnValue}, #{entity.elapsedTime},
                 now(), #{entity.createBy})
     </insert>
-    <update id="update" parameterType="com.lib.model.Payload">
+    <update id="update" parameterType="com.lib.bookbrain.model.Payload">
         update get_log
         <set>
             <if test="entity.returnValue != null and entity.returnValue != ''">
@@ -31,7 +31,7 @@
         </set>
         where log_id = #{entity.logId}
     </update>
-    <delete id="delete" parameterType="com.lib.model.Payload">
+    <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
         delete
         from get_log
         where log_id = #{id}
@@ -67,7 +67,7 @@
         </where>
         limit #{pageStart}, #{pageSize}
     </select>
-    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.model.Payload">
+    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
         select l.`log_id`,
                l.`class_name`,
                l.`method`,

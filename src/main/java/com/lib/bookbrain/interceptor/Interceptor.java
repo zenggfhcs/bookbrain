@@ -1,8 +1,8 @@
-package com.lib.web.interceptor;
+package com.lib.bookbrain.interceptor;
 
-import com.lib.model.TokenBody;
-import com.lib.model.User;
-import com.lib.utils.Jwt;
+import com.lib.bookbrain.model.TokenBody;
+import com.lib.bookbrain.model.User;
+import com.lib.bookbrain.utils.Jwt;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.Nullable;

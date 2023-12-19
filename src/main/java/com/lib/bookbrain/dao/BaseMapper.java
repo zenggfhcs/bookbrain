@@ -1,8 +1,8 @@
-package com.lib.dao;
+package com.lib.bookbrain.dao;
 
-import com.lib.model.BaseEntity;
-import com.lib.model.Filter;
-import com.lib.model.Payload;
+import com.lib.bookbrain.model.BaseEntity;
+import com.lib.bookbrain.model.Filter;
+import com.lib.bookbrain.model.Payload;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.lib.dao;
+package com.lib.bookbrain.dao;
 
-import com.lib.model.Filter;
-import com.lib.model.Payload;
-import com.lib.model.User;
+import com.lib.bookbrain.model.Filter;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;

@@ -1,11 +1,12 @@
-package com.lib.web.controller;
+package com.lib.bookbrain.controller;
 
-import com.lib.anno.AroundConduct;
-import com.lib.model.Debit;
-import com.lib.model.Payload;
-import com.lib.model.Filter;
-import com.lib.model.Response;
-import com.lib.service.DebitService;
+import com.lib.bookbrain.anno.AroundConduct;
+import com.lib.bookbrain.model.Debit;
+import com.lib.bookbrain.model.Filter;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.service.DebitService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class DebitController {
 private final DebitService debitService;
 
+@Autowired
 public DebitController(DebitService debitService) {
    this.debitService = debitService;
 }

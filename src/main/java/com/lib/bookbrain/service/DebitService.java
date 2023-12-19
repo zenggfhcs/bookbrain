@@ -1,6 +1,6 @@
-package com.lib.service;
+package com.lib.bookbrain.service;
 
-import com.lib.model.*;
+import com.lib.bookbrain.model.*;
 
 public interface DebitService extends BaseService<Debit> {
 @Override
