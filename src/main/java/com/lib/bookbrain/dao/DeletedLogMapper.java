@@ -1,8 +1,7 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.log.DeletedLog;
-import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.log.DeletedLog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public interface DeletedLogMapper extends BaseMapper<DeletedLog> {
 DeletedLog getById(Payload<DeletedLog> payload);
 
-List<DeletedLog> getBy(@Param("payload") Payload<DeletedLog> payload, @Param("filter") Filter filter);
+List<DeletedLog> getBy(@Param("payload") Payload<DeletedLog> payload);
 
 int create(Payload<DeletedLog> payload);
 

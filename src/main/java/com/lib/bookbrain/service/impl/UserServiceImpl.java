@@ -36,8 +36,8 @@ public Response login(Payload<User> payload) {
 }
 @AroundGet
 @Override
-public Response getBy(Payload<User> payload, Filter filter) {
-   return baseService.getBy(payload, filter);
+public Response getBy(Payload<User> payload) {
+   return baseService.getBy(payload);
 }
 
 

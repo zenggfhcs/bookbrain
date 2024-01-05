@@ -1,16 +1,15 @@
 package com.lib.bookbrain.service;
 
-import com.lib.bookbrain.model.Filter;
-import com.lib.bookbrain.model.log.GetLog;
 import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.log.GetLog;
 
 public interface GetLogService extends BaseService<GetLog> {
 void createLog(GetLog log);
 
 void updateLogAfterReturn(GetLog log);
 
-Response getBy(Payload<GetLog> payload, Filter filter);
+Response getBy(Payload<GetLog> payload);
 
 Response create(Payload<GetLog> payload);
 

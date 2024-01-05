@@ -1,7 +1,6 @@
 package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.dao.UpdatedLogMapper;
-import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.Response;
 import com.lib.bookbrain.model.log.UpdatedLog;
@@ -40,8 +39,8 @@ public void updateLog(UpdatedLog log) {
 }
 
 @Override
-public Response getBy(Payload<UpdatedLog> payload, Filter filter) {
-   return baseService.getBy(payload, filter);
+public Response getBy(Payload<UpdatedLog> payload) {
+   return baseService.getBy(payload);
 }
 
 @Override

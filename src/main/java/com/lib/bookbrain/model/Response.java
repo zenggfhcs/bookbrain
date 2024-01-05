@@ -1,6 +1,8 @@
 package com.lib.bookbrain.model;
 
 
+import com.lib.bookbrain.constants.Message;
+import com.lib.bookbrain.constants.ResponseCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,7 +40,7 @@ private Object data;
  * @return 成功请求的 Response 对象（有数据）
  */
 public static Response success(Object data) {
-   return new Response(LocalDateTime.now(), 0, "success", data);
+   return new Response(LocalDateTime.now(), ResponseCode.DEFAULT.getCode(), "", data);
 }
 
 /**
@@ -53,13 +55,24 @@ public static Response success() {
 /**
  * 请求失败
  *
- * @param message 失败相关信息
+ * @param msg 失败相关信息
  * @return 失败请求的 Response 对象
  */
-public static Response error(String message) {
-   return new Response(LocalDateTime.now(), -1, message, null);
+public static Response error(String msg) {
+   return new Response(LocalDateTime.now(), ResponseCode.ERROR.getCode(), msg, null);
 }
 
+public static Response error(Message message) {
+   return error(message.getMsg());
+}
+
+public static Response error(ResponseCode code, Message msg) {
+   return error(code.getCode(), msg.getMsg());
+}
+
+public static Response error(ResponseCode code, String message) {
+   return error(code.getCode(), message);
+}
 public static Response error(Integer code, String message) {
    return new Response(LocalDateTime.now(), code, message, null);
 }

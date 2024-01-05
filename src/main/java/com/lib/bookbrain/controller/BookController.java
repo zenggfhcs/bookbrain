@@ -21,8 +21,8 @@ public BookController(BookService bookService) {
 
 
 @GetMapping
-public Response getBooks(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken, @RequestBody(required = false) Filter filter) {
-   return bookService.getBy(payload, filter);
+public Response getBooks(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken) {
+   return bookService.getBy(payload);
 }
 
 @PostMapping

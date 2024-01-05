@@ -1,8 +1,7 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.entity.Debit;
-import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.entity.Debit;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public interface DebitMapper extends BaseMapper<Debit> {
 Debit getById(Payload<Debit> payload);
 
-List<Debit> getBy(@Param("payload") Payload<Debit> payload, @Param("filter") Filter filter);
+List<Debit> getBy(@Param("payload") Payload<Debit> payload);
 
 int create(Payload<Debit> payload);
 

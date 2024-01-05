@@ -46,8 +46,8 @@ public void updateLogAfterReturn(GetLog log) {
    getLogMapper.update(payload);
 }
 
-public Response getBy(Payload<GetLog> payload, Filter filter) {
-   return baseService.getBy(payload, filter);
+public Response getBy(Payload<GetLog> payload) {
+   return baseService.getBy(payload);
 }
 
 @Override

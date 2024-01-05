@@ -25,47 +25,47 @@
         p.`revision`
         from publisher p
         <where>
-            <if test="entity.publishId != null">
-                p.`publish_id` = #{entity.publishId}
+            <if test="publishId != null">
+                p.`publish_id` = #{publishId}
             </if>
-            <if test="entity.createBy != null">
-                and p.`create_by` = #{entity.createBy}
+            <if test="createBy != null">
+                and p.`create_by` = #{createBy}
             </if>
-            <if test="entity.updateBy != null">
-                and p.`update_by` = #{entity.updateBy}
+            <if test="updateBy != null">
+                and p.`update_by` = #{updateBy}
             </if>
             <if test="1 == 1">
                 and p.`create_time` between #{minCreateTime} and #{maxCreateTime}
                 and p.`update_time` between #{minUpdateTime} and #{maxUpdateTime}
             </if>
-            <if test="entity.name != null and entity.name != ''">
-                and p.`name` like concat('%', #{entity.name}, '%')
+            <if test="name != null and name != ''">
+                and p.`name` like concat('%', #{name}, '%')
             </if>
         </where>
     </select>
-    <insert id="create" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true" keyColumn="entity.publishId">
+    <insert id="create" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true" keyColumn="publishId">
         insert into publisher(name, remark, create_by, create_time, update_by, update_time, revision)
-        values (#{entity.name}, #{entity.remark}, #{tokenBody.id}, NOW(), #{tokenBody.id}, NOW(),
+        values (#{name}, #{remark}, #{tokenBody.id}, NOW(), #{tokenBody.id}, NOW(),
                 0)
     </insert>
     <update id="update" parameterType="com.lib.bookbrain.model.Payload">
         update publisher p
         <set>
-            <if test="entity.name != null and entity.name != ''">
-                p.`name` = #{entity.name},
+            <if test="name != null and name != ''">
+                p.`name` = #{name},
             </if>
-            <if test="entity.remark != null and entity.remark != ''">
-                p.`remark` = #{entity.remark},
+            <if test="remark != null and remark != ''">
+                p.`remark` = #{remark},
             </if>
-            <if test="entity.updateBy != null">
-                p.`update_by` = #{entity.updateBy},
+            <if test="updateBy != null">
+                p.`update_by` = #{updateBy},
             </if>
             <if test="1 == 1">
                 p.`update_time` = NOW(),
                 p.`revision` = (p.`revision` + 1) % 2147483647
             </if>
         </set>
-        where p.`publish_id` = #{id} and p.`revision` = #{entity.revision};
+        where p.`publish_id` = #{id} and p.`revision` = #{revision};
     </update>
     <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
         delete
@@ -88,10 +88,10 @@
     <select id="getByUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
         select
         <trim suffixOverrides=",">
-            <if test="entity.name != null and entity.name != ''">
+            <if test="name != null and name != ''">
                 p.`name`,
             </if>
-            <if test="entity.remark != null and entity.remark != ''">
+            <if test="remark != null and remark != ''">
                 p.`remark`,
             </if>
             <if test="1 == 1">

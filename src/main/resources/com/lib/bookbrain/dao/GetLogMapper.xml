@@ -13,23 +13,23 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="createBy" column="create_by" jdbcType="INTEGER"/>
     </resultMap>
-    <insert id="create" useGeneratedKeys="true" keyProperty="entity.logId" keyColumn="log_id"
+    <insert id="create" useGeneratedKeys="true" keyProperty="logId" keyColumn="log_id"
             parameterType="com.lib.bookbrain.model.Payload">
         insert into get_log(method, class_name, payload, return_value, elapsed_time, create_time, create_by)
-        values (#{entity.method}, #{entity.className}, #{entity.payload}, #{entity.returnValue}, #{entity.elapsedTime},
-                now(), #{entity.createBy})
+        values (#{method}, #{className}, #{payload}, #{returnValue}, #{elapsedTime},
+                now(), #{createBy})
     </insert>
     <update id="update" parameterType="com.lib.bookbrain.model.Payload">
         update get_log
         <set>
-            <if test="entity.returnValue != null and entity.returnValue != ''">
-                return_value = #{entity.returnValue},
+            <if test="returnValue != null and returnValue != ''">
+                return_value = #{returnValue},
             </if>
-            <if test="entity.elapsedTime != null">
-                elapsed_time = #{entity.elapsedTime},
+            <if test="elapsedTime != null">
+                elapsed_time = #{elapsedTime},
             </if>
         </set>
-        where log_id = #{entity.logId}
+        where log_id = #{logId}
     </update>
     <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
         delete
@@ -49,15 +49,15 @@
         l.create_by
         from get_log l
         <where>
-            <if test="entity.logId != null">
-                l.log_id = #{entity.logId}
+            <if test="logId != null">
+                l.log_id = #{logId}
             </if>
-            <if test="entity.logId == null">
-                <if test="entity.createBy != null">
-                    l.create_by = #{entity.createBy}
+            <if test="logId == null">
+                <if test="createBy != null">
+                    l.create_by = #{createBy}
                 </if>
-                <if test="entity.method != null and entity.method != ''">
-                    and l.method = #{entity.method}
+                <if test="method != null and method != ''">
+                    and l.method = #{method}
                 </if>
                 <if test="1 == 1">
                     and l.elapsed_time between #{minElapsedTime} and #{maxElapsedTime}

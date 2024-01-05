@@ -17,7 +17,7 @@ public GetLogController(GetLogService logService) {
 }
 
 @GetMapping
-public Response getLogs(@RequestBody(required = false) Payload<GetLog> payload, @RequestHeader("token") String token, @RequestBody(required = false) Filter filter) {
-   return logService.getBy(payload, filter);
+public Response getLogs(@RequestBody(required = false) Payload<GetLog> payload) {
+   return logService.getBy(payload);
 }
 }

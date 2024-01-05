@@ -1,6 +1,7 @@
 package com.lib.bookbrain.error;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.lib.bookbrain.constants.Message;
 import com.lib.bookbrain.model.Response;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,12 +19,12 @@ public class GlobalExceptionHandler {
  */
 @ExceptionHandler(SQLException.class)
 public Response sqlEx(SQLException se) {
-   return Response.error("sql执行失败：" + se.getMessage());
+   return Response.error("sql error：" + se.getSQLState());
 }
 
 @ExceptionHandler(JWTVerificationException.class)
 public Response jwtEx() {
-   return Response.error("token parsing(or create) error");
+   return Response.error(Message.TOKEN_ERROR);
 }
 
 //@ExceptionHandler(Exception.class)

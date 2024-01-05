@@ -2,7 +2,6 @@ package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.annotation.AroundConduct;
 import com.lib.bookbrain.model.entity.Debit;
-import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.Response;
 import com.lib.bookbrain.service.DebitService;
@@ -21,8 +20,8 @@ public DebitController(DebitService debitService) {
 }
 
 @GetMapping
-public Response getDebits(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader("token") String ignoredToken, @RequestBody(required = false) Filter filter) {
-   return debitService.getBy(payload, filter);
+public Response getDebits(@RequestBody(required = false) Payload<Debit> payload) {
+   return debitService.getBy(payload);
 }
 
 @PostMapping

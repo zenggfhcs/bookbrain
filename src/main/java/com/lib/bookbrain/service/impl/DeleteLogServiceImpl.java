@@ -35,8 +35,8 @@ public void updateLog(DeletedLog log) {
    deletedLogMapper.update(_payload);
 }
 
-public Response getBy(Payload<DeletedLog> payload, Filter filter) {
-   return baseService.getBy(payload, filter);
+public Response getBy(Payload<DeletedLog> payload) {
+   return baseService.getBy(payload);
 }
 
 

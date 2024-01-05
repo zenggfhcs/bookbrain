@@ -23,8 +23,8 @@ public BookServiceImpl(BookMapper bookMapper) {
 
 @AroundGet
 @Override
-public Response getBy(Payload<Book> payload, Filter filter) {
-   return baseService.getBy(payload, filter);
+public Response getBy(Payload<Book> payload) {
+   return baseService.getBy(payload);
 }
 
 @Override

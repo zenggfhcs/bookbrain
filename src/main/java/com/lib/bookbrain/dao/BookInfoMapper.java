@@ -1,8 +1,7 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.entity.BookInfo;
-import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.entity.BookInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public interface BookInfoMapper extends BaseMapper<BookInfo> {
 BookInfo getById(Payload<BookInfo> payload);
 
-List<BookInfo> getBy(@Param("payload") Payload<BookInfo> payload, @Param("filter") Filter filter);
+List<BookInfo> getBy(@Param("payload") Payload<BookInfo> payload);
 
 int update(Payload<BookInfo> payload);
 

@@ -21,33 +21,33 @@ public UserController(UserService userService) {
 }
 
 @PostMapping("/login")
-public Response login(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String token) {
+public Response login(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken) {
    return userService.login(payload);
 }
 
 @GetMapping
-public Response getUsers(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String token, @RequestBody(required = false) Filter filter) {
-   return userService.getBy(payload, filter);
+public Response getUsers(@RequestBody(required = false) Payload<User> payload) {
+   return userService.getBy(payload);
 }
 
 @PostMapping
-public Response createUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String token) {
+public Response createUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken) {
    return userService.create(payload);
 }
 
-@GetMapping("/{id}")
-public Response getUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String token, @PathVariable Integer id) {
+@GetMapping("/{ignoredId}")
+public Response getUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return userService.getById(payload);
 }
 
-@PatchMapping("/{id}")
-public Response updateUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String token, @PathVariable Integer id) {
+@PatchMapping("/{ignoredId}")
+public Response updateUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return userService.update(payload);
 }
 
 
-@DeleteMapping("/{id}")
-public Response deleteUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String token, @PathVariable Integer id) {
+@DeleteMapping("/{ignoredId}")
+public Response deleteUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return userService.delete(payload);
 }
 }

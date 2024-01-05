@@ -4,10 +4,9 @@ import com.lib.bookbrain.annotation.AroundDelete;
 import com.lib.bookbrain.annotation.AroundGet;
 import com.lib.bookbrain.annotation.AroundUpdate;
 import com.lib.bookbrain.dao.PublisherMapper;
-import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.entity.Publisher;
 import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.entity.Publisher;
 import com.lib.bookbrain.service.PublisherService;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +23,8 @@ public PublisherServiceImpl(PublisherMapper publisherMapper) {
 
 @AroundGet
 @Override
-public Response getBy(Payload<Publisher> payload, Filter filter) {
-   return baseService.getBy(payload, filter);
+public Response getBy(Payload<Publisher> payload) {
+   return baseService.getBy(payload);
 }
 
 @Override

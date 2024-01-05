@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public enum Authority {
    /**
-    *
+    * 创建用户
     */
    USER_CREATE(0B1),
    /**
@@ -60,7 +60,6 @@ public enum Authority {
    /**
     *
     */
-   
    PUBLISHER_CREATE(0B1000000000000),
    /**
     *

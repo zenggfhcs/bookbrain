@@ -73,8 +73,8 @@ private LocalDateTime lastLoginTime;
  * @param authority     权限类型
  * @return 权限检查结果
  */
-public static boolean hasAuthority(int userAuthority, int authority) {
-   return (userAuthority & authority) != 0;
+public static boolean hasAuthority(int userAuthority, Authority authority) {
+   return (userAuthority & authority.getValue()) != 0;
 }
 
 /**

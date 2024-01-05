@@ -4,7 +4,7 @@ import com.lib.bookbrain.model.*;
 import com.lib.bookbrain.model.entity.BaseEntity;
 
 public interface BaseService<T extends BaseEntity> {
-Response getBy(Payload<T> payload, Filter filter);
+Response getBy(Payload<T> payload);
 
 Response create(Payload<T> payload);
 

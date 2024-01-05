@@ -26,73 +26,73 @@
         <association property="publisher" column="{id=publish_id}" javaType="com.lib.bookbrain.model.entity.Publisher"
                      select="com.lib.bookbrain.dao.PublisherMapper.getById"/>
     </resultMap>
-    <insert id="create" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true" keyColumn="entity.bookInfoId">
+    <insert id="create" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true" keyColumn="bookInfoId">
         insert into book_info (publish_id, publish_place, isbn, cip, book_name, book_type, cover, author,
                                `describe`, publish_date, keyword, lang, price, stock, create_by, create_time, update_by,
                                update_time, revision)
-        VALUES ( #{entity.publisher.publishId}, #{entity.publishPlace}, #{entity.isbn}, #{entity.cip}
-               , #{entity.bookName}
-               , #{entity.bookType}, #{entity.cover}, #{entity.author}, #{entity.describe}
-               , #{entity.publishDate}
-               , #{entity.keyword}, #{entity.lang}, #{entity.price}, #{entity.stock}, #{entity.createBy}
-               , NOW(), #{entity.updateBy}, now(), #{entity.revision})
+        VALUES ( #{publisher.publishId}, #{publishPlace}, #{isbn}, #{cip}
+               , #{bookName}
+               , #{bookType}, #{cover}, #{author}, #{describe}
+               , #{publishDate}
+               , #{keyword}, #{lang}, #{price}, #{stock}, #{createBy}
+               , NOW(), #{updateBy}, now(), #{revision})
     </insert>
     <update id="update" parameterType="com.lib.bookbrain.model.Payload">
         update book_info bif
         <set>
-            <if test="entity.publisher.publishId != null">
-                bif.`publish_id` = #{entity.publisher.publishId},
+            <if test="publisher.publishId != null">
+                bif.`publish_id` = #{publisher.publishId},
             </if>
-            <if test="entity.publishPlace != null and entity.publishPlace != ''">
-                bif.`publish_place` = #{entity.publishPlace},
+            <if test="publishPlace != null and publishPlace != ''">
+                bif.`publish_place` = #{publishPlace},
             </if>
-            <if test="entity.isbn != null and entity.isbn != ''">
-                bif.`isbn` = #{entity.isbn},
+            <if test="isbn != null and isbn != ''">
+                bif.`isbn` = #{isbn},
             </if>
-            <if test="entity.cip != null and entity.cip != ''">
-                bif.`cip` = #{entity.cip},
+            <if test="cip != null and cip != ''">
+                bif.`cip` = #{cip},
             </if>
-            <if test="entity.bookName != null and entity.bookName != ''">
-                bif.`book_name` = #{entity.bookName},
+            <if test="bookName != null and bookName != ''">
+                bif.`book_name` = #{bookName},
             </if>
-            <if test="entity.bookType != null and entity.bookType != ''">
-                bif.`book_type` = #{entity.bookType},
+            <if test="bookType != null and bookType != ''">
+                bif.`book_type` = #{bookType},
             </if>
-            <if test="entity.cover != null and entity.cover != ''">
-                bif.`cover` = #{entity.cover},
+            <if test="cover != null and cover != ''">
+                bif.`cover` = #{cover},
             </if>
-            <if test="entity.author != null and entity.author != ''">
-                bif.`author` = #{entity.author},
+            <if test="author != null and author != ''">
+                bif.`author` = #{author},
             </if>
-            <if test="entity.publishDate != null">
-                bif.`publish_date` = #{entity.publishDate},
+            <if test="publishDate != null">
+                bif.`publish_date` = #{publishDate},
             </if>
-            <if test="entity.keyword != null and entity.keyword != ''">
-                bif.`keyword` = #{entity.keyword},
+            <if test="keyword != null and keyword != ''">
+                bif.`keyword` = #{keyword},
             </if>
-            <if test="entity.lang != null and entity.lang != ''">
-                bif.`lang` = #{entity.lang},
+            <if test="lang != null and lang != ''">
+                bif.`lang` = #{lang},
             </if>
-            <if test="entity.price != null">
-                bif.`price` = #{entity.price},
+            <if test="price != null">
+                bif.`price` = #{price},
             </if>
-            <if test="entity.stock != null">
-                bif.`stock` = #{entity.stock},
+            <if test="stock != null">
+                bif.`stock` = #{stock},
             </if>
-            <if test="entity.updateBy != null">
-                bif.`update_by` = #{entity.updateBy},
+            <if test="updateBy != null">
+                bif.`update_by` = #{updateBy},
             </if>
             <if test="1 == 1">
                 bif.`update_time` = NOW(),
             </if>
-            <if test="entity.describe != null">
-                bif.`describe` = #{entity.describe},
+            <if test="describe != null">
+                bif.`describe` = #{describe},
             </if>
             <if test="1 == 1">
                 bif.`revision` = (1 + bif.`revision`) % 2147483647,
             </if>
         </set>
-        where bif.`book_info_id` = #{id} and bif.`revision` = #{entity.revision}
+        where bif.`book_info_id` = #{id} and bif.`revision` = #{revision}
     </update>
     <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
         delete
@@ -122,12 +122,12 @@
         bif.`revision`
         from book_info bif
         <where>
-            <if test="payload.entity != null">
-                <if test="payload.entity.bookInfoId != null">
-                    and bif.`book_info_id` = #{payload.entity.bookInfoId}
+            <if test="payload.!= null">
+                <if test="payload.bookInfoId != null">
+                    and bif.`book_info_id` = #{payload.bookInfoId}
                 </if>
-                <if test="payload.entity.bookName != null">
-                    and bif.`book_name` like concat('%', #{payload.entity.bookName}, '%')
+                <if test="payload.bookName != null">
+                    and bif.`book_name` like concat('%', #{payload.bookName}, '%')
                 </if>
             </if>
         </where>
@@ -161,7 +161,7 @@
     <select id="getByUpdate" resultMap="BaseResultMap">
         select
         <trim suffixOverrides=",">
-            <if test="entity.author != null">
+            <if test="author != null">
                 bif.`author`,
             </if>
         </trim>

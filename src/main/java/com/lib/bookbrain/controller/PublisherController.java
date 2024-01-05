@@ -17,28 +17,28 @@ public PublisherController(PublisherService publisherService) {
 }
 
 @GetMapping
-public Response getPublishers(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String token, @RequestBody(required = false) Filter filter) {
-   return publisherService.getBy(payload, filter);
+public Response getPublishers(@RequestBody(required = false) Payload<Publisher> payload) {
+   return publisherService.getBy(payload);
 }
 
 @PostMapping
-public Response createPublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String token) {
+public Response createPublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String ignoredToken) {
    return publisherService.create(payload);
 }
 
-@GetMapping("/{id}")
-public Response getPublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String token, @PathVariable Integer id) {
+@GetMapping("/{ignoredId}")
+public Response getPublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return publisherService.getById(payload);
 }
 
 
-@PatchMapping("/{id}")
-public Response updatePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String token, @PathVariable Integer id) {
+@PatchMapping("/{ignoredId}")
+public Response updatePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return publisherService.update(payload);
 }
 
-@DeleteMapping("/{id}")
-public Response deletePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String token, @PathVariable Integer id) {
+@DeleteMapping("/{ignoredId}")
+public Response deletePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return publisherService.delete(payload);
 }
 }

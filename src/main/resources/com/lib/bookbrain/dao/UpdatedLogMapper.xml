@@ -12,24 +12,24 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="createBy" column="create_by" jdbcType="INTEGER"/>
     </resultMap>
-    <insert id="create" parameterType="com.lib.bookbrain.model.Payload" keyProperty="entity.logId" keyColumn="log_id"
+    <insert id="create" parameterType="com.lib.bookbrain.model.Payload" keyProperty="logId" keyColumn="log_id"
             useGeneratedKeys="true">
         insert into update_log(data_class, data_id, old_data, new_data, elapsed_time, create_time, create_by)
-        values (#{entity.dataClass}, #{entity.dataId}, #{entity.oldData}, #{entity.newData}, #{entity.elapsedTime},
+        values (#{dataClass}, #{dataId}, #{oldData}, #{newData}, #{elapsedTime},
                 NOW(),
-                #{entity.createBy})
+                #{createBy})
     </insert>
     <update id="update">
         update update_log u
         <set>
-            <if test="entity.oldData != null and entity.oldData != ''">
-                u.old_data = #{entity.oldData},
+            <if test="oldData != null and oldData != ''">
+                u.old_data = #{oldData},
             </if>
-            <if test="entity.elapsedTime != null">
-                u.elapsed_time = #{entity.elapsedTime},
+            <if test="elapsedTime != null">
+                u.elapsed_time = #{elapsedTime},
             </if>
         </set>
-        where log_id = #{entity.logId}
+        where log_id = #{logId}
     </update>
 
     <select id="getBy" resultMap="BaseResultMap">

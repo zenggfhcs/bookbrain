@@ -1,8 +1,7 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.Filter;
-import com.lib.bookbrain.model.log.GetLog;
 import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.log.GetLog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public interface GetLogMapper extends BaseMapper<GetLog> {
 GetLog getById(Payload<GetLog> payload);
 
-List<GetLog> getBy(@Param("payload") Payload<GetLog> payload, @Param("filter") Filter filter);
+List<GetLog> getBy(@Param("payload") Payload<GetLog> payload);
 
 int create(Payload<GetLog> payload);
 

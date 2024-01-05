@@ -1,6 +1,5 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.entity.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-List<User> getBy(@Param("payload") Payload<User> payload, @Param("filter") Filter filter);
+List<User> getBy(@Param("payload") Payload<User> payload);
 
 int create(Payload<User> payload);
 

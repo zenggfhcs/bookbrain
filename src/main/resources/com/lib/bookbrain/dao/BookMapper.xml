@@ -15,38 +15,38 @@
         <association column="{id=book_info_id}" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
                      select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
     </resultMap>
-    <insert id="create" useGeneratedKeys="true" keyColumn="entity.bookId"
+    <insert id="create" useGeneratedKeys="true" keyColumn="bookId"
             parameterType="com.lib.bookbrain.model.Payload">
         insert into book (book_damage_level, borrowable, book_info_id, create_by, create_time, update_by,
                           update_time, revision)
-        VALUES (#{entity.bookDamageLevel}, #{entity.borrowable}, #{entity.bookInfo.bookInfoId}, #{entity.createBy},
+        VALUES (#{bookDamageLevel}, #{borrowable}, #{bookInfo.bookInfoId}, #{createBy},
                 now(),
-                #{entity.updateBy}, now(), #{entity.revision})
+                #{updateBy}, now(), #{revision})
     </insert>
     <update id="update" parameterType="com.lib.bookbrain.model.Payload">
         update book b
         <set>
-            <if test="entity.bookDamageLevel != null">
-                b.`book_damage_level` = #{entity.bookDamageLevel},
+            <if test="bookDamageLevel != null">
+                b.`book_damage_level` = #{bookDamageLevel},
             </if>
-            <if test="entity.borrowable != null">
-                b.`borrowable` = #{entity.borrowable},
+            <if test="borrowable != null">
+                b.`borrowable` = #{borrowable},
             </if>
-            <if test="entity.bookInfo.bookInfoId != null">
-                b.`book_info_id` = #{entity.bookInfo.bookInfoId},
+            <if test="bookInfo.bookInfoId != null">
+                b.`book_info_id` = #{bookInfo.bookInfoId},
             </if>
-            <if test="entity.updateBy != null">
-                b.`update_by` = #{entity.updateBy},
+            <if test="updateBy != null">
+                b.`update_by` = #{updateBy},
             </if>
             <if test="1 == 1">
                 b.`update_time` = now(),
             </if>
-            <if test="entity.revision != null">
+            <if test="revision != null">
                 b.`revision` = (1 + b.`revision`) % 2147483647,
             </if>
         </set>
         where b.`book_id` = #{id}
-        and b.`revision` = #{entity.revision}
+        and b.`revision` = #{revision}
     </update>
     <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
         delete

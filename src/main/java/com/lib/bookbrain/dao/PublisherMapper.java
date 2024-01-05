@@ -1,6 +1,5 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.entity.Publisher;
 import org.apache.ibatis.annotations.Mapper;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface PublisherMapper extends BaseMapper<Publisher> {
-List<Publisher> getBy(@Param("payload") Payload<Publisher> payload, @Param("filter") Filter filter);
+List<Publisher> getBy(@Param("payload") Payload<Publisher> payload);
 
 Publisher getById(Payload<Publisher> payload);
 

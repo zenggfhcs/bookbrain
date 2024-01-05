@@ -24,8 +24,8 @@ public DebitServiceImpl(DebitMapper debitMapper) {
 
 @AroundGet
 @Override
-public Response getBy(Payload<Debit> payload, Filter filter) {
-   return baseService.getBy(payload, filter);
+public Response getBy(Payload<Debit> payload) {
+   return baseService.getBy(payload);
 }
 
 @Override

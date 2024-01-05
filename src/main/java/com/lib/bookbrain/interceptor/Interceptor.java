@@ -1,5 +1,6 @@
 package com.lib.bookbrain.interceptor;
 
+import com.lib.bookbrain.constants.Authority;
 import com.lib.bookbrain.model.TokenBody;
 import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.utils.Jwt;
@@ -19,14 +20,16 @@ public boolean preHandle(HttpServletRequest request, HttpServletResponse respons
    // 解析 token
    TokenBody tokenBody = Jwt.decodeToken(token);
    // 未解析路径，未获取权限类型
-   return User.hasAuthority(tokenBody.getAuthority(), 1);
+   return User.hasAuthority(tokenBody.getAuthority(), Authority.USER_CREATE);
 }
 
 @Override
 public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
+
 }
 
 @Override
 public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
+
 }
 }

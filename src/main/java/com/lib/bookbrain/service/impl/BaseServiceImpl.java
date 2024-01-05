@@ -16,8 +16,8 @@ public BaseServiceImpl(BaseMapper<T> baseMapper) {
 
 
 @Override
-public Response getBy(Payload<T> payload, Filter filter) {
-   List<T> _list = baseMapper.getBy(payload, filter);
+public Response getBy(Payload<T> payload) {
+   List<T> _list = baseMapper.getBy(payload);
    return Response.success(_list);
 }
 
