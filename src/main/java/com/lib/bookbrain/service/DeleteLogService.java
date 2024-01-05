@@ -1,6 +1,9 @@
 package com.lib.bookbrain.service;
 
-import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.model.log.DeletedLog;
+import com.lib.bookbrain.model.Filter;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.Response;
 
 public interface DeleteLogService extends BaseService<DeletedLog> {
 void createLog(DeletedLog log);

@@ -4,7 +4,7 @@ import com.lib.bookbrain.dao.UpdatedLogMapper;
 import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.Response;
-import com.lib.bookbrain.model.UpdatedLog;
+import com.lib.bookbrain.model.log.UpdatedLog;
 import com.lib.bookbrain.service.UpdateLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

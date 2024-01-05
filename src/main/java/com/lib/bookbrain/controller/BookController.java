@@ -1,7 +1,8 @@
 package com.lib.bookbrain.controller;
 
-import com.lib.bookbrain.anno.AroundConduct;
+import com.lib.bookbrain.annotation.AroundConduct;
 import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.model.entity.Book;
 import com.lib.bookbrain.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,27 +21,27 @@ public BookController(BookService bookService) {
 
 
 @GetMapping
-public Response getBooks(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String token, @RequestBody(required = false) Filter filter) {
+public Response getBooks(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken, @RequestBody(required = false) Filter filter) {
    return bookService.getBy(payload, filter);
 }
 
 @PostMapping
-public Response createBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String token) {
+public Response createBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken) {
    return bookService.create(payload);
 }
 
-@GetMapping("/{id}")
-public Response getBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String token, @PathVariable Integer id) {
+@GetMapping("/{ignoredId}")
+public Response getBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return bookService.getById(payload);
 }
 
-@PatchMapping("/{id}")
-public Response updateBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String token, @PathVariable Integer id) {
+@PatchMapping("/{ignoredId}")
+public Response updateBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return bookService.update(payload);
 }
 
-@DeleteMapping("/{id}")
-public Response deleteBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String token, @PathVariable Integer id) {
+@DeleteMapping("/{ignoredId}")
+public Response deleteBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return bookService.delete(payload);
 }
 }

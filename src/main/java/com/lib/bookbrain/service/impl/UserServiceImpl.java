@@ -1,10 +1,13 @@
 package com.lib.bookbrain.service.impl;
 
-import com.lib.bookbrain.anno.AroundDelete;
-import com.lib.bookbrain.anno.AroundGet;
-import com.lib.bookbrain.anno.AroundUpdate;
+import com.lib.bookbrain.annotation.AroundDelete;
+import com.lib.bookbrain.annotation.AroundGet;
+import com.lib.bookbrain.annotation.AroundUpdate;
+import com.lib.bookbrain.constants.UserCondition;
+import com.lib.bookbrain.constants.State;
 import com.lib.bookbrain.dao.UserMapper;
 import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +64,7 @@ public Response delete(Payload<User> payload) {
    // 获取
    User _user = userMapper.getById(payload);
    // 更新状态 => 已删除
-   _user.updateState(User.State.IS_DELETE, User.Condition.ENABLE);
+   _user.updateCondition(UserCondition.IS_ENABLE, State.OFF);
    //
    payload.setEntity(_user);
    

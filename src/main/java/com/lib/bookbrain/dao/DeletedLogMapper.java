@@ -1,6 +1,6 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.DeletedLog;
+import com.lib.bookbrain.model.log.DeletedLog;
 import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
 import org.apache.ibatis.annotations.Mapper;

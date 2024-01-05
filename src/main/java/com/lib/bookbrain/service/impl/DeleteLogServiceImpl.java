@@ -2,6 +2,7 @@ package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.dao.DeletedLogMapper;
 import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.model.log.DeletedLog;
 import com.lib.bookbrain.service.DeleteLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

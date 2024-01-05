@@ -1,6 +1,7 @@
 package com.lib.bookbrain.service;
 
 import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.model.entity.BaseEntity;
 
 public interface BaseService<T extends BaseEntity> {
 Response getBy(Payload<T> payload, Filter filter);

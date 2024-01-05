@@ -2,6 +2,7 @@ package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.dao.GetLogMapper;
 import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.model.log.GetLog;
 import com.lib.bookbrain.service.GetLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -38,7 +39,7 @@ public void createLog(GetLog log) {
  */
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 @Override
-public void updateLog(GetLog log) {
+public void updateLogAfterReturn(GetLog log) {
    Payload<GetLog> payload = new Payload<>();
    payload.setEntity(log);
    

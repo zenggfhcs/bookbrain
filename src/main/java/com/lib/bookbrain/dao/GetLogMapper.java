@@ -1,7 +1,7 @@
 package com.lib.bookbrain.dao;
 
 import com.lib.bookbrain.model.Filter;
-import com.lib.bookbrain.model.GetLog;
+import com.lib.bookbrain.model.log.GetLog;
 import com.lib.bookbrain.model.Payload;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

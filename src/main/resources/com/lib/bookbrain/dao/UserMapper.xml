@@ -3,13 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.User">
+    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.User">
         <id property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="authenticationString" column="authentication_string" jdbcType="VARCHAR"/>
         <result property="displayName" column="display_name" jdbcType="VARCHAR"/>
         <result property="userEmail" column="user_email" jdbcType="VARCHAR"/>
         <result property="userPhoneNumber" column="user_phone_number" jdbcType="VARCHAR"/>
-        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="condition" column="condition" jdbcType="INTEGER"/>
         <result property="authority" column="authority" jdbcType="INTEGER"/>
         <result property="surname" column="surname" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
@@ -23,12 +23,12 @@
         <result property="revision" column="revision" jdbcType="INTEGER"/>
     </resultMap>
     <insert id="create" useGeneratedKeys="true" keyProperty="entity.userId" parameterType="com.lib.bookbrain.model.Payload">
-        insert into user(authentication_string, display_name, user_email, user_phone_number, state, authority,
+        insert into user(authentication_string, display_name, user_email, user_phone_number, `condition`, authority,
                          surname, name, age, sex, last_login_time, create_by, create_time, update_by, update_time,
                          revision)
         values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.userEmail},
                 #{entity.userPhoneNumber},
-                #{entity.state}, #{entity.authority}, #{entity.surname}, #{entity.name}, #{entity.age}, #{entity.sex},
+                #{entity.condition}, #{entity.authority}, #{entity.surname}, #{entity.name}, #{entity.age}, #{entity.sex},
                 #{entity.lastLoginTime}, #{entity.createBy}, now(), #{entity.updateBy}, now(), 0);
     </insert>
     <update id="update" parameterType="com.lib.bookbrain.model.Payload">
@@ -43,8 +43,8 @@
             <if test="entity.userEmail != null and entity.userEmail != ''">
                 user_email = #{entity.userEmail},
             </if>
-            <if test="entity.state != null">
-                state = #{entity.state},
+            <if test="entity.condition != null">
+                `condition` = #{entity.condition},
             </if>
             <if test="entity.authority != null">
                 authority = #{entity.authority},
@@ -78,7 +78,7 @@
     </update>
     <update id="delete" parameterType="com.lib.bookbrain.model.Payload">
         update user u
-        set u.state = #{entity.state}
+        set u.condition = #{entity.condition}
         where u.user_id = #{entity.userId};
     </update>
     <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
@@ -86,7 +86,7 @@
                u.`display_name`,
                u.`user_email`,
                u.`user_phone_number`,
-               u.`state`,
+               u.`condition`,
                u.`authority`,
                u.`surname`,
                u.`name`,
@@ -117,7 +117,7 @@
         u.display_name,
         u.user_email,
         u.user_phone_number,
-        u.state,
+        u.`condition`,
         u.authority,
         u.surname,
         u.name,

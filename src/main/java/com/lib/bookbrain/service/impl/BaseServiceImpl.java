@@ -2,6 +2,7 @@ package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.dao.BaseMapper;
 import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.model.entity.BaseEntity;
 import com.lib.bookbrain.service.BaseService;
 
 import java.util.List;

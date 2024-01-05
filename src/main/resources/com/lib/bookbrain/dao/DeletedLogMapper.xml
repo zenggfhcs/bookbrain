@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.DeletedLogMapper">
-    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.DeletedLog">
+    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.log.DeletedLog">
         <id property="logId" column="log_id" jdbcType="BIGINT"/>
         <result property="dataClass" column="data_class" jdbcType="VARCHAR"/>
         <result property="dataId" column="data_id" jdbcType="INTEGER"/>
@@ -32,9 +32,9 @@
     </update>
     <delete id="delete">
     </delete>
-    <select id="getBy" resultType="com.lib.bookbrain.model.DeletedLog" >
+    <select id="getBy" resultType="com.lib.bookbrain.model.log.DeletedLog" >
     </select>
-    <select id="getById" resultType="com.lib.bookbrain.model.DeletedLog">
+    <select id="getById" resultType="com.lib.bookbrain.model.log.DeletedLog">
     </select>
 
     <select id="getByUpdate" resultMap="BaseResultMap">

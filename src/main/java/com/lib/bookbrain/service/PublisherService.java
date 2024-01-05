@@ -2,7 +2,7 @@ package com.lib.bookbrain.service;
 
 import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.Publisher;
+import com.lib.bookbrain.model.entity.Publisher;
 import com.lib.bookbrain.model.Response;
 
 public interface PublisherService extends BaseService<Publisher> {

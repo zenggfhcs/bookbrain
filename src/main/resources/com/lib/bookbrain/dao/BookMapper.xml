@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.BookMapper">
-    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.Book">
+    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Book">
         <id column="book_id" jdbcType="INTEGER" property="bookId"/>
         <result column="book_damage_level" jdbcType="TINYINT" property="bookDamageLevel"/>
         <result column="borrowable" jdbcType="BIT" property="borrowable"/>
@@ -12,7 +12,7 @@
         <result column="update_by" jdbcType="INTEGER" property="updateBy"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="revision" jdbcType="INTEGER" property="revision"/>
-        <association column="{id=book_info_id}" property="bookInfo" javaType="com.lib.bookbrain.model.BookInfo"
+        <association column="{id=book_info_id}" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
                      select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
     </resultMap>
     <insert id="create" useGeneratedKeys="true" keyColumn="entity.bookId"

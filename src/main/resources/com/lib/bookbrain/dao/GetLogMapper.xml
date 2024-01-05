@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.GetLogMapper">
-    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.GetLog">
+    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.log.GetLog">
         <id property="logId" column="log_id" jdbcType="BIGINT"/>
         <result property="method" column="method" jdbcType="VARCHAR"/>
         <result property="className" column="class_name" jdbcType="VARCHAR"/>

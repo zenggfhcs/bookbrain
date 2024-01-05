@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.PublisherMapper">
-    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.Publisher">
+    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Publisher">
         <id property="publishId" column="publish_id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="INTEGER"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>

@@ -1,6 +1,6 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.BookInfo;
+import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.model.Filter;
 import com.lib.bookbrain.model.Payload;
 import org.apache.ibatis.annotations.Mapper;
