@@ -1,5 +1,6 @@
 package com.lib.bookbrain.service.impl;
 
+import com.lib.bookbrain.constants.Message;
 import com.lib.bookbrain.dao.BaseMapper;
 import com.lib.bookbrain.model.*;
 import com.lib.bookbrain.model.entity.BaseEntity;
@@ -25,7 +26,7 @@ public Response getBy(Payload<T> payload) {
 public Response getById(Payload<T> payload) {
    T _t = baseMapper.getById(payload);
    if (_t == null) {
-      return Response.error("不存在");
+      return Response.error(Message.GET_ERROR);
    }
    return Response.success(_t);
 }
@@ -33,13 +34,13 @@ public Response getById(Payload<T> payload) {
 @Override
 public Response create(Payload<T> payload) {
    if (payload.getEntity() == null) {
-      return Response.error("需要新建的 xx 信息为空");
+      return Response.error(Message.CREATE_DATA_ERROR);
    }
    
    int _cc = baseMapper.create(payload);
    
    if (_cc == 0) {
-      return Response.error("新建失败");
+      return Response.error(Message.CREATE_ERROR);
    }
    return Response.success();
 }
@@ -50,13 +51,13 @@ public Response update(Payload<T> payload) {
    T _newEntityData = payload.getEntity();
    // 空数据处理
    if (_newEntityData == null) {
-      return Response.error("更新数据为空");
+      return Response.error(Message.UPDATE_DATA_ERROR);
    }
    // 获取原始数据
    T _oldEntityData = baseMapper.getByUpdate(payload);
    // 空数据处理
    if (_oldEntityData == null) {
-      return Response.error("旧数据异常");
+      return Response.error(Message.UPDATE_OLD_DATE_ERROR);
    }
    // 设置版本号（乐观锁）
    _newEntityData.setRevision(_oldEntityData.getRevision());
@@ -66,7 +67,7 @@ public Response update(Payload<T> payload) {
    payload.setEntity(_newEntityData);
    // 判断结果
    if (_uc == 0) {
-      return Response.error("更新失败");
+      return Response.error(Message.UPDATE_ERROR);
    }
    return Response.success();
 }
@@ -76,11 +77,11 @@ public Response update(Payload<T> payload) {
 public Response delete(Payload<T> payload) {
    T _entity = baseMapper.getById(payload);
    if (_entity == null) {
-      return Response.error("该 id 不存在对应的 publisher");
+      return Response.error(Message.DELETE_DATA_ERROR);
    }
    int _dc = baseMapper.delete(payload);
    if (_dc == 0) {
-      return Response.error("删除失败");
+      return Response.error(Message.DELETE_ERROR);
    }
    payload.setEntity(_entity);
    return Response.success();

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG" monitorInterval="30">
+   <!-- 输出格式 -->
+   <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} - [%t] %-5level %logger{36} - %msg%n"/>
+
+   <Appenders>
+      <!-- 控制台输出 -->
+      <Console name="Console" target="SYSTEM_OUT">
+         <!-- 过滤器 -->
+         <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+         <!-- 缓冲bufferSize，默认值为256，可调整至1-256之间 -->
+         <Buffered mode="ONCE" bufferSize="256"/>
+      </Console>
+
+      <!-- 文件输出 -->
+      <RollingFile name="RollingFile" fileName="/path/to/logs/test.log" filePattern="/path/to/logs/$${date:yyyy-MM}/test-%d{yyyy-MM-dd}-%i.log">
+         <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+         <!-- 输出格式 -->
+         <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+         <!-- 触发策略 -->
+         <Policies>
+            <!-- 按时间滚动 -->
+            <TimeBasedTriggeringPolicy/>
+            <!-- 按文件大小滚动，这里设置10MB -->
+            <SizeBasedTriggeringPolicy size="10MB"/>
+         </Policies>
+         <!-- 滚动策略 -->
+         <DefaultRolloverStrategy max="10"/>
+      </RollingFile>
+   </Appenders>
+
+   <Loggers>
+      <!-- 默认日志 -->
+      <Root level="INFO">
+         <AppenderRef ref="Console"/>
+         <AppenderRef ref="RollingFile"/>
+      </Root>
+
+      <!-- 指定包名的日志 -->
+      <Logger name="com.example" level="DEBUG" additivity="false">
+         <AppenderRef ref="Console"/>
+         <AppenderRef ref="RollingFile"/>
+      </Logger>
+   </Loggers>
+</Configuration>

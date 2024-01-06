@@ -4,15 +4,24 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: yunxia
     password: 768874
-
+  # security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: b4e2eef5f381ca2db9eb9814073cdd8f39971663bc2bd20bc6287c4ef8cba43f
+          issuer-uri: https://idp.example.com/issuer
+          jwk-set-uri: https://idp.example.com/.well-known/jwks.json
 
 # mybatis 相关配置
 mybatis:
+  mapper-locations: classpath:com/lib/bookbrain/dao/*.xml
   configuration:
     #    命令行输入 sql 日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #    开启驼峰命名和下划线的匹配：user_id => userId
     map-underscore-to-camel-case: true
+
 
 # 日志
 logging:
@@ -42,3 +51,10 @@ async:
       # 配置线程池中的线程的名称前缀
       name:
         prefix: async-service-
+
+jwt:
+  private.key: classpath:jwt-pri.key
+  public.key: classpath:jwt-pub.key
+
+token:
+  maximum-interval: 3

@@ -96,8 +96,8 @@
     </update>
     <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
         delete
-        from book_info
-        where book_info_id = #{id}
+        from book_info bif
+        where bif.`book_info_id` = #{id}
     </delete>
     <select id="getBy" resultMap="BaseResultMap">
         select distinct bif.`book_info_id`,
@@ -159,13 +159,13 @@
     </select>
 
     <select id="getByUpdate" resultMap="BaseResultMap">
-        select
-        <trim suffixOverrides=",">
-            <if test="author != null">
-                bif.`author`,
-            </if>
-        </trim>
-        from book_info bif
-        where bif.`book_info_id` = #{id}
+       select
+       <trim suffixOverrides=",">
+          <if test="author != null">
+             bif.`author`,
+          </if>
+       </trim>
+       from book_info bif
+       where bif.`book_info_id` = #{id}
     </select>
 </mapper>

@@ -19,8 +19,8 @@ public class Jwt {
 private static final String key;
 private static final Algorithm algorithm;
 /**
- * 有效时长 毫秒值 三天
- * 3 * 24 * 60 * 60 * 1000
+ * 有效时长 毫秒值 七天
+ * 7 * 24 * 60 * 60 * 1000
  */
 private static final long EFFECTIVE_DURATION;
 
@@ -33,7 +33,7 @@ static {
 }
 
 static {
-   EFFECTIVE_DURATION = 604_800_000;
+   EFFECTIVE_DURATION = 1_411_200_000;
 }
 
 /**
@@ -42,7 +42,7 @@ static {
  * @param user 需要编码的用户公共数据
  * @return jwt token
  */
-public static String createToken(User user) {
+public static String encoder(User user) {
    try {
       return JWT.create()
             // 自定义信息
@@ -63,7 +63,7 @@ public static String createToken(User user) {
  * @param token jwt token
  * @return 解码后的 TokenBody 对象
  */
-public static TokenBody decodeToken(String token) {
+public static TokenBody decoder(String token) {
    // 解析 jwt
    DecodedJWT deJwt = JWT.require(algorithm).build().verify(token);
    // 获取 payload 是 base64 形式
@@ -76,10 +76,13 @@ public static TokenBody decodeToken(String token) {
 }
 
 public static void main(String[] args) {
+   // decoder("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiYXV0aG9yaXR5IjoyMTQ3NDgzNjQ3LCJleHAiOjE3MDQ1MzQwNDB9.J7FC06gbKvanzFTpWQBjjYl72Kb2gSDYNjmigfMKkf4");
+   
+   System.out.println((EFFECTIVE_DURATION / 3 * 7));
    User user = new User();
    user.setUserId(1);
    user.setDisplayName("admin");
    user.setAuthority(Integer.MAX_VALUE);
-   System.out.println(createToken(user));
+   System.out.println(encoder(user));
 }
 }

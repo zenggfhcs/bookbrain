@@ -55,7 +55,7 @@ public static Payload<BaseEntity> parseArgsTo(Object[] args) {
    // token
    String token = args[1].toString();
    // token => tokenBody
-   TokenBody tokenBody = Jwt.decodeToken(token);
+   TokenBody tokenBody = Jwt.decoder(token);
    _payload.setTokenBody(tokenBody);
    if (args.length == 3 && args[2].getClass() == Integer.class) {
       _payload.setId(Integer.parseInt(args[2].toString()));

@@ -38,30 +38,30 @@
     </delete>
     <select id="getBy" resultMap="BaseResultMap">
         select
-        l.log_id,
-        l.class_name,
-        l.method,
-        l.payload,
-        l.return_value,
-        l.elapsed_time,
-        l.run_time,
-        l.create_time,
-        l.create_by
+        l.`log_id`,
+        l.`class_name`,
+        l.`method`,
+        l.`payload`,
+        l.`return_value`,
+        l.`elapsed_time`,
+        l.`run_time`,
+        l.`create_time`,
+        l.`create_by`
         from get_log l
         <where>
             <if test="logId != null">
-                l.log_id = #{logId}
+                l.`log_id` = #{logId}
             </if>
             <if test="logId == null">
                 <if test="createBy != null">
-                    l.create_by = #{createBy}
+                    l.`create_by` = #{createBy}
                 </if>
                 <if test="method != null and method != ''">
-                    and l.method = #{method}
+                    and l.`method` = #{method}
                 </if>
                 <if test="1 == 1">
-                    and l.elapsed_time between #{minElapsedTime} and #{maxElapsedTime}
-                    and l.run_time between #{minRunTime} and #{maxRunTime}
+                    and l.`elapsed_time` between #{filter.lowerElapsedTime} and #{filter.upperElapsedTime}
+                    and l.`run_time` between #{minRunTime} and #{maxRunTime}
                 </if>
             </if>
         </where>
