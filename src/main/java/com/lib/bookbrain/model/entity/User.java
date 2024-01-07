@@ -92,18 +92,18 @@ private static int set(int a, int local, int condition) {
    return a & (~local) | (local * condition);
 }
 
+public static void checkAuthority(TokenBody tokenBody, Authority authority) {
+   if (tokenBody != null && hasAuthority(tokenBody.getAuthority(), authority)) {
+      return;
+   }
+   throw new MissPermissionException();
+}
+
 public void updateAuthority(Authority authority, State state) {
    this.authority = set(this.authority, authority.getValue(), state.getValue());
 }
 
 public void updateCondition(UserCondition condition, State state) {
    this.condition = set(this.condition, condition.getValue(), state.getValue());
-}
-
-public static void checkAuthority(TokenBody tokenBody, Authority authority) {
-   if (tokenBody != null && hasAuthority(tokenBody.getAuthority(), authority)) {
-      return;
-   }
-   throw new MissPermissionException();
 }
 }

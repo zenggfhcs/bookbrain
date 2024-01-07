@@ -1,87 +1,87 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.GetLogMapper">
-    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.log.GetLog">
-        <id property="logId" column="log_id" jdbcType="BIGINT"/>
-        <result property="method" column="method" jdbcType="VARCHAR"/>
-        <result property="className" column="class_name" jdbcType="VARCHAR"/>
-        <result property="payload" column="payload" jdbcType="VARCHAR"/>
-        <result property="returnValue" column="return_value" jdbcType="VARCHAR"/>
-        <result property="elapsedTime" column="elapsed_time" jdbcType="BIGINT"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
-    </resultMap>
-    <insert id="create" useGeneratedKeys="true" keyProperty="entity.logId" keyColumn="log_id"
-            parameterType="com.lib.bookbrain.model.Payload">
-        insert into get_log(method, class_name, payload, return_value, elapsed_time, create_time, create_by)
-        values (#{entity.method}, #{entity.className}, #{entity.payload}, #{entity.returnValue}, #{entity.elapsedTime},
-                now(), #{entity.createBy})
-    </insert>
-    <update id="update" parameterType="com.lib.bookbrain.model.Payload">
-        update get_log
-        <set>
-            <if test="entity.returnValue != null and entity.returnValue != ''">
-                return_value = #{entity.returnValue},
+   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.log.GetLog">
+      <id property="logId" column="log_id" jdbcType="BIGINT"/>
+      <result property="method" column="method" jdbcType="VARCHAR"/>
+      <result property="className" column="class_name" jdbcType="VARCHAR"/>
+      <result property="payload" column="payload" jdbcType="VARCHAR"/>
+      <result property="returnValue" column="return_value" jdbcType="VARCHAR"/>
+      <result property="elapsedTime" column="elapsed_time" jdbcType="BIGINT"/>
+      <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+      <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+   </resultMap>
+   <insert id="create" useGeneratedKeys="true" keyProperty="entity.logId" keyColumn="log_id"
+           parameterType="com.lib.bookbrain.model.Payload">
+      insert into get_log(method, class_name, payload, return_value, elapsed_time, create_time, create_by)
+      values (#{entity.method}, #{entity.className}, #{entity.payload}, #{entity.returnValue}, #{entity.elapsedTime},
+              now(), #{entity.createBy})
+   </insert>
+   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+      update get_log
+      <set>
+         <if test="entity.returnValue != null and entity.returnValue != ''">
+            return_value = #{entity.returnValue},
+         </if>
+         <if test="entity.elapsedTime != null">
+            elapsed_time = #{entity.elapsedTime},
+         </if>
+      </set>
+      where log_id = #{entity.logId}
+   </update>
+   <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
+      delete
+      from get_log
+      where log_id = #{id}
+   </delete>
+   <select id="getBy" resultMap="BaseResultMap">
+      select
+      l.`log_id`,
+      l.`class_name`,
+      l.`method`,
+      l.`payload`,
+      l.`return_value`,
+      l.`elapsed_time`,
+      l.`run_time`,
+      l.`create_time`,
+      l.`create_by`
+      from get_log l
+      <where>
+         <if test="entity != null">
+            <if test="entity.logId != null">
+               l.`log_id` = #{entity.logId}
             </if>
-            <if test="entity.elapsedTime != null">
-                elapsed_time = #{entity.elapsedTime},
+            <if test="entity.logId == null">
+               <if test="entity.createBy != null">
+                  l.`create_by` = #{entity.createBy}
+               </if>
+               <if test="entity.method != null and entity.method != ''">
+                  and l.`method` = #{entity.method}
+               </if>
+               <if test="1 == 1">
+                  and l.`elapsed_time` between #{filter.lowerElapsedTime} and #{filter.upperElapsedTime}
+                  # and l.`run_time` between #{minRunTime} and #{maxRunTime}
+               </if>
             </if>
-        </set>
-        where log_id = #{entity.logId}
-    </update>
-    <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
-        delete
-        from get_log
-        where log_id = #{id}
-    </delete>
-    <select id="getBy" resultMap="BaseResultMap">
-       select
-       l.`log_id`,
-       l.`class_name`,
-       l.`method`,
-       l.`payload`,
-       l.`return_value`,
-       l.`elapsed_time`,
-       l.`run_time`,
-       l.`create_time`,
-       l.`create_by`
-       from get_log l
-       <where>
-          <if test="entity != null">
-             <if test="entity.logId != null">
-                l.`log_id` = #{entity.logId}
-             </if>
-             <if test="entity.logId == null">
-                <if test="entity.createBy != null">
-                   l.`create_by` = #{entity.createBy}
-                </if>
-                <if test="entity.method != null and entity.method != ''">
-                   and l.`method` = #{entity.method}
-                </if>
-                <if test="1 == 1">
-                   and l.`elapsed_time` between #{filter.lowerElapsedTime} and #{filter.upperElapsedTime}
-                   # and l.`run_time` between #{minRunTime} and #{maxRunTime}
-                </if>
-             </if>
-          </if>
-       </where>
-       limit #{pageStart}, #{pageSize}
-    </select>
-    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
-        select l.`log_id`,
-               l.`class_name`,
-               l.`method`,
-               l.`payload`,
-               l.`return_value`,
-               l.`elapsed_time`,
-               l.`create_time`,
-               l.`create_by`
-        from get_log l
-        where l.`log_id` = #{id}
-    </select>
+         </if>
+      </where>
+      limit #{pageStart}, #{pageSize}
+   </select>
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+      select l.`log_id`,
+             l.`class_name`,
+             l.`method`,
+             l.`payload`,
+             l.`return_value`,
+             l.`elapsed_time`,
+             l.`create_time`,
+             l.`create_by`
+      from get_log l
+      where l.`log_id` = #{id}
+   </select>
 
-    <select id="getByUpdate" resultMap="BaseResultMap">
-    </select>
+   <select id="getByUpdate" resultMap="BaseResultMap">
+   </select>
 </mapper>

@@ -17,9 +17,9 @@ public enum State {
    ON(Value.v01),
    ;
 
+private final Integer value;
+
 State(Integer value) {
    this.value = value;
 }
-
-private final Integer value;
 }

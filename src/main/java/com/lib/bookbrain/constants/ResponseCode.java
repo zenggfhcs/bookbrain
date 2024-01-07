@@ -14,7 +14,8 @@ public enum ResponseCode {
    /**
     *
     */
-   ERROR(-1),;
+   ERROR(-1),
+   ;
 
 private final Integer code;
 

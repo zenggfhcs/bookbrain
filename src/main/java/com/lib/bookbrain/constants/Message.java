@@ -50,9 +50,9 @@ public enum Message {
    MISS_PERMISSION("没有权限"),
    ;
 
+private final String msg;
+
 Message(String msg) {
    this.msg = msg;
 }
-
-private final String msg;
 }

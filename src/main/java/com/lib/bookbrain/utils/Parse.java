@@ -2,6 +2,7 @@ package com.lib.bookbrain.utils;
 
 public class Parse {
 private static final PatternMatcher PM;
+
 static {
    PM = PatternMatcher.generate();
 }

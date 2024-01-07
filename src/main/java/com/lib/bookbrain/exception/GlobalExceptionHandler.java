@@ -32,6 +32,11 @@ public Response missPermission() {
    return Response.error(Message.MISS_PERMISSION);
 }
 
+@ExceptionHandler(UpdateErrorException.class)
+public Response updateError() {
+   return Response.error(Message.UPDATE_ERROR);
+}
+
 //@ExceptionHandler(Exception.class)
 //public Response tokenEx(Exception e) {
 //   return Response.error("请求失败:" + e.getMessage());

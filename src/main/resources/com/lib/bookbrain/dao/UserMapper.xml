@@ -22,7 +22,8 @@
       <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
    </resultMap>
-   <insert id="create" useGeneratedKeys="true" keyProperty="entity.userId" parameterType="com.lib.bookbrain.model.Payload">
+   <insert id="create" useGeneratedKeys="true" keyProperty="entity.userId"
+           parameterType="com.lib.bookbrain.model.Payload">
       insert into user(authentication_string, display_name, user_email, user_phone_number, `condition`, authority,
                        surname, name, age, sex, last_login_time, create_by, create_time, update_by, update_time,
                        revision)

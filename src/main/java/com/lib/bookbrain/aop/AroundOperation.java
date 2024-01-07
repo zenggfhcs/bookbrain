@@ -69,7 +69,7 @@ public Object logGet(ProceedingJoinPoint point) throws Throwable {
 }
 
 private void fillBeforeGet(ProceedingJoinPoint point, Payload<BaseEntity> payload, GetLog log) {
-   log.setClassName(point.getSignature().getDeclaringType().getName());// 执行的方法所在的类（接口）
+   log.setClassName(Parse.serviceToDataClass(point.getSignature().getDeclaringType().getName()));// 执行的方法所在的类（接口）
    log.setMethod(point.getSignature().getName());// 执行的方法
    log.setPayload(Json.stringify(payload));// 方法接收的参数
    log.setReturnValue("");// 返回值

@@ -21,9 +21,9 @@ public enum UserCondition {
    PHONE_NUMBER_VERIFIED(Value.v03),
    ;
 
+private final Integer value;
+
 UserCondition(Integer value) {
    this.value = value;
 }
-
-private final Integer value;
 }

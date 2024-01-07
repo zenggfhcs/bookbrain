@@ -90,9 +90,9 @@ public enum Authority {
    DEBIT_UPDATE(Value.v20),
    ;
 
+private final Integer value;
+
 Authority(Integer value) {
    this.value = value;
 }
-
-private final Integer value;
 }

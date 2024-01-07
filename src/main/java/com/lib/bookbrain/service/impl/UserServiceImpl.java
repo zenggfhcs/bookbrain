@@ -4,10 +4,11 @@ import com.lib.bookbrain.annotation.AroundDelete;
 import com.lib.bookbrain.annotation.AroundGet;
 import com.lib.bookbrain.annotation.AroundUpdate;
 import com.lib.bookbrain.constants.Authority;
-import com.lib.bookbrain.constants.UserCondition;
 import com.lib.bookbrain.constants.State;
+import com.lib.bookbrain.constants.UserCondition;
 import com.lib.bookbrain.dao.UserMapper;
-import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.Response;
 import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public Response login(Payload<User> payload) {
    /* -------- 异常提示 -------- */
    return Response.error("用户ID或密码无效");
 }
+
 @AroundGet
 @Override
 public Response getBy(Payload<User> payload) {

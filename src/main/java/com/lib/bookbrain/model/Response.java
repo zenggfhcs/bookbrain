@@ -73,6 +73,7 @@ public static Response error(ResponseCode code, Message msg) {
 public static Response error(ResponseCode code, String message) {
    return error(code.getCode(), message);
 }
+
 public static Response error(Integer code, String message) {
    return new Response(LocalDateTime.now(), code, message, null);
 }

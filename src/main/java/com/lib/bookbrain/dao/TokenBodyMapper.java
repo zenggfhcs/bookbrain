@@ -5,5 +5,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TokenBodyMapper {
-   TokenBody getByToken(String token);
+TokenBody getByToken(String token);
 }

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
  *
  * @author Josh Cummings
  */
-@WebMvcTest({ UserController.class, TokenController.class })
+@WebMvcTest({UserController.class, TokenController.class})
 @Import(SecurityConfiguration.class)
 public class Tests {
 }

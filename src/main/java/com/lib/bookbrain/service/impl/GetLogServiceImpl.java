@@ -1,7 +1,8 @@
 package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.dao.GetLogMapper;
-import com.lib.bookbrain.model.*;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.Response;
 import com.lib.bookbrain.model.log.GetLog;
 import com.lib.bookbrain.service.GetLogService;
 import org.springframework.stereotype.Service;
