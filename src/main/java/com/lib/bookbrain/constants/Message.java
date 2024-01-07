@@ -2,6 +2,11 @@ package com.lib.bookbrain.constants;
 
 import lombok.Getter;
 
+/**
+ * 响应消息枚举
+ *
+ * @author yunxia
+ */
 @Getter
 public enum Message {
    /**
@@ -48,6 +53,10 @@ public enum Message {
     *
     */
    MISS_PERMISSION("没有权限"),
+   /**
+    *
+    */
+   SQL_RUN_ERROR("sql run error"),
    ;
 
 private final String msg;

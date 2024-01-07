@@ -8,6 +8,11 @@ import com.lib.bookbrain.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * book controller
+ *
+ * @author yunxia
+ */
 @RestController
 @RequestMapping("/books")
 @AroundConduct

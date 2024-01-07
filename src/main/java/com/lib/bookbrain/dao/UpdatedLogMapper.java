@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author yunxia
+ */
 @Mapper
 public interface UpdatedLogMapper extends BaseMapper<UpdatedLog> {
 UpdatedLog getById(Payload<UpdatedLog> payload);

@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author yunxia
+ */
 @Mapper
 public interface PublisherMapper extends BaseMapper<Publisher> {
 List<Publisher> getBy(@Param("payload") Payload<Publisher> payload);

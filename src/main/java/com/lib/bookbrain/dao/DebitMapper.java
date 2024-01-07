@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author yunxia
+ */
 @Mapper
 public interface DebitMapper extends BaseMapper<Debit> {
 Debit getById(Payload<Debit> payload);

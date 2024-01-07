@@ -9,6 +9,11 @@ import com.lib.bookbrain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * user controller
+ *
+ * @author yunxia
+ */
 @RestController
 @RequestMapping("/users")
 @AroundConduct
@@ -45,7 +50,6 @@ public Response getUser(@RequestBody(required = false) Payload<User> payload, @R
 public Response updateUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return userService.update(payload);
 }
-
 
 @DeleteMapping("/{ignoredId}")
 public Response deleteUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {

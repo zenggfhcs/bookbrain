@@ -13,6 +13,9 @@ import com.lib.bookbrain.service.DebitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author yunxia
+ */
 @Service
 public class DebitServiceImpl implements DebitService {
 
@@ -28,14 +31,14 @@ public DebitServiceImpl(DebitMapper debitMapper) {
 @AroundGet
 @Override
 public Response getBy(Payload<Debit> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.DEBIT_GET);
    return baseService.getBy(payload);
 }
 
 @Override
 public Response create(Payload<Debit> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.DEBIT_CREATE);
    return baseService.create(payload);
 }
@@ -43,7 +46,7 @@ public Response create(Payload<Debit> payload) {
 @AroundGet
 @Override
 public Response getById(Payload<Debit> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.DEBIT_GET);
    return baseService.getById(payload);
 }
@@ -51,7 +54,7 @@ public Response getById(Payload<Debit> payload) {
 @AroundUpdate
 @Override
 public Response update(Payload<Debit> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.DEBIT_UPDATE);
    return baseService.update(payload);
 }
@@ -59,7 +62,7 @@ public Response update(Payload<Debit> payload) {
 @AroundDelete
 @Override
 public Response delete(Payload<Debit> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.DEBIT_DELETE);
    return baseService.delete(payload);
 }

@@ -8,6 +8,11 @@ import com.lib.bookbrain.service.DebitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * debit controller
+ *
+ * @author yunxia
+ */
 @RestController
 @RequestMapping("/debits")
 @AroundConduct

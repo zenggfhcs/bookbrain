@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * 注解 controller ，将 controller 的 token 解析
+ *
+ * @author yunxia
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})

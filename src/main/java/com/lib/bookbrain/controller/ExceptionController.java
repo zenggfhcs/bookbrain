@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 拦截 error，使 500、404 等情况返回的数据格式为自定义数据格式
+ *
+ * @author yunxia
+ */
 @RestController
 @RequestMapping("/error")
 public class ExceptionController extends AbstractErrorController {

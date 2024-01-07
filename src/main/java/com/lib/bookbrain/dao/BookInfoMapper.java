@@ -6,6 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+/**
+ * book info mapper
+ *
+ * @author yunxia
+ */
 @Mapper
 public interface BookInfoMapper extends BaseMapper<BookInfo> {
 BookInfo getById(Payload<BookInfo> payload);

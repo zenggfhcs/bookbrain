@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * 注解删除操作
+ *
+ * @author yunxia
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})

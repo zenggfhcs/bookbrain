@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author yunxia
+ */
 @Service
 public class GetLogServiceImpl implements GetLogService {
 private final GetLogMapper getLogMapper;

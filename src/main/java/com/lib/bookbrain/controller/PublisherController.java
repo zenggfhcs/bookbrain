@@ -7,6 +7,11 @@ import com.lib.bookbrain.model.entity.Publisher;
 import com.lib.bookbrain.service.PublisherService;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * publisher controller
+ *
+ * @author yunxia
+ */
 @RestController
 @RequestMapping("/publishers")
 @AroundConduct

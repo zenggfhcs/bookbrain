@@ -7,8 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+
 /**
- * bookinfo 实体类
+ * @author yunxia
  */
 
 @NoArgsConstructor

@@ -13,6 +13,9 @@ import com.lib.bookbrain.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author yunxia
+ */
 @Service
 public class BookServiceImpl implements BookService {
 private final BookMapper bookMapper;
@@ -27,14 +30,14 @@ public BookServiceImpl(BookMapper bookMapper) {
 @AroundGet
 @Override
 public Response getBy(Payload<Book> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_GET);
    return baseService.getBy(payload);
 }
 
 @Override
 public Response create(Payload<Book> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_CREATE);
    return baseService.create(payload);
 }
@@ -42,7 +45,7 @@ public Response create(Payload<Book> payload) {
 @AroundGet
 @Override
 public Response getById(Payload<Book> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_GET);
    return baseService.getById(payload);
 }
@@ -50,7 +53,7 @@ public Response getById(Payload<Book> payload) {
 @AroundUpdate
 @Override
 public Response update(Payload<Book> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_UPDATE);
    return baseService.getById(payload);
 }
@@ -58,7 +61,7 @@ public Response update(Payload<Book> payload) {
 @AroundDelete
 @Override
 public Response delete(Payload<Book> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_DELETE);
    return baseService.delete(payload);
 }

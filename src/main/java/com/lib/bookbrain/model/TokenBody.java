@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * token body
+ *
+ * @author yunxia
  */
 @Data
 @NoArgsConstructor

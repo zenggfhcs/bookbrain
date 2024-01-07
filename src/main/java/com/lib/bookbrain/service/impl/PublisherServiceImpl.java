@@ -12,7 +12,9 @@ import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.service.PublisherService;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * @author yunxia
+ */
 @Service
 public class PublisherServiceImpl implements PublisherService {
 private final PublisherMapper publisherMapper;

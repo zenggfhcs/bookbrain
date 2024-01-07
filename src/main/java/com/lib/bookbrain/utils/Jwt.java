@@ -3,7 +3,6 @@ package com.lib.bookbrain.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.lib.bookbrain.model.TokenBody;
 import com.lib.bookbrain.model.entity.User;
@@ -43,18 +42,22 @@ static {
  * @return jwt token
  */
 public static String encoder(User user) {
-   try {
-      return JWT.create()
-            // 自定义信息
-            .withClaim("id", user.getUserId())
-            .withClaim("name", user.getDisplayName())
-            .withClaim("authority", user.getAuthority())
-            // 有效时间
-            .withExpiresAt(new Date(System.currentTimeMillis() + EFFECTIVE_DURATION))
-            .sign(algorithm);
-   } catch (JWTCreationException exception) {
-      throw new JWTCreationException(exception.getMessage(), null);
-   }
+   return coder(user.getUserId(), user.getDisplayName(), user.getAuthority());
+}
+
+public static String encoder(TokenBody body) {
+   return coder(body.getId(), body.getName(), body.getAuthority());
+}
+
+private static String coder(Integer id, String name, Integer authority) {
+   return JWT.create()
+         // 自定义信息
+         .withClaim("id", id)
+         .withClaim("name", name)
+         .withClaim("authority", authority)
+         // 有效时间
+         .withExpiresAt(new Date(System.currentTimeMillis() + EFFECTIVE_DURATION))
+         .sign(algorithm);
 }
 
 /**
@@ -76,8 +79,6 @@ public static TokenBody decoder(String token) {
 }
 
 public static void main(String[] args) {
-   // decoder("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiYXV0aG9yaXR5IjoyMTQ3NDgzNjQ3LCJleHAiOjE3MDQ1MzQwNDB9.J7FC06gbKvanzFTpWQBjjYl72Kb2gSDYNjmigfMKkf4");
-   
    System.out.println((EFFECTIVE_DURATION / 3 * 7));
    User user = new User();
    user.setUserId(1);

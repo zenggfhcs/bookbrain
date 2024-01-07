@@ -11,6 +11,7 @@ import com.lib.bookbrain.service.UpdateLogService;
 import com.lib.bookbrain.utils.Json;
 import com.lib.bookbrain.utils.Parse;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 运行前后的操作
+ *
+ * @author yunxia
  */
 @Component
 @Aspect
@@ -51,37 +54,36 @@ public AroundOperation(GetLogService getLogService, UpdateLogService updateLogSe
  */
 @Around("@annotation(com.lib.bookbrain.annotation.AroundGet)")
 public Object logGet(ProceedingJoinPoint point) throws Throwable {
-   /* -------- 前 -------- */
-   Payload<BaseEntity> _payload = Payload.getOrNew(point.getArgs()[0]);// 解析参数
-   GetLog _getLog = GetLog.create();// 创建日志
-   this.fillBeforeGet(point, _payload, _getLog);// 填充日志信息
-   /* -------- 前 -------- */
+   /* ===================== 前 ===================== */
+   Payload<BaseEntity> _payload = Payload.getOrNew(point.getArgs()[0]); // 解析参数
+   GetLog _getLog = GetLog.create();                                    // 创建日志
+   this.fillBeforeGet(point.getSignature(), _payload, _getLog);         // 填充日志信息
    
-   long _startTime = System.currentTimeMillis();// 执行起始时间
-   Object _res = point.proceed();// 执行原始方法
+   /* ===================== 执行 ===================== */
+   long _startTime = System.currentTimeMillis();                        // 记录执行起始时间
+   Object _res = point.proceed();                                       // 执行原始方法
    
-   /* -------- 后 -------- */
-   long _endTime = System.currentTimeMillis();// 执行结束时间
-   this.fillAfterGet(_res, _endTime - _startTime, _getLog);// 填充日志信息
-   /* -------- 后 -------- */
-   
+   /* ===================== 后 ===================== */
+   long _endTime = System.currentTimeMillis();                          // 执行结束时间
+   long _time = _endTime - _startTime;                                  // 执行耗时（毫秒值）
+   this.fillAfterGet(_res, _time, _getLog);                             // 填充日志信息
    return _res;
 }
 
-private void fillBeforeGet(ProceedingJoinPoint point, Payload<BaseEntity> payload, GetLog log) {
-   log.setClassName(Parse.serviceToDataClass(point.getSignature().getDeclaringType().getName()));// 执行的方法所在的类（接口）
-   log.setMethod(point.getSignature().getName());// 执行的方法
-   log.setPayload(Json.stringify(payload));// 方法接收的参数
-   log.setReturnValue("");// 返回值
-   log.setElapsedTime(0L);// 运行时长
-   log.setCreateBy(payload.getTokenBody().getId());// 方法执行者
-   getLogService.createLog(log);// 插入日志，无论调用是否成功都有日志
+private void fillBeforeGet(Signature signature, Payload<BaseEntity> payload, GetLog log) {
+   log.setClassName(Parse.serviceToDataClass(signature.getDeclaringType().getName())); // 数据对象对应的类
+   log.setMethod(signature.getName());                                                 // 执行的方法
+   log.setPayload(Json.stringify(payload));                                            // 方法接收的参数
+   log.setReturnValue("");                                                             // 返回值
+   log.setElapsedTime(0L);                                                             // 运行时长
+   log.setCreateBy(payload.getTokenBody().getId());                                    // 方法执行者
+   getLogService.createLog(log);                                                       // 插入日志，无论调用是否成功都有日志
 }
 
 private void fillAfterGet(Object res, Long time, GetLog log) {
-   log.setReturnValue(Json.stringify(res));// 返回值
-   log.setElapsedTime(time);// 运行时间
-   getLogService.updateLogAfterReturn(log);// 将执行完成的返回值更新到日志
+   log.setReturnValue(Json.stringify(res));  // 返回值
+   log.setElapsedTime(time);                 // 运行时间
+   getLogService.updateLogAfterReturn(log);  // 将执行完成的返回值更新到日志
 }
 
 /**
@@ -93,75 +95,74 @@ private void fillAfterGet(Object res, Long time, GetLog log) {
  */
 @Around("@annotation(com.lib.bookbrain.annotation.AroundUpdate)")
 public Object logUpdate(ProceedingJoinPoint point) throws Throwable {
-   /* -------- 前 -------- */
-   Payload<BaseEntity> _payload = Payload.getOrNew(point.getArgs()[0]);// 解析参数
-   UpdatedLog _updatedLog = new UpdatedLog();
-   this.fillBeforeUpdate(point, _payload, _updatedLog);
-   /* -------- 前 -------- */
+   /* ===================== 前 ===================== */
+   Payload<BaseEntity> _payload = Payload.getOrNew(point.getArgs()[0]); // 解析参数
+   UpdatedLog _updatedLog = new UpdatedLog();                           // 创建日志
+   this.fillBeforeUpdate(point.getSignature(), _payload, _updatedLog);  // 填充日志
    
-   Long _startTime = System.currentTimeMillis();
-   Object _res = point.proceed();
+   /* ===================== 运行 ===================== */
+   long _startTime = System.currentTimeMillis();                        // 记录起始时间
+   Object _res = point.proceed();                                       // 执行
    
-   /* -------- 后 -------- */
-   Long _endTime = System.currentTimeMillis();
-   this.fillAfterUpdate(_payload, _endTime - _startTime, _updatedLog);
-   /* -------- 后 -------- */
+   /* ===================== 后 ===================== */
+   long _endTime = System.currentTimeMillis();                          // 执行结束时间
+   long _time = _endTime - _startTime;                                  // 执行耗时（毫秒值）
+   this.fillAfterUpdate(_payload, _time, _updatedLog);                  // 填充日志
    
    return _res;
 }
 
-private void fillBeforeUpdate(ProceedingJoinPoint point, Payload<BaseEntity> payload, UpdatedLog log) {
-   // 通过服务名称，解析出实体名称
-   log.setDataClass(Parse.serviceToDataClass(point.getSignature().getDeclaringType().getName()));
-   log.setDataId(payload.getId());
-   log.setOldData("");
-   log.setNewData(Json.stringify(payload));
-   log.setElapsedTime(0L);
-   log.setCreateBy(payload.getTokenBody().getId());
-   updateLogService.createLog(log);// 插入日志
+private void fillBeforeUpdate(Signature signature, Payload<BaseEntity> payload, UpdatedLog log) {
+   log.setDataClass(Parse.serviceToDataClass(signature.getDeclaringType().getName())); // 数据对象对应的类
+   log.setDataId(payload.getId());                                                     // 数据 id
+   log.setOldData("");                                                                 // 旧数据（JSON）
+   log.setNewData(Json.stringify(payload));                                            // 新数据（JSON）
+   log.setElapsedTime(0L);                                                             // 运行时间
+   log.setCreateBy(payload.getTokenBody().getId());                                    // 动作执行者
+   updateLogService.createLog(log);                                                    // 插入日志
 }
 
 private void fillAfterUpdate(Payload<BaseEntity> payload, Long time, UpdatedLog log) {
-   log.setElapsedTime(time);
-   payload.setTokenBody(null);
-   log.setOldData(Json.stringify(payload.getEntity()));
-   updateLogService.updateLog(log);// 更新日志
+   log.setElapsedTime(time);                             // 运行时间
+   payload.setTokenBody(null);                           // 去除 JSON 干扰
+   log.setOldData(Json.stringify(payload.getEntity()));  // 旧数据
+   updateLogService.updateLog(log);                      // 更新日志
 }
 
 @Around("@annotation(com.lib.bookbrain.annotation.AroundDelete)")
 public Object logDelete(ProceedingJoinPoint point) throws Throwable {
-   /* -------- 前 -------- */
+   /* ===================== 前 ===================== */
    Payload<BaseEntity> _payload = Payload.getOrNew(point.getArgs()[0]); // 解析参数
-   DeletedLog _deletedLog = new DeletedLog(); // 创建一个日志
-   this.fillBeforeDelete(point, _payload, _deletedLog); // 填充日志
-   /* -------- 前 -------- */
+   DeletedLog _deletedLog = new DeletedLog();                           // 创建日志
+   this.fillBeforeDelete(point.getSignature(), _payload, _deletedLog);  // 填充日志
    
-   Long _startTime = System.currentTimeMillis();
-   Object _res = point.proceed();
+   /* ===================== 运行 ===================== */
+   long _startTime = System.currentTimeMillis();                        // 运行起始时间
+   Object _res = point.proceed();                                       // 运行
    
-   /* -------- 后 -------- */
-   Long _endTime = System.currentTimeMillis();
-   this.fillAfterDelete(_payload, _endTime - _startTime, _deletedLog);
-   /* -------- 后 -------- */
+   /* ===================== 后 ===================== */
+   long _endTime = System.currentTimeMillis();                          // 运行结束时间
+   long _time = _endTime - _startTime;                                  // 运行耗时（毫秒值）
+   this.fillAfterDelete(_payload, _time, _deletedLog);                  // 填充日志
    
    return _res;
 }
 
-private void fillBeforeDelete(ProceedingJoinPoint point, Payload<BaseEntity> payload, DeletedLog log) {
-   log.setDataClass(Parse.serviceToDataClass(point.getSignature().getDeclaringType().getName()));
-   log.setDataId(payload.getId());
-   log.setData("");
-   log.setElapsedTime(0L);
-   log.setCreateBy(payload.getTokenBody().getId());
-   deleteLogService.createLog(log);// 插入日志
+private void fillBeforeDelete(Signature signature, Payload<BaseEntity> payload, DeletedLog log) {
+   log.setDataClass(Parse.serviceToDataClass(signature.getDeclaringType().getName())); // 数据对象对应的类
+   log.setDataId(payload.getId());                                                     // 数据 id
+   log.setData("");                                                                    // 数据初始为空
+   log.setElapsedTime(0L);                                                             // 运行时间初始为 0
+   log.setCreateBy(payload.getTokenBody().getId());                                    // 执行者
+   deleteLogService.createLog(log);                                                    // 插入日志
 }
 
 private void fillAfterDelete(Payload<BaseEntity> payload, Long time, DeletedLog log) {
-   log.setElapsedTime(time);
-   payload.setTokenBody(null);
-   payload.setId(null);
-   log.setData(Json.stringify(payload));
-   deleteLogService.updateLog(log); // 更新日志
+   log.setElapsedTime(time);              // 更新运行时间
+   payload.setTokenBody(null);            // 去除 JSON 干扰
+   payload.setId(null);                   // 去除 JSON 干扰
+   log.setData(Json.stringify(payload));  // 更新数据
+   deleteLogService.updateLog(log);       // 更新日志
 }
 
 /**
@@ -171,10 +172,9 @@ private void fillAfterDelete(Payload<BaseEntity> payload, Long time, DeletedLog 
  */
 @Around("@within(com.lib.bookbrain.annotation.AroundConduct)")
 public Object aroundConduct(ProceedingJoinPoint point) throws Throwable {
-   // 预期参数为 { parameter, token, id }
-   Object[] args = point.getArgs();
-   Payload<BaseEntity> _payload = Payload.parseArgsTo(args);
-   args[0] = _payload;
-   return point.proceed(args);
+   Object[] args = point.getArgs();                            // 预期参数为 { payload, token(, id)? }
+   Payload<BaseEntity> _payload = Payload.parseArgsTo(args);   // 解析参数
+   args[0] = _payload;                                         // 参数写回
+   return point.proceed(args);                                 // 使用新参数运行
 }
 }

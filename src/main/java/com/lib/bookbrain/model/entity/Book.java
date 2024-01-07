@@ -5,8 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 /**
- * book 实体类
+ * @author yunxia
  */
 @NoArgsConstructor
 @AllArgsConstructor

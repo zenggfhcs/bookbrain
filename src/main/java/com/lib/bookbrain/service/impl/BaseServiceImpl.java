@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author yunxia
+ */
 public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 protected final BaseMapper<T> baseMapper;
 

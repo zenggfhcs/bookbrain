@@ -3,18 +3,20 @@ package com.lib.bookbrain.constants;
 import lombok.Getter;
 
 /**
- * 开还是关？
+ * 状态枚举
+ *
+ * @author yunxia
  */
 @Getter
 public enum State {
    /**
     *
     */
-   OFF(Value.v00),
+   OFF(Value.i00),
    /**
     *
     */
-   ON(Value.v01),
+   ON(Value.i01),
    ;
 
 private final Integer value;

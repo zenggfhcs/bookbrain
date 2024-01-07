@@ -7,6 +7,11 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * book mapper
+ *
+ * @author yunxia
+ */
 @Mapper
 public interface BookMapper extends BaseMapper<Book> {
 

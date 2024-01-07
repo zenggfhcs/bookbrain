@@ -13,6 +13,9 @@ import com.lib.bookbrain.service.BookInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author yunxia
+ */
 @Service
 public class BookInfoServiceImpl implements BookInfoService {
 
@@ -29,39 +32,49 @@ public BookInfoServiceImpl(BookInfoMapper bookInfoMapper) {
 @AroundGet
 @Override
 public Response getBy(Payload<BookInfo> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_INFO_GET);
+   
+   /* ===================== 执行 ===================== */
    return baseService.getBy(payload);
 }
 
 @Override
 public Response create(Payload<BookInfo> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_INFO_CREATE);
+   
+   /* ===================== 执行 ===================== */
    return baseService.create(payload);
 }
 
 @AroundGet
 @Override
 public Response getById(Payload<BookInfo> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_INFO_GET);
+   
+   /* ===================== 执行 ===================== */
    return baseService.getById(payload);
 }
 
 @AroundUpdate
 @Override
 public Response update(Payload<BookInfo> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_INFO_UPDATE);
+   
+   /* ===================== 执行 ===================== */
    return baseService.update(payload);
 }
 
 @AroundDelete
 @Override
 public Response delete(Payload<BookInfo> payload) {
-   /* -------- 权限检查 -------- */
+   /* ===================== 权限检查 ===================== */
    User.checkAuthority(payload.getTokenBody(), Authority.BOOK_INFO_DELETE);
+   
+   /* ===================== 执行 ===================== */
    return baseService.delete(payload);
 }
 

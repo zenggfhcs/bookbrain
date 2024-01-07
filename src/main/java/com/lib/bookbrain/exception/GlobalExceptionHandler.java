@@ -8,18 +8,22 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.sql.SQLException;
 
+/**
+ * 全局异常处理器
+ *
+ * @author yunxia
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
 /**
  * sql 执行失败异常处理
  *
- * @param se 抛出的异常
  * @return 规范返回
  */
 @ExceptionHandler(SQLException.class)
-public Response sqlEx(SQLException se) {
-   return Response.error("sql error：" + se.getSQLState());
+public Response sqlEx() {
+   return Response.error(Message.SQL_RUN_ERROR);
 }
 
 @ExceptionHandler(JWTVerificationException.class)
@@ -37,8 +41,8 @@ public Response updateError() {
    return Response.error(Message.UPDATE_ERROR);
 }
 
-//@ExceptionHandler(Exception.class)
-//public Response tokenEx(Exception e) {
-//   return Response.error("请求失败:" + e.getMessage());
-//}
+// @ExceptionHandler(Exception.class)
+// public Response tokenEx(Exception e) {
+//    return Response.error("请求失败:" + e.getMessage());
+// }
 }

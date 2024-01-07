@@ -7,6 +7,11 @@ import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.service.BookInfoService;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * book info controller
+ *
+ * @author yunxia
+ */
 @RestController
 @RequestMapping("/bookInfos")
 @AroundConduct

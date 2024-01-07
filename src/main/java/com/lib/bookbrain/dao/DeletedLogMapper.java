@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author yunxia
+ */
 @Mapper
 public interface DeletedLogMapper extends BaseMapper<DeletedLog> {
 DeletedLog getById(Payload<DeletedLog> payload);

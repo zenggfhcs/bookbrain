@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * @author yunxia
+ */
 @Component
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
