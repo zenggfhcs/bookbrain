@@ -1,166 +1,174 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.User">
-        <id property="userId" column="user_id" jdbcType="INTEGER"/>
-        <result property="authenticationString" column="authentication_string" jdbcType="VARCHAR"/>
-        <result property="displayName" column="display_name" jdbcType="VARCHAR"/>
-        <result property="userEmail" column="user_email" jdbcType="VARCHAR"/>
-        <result property="userPhoneNumber" column="user_phone_number" jdbcType="VARCHAR"/>
-        <result property="condition" column="condition" jdbcType="INTEGER"/>
-        <result property="authority" column="authority" jdbcType="INTEGER"/>
-        <result property="surname" column="surname" jdbcType="VARCHAR"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
-        <result property="age" column="age" jdbcType="TINYINT"/>
-        <result property="sex" column="sex" jdbcType="TINYINT"/>
-        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
-        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="revision" column="revision" jdbcType="INTEGER"/>
-    </resultMap>
-    <insert id="create" useGeneratedKeys="true" keyProperty="userId" parameterType="com.lib.bookbrain.model.Payload">
-        insert into user(authentication_string, display_name, user_email, user_phone_number, `condition`, authority,
-                         surname, name, age, sex, last_login_time, create_by, create_time, update_by, update_time,
-                         revision)
-        values (MD5(#{authenticationString}), #{displayName}, #{userEmail},
-                #{userPhoneNumber},
-                #{condition}, #{authority}, #{surname}, #{name}, #{age}, #{sex},
-                #{lastLoginTime}, #{createBy}, now(), #{updateBy}, now(), 0);
-    </insert>
-    <update id="update" parameterType="com.lib.bookbrain.model.Payload">
-        update user u
-        <set>
-            <if test="authenticationString != null and authenticationString != ''">
-                u.`authentication_string` = MD5(#{authenticationString}),
+   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.User">
+      <id property="userId" column="user_id" jdbcType="INTEGER"/>
+      <result property="authenticationString" column="authentication_string" jdbcType="VARCHAR"/>
+      <result property="displayName" column="display_name" jdbcType="VARCHAR"/>
+      <result property="userEmail" column="user_email" jdbcType="VARCHAR"/>
+      <result property="userPhoneNumber" column="user_phone_number" jdbcType="VARCHAR"/>
+      <result property="condition" column="condition" jdbcType="INTEGER"/>
+      <result property="authority" column="authority" jdbcType="INTEGER"/>
+      <result property="surname" column="surname" jdbcType="VARCHAR"/>
+      <result property="name" column="name" jdbcType="VARCHAR"/>
+      <result property="age" column="age" jdbcType="TINYINT"/>
+      <result property="sex" column="sex" jdbcType="TINYINT"/>
+      <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+      <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+      <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+      <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+      <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+      <result property="revision" column="revision" jdbcType="INTEGER"/>
+   </resultMap>
+   <insert id="create" useGeneratedKeys="true" keyProperty="entity.userId" parameterType="com.lib.bookbrain.model.Payload">
+      insert into user(authentication_string, display_name, user_email, user_phone_number, `condition`, authority,
+                       surname, name, age, sex, last_login_time, create_by, create_time, update_by, update_time,
+                       revision)
+      values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.userEmail},
+              #{entity.userPhoneNumber},
+              #{entity.condition}, #{entity.authority}, #{entity.surname}, #{entity.name}, #{entity.age}, #{entity.sex},
+              #{entity.lastLoginTime}, #{entity.createBy}, now(), #{entity.updateBy}, now(), 0);
+   </insert>
+   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+      update user u
+      <set>
+         <if test="entity != null">
+            <if test="entity.authenticationString != null and entity.authenticationString != ''">
+               u.`authentication_string` = MD5(#{entity.authenticationString}),
             </if>
-            <if test="displayName != null and displayName != ''">
-                u.`display_name` = #{displayName},
+            <if test="entity.displayName != null and entity.displayName != ''">
+               u.`display_name` = #{entity.displayName},
             </if>
-            <if test="userEmail != null and userEmail != ''">
-                u.`user_email` = #{userEmail},
+            <if test="entity.userEmail != null and entity.userEmail != ''">
+               u.`user_email` = #{entity.userEmail},
             </if>
-            <if test="condition != null">
-                u.`condition` = #{condition},
+            <if test="entity.condition != null">
+               u.`condition` = #{entity.condition},
             </if>
-            <if test="authority != null">
-                u.`authority` = #{authority},
+            <if test="entity.authority != null">
+               u.`authority` = #{entity.authority},
             </if>
-            <if test="surname != null">
-                u.`surname` = #{surname},
+            <if test="entity.surname != null">
+               u.`surname` = #{entity.surname},
             </if>
-            <if test="name != null">
-                u.`name` = #{name},
+            <if test="entity.name != null">
+               u.`name` = #{entity.name},
             </if>
-            <if test="age != null">
-                u.`age` = #{age},
+            <if test="entity.age != null">
+               u.`age` = #{entity.age},
             </if>
-            <if test="sex != null">
-                u.`sex` = #{sex},
+            <if test="entity.sex != null">
+               u.`sex` = #{entity.sex},
             </if>
-            <if test="lastLoginTime != null">
-                u.`last_login_time` = #{lastLoginTime},
+            <if test="entity.updateBy != null">
+               u.`update_by` = #{entity.updateBy},
             </if>
-            <if test="updateBy != null">
-                u.`update_by` = #{updateBy},
+         </if>
+         <if test="1 == 1">
+            u.`update_time` = now(),
+            u.`revision` = (1 + u.`revision`) % 2147483647,
+         </if>
+      </set>
+      where u.`user_id` = #{id}
+   </update>
+   <update id="delete" parameterType="com.lib.bookbrain.model.Payload">
+      update user u
+      set u.`condition` = #{entity.condition}
+      where u.`user_id` = #{id};
+   </update>
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+      select u.`user_id`,
+             u.`display_name`,
+             u.`user_email`,
+             u.`user_phone_number`,
+             u.`condition`,
+             u.`authority`,
+             u.`surname`,
+             u.`name`,
+             u.`age`,
+             u.`sex`,
+             u.`last_login_time`,
+             u.`create_by`,
+             u.`create_time`,
+             u.`update_by`,
+             u.`update_time`,
+             u.`revision`
+      from user u
+      where u.`user_id` = #{id};
+   </select>
+   <select id="login" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
+      select count(*)
+      from user u
+      where u.`user_id` = #{userId}
+        and u.`authentication_string` = MD5(#{authenticationString});
+   </select>
+   <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
+      select count(*)
+      from user u
+      where user_id = #{id};
+   </select>
+   <select id="getBy" resultMap="BaseResultMap">
+      select u.`user_id`,
+      u.`display_name`,
+      u.`user_email`,
+      u.`user_phone_number`,
+      u.`condition`,
+      u.`authority`,
+      u.`surname`,
+      u.`name`,
+      u.`age`,
+      u.`sex`,
+      u.`last_login_time`,
+      u.`create_by`,
+      u.`create_time`,
+      u.`update_by`,
+      u.`update_time`,
+      u.`revision`
+      from user u
+      <where>
+         <if test="entity != null">
+            <if test="entity.userId != null">
+               u.`user_id` = #{entity.userId}
             </if>
-            <if test="1 == 1">
-                u.`update_time` = now(),
+            <if test="entity.surname != null and entity.surname != ''">
+               and u.`surname` = #{entity.surname}
             </if>
-            <if test="revision != null">
-                u.`revision` = #{revision},
+            <if test="entity.name != null and entity.name != ''">
+               and u.`name` = #{entity.name}
             </if>
-        </set>
-        where u.`user_id` = #{id}
-    </update>
-    <update id="delete" parameterType="com.lib.bookbrain.model.Payload">
-        update user u
-        set u.`condition` = #{condition}
-        where u.`user_id` = #{userId};
-    </update>
-    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
-        select u.`user_id`,
-               u.`display_name`,
-               u.`user_email`,
-               u.`user_phone_number`,
-               u.`condition`,
-               u.`authority`,
-               u.`surname`,
-               u.`name`,
-               u.`age`,
-               u.`sex`,
-               u.`last_login_time`,
-               u.`create_by`,
-               u.`create_time`,
-               u.`update_by`,
-               u.`update_time`,
-               u.`revision`
-        from user u
-        where u.`user_id` = #{id};
-    </select>
-    <select id="login" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
-        select count(*)
-        from user u
-        where u.`user_id` = #{userId}
-          and u.`authentication_string` = MD5(#{authenticationString});
-    </select>
-    <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
-        select count(*)
-        from user u
-        where user_id = #{id};
-    </select>
-    <select id="getBy" resultMap="BaseResultMap">
-        select u.`user_id`,
-        u.`display_name`,
-        u.`user_email`,
-        u.`user_phone_number`,
-        u.`condition`,
-        u.`authority`,
-        u.`surname`,
-        u.`name`,
-        u.`age`,
-        u.`sex`,
-        u.`last_login_time`,
-        u.`create_by`,
-        u.`create_time`,
-        u.`update_by`,
-        u.`update_time`,
-        u.`revision`
-        from user u
-        <where>
-            <if test="!= null">
-                <if test="userId != null">
-                    u.`user_id` = #{userId}
-                </if>
-                <if test="surname != null and surname != ''">
-                    and u.`surname` = #{surname}
-                </if>
-                <if test="name != null and name != ''">
-                    and u.`name` = #{name}
-                </if>
-                <if test="userEmail != null and userEmail != ''">
-                    and u.`user_email` = #{userEmail}
-                </if>
-                <if test="userPhoneNumber != null and userPhoneNumber != ''">
-                    and u.`user_phone_number` like CONCAT(#{userPhoneNumber}, '%')
-                </if>
-                <if test="name != null and name != ''">
-                    and u.`name` like CONCAT('%', #{name}, '%')
-                </if>
+            <if test="entity.userEmail != null and entity.userEmail != ''">
+               and u.`user_email` = #{entity.userEmail}
             </if>
-            <if test="filter">
-                and u.`age` between #{lowerAge} and #{upperAge}
-                and u.`last_login_time` between #{lowerLastLoginTime} and #{upperLastLoginTime}
-                and u.`create_time` between #{lowerCreateTime} and #{upperCreateTime}
-                and u.`update_time` between #{lowerUpdateTime} and #{upperUpdateTime}
+            <if test="entity.userPhoneNumber != null and entity.userPhoneNumber != ''">
+               and u.`user_phone_number` like CONCAT(#{entity.userPhoneNumber}, '%')
             </if>
-        </where>
-        limit #{pageStart}, #{pageSize}
-    </select>
+            <if test="entity.name != null and entity.name != ''">
+               and u.`name` like CONCAT('%', #{entity.name}, '%')
+            </if>
+         </if>
+         <if test="filter != null">
+            and u.`age` between #{lowerAge} and #{upperAge}
+            and u.`last_login_time` between #{lowerLastLoginTime} and #{upperLastLoginTime}
+            and u.`create_time` between #{lowerCreateTime} and #{upperCreateTime}
+            and u.`update_time` between #{lowerUpdateTime} and #{upperUpdateTime}
+         </if>
+      </where>
+      limit #{pageStart}, #{pageSize}
+   </select>
 
-    <select id="getByUpdate" resultMap="BaseResultMap">
-    </select>
+   <select id="getByUpdate" resultMap="BaseResultMap">
+   </select>
+   <select id="getByToken" resultMap="BaseResultMap">
+      select u.`user_id`,
+             u.`display_name`,
+             u.`authority`
+      from user u,
+           token_used_log t
+      where t.token = #{token}
+        and u.user_id = t.user_id
+        and t.`last_use_time` > SUBDATE(NOW(), 7)
+
+   </select>
 </mapper>

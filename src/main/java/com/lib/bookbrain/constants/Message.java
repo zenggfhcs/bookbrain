@@ -43,7 +43,12 @@ public enum Message {
    /**
     *
     */
-   DELETE_ERROR("删除失败");
+   DELETE_ERROR("删除失败"),
+   /**
+    *
+    */
+   MISS_PERMISSION("没有权限"),
+   ;
 
 Message(String msg) {
    this.msg = msg;

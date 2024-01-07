@@ -2,7 +2,9 @@ package com.lib.bookbrain.model;
 
 import com.lib.bookbrain.model.entity.BaseEntity;
 import com.lib.bookbrain.utils.Jwt;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -63,8 +65,7 @@ public static Payload<BaseEntity> parseArgsTo(Object[] args) {
    return _payload;
 }
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public static class Filter {

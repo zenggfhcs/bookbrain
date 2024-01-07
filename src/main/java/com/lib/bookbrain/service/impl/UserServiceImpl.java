@@ -3,6 +3,7 @@ package com.lib.bookbrain.service.impl;
 import com.lib.bookbrain.annotation.AroundDelete;
 import com.lib.bookbrain.annotation.AroundGet;
 import com.lib.bookbrain.annotation.AroundUpdate;
+import com.lib.bookbrain.constants.Authority;
 import com.lib.bookbrain.constants.UserCondition;
 import com.lib.bookbrain.constants.State;
 import com.lib.bookbrain.dao.UserMapper;
@@ -37,30 +38,40 @@ public Response login(Payload<User> payload) {
 @AroundGet
 @Override
 public Response getBy(Payload<User> payload) {
+   /* -------- 权限检查 -------- */
+   User.checkAuthority(payload.getTokenBody(), Authority.USER_GET);
    return baseService.getBy(payload);
 }
 
 
 @Override
 public Response create(Payload<User> payload) {
+   /* -------- 权限检查 -------- */
+   User.checkAuthority(payload.getTokenBody(), Authority.USER_CREATE);
    return baseService.create(payload);
 }
 
 @AroundGet
 @Override
 public Response getById(Payload<User> payload) {
+   /* -------- 权限检查 -------- */
+   User.checkAuthority(payload.getTokenBody(), Authority.USER_GET);
    return baseService.getById(payload);
 }
 
 @AroundUpdate
 @Override
 public Response update(Payload<User> payload) {
+   /* -------- 权限检查 -------- */
+   User.checkAuthority(payload.getTokenBody(), Authority.USER_UPDATE);
    return baseService.update(payload);
 }
 
 @AroundDelete
 @Override
 public Response delete(Payload<User> payload) {
+   /* -------- 权限检查 -------- */
+   User.checkAuthority(payload.getTokenBody(), Authority.USER_DELETE);
    // 获取
    User _user = userMapper.getById(payload);
    // 更新状态 => 已删除

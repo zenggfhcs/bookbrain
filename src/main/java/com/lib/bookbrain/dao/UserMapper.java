@@ -24,6 +24,8 @@ int update(Payload<User> payload);
 
 User getByUpdate(Payload<User> payload);
 
+User getByToken(String token);
+
 int has(Payload<User> payload);
 
 int login(Payload<User> payload);

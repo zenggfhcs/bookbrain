@@ -10,69 +10,85 @@ public enum Authority {
    /**
     * 创建用户
     */
-   USER_CREATE(0B1),
+   USER_CREATE(Value.v01),
    /**
     *
     */
-   USER_DELETE(0B10),
+   USER_DELETE(Value.v02),
    /**
     *
     */
-   USER_SELECT(0B100),
+   USER_GET(Value.v03),
    /**
     *
     */
-   USER_UPDATE(0B1000),
+   USER_UPDATE(Value.v04),
    /**
     *
     */
-   BOOK_CREATE(0B10000),
+   BOOK_CREATE(Value.v05),
    /**
     *
     */
-   BOOK_DELETE(0B100000),
+   BOOK_DELETE(Value.v06),
+   /**
+    *
+    */
+   BOOK_GET(Value.v07),
+   /**
+    *
+    */
+   BOOK_UPDATE(Value.v08),
+   /**
+    *
+    */
+   BOOK_INFO_CREATE(Value.v09),
    /**
     *
     */
    
-   BOOK_SELECT(0B1000000),
+   BOOK_INFO_DELETE(Value.v10),
    /**
     *
     */
-   BOOK_UPDATE(0B10000000),
+   BOOK_INFO_GET(Value.v11),
    /**
     *
     */
-   BOOK_INFO_CREATE(0B100000000),
+   BOOK_INFO_UPDATE(Value.v12),
    /**
     *
     */
-   
-   BOOK_INFO_DELETE(0B1000000000),
+   PUBLISHER_CREATE(Value.v13),
    /**
     *
     */
-   BOOK_INFO_SELECT(0B10000000000),
+   PUBLISHER_DELETE(Value.v14),
    /**
     *
     */
-   BOOK_INFO_UPDATE(0B100000000000),
+   PUBLISHER_GET(Value.v15),
    /**
     *
     */
-   PUBLISHER_CREATE(0B1000000000000),
+   PUBLISHER_UPDATE(Value.v16),
    /**
     *
     */
-   PUBLISHER_DELETE(0B10000000000000),
+   DEBIT_CREATE(Value.v17),
    /**
     *
     */
-   PUBLISHER_SELECT(0B100000000000000),
+   DEBIT_DELETE(Value.v18),
    /**
     *
     */
-   PUBLISHER_UPDATE(0B1000000000000000);
+   DEBIT_GET(Value.v19),
+   /**
+    *
+    */
+   DEBIT_UPDATE(Value.v20),
+   ;
 
 Authority(Integer value) {
    this.value = value;

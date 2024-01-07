@@ -7,7 +7,14 @@ import lombok.Getter;
  */
 @Getter
 public enum ResponseCode {
-   DEFAULT(200), ERROR(-1);
+   /**
+    *
+    */
+   DEFAULT(200),
+   /**
+    *
+    */
+   ERROR(-1),;
 
 private final Integer code;
 

@@ -7,7 +7,15 @@ import lombok.Getter;
  */
 @Getter
 public enum State {
-   OFF(0), ON(1);
+   /**
+    *
+    */
+   OFF(Value.v00),
+   /**
+    *
+    */
+   ON(Value.v01),
+   ;
 
 State(Integer value) {
    this.value = value;

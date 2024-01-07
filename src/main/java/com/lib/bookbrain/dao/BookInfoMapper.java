@@ -3,7 +3,6 @@ package com.lib.bookbrain.dao;
 import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.entity.BookInfo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
 public interface BookInfoMapper extends BaseMapper<BookInfo> {
 BookInfo getById(Payload<BookInfo> payload);
 
-List<BookInfo> getBy(@Param("payload") Payload<BookInfo> payload);
+List<BookInfo> getBy(Payload<BookInfo> payload);
 
 int update(Payload<BookInfo> payload);
 

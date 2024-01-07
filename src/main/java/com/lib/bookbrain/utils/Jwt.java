@@ -22,7 +22,7 @@ private static final Algorithm algorithm;
  * 有效时长 毫秒值 七天
  * 7 * 24 * 60 * 60 * 1000
  */
-private static final long EFFECTIVE_DURATION;
+public static final long EFFECTIVE_DURATION;
 
 static {
    key = "b4e2eef5f381ca2db9eb9814073cdd8f39971663bc2bd20bc6287c4ef8cba43f";

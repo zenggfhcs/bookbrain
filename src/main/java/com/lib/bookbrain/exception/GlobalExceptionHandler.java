@@ -1,4 +1,4 @@
-package com.lib.bookbrain.error;
+package com.lib.bookbrain.exception;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.lib.bookbrain.constants.Message;
@@ -25,6 +25,11 @@ public Response sqlEx(SQLException se) {
 @ExceptionHandler(JWTVerificationException.class)
 public Response jwtEx() {
    return Response.error(Message.TOKEN_ERROR);
+}
+
+@ExceptionHandler(MissPermissionException.class)
+public Response missPermission() {
+   return Response.error(Message.MISS_PERMISSION);
 }
 
 //@ExceptionHandler(Exception.class)

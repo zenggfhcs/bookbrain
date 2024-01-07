@@ -13,22 +13,22 @@
         <result property="createBy" column="create_by" jdbcType="INTEGER"/>
 
     </resultMap>
-    <insert id="create" parameterType="com.lib.bookbrain.model.Payload" keyProperty="logId" keyColumn="log_id"
+    <insert id="create" parameterType="com.lib.bookbrain.model.Payload" keyProperty="entity.logId" keyColumn="log_id"
             useGeneratedKeys="true">
-        insert into delete_log(data_class, data_id, data, elapsed_time, create_time, create_by)
-        values (#{dataClass}, #{dataId}, #{data}, 0, NOW(), #{createBy})
+       insert into delete_log(data_class, data_id, data, elapsed_time, create_time, create_by)
+       values (#{dataClass}, #{dataId}, #{data}, 0, NOW(), #{createBy})
     </insert>
     <update id="update" parameterType="com.lib.bookbrain.model.Payload">
-        update delete_log
-        <set>
-            <if test="data != null and data != ''">
-                data = #{data},
-            </if>
-            <if test="elapsedTime != null">
-                elapsed_time = #{elapsedTime},
-            </if>
-        </set>
-        where log_id = #{logId}
+       update delete_log dl
+       <set>
+          <if test="entity.data != null and entity.data != ''">
+             dl.`data` = #{entity.data},
+          </if>
+          <if test="entity.elapsedTime != null">
+             dl.`elapsed_time` = #{entity.elapsedTime},
+          </if>
+       </set>
+       where dl.`log_id` = #{logId}
     </update>
     <delete id="delete">
     </delete>

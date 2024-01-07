@@ -10,15 +10,16 @@ public enum UserCondition {
    /**
     * 已启用
     */
-   IS_ENABLE(0b1),
+   IS_ENABLE(Value.v01),
    /**
     * 邮箱已验证
     */
-   EMAIL_VERIFIED(0b10),
+   EMAIL_VERIFIED(Value.v02),
    /**
     * 电话号码已验证
     */
-   PHONE_NUMBER_VERIFIED(0b100);
+   PHONE_NUMBER_VERIFIED(Value.v03),
+   ;
 
 UserCondition(Integer value) {
    this.value = value;

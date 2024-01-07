@@ -3,6 +3,8 @@ package com.lib.bookbrain.model.entity;
 import com.lib.bookbrain.constants.Authority;
 import com.lib.bookbrain.constants.State;
 import com.lib.bookbrain.constants.UserCondition;
+import com.lib.bookbrain.exception.MissPermissionException;
+import com.lib.bookbrain.model.TokenBody;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -98,4 +100,10 @@ public void updateCondition(UserCondition condition, State state) {
    this.condition = set(this.condition, condition.getValue(), state.getValue());
 }
 
+public static void checkAuthority(TokenBody tokenBody, Authority authority) {
+   if (tokenBody != null && hasAuthority(tokenBody.getAuthority(), authority)) {
+      return;
+   }
+   throw new MissPermissionException();
+}
 }

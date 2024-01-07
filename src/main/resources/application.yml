@@ -1,17 +1,21 @@
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/library
+    url: jdbc:mariadb://localhost:3306/lib
     driver-class-name: org.mariadb.jdbc.Driver
     username: yunxia
     password: 768874
-  # security
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          public-key-location: b4e2eef5f381ca2db9eb9814073cdd8f39971663bc2bd20bc6287c4ef8cba43f
-          issuer-uri: https://idp.example.com/issuer
-          jwk-set-uri: https://idp.example.com/.well-known/jwks.json
+  # https://juejin.cn/post/7076244567569203208
+  data:
+    redis:
+      host: 192.168.137.147
+      port: 6379
+      password: 768874
+      database: 0
+      lettuce:
+        pool:
+          max-idle: 16
+          max-active: 32
+          min-idle: 8
 
 # mybatis 相关配置
 mybatis:
@@ -52,9 +56,3 @@ async:
       name:
         prefix: async-service-
 
-jwt:
-  private.key: classpath:jwt-pri.key
-  public.key: classpath:jwt-pub.key
-
-token:
-  maximum-interval: 3

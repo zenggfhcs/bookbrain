@@ -12,6 +12,8 @@
       from user u,
            token_used_log t
       where t.token = #{token}
+        and u.user_id = t.user_id
+        and t.`last_use_time` > SUBDATE(NOW(), 7)
 
    </select>
 </mapper>
