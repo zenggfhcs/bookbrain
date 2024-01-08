@@ -9,56 +9,31 @@ import lombok.Getter;
  */
 @Getter
 public enum Message {
-   /**
-    * 登录失败提示信息
-    */
-   LOGIN_FAILED("帐号或密码错误"),
-   /**
-    * token error
-    */
-   TOKEN_ERROR("token parsing(or create) error"),
-   /**
-    *
-    */
-   CREATE_ERROR("新建失败"),
-   /**
-    *
-    */
-   CREATE_DATA_ERROR("新建所需要的数据为空"),
-   /**
-    *
-    */
-   GET_ERROR("不存在"),
-   /**
-    *
-    */
-   UPDATE_DATA_ERROR("更新所需要的数据为空"),
-   /**
-    *
-    */
-   UPDATE_OLD_DATE_ERROR("旧数据异常"),
-   /**
-    *
-    */
-   UPDATE_ERROR("更新失败"),
-   /**
-    *
-    */
-   DELETE_DATA_ERROR("删除的对象似乎不存在"),
-   /**
-    *
-    */
-   DELETE_ERROR("删除失败"),
-   /**
-    *
-    */
-   MISS_PERMISSION("没有权限"),
-   /**
-    *
-    */
-   SQL_RUN_ERROR("sql run error"),
-   ;
+   LOGIN_FAILED("Username or password error"),                             // 登录失败提示信息：用户名或者密码错误
 
+   TOKEN_ERROR("Token error"),                                             // token 创建或者解析时发生错误
+
+   CREATE_ERROR("Creation failed"),                                        //
+
+   CREATE_DATA_ERROR("The data required to create a new one is empty"),    //
+
+   GET_ERROR("The data does not exist"),                                   //
+
+   UPDATE_DATA_ERROR("The data required for update is empty"),             //
+
+   UPDATE_OLD_DATE_ERROR("The data to be updated is empty"),               //
+
+   UPDATE_ERROR("Update failed"),                                          //
+
+   DELETE_DATA_ERROR("The data to be deleted is empty"),                   //
+
+   DELETE_ERROR("Delete error"),                                           //
+
+   MISS_PERMISSION("Delete failed"),                                       //
+
+   SQL_RUN_ERROR("Sql execution failed"),                                  //
+
+   ;
 private final String msg;
 
 Message(String msg) {

@@ -8,6 +8,8 @@ import com.alibaba.fastjson2.JSONWriter;
 
 /**
  * 对 fastjson 的封装
+ *
+ * @author yunxia
  */
 public class Json {
 /**
@@ -17,10 +19,7 @@ public class Json {
  * @return 转换后的 json 字符串
  */
 public static String stringify(Object o) {
-   return JSON.toJSONString(o,
-         JSONWriter.Feature.NotWriteDefaultValue,
-         JSONWriter.Feature.NotWriteEmptyArray
-   );
+   return JSON.toJSONString(o, JSONWriter.Feature.NotWriteDefaultValue, JSONWriter.Feature.NotWriteEmptyArray);
 }
 
 /**
@@ -32,9 +31,7 @@ public static String stringify(Object o) {
  * @return 反序列化对象
  */
 public static <T> T parse(String s, Class<T> c) {
-   return JSON.parseObject(s, c,
-         JSONReader.Feature.TrimString
-   );
+   return JSON.parseObject(s, c, JSONReader.Feature.TrimString);
 }
 
 /**

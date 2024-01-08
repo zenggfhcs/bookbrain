@@ -80,7 +80,7 @@ public Response delete(Payload<User> payload) {
    // 获取
    User _user = userMapper.getById(payload);
    // 更新状态 => 已删除
-   _user.updateCondition(UserCondition.IS_ENABLE, State.OFF);
+   _user.updateCondition(UserCondition.IS_ENABLE, State.CLOSE);
    //
    payload.setEntity(_user);
    

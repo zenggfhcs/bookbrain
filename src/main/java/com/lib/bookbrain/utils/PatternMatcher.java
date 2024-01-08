@@ -5,6 +5,11 @@ import org.springframework.stereotype.Component;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 模式匹配封装
+ *
+ * @author yunxia
+ */
 @Component
 public class PatternMatcher {
 /**

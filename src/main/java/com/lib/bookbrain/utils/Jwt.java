@@ -11,6 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 
+/**
+ * jwt token 处理器
+ *
+ * @author yunxia
+ */
 public class Jwt {
 /**
  * 有效时长 毫秒值 七天

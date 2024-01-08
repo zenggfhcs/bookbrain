@@ -22,7 +22,10 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
  */
 @Override
 public void addInterceptors(InterceptorRegistry registry) {
-   registry.addInterceptor(new Interceptor()).excludePathPatterns("users/login", "users/register").addPathPatterns("/**");
+   registry
+         .addInterceptor(new Interceptor())
+         .excludePathPatterns("users/login", "users/register")
+         .addPathPatterns("/**");
 }
 
 /**
@@ -36,7 +39,7 @@ public static class Interceptor implements HandlerInterceptor {
       {                                                        // 维护 token 最后使用时间
       
       }
-      response.setHeader("token", token);                   // token 更新
+      response.setHeader("token", token);                   // 更新 token
       return true;                                             // 到具体的服务检查权限
    }
 }
