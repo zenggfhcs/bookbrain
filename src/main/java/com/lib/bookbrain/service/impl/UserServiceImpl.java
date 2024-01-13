@@ -3,9 +3,7 @@ package com.lib.bookbrain.service.impl;
 import com.lib.bookbrain.annotation.AroundDelete;
 import com.lib.bookbrain.annotation.AroundGet;
 import com.lib.bookbrain.annotation.AroundUpdate;
-import com.lib.bookbrain.constants.Authority;
-import com.lib.bookbrain.constants.State;
-import com.lib.bookbrain.constants.UserCondition;
+import com.lib.bookbrain.constants.Message;
 import com.lib.bookbrain.dao.UserMapper;
 import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.Response;
@@ -31,59 +29,40 @@ public UserServiceImpl(UserMapper userMapper) {
 
 @Override
 public Response login(Payload<User> payload) {
-   boolean loginSuccess = userMapper.login(payload) == 1;
-   if (loginSuccess) {
-      return Response.success();
+   int _lc = userMapper.login(payload);            // 登录
+   if (_lc != 1) {                                 // 登录失败
+      return Response.error(Message.LOGIN_FAILED); // 返回登录失败
    }
-   
-   /* -------- 异常提示 -------- */
-   return Response.error("用户ID或密码无效");
+   return Response.success();                      // 返回成功
 }
 
 @AroundGet
 @Override
 public Response getBy(Payload<User> payload) {
-   /* -------- 权限检查 -------- */
-   User.checkAuthority(payload.getTokenBody(), Authority.USER_GET);
    return baseService.getBy(payload);
 }
 
 
 @Override
 public Response create(Payload<User> payload) {
-   /* -------- 权限检查 -------- */
-   User.checkAuthority(payload.getTokenBody(), Authority.USER_CREATE);
    return baseService.create(payload);
 }
 
 @AroundGet
 @Override
 public Response getById(Payload<User> payload) {
-   /* -------- 权限检查 -------- */
-   User.checkAuthority(payload.getTokenBody(), Authority.USER_GET);
    return baseService.getById(payload);
 }
 
 @AroundUpdate
 @Override
 public Response update(Payload<User> payload) {
-   /* -------- 权限检查 -------- */
-   User.checkAuthority(payload.getTokenBody(), Authority.USER_UPDATE);
    return baseService.update(payload);
 }
 
 @AroundDelete
 @Override
 public Response delete(Payload<User> payload) {
-   /* -------- 权限检查 -------- */
-   User.checkAuthority(payload.getTokenBody(), Authority.USER_DELETE);
-   // 获取
-   User _user = userMapper.getById(payload);
-   // 更新状态 => 已删除
-   _user.updateCondition(UserCondition.IS_ENABLE, State.CLOSE);
-   //
-   payload.setEntity(_user);
-   
    return baseService.delete(payload);
 }
 

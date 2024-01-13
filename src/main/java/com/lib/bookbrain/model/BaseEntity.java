@@ -1,4 +1,4 @@
-package com.lib.bookbrain.model.entity;
+package com.lib.bookbrain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,22 +17,22 @@ public class BaseEntity {
 /**
  * 创建人
  */
-protected Integer createBy;
+protected Integer createdBy;
 
 /**
  * 创建时间
  */
-protected LocalDateTime createTime;
+protected LocalDateTime creationTime = LocalDateTime.now();
 
 /**
  * 最后更新者
  */
-protected Integer updateBy;
+protected Integer updatedBy;
 
 /**
  * 最后更新时间
  */
-protected LocalDateTime updateTime;
+protected LocalDateTime lastUpdateTime;
 
 /**
  * 版本号，乐观锁

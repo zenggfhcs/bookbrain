@@ -16,7 +16,7 @@ Debit getById(Payload<Debit> payload);
 
 List<Debit> getBy(@Param("payload") Payload<Debit> payload);
 
-int create(Payload<Debit> payload);
+int insert(Payload<Debit> payload);
 
 int update(Payload<Debit> payload);
 

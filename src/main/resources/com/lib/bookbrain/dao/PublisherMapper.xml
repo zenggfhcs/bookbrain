@@ -7,10 +7,10 @@
       <id property="publishId" column="publish_id" jdbcType="INTEGER"/>
       <result property="name" column="name" jdbcType="INTEGER"/>
       <result property="remark" column="remark" jdbcType="VARCHAR"/>
-      <result property="createBy" column="create_by" jdbcType="INTEGER"/>
-      <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-      <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
-      <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+      <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+      <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
+      <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
+      <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
    </resultMap>
    <select id="getBy" resultMap="BaseResultMap">
@@ -18,10 +18,10 @@
       p.`publish_id`,
       p.`name`,
       p.`remark`,
-      p.`create_by`,
-      p.`create_time`,
-      p.`update_by`,
-      p.`update_time`,
+      p.`created_by`,
+      p.`creation_time`,
+      p.`updated_by`,
+      p.`last_update_time`,
       p.`revision`
       from publisher p
       <where>
@@ -29,25 +29,25 @@
             <if test="entity.publishId != null">
                p.`publish_id` = #{entity.publishId}
             </if>
-            <if test="entity.createBy != null">
-               and p.`create_by` = #{entity.createBy}
+            <if test="entity.createdBy != null">
+               and p.`created_by` = #{entity.createdBy}
             </if>
             <if test="entity.updateBy != null">
-               and p.`update_by` = #{entity.updateBy}
+               and p.`updated_by` = #{entity.updateBy}
             </if>
             <if test="entity.name != null and entity.name != ''">
                and p.`name` like concat('%', #{entity.name}, '%')
             </if>
          </if>
          <if test="1 == 1">
-            # and p.`create_time` between #{minCreateTime} and #{maxCreateTime}
-            # and p.`update_time` between #{minUpdateTime} and #{maxUpdateTime}
+            # and p.`creation_time` between #{minCreateTime} and #{maxCreateTime}
+            # and p.`last_update_time` between #{minUpdateTime} and #{maxUpdateTime}
          </if>
       </where>
    </select>
-   <insert id="create" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
            keyColumn="entity.publishId">
-      insert into publisher(name, remark, create_by, create_time, update_by, update_time, revision)
+      insert into publisher(name, remark, created_by, creation_time, updated_by, last_update_time, revision)
       values (#{name}, #{remark}, #{tokenBody.id}, NOW(), #{tokenBody.id}, NOW(),
               0)
    </insert>
@@ -62,11 +62,11 @@
                p.`remark` = #{entity.remark},
             </if>
             <if test="entity.updateBy != null">
-               p.`update_by` = #{entity.updateBy},
+               p.`updated_by` = #{entity.updateBy},
             </if>
          </if>
          <if test="1 == 1">
-            p.`update_time` = NOW(),
+            p.`last_update_time` = NOW(),
             p.`revision` = (p.`revision` + 1) % 2147483647
          </if>
       </set>
@@ -81,10 +81,10 @@
       select p.`publish_id`,
              p.`name`,
              p.`remark`,
-             p.`create_by`,
-             p.`create_time`,
-             p.`update_by`,
-             p.`update_time`,
+             p.`created_by`,
+             p.`creation_time`,
+             p.`updated_by`,
+             p.`last_update_time`,
              p.`revision`
       from publisher p
       where p.`publish_id` = #{id}

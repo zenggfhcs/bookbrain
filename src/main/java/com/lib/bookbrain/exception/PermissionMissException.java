@@ -5,5 +5,5 @@ package com.lib.bookbrain.exception;
  *
  * @author yunxia
  */
-public class MissPermissionException extends RuntimeException {
+public class PermissionMissException extends RuntimeException {
 }

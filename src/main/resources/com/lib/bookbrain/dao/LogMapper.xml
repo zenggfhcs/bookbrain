@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lib.bookbrain.dao.LogMapper">
+   <resultMap id="id" type="integer">
+
+   </resultMap>
+   <insert id="create" keyProperty="id" keyColumn="id"
+           useGeneratedKeys="true" parameterType="com.lib.bookbrain.model.entity.Log">
+      insert into log(type, service_name, data_id, input, output, elapsed_time, creation_time, created_by)
+      values (#{type}, #{serviceName}, #{dataId}, #{input}, #{output}, #{elapsedTime}, now(), #{createdBy})
+   </insert>
+   <update id="alter" parameterType="com.lib.bookbrain.model.entity.Log">
+      update log l
+      set l.`elapsed_time` = #{elapsedTime},
+          l.`output`=#{output}
+      where l.`id` = #{id}
+   </update>
+</mapper>

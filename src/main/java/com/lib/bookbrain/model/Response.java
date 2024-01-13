@@ -69,14 +69,6 @@ public static Response error(Message message) {
    return error(message.getMsg());
 }
 
-public static Response error(ResponseCode code, Message msg) {
-   return error(code.getCode(), msg.getMsg());
-}
-
-public static Response error(ResponseCode code, String message) {
-   return error(code.getCode(), message);
-}
-
 public static Response error(Integer code, String message) {
    return new Response(LocalDateTime.now(), code, message, null);
 }

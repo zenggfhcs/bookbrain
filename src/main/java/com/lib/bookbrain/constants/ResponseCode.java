@@ -18,4 +18,9 @@ private final Integer code;
 ResponseCode(Integer code) {
    this.code = code;
 }
+
+@Override
+public String toString() {
+   return code.toString();
+}
 }

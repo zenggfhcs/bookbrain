@@ -17,7 +17,7 @@ public interface UserMapper extends BaseMapper<User> {
 
 List<User> getBy(@Param("payload") Payload<User> payload);
 
-int create(Payload<User> payload);
+int insert(Payload<User> payload);
 
 User getById(Payload<User> payload);
 

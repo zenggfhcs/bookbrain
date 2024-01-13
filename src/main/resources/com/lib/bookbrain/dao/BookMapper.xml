@@ -7,18 +7,18 @@
       <id column="book_id" jdbcType="INTEGER" property="bookId"/>
       <result column="book_damage_level" jdbcType="TINYINT" property="bookDamageLevel"/>
       <result column="borrowable" jdbcType="BIT" property="borrowable"/>
-      <result column="create_by" jdbcType="INTEGER" property="createBy"/>
-      <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-      <result column="update_by" jdbcType="INTEGER" property="updateBy"/>
-      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+      <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
+      <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
+      <result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
+      <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
       <result column="revision" jdbcType="INTEGER" property="revision"/>
       <association column="{id=book_info_id}" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
                    select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
    </resultMap>
-   <insert id="create" useGeneratedKeys="true" keyProperty="entity.bookId" keyColumn="book_id"
+   <insert id="insert" useGeneratedKeys="true" keyProperty="entity.bookId" keyColumn="book_id"
            parameterType="com.lib.bookbrain.model.Payload">
-      insert into book (book_damage_level, borrowable, book_info_id, create_by, create_time, update_by,
-                        update_time, revision)
+      insert into book (book_damage_level, borrowable, book_info_id, created_by, creation_time, updated_by,
+                        last_update_time, revision)
       VALUES (#{entity.bookDamageLevel}, #{entity.borrowable}, #{entity.bookInfo.bookInfoId}, #{entity.createBy},
               now(),
               #{entity.updateBy}, now(), #{entity.revision})
@@ -37,11 +37,11 @@
                b.`book_info_id` = #{entity.bookInfo.bookInfoId},
             </if>
             <if test="entity.updateBy != null">
-               b.`update_by` = #{entity.updateBy},
+               b.`updated_by` = #{entity.updateBy},
             </if>
          </if>
          <if test="1 == 1">
-            b.`update_time` = now(),
+            b.`last_update_time` = now(),
             b.`revision` = (1 + b.`revision`) % 2147483647,
          </if>
       </set>
@@ -58,10 +58,10 @@
       b.`book_damage_level`,
       b.`borrowable`,
       b.`book_info_id`,
-      b.`create_by`,
-      b.`create_time`,
-      b.`update_by`,
-      b.`update_time`,
+      b.`created_by`,
+      b.`creation_time`,
+      b.`updated_by`,
+      b.`last_update_time`,
       b.`revision`
       from book b
       <where>
@@ -72,10 +72,10 @@
              b.`book_damage_level`,
              b.`borrowable`,
              b.`book_info_id`,
-             b.`create_by`,
-             b.`create_time`,
-             b.`update_by`,
-             b.`update_time`,
+             b.`created_by`,
+             b.`creation_time`,
+             b.`updated_by`,
+             b.`last_update_time`,
              b.`revision`
       from book b
       where b.`book_id` = #{id}

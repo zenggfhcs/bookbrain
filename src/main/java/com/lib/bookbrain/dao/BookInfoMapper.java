@@ -19,7 +19,7 @@ List<BookInfo> getBy(Payload<BookInfo> payload);
 
 int update(Payload<BookInfo> payload);
 
-int create(Payload<BookInfo> payload);
+int insert(Payload<BookInfo> payload);
 
 int delete(Payload<BookInfo> payload);
 

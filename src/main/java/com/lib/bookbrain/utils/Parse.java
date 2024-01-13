@@ -8,10 +8,10 @@ static {
 }
 
 /**
- * 将 **.impl.<b>XXX</b>DefaultService
- * 转换成 com.lib.model.<b>XXX</b>
+ * 提取 **.impl.<b>(XXX)</b>ServiceImpl
+ * 的 <b>XXX</b>
  *
- * @param serviceClass **.impl.<b>XXX</b>ServiceImpl 形式字符串
+ * @param serviceClass **.impl.<b>(XXX)</b>ServiceImpl 形式字符串
  * @return <b>XXX</b> 字符串
  */
 public static String serviceToDataClass(String serviceClass) {

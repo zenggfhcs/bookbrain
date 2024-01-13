@@ -16,16 +16,16 @@
       <result property="age" column="age" jdbcType="TINYINT"/>
       <result property="sex" column="sex" jdbcType="TINYINT"/>
       <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
-      <result property="createBy" column="create_by" jdbcType="INTEGER"/>
-      <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-      <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
-      <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+      <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+      <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
+      <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
+      <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
    </resultMap>
-   <insert id="create" useGeneratedKeys="true" keyProperty="entity.userId"
+   <insert id="insert" useGeneratedKeys="true" keyProperty="entity.userId"
            parameterType="com.lib.bookbrain.model.Payload">
       insert into user(authentication_string, display_name, user_email, user_phone_number, `condition`, authority,
-                       surname, name, age, sex, last_login_time, create_by, create_time, update_by, update_time,
+                       surname, name, age, sex, last_login_time, created_by, creation_time, updated_by, last_update_time,
                        revision)
       values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.userEmail},
               #{entity.userPhoneNumber},
@@ -64,11 +64,11 @@
                u.`sex` = #{entity.sex},
             </if>
             <if test="entity.updateBy != null">
-               u.`update_by` = #{entity.updateBy},
+               u.`updated_by` = #{entity.updateBy},
             </if>
          </if>
          <if test="1 == 1">
-            u.`update_time` = now(),
+            u.`last_update_time` = now(),
             u.`revision` = (1 + u.`revision`) % 2147483647,
          </if>
       </set>
@@ -91,10 +91,10 @@
              u.`age`,
              u.`sex`,
              u.`last_login_time`,
-             u.`create_by`,
-             u.`create_time`,
-             u.`update_by`,
-             u.`update_time`,
+             u.`created_by`,
+             u.`creation_time`,
+             u.`updated_by`,
+             u.`last_update_time`,
              u.`revision`
       from user u
       where u.`user_id` = #{id};
@@ -122,10 +122,10 @@
       u.`age`,
       u.`sex`,
       u.`last_login_time`,
-      u.`create_by`,
-      u.`create_time`,
-      u.`update_by`,
-      u.`update_time`,
+      u.`created_by`,
+      u.`creation_time`,
+      u.`updated_by`,
+      u.`last_update_time`,
       u.`revision`
       from user u
       <where>
@@ -152,8 +152,8 @@
          <if test="filter != null">
             and u.`age` between #{lowerAge} and #{upperAge}
             and u.`last_login_time` between #{lowerLastLoginTime} and #{upperLastLoginTime}
-            and u.`create_time` between #{lowerCreateTime} and #{upperCreateTime}
-            and u.`update_time` between #{lowerUpdateTime} and #{upperUpdateTime}
+            and u.`creation_time` between #{lowerCreateTime} and #{upperCreateTime}
+            and u.`last_update_time` between #{lowerUpdateTime} and #{upperUpdateTime}
          </if>
       </where>
       limit #{pageStart}, #{pageSize}
@@ -166,7 +166,7 @@
              u.`display_name`,
              u.`authority`
       from user u,
-           token_used_log t
+           token_used t
       where t.token = #{token}
         and u.user_id = t.user_id
         and t.`last_use_time` > SUBDATE(NOW(), 7)

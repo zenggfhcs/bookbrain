@@ -25,8 +25,4 @@ private String name;
  * 到期时间
  */
 private Long exp;
-/**
- * 权限公开值
- */
-private int authority;
 }

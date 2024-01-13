@@ -19,7 +19,7 @@ Book getById(Payload<Book> payload);
 
 List<Book> getBy(@Param("payload") Payload<Book> payload);
 
-int create(Payload<Book> payload);
+int insert(Payload<Book> payload);
 
 int update(Payload<Book> payload);
 

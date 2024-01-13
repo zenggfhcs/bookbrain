@@ -18,7 +18,7 @@ Publisher getById(Payload<Publisher> payload);
 
 int update(Payload<Publisher> payload);
 
-int create(Payload<Publisher> payload);
+int insert(Payload<Publisher> payload);
 
 int delete(Payload<Publisher> payload);
 

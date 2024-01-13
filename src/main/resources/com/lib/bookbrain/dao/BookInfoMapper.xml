@@ -18,24 +18,24 @@
       <result property="lang" column="lang" jdbcType="VARCHAR"/>
       <result property="price" column="price" jdbcType="DECIMAL"/>
       <result property="stock" column="stock" jdbcType="INTEGER"/>
-      <result property="createBy" column="create_by" jdbcType="INTEGER"/>
-      <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-      <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
-      <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+      <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+      <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
+      <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
+      <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
       <association property="publisher" column="{id=publish_id}" javaType="com.lib.bookbrain.model.entity.Publisher"
                    select="com.lib.bookbrain.dao.PublisherMapper.getById"/>
    </resultMap>
-   <insert id="create" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
            keyProperty="entity.bookInfoId">
       insert into book_info (publish_id, publish_place, isbn, cip, book_name, book_type, cover, author,
-                             `describe`, publish_date, keyword, lang, price, stock, create_by, create_time, update_by,
-                             update_time, revision)
+                             `describe`, publish_date, keyword, lang, price, stock, created_by, creation_time, updated_by,
+                             last_update_time, revision)
       VALUES ( #{entity.publisher.publishId}, #{entity.publishPlace}, #{entity.isbn}
              , #{entity.cip}, #{entity.bookName}, #{entity.bookType}, #{entity.cover}
              , #{entity.author}, #{entity.describe}, #{entity.publishDate}, #{entity.keyword}
-             , #{entity.lang}, #{entity.price}, #{entity.stock}, #{entity.createBy}
-             , NOW(), #{entity.updateBy}, now(), 0)
+             , #{entity.lang}, #{entity.price}, #{entity.stock}, #{entity.createdBy}
+             , NOW(), #{entity.updatedBy}, now(), 0)
    </insert>
    <update id="update" parameterType="com.lib.bookbrain.model.Payload">
       update book_info bif
@@ -81,7 +81,7 @@
                bif.`stock` = #{entity.stock},
             </if>
             <if test="entity.updateBy != null">
-               bif.`update_by` = #{entity.updateBy},
+               bif.`updated_by` = #{entity.updateBy},
             </if>
             <if test="entity.describe != null">
                bif.`describe` = #{entity.describe},
@@ -90,7 +90,7 @@
          <if test="1 == 1">
          </if>
          <if test="1 == 1">
-            bif.`update_time` = NOW(),
+            bif.`last_update_time` = NOW(),
             bif.`revision` = (1 + bif.`revision`) % 2147483647,
          </if>
       </set>
@@ -117,10 +117,10 @@
       bif.`lang`,
       bif.`price`,
       bif.`stock`,
-      bif.`create_by`,
-      bif.`create_time`,
-      bif.`update_by`,
-      bif.`update_time`,
+      bif.`created_by`,
+      bif.`creation_time`,
+      bif.`updated_by`,
+      bif.`last_update_time`,
       bif.`revision`
       from book_info bif
       <where>
@@ -151,10 +151,10 @@
                       bif.`lang`,
                       bif.`price`,
                       bif.`stock`,
-                      bif.`create_by`,
-                      bif.`create_time`,
-                      bif.`update_by`,
-                      bif.`update_time`,
+                      bif.`created_by`,
+                      bif.`creation_time`,
+                      bif.`updated_by`,
+                      bif.`last_update_time`,
                       bif.`revision`
       from book_info bif
       where bif.`book_info_id` = #{id}

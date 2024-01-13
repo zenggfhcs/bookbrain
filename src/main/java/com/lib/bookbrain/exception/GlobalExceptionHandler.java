@@ -26,16 +26,31 @@ public Response sqlEx() {
    return Response.error(Message.SQL_RUN_ERROR);
 }
 
+/**
+ * jwt error
+ *
+ * @return 规范返回
+ */
 @ExceptionHandler(JWTVerificationException.class)
 public Response jwtEx() {
    return Response.error(Message.TOKEN_ERROR);
 }
 
-@ExceptionHandler(MissPermissionException.class)
+/**
+ * 权限缺失
+ *
+ * @return 规范返回
+ */
+@ExceptionHandler(PermissionMissException.class)
 public Response missPermission() {
    return Response.error(Message.MISS_PERMISSION);
 }
 
+/**
+ * 更新蔓延抛出异常
+ *
+ * @return 规范返回
+ */
 @ExceptionHandler(UpdateErrorException.class)
 public Response updateError() {
    return Response.error(Message.UPDATE_ERROR);

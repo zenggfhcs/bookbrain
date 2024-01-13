@@ -47,21 +47,20 @@ static {
  * @return jwt token
  */
 public static String encoder(User user) {
-   return coder(user.getUserId(), user.getDisplayName(), user.getAuthority());
+   return coder(user.getUserId(), user.getDisplayName());
 }
 
-public static String encoder(TokenBody body) {
-   return coder(body.getId(), body.getName(), body.getAuthority());
-}
-
-private static String coder(Integer id, String name, Integer authority) {
+/**
+ * 编码 jwt 实现
+ * @param id 编码 id
+ * @param name 编码 name
+ * @return token
+ */
+private static String coder(Integer id, String name) {
    return JWT.create()
-         // 自定义信息
-         .withClaim("id", id)
-         .withClaim("name", name)
-         .withClaim("authority", authority)
-         // 有效时间
-         .withExpiresAt(new Date(System.currentTimeMillis() + EFFECTIVE_DURATION))
+         .withClaim("id", id)                                                 // id
+         .withClaim("name", name)                                             // name
+         .withExpiresAt(new Date(System.currentTimeMillis() + EFFECTIVE_DURATION))  // 有效时间
          .sign(algorithm);
 }
 
@@ -72,19 +71,16 @@ private static String coder(Integer id, String name, Integer authority) {
  * @return 解码后的 TokenBody 对象
  */
 public static TokenBody decoder(String token) {
-   // 解析 jwt
-   DecodedJWT deJwt = JWT.require(algorithm).build().verify(token);
-   // 获取 payload 是 base64 形式
-   String payload = deJwt.getPayload();
-   // 解码为字节数组
-   byte[] payloadBytes = Base64.getDecoder().decode(payload);
-   // 将字节数组转换为字符串（使用UTF-8字符集）
-   String data = new String(payloadBytes, StandardCharsets.UTF_8);
+   DecodedJWT deJwt = JWT.require(algorithm).build().verify(token);     // 解析 jwt
+   String payload = deJwt.getPayload();                                 // 获取 payload 是 base64 形式
+   byte[] payloadBytes = Base64.getDecoder().decode(payload);           // 解码为字节数组
+   String data = new String(payloadBytes, StandardCharsets.UTF_8);      // 将字节数组转换为字符串（使用UTF-8字符集）
+   
    return Json.parse(data, TokenBody.class);
 }
 
 public static void main(String[] args) {
-   System.out.println((EFFECTIVE_DURATION / 3 * 7));
+   /* ------------------------ test ------------------------ */
    User user = new User();
    user.setUserId(1);
    user.setDisplayName("admin");

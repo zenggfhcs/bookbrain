@@ -1,7 +1,7 @@
 package com.lib.bookbrain.dao;
 
 import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.entity.BaseEntity;
+import com.lib.bookbrain.model.BaseEntity;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ List<T> getBy(Payload<T> payload);
 int update(Payload<T> payload);
 
 
-int create(Payload<T> payload);
+int insert(Payload<T> payload);
 
 int delete(Payload<T> payload);
 

@@ -19,7 +19,9 @@ public class Json {
  * @return 转换后的 json 字符串
  */
 public static String stringify(Object o) {
-   return JSON.toJSONString(o, JSONWriter.Feature.NotWriteDefaultValue, JSONWriter.Feature.NotWriteEmptyArray);
+   return JSON.toJSONString(o,
+         JSONWriter.Feature.NotWriteDefaultValue,     // 不写字段默认值
+         JSONWriter.Feature.NotWriteEmptyArray);      // 不写空数组
 }
 
 /**
@@ -32,16 +34,5 @@ public static String stringify(Object o) {
  */
 public static <T> T parse(String s, Class<T> c) {
    return JSON.parseObject(s, c, JSONReader.Feature.TrimString);
-}
-
-/**
- * 反系列化 JsonToObject
- * 不进行类型转换
- *
- * @param s json 字符串
- * @return json 对应的 object 对象
- */
-public static Object parse(String s) {
-   return JSON.parseObject(s);
 }
 }

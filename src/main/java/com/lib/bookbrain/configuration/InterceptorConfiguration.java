@@ -43,4 +43,25 @@ public static class Interceptor implements HandlerInterceptor {
       return true;                                             // 到具体的服务检查权限
    }
 }
+
+private static String getIpAddress(HttpServletRequest request) {
+   String[] ips = {
+         request.getHeader("x-forwarded-for"),
+         request.getHeader("Proxy-Client-IP"),
+         request.getHeader("WL-Proxy-Client-IP"),
+         request.getHeader("HTTP_CLIENT_IP"),
+         request.getHeader("HTTP_X_FORWARDED_FOR"),
+         request.getRemoteAddr(),
+   };
+   for (String ip : ips) {
+      if (!isEmpty(ip)) {
+         return ip;
+      }
+   }
+   return null;
+}
+
+private static boolean isEmpty(String ip) {
+   return ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip);
+}
 }

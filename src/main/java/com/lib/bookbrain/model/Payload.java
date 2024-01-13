@@ -1,6 +1,7 @@
 package com.lib.bookbrain.model;
 
-import com.lib.bookbrain.model.entity.BaseEntity;
+import com.lib.bookbrain.exception.Assert;
+import com.lib.bookbrain.exception.PayloadMissException;
 import com.lib.bookbrain.utils.Jwt;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -54,17 +55,46 @@ public static Payload<BaseEntity> getOrNew(Object arg) {
  * @return 2
  */
 public static Payload<BaseEntity> parseArgsTo(Object[] args) {
-   // 解析参数 => parameter
-   Payload<BaseEntity> _payload = Payload.getOrNew(args[0]);
-   // token
-   String token = args[1].toString();
-   // token => tokenBody
-   TokenBody tokenBody = Jwt.decoder(token);
-   _payload.setTokenBody(tokenBody);
-   if (args.length == 3 && args[2].getClass() == Integer.class) {
-      _payload.setId(Integer.parseInt(args[2].toString()));
+   Assert.isCorrect(() -> args.length > 0,                    // 检查参数
+         new PayloadMissException());
+   Payload<BaseEntity> _payload = Payload.getOrNew(args[0]);   // 解析参数 => parameter
+   {
+      String token = args.length > 1                           // 获取 token
+            ? args[1].toString()
+            : "";
+      TokenBody tokenBody = Jwt.decoder(token);                // token => tokenBody
+      _payload.setTokenBody(tokenBody);                        // payload 记录 tokenBody
    }
+   {
+      Integer _id = args.length > 2                            //
+            ? Integer.parseInt(args[2].toString())             // payload 记录 id
+            : 0;
+      _payload.setId(_id);
+   }
+   
    return _payload;
+}
+
+
+/**
+ * 通过实体生成载体
+ * @param e 实体对象
+ * @return 封装了实体的载体对象
+ * @param <E> BaseEntity
+ */
+public static <E extends BaseEntity> Payload<E> generateByEntity(E e) {
+   Payload<E> _payload = new Payload<>();
+   _payload.setEntity(e);
+   return _payload;
+}
+
+/**
+ * 清理载荷信息，只保留实体
+ */
+public void clear() {
+   setId(null);
+   setTokenBody(null);
+   setFilter(null);
 }
 
 @Data
@@ -124,3 +154,4 @@ public static class Filter {
    private Long upperElapsedTime = 10000L;
 }
 }
+
