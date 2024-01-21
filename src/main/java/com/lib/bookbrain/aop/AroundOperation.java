@@ -117,6 +117,13 @@ private Object log(ProceedingJoinPoint point, TriConsumer<Log, Signature, Payloa
    return _res;
 }
 
+/**
+ * fill
+ *
+ * @param log       fill
+ * @param signature fill
+ * @param payload   fill
+ */
 private void fillBefore(Log log, Signature signature, Payload<BaseEntity> payload) {
    log.fillServiceName(generateServiceName(signature))      // 1
          .fillDataId(payload.getId())                       // 2
@@ -124,6 +131,13 @@ private void fillBefore(Log log, Signature signature, Payload<BaseEntity> payloa
          .fillCreatedBy(payload.getTokenBody().getId());    // 4
 }
 
+/**
+ * fill
+ *
+ * @param log  fill
+ * @param time fill
+ * @param res  fill
+ */
 private void fillAfter(Log log, Long time, Object res) {
    log.fillElapsedTime(time)                       // 5
          .fillOutput(Json.stringify(res));         // 6

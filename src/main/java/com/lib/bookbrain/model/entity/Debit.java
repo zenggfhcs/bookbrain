@@ -19,7 +19,7 @@ public class Debit extends BaseEntity {
 /**
  *
  */
-private Long debitId;
+private Long id;
 /**
  *
  */

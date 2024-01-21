@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface LogMapper extends BaseMapper<Log> {
-   void create(Log log);
-   void alter(Log log);
+void create(Log log);
+
+void alter(Log log);
 }

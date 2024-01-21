@@ -26,11 +26,6 @@ public UserController(UserService userService) {
    this.userService = userService;
 }
 
-@PostMapping("/login")
-public Response login(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken) {
-   return userService.login(payload);
-}
-
 @GetMapping
 public Response getUsers(@RequestBody(required = false) Payload<User> payload) {
    return userService.getBy(payload);

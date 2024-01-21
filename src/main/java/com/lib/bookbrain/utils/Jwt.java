@@ -47,12 +47,13 @@ static {
  * @return jwt token
  */
 public static String encoder(User user) {
-   return coder(user.getUserId(), user.getDisplayName());
+   return coder(user.getId(), user.getDisplayName());
 }
 
 /**
  * 编码 jwt 实现
- * @param id 编码 id
+ *
+ * @param id   编码 id
  * @param name 编码 name
  * @return token
  */
@@ -82,9 +83,9 @@ public static TokenBody decoder(String token) {
 public static void main(String[] args) {
    /* ------------------------ test ------------------------ */
    User user = new User();
-   user.setUserId(1);
+   user.setId(1);
    user.setDisplayName("admin");
-   user.setAuthority(Integer.MAX_VALUE);
+   user.setAuthority(Long.MAX_VALUE);
    System.out.println(encoder(user));
 }
 }

@@ -4,11 +4,11 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.UserMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.User">
-      <id property="userId" column="user_id" jdbcType="INTEGER"/>
+      <id property="id" column="id" jdbcType="INTEGER"/>
       <result property="authenticationString" column="authentication_string" jdbcType="VARCHAR"/>
       <result property="displayName" column="display_name" jdbcType="VARCHAR"/>
-      <result property="userEmail" column="user_email" jdbcType="VARCHAR"/>
-      <result property="userPhoneNumber" column="user_phone_number" jdbcType="VARCHAR"/>
+      <result property="email" column="email" jdbcType="VARCHAR"/>
+      <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
       <result property="condition" column="condition" jdbcType="INTEGER"/>
       <result property="authority" column="authority" jdbcType="INTEGER"/>
       <result property="surname" column="surname" jdbcType="VARCHAR"/>
@@ -24,13 +24,13 @@
    </resultMap>
    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.userId"
            parameterType="com.lib.bookbrain.model.Payload">
-      insert into user(authentication_string, display_name, user_email, user_phone_number, `condition`, authority,
-                       surname, name, age, sex, last_login_time, created_by, creation_time, updated_by, last_update_time,
-                       revision)
+      insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
+                       `condition`, `authority`, `surname`, `name`, `age`, `sex`, `last_login_time`,
+                       `created_by`, `creation_time`, `updated_by`, `last_update_time`, `revision`)
       values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.userEmail},
-              #{entity.userPhoneNumber},
-              #{entity.condition}, #{entity.authority}, #{entity.surname}, #{entity.name}, #{entity.age}, #{entity.sex},
-              #{entity.lastLoginTime}, #{entity.createBy}, now(), #{entity.updateBy}, now(), 0);
+              #{entity.userPhoneNumber}, #{entity.condition}, #{entity.authority}, #{entity.surname},
+              #{entity.name}, #{entity.age}, #{entity.sex}, now(), #{entity.createdBy}, now(), #{entity.updatedBy},
+              now(), 0);
    </insert>
    <update id="update" parameterType="com.lib.bookbrain.model.Payload">
       update user u
@@ -43,7 +43,7 @@
                u.`display_name` = #{entity.displayName},
             </if>
             <if test="entity.userEmail != null and entity.userEmail != ''">
-               u.`user_email` = #{entity.userEmail},
+               u.`email` = #{entity.userEmail},
             </if>
             <if test="entity.condition != null">
                u.`condition` = #{entity.condition},
@@ -72,18 +72,18 @@
             u.`revision` = (1 + u.`revision`) % 2147483647,
          </if>
       </set>
-      where u.`user_id` = #{id}
+      where u.`id` = #{id}
    </update>
    <update id="delete" parameterType="com.lib.bookbrain.model.Payload">
       update user u
       set u.`condition` = #{entity.condition}
-      where u.`user_id` = #{id};
+      where u.`id` = #{id};
    </update>
    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
-      select u.`user_id`,
+      select u.`id`,
              u.`display_name`,
-             u.`user_email`,
-             u.`user_phone_number`,
+             u.`email`,
+             u.`phone_number`,
              u.`condition`,
              u.`authority`,
              u.`surname`,
@@ -97,24 +97,39 @@
              u.`last_update_time`,
              u.`revision`
       from user u
-      where u.`user_id` = #{id};
+      where u.`id` = #{id};
    </select>
-   <select id="login" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
-      select count(*)
+   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+      select u.`id`,
+             u.`display_name`,
+             u.`email`,
+             u.`phone_number`,
+             u.`condition`,
+             u.`authority`,
+             u.`surname`,
+             u.`name`,
+             u.`age`,
+             u.`sex`,
+             u.`last_login_time`,
+             u.`created_by`,
+             u.`creation_time`,
+             u.`updated_by`,
+             u.`last_update_time`,
+             u.`revision`
       from user u
-      where u.`user_id` = #{userId}
+      where u.`id` = #{userId}
         and u.`authentication_string` = MD5(#{authenticationString});
    </select>
    <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
       select count(*)
       from user u
-      where user_id = #{id};
+      where u.`id` = #{id};
    </select>
    <select id="getBy" resultMap="BaseResultMap">
-      select u.`user_id`,
+      select u.`id`,
       u.`display_name`,
-      u.`user_email`,
-      u.`user_phone_number`,
+      u.`email`,
+      u.`phone_number`,
       u.`condition`,
       u.`authority`,
       u.`surname`,
@@ -131,7 +146,7 @@
       <where>
          <if test="entity != null">
             <if test="entity.userId != null">
-               u.`user_id` = #{entity.userId}
+               u.`id` = #{entity.userId}
             </if>
             <if test="entity.surname != null and entity.surname != ''">
                and u.`surname` = #{entity.surname}
@@ -140,10 +155,10 @@
                and u.`name` = #{entity.name}
             </if>
             <if test="entity.userEmail != null and entity.userEmail != ''">
-               and u.`user_email` = #{entity.userEmail}
+               and u.`email` = #{entity.userEmail}
             </if>
             <if test="entity.userPhoneNumber != null and entity.userPhoneNumber != ''">
-               and u.`user_phone_number` like CONCAT(#{entity.userPhoneNumber}, '%')
+               and u.`phone_number` like CONCAT(#{entity.userPhoneNumber}, '%')
             </if>
             <if test="entity.name != null and entity.name != ''">
                and u.`name` like CONCAT('%', #{entity.name}, '%')
@@ -162,14 +177,13 @@
    <select id="getByUpdate" resultMap="BaseResultMap">
    </select>
    <select id="getByToken" resultMap="BaseResultMap">
-      select u.`user_id`,
+      select u.`id`,
              u.`display_name`,
              u.`authority`
       from user u,
            token_used t
       where t.token = #{token}
-        and u.user_id = t.user_id
+        and u.id = t.id
         and t.`last_use_time` > SUBDATE(NOW(), 7)
-
    </select>
 </mapper>

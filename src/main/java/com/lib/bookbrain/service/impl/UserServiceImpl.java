@@ -29,11 +29,11 @@ public UserServiceImpl(UserMapper userMapper) {
 
 @Override
 public Response login(Payload<User> payload) {
-   int _lc = userMapper.login(payload);            // 登录
-   if (_lc != 1) {                                 // 登录失败
-      return Response.error(Message.LOGIN_FAILED); // 返回登录失败
+   User _user = userMapper.login(payload);            // 登录
+   if (_user == null) {                               // 登录失败
+      return Response.error(Message.LOGIN_FAILED);    // 返回登录失败
    }
-   return Response.success();                      // 返回成功
+   return Response.success();                         // 返回成功
 }
 
 @AroundGet

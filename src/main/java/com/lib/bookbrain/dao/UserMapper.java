@@ -31,5 +31,5 @@ User getByToken(String token);
 
 int has(Payload<User> payload);
 
-int login(Payload<User> payload);
+User login(Payload<User> payload);
 }

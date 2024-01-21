@@ -4,7 +4,7 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.PublisherMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Publisher">
-      <id property="publishId" column="publish_id" jdbcType="INTEGER"/>
+      <id property="id" column="publish_id" jdbcType="INTEGER"/>
       <result property="name" column="name" jdbcType="INTEGER"/>
       <result property="remark" column="remark" jdbcType="VARCHAR"/>
       <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
@@ -47,7 +47,8 @@
    </select>
    <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
            keyColumn="entity.publishId">
-      insert into publisher(name, remark, created_by, creation_time, updated_by, last_update_time, revision)
+      insert into publisher(`name`, `remark`, `created_by`, `creation_time`, `updated_by`, `last_update_time`,
+                            `revision`)
       values (#{name}, #{remark}, #{tokenBody.id}, NOW(), #{tokenBody.id}, NOW(),
               0)
    </insert>
@@ -74,11 +75,11 @@
    </update>
    <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
       delete
-      from publisher
-      where publish_id = #{id}
+      from publisher p
+      where p.`id` = #{id}
    </delete>
    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
-      select p.`publish_id`,
+      select p.`id`,
              p.`name`,
              p.`remark`,
              p.`created_by`,
@@ -87,7 +88,7 @@
              p.`last_update_time`,
              p.`revision`
       from publisher p
-      where p.`publish_id` = #{id}
+      where p.`id` = #{id}
    </select>
 
    <select id="getByUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">

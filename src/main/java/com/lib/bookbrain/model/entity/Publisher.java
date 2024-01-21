@@ -17,7 +17,7 @@ public class Publisher extends BaseEntity {
 /**
  * 出版社 Id
  */
-private Integer publishId;
+private Integer id;
 
 /**
  * 出版社名称

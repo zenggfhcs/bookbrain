@@ -4,7 +4,7 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.BookInfoMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.BookInfo">
-      <id property="bookInfoId" column="book_info_id" jdbcType="INTEGER"/>
+      <id property="id" column="book_info_id" jdbcType="INTEGER"/>
       <result property="publishPlace" column="publish_place" jdbcType="VARCHAR"/>
       <result property="isbn" column="isbn" jdbcType="VARCHAR"/>
       <result property="cip" column="cip" jdbcType="VARCHAR"/>
@@ -28,17 +28,35 @@
    </resultMap>
    <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
            keyProperty="entity.bookInfoId">
-      insert into book_info (publish_id, publish_place, isbn, cip, book_name, book_type, cover, author,
-                             `describe`, publish_date, keyword, lang, price, stock, created_by, creation_time, updated_by,
-                             last_update_time, revision)
-      VALUES ( #{entity.publisher.publishId}, #{entity.publishPlace}, #{entity.isbn}
-             , #{entity.cip}, #{entity.bookName}, #{entity.bookType}, #{entity.cover}
-             , #{entity.author}, #{entity.describe}, #{entity.publishDate}, #{entity.keyword}
-             , #{entity.lang}, #{entity.price}, #{entity.stock}, #{entity.createdBy}
-             , NOW(), #{entity.updatedBy}, now(), 0)
+      insert into book_info (`publisher_id`, `publish_place`, `isbn`, `cip`, `book_name`,
+                             `book_type`, `cover`, `author`, `describe`, `publish_date`,
+                             `keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
+                             `updated_by`, `last_update_time`, `revision`)
+      select #{entity.publisher.id}
+           , #{entity.publishPlace}
+           , #{entity.isbn}
+           , #{entity.cip}
+           , #{entity.bookName}
+           , #{entity.bookType}
+           , #{entity.cover}
+           , #{entity.author}
+           , #{entity.describe}
+           , #{entity.publishDate}
+           , #{entity.keyword}
+           , #{entity.lang}
+           , #{entity.price}
+           , #{entity.stock}
+           , #{entity.createdBy}
+           , NOW()
+           , #{entity.updatedBy}
+           , now()
+           , 0
+      from authority a
+      where a.`id` = #{tokenBody.id}
+        and a.`insert_book_info_privilege` = 1
    </insert>
    <update id="update" parameterType="com.lib.bookbrain.model.Payload">
-      update book_info bif
+      update book_info bif, authority auth
       <set>
          <if test="entity != null">
             <if test="entity.publishId != null">
@@ -94,12 +112,18 @@
             bif.`revision` = (1 + bif.`revision`) % 2147483647,
          </if>
       </set>
-      where bif.`book_info_id` = #{id} and bif.`revision` = #{entity.revision}
+      where auth.`id` = #{tokenBody.id}
+      and auth.`update_book_info_privilege` = 1
+      and bif.`book_info_id` = #{id}
+      and bif.`revision` = #{entity.revision}
    </update>
    <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
-      delete
-      from book_info bif
-      where bif.`book_info_id` = #{id}
+      delete bif
+      from book_info bif,
+           authority a
+      where a.`id` = #{tokenBody.id}
+        and a.delete_book_info_privilege = 1
+        and bif.`id` = #{id}
    </delete>
    <select id="getBy" resultMap="BaseResultMap">
       select distinct bif.`book_info_id`,
@@ -122,8 +146,12 @@
       bif.`updated_by`,
       bif.`last_update_time`,
       bif.`revision`
-      from book_info bif
+      from book_info bif, authority auth
       <where>
+         <if test="1 == 1">
+            and auth.`id` = #{tokenBody.id}
+            and auth.`select_book_info_privilege` = 1
+         </if>
          <if test="entity != null">
             <if test="entity.bookInfoId != null">
                and bif.`book_info_id` = #{entity.bookInfoId}
@@ -136,8 +164,8 @@
       limit #{filter.pageStart}, #{filter.pageSize}
    </select>
    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
-      select distinct bif.`book_info_id`,
-                      bif.`publish_id`,
+      select distinct bif.`id`,
+                      bif.`publisher_id`,
                       bif.`publish_place`,
                       bif.`isbn`,
                       bif.`cip`,
@@ -156,8 +184,11 @@
                       bif.`updated_by`,
                       bif.`last_update_time`,
                       bif.`revision`
-      from book_info bif
-      where bif.`book_info_id` = #{id}
+      from book_info bif,
+           authority auth
+      where auth.id = #{tokenBody.id}
+        and auth.`select_book_info_privilege` = 1
+        and bif.`id` = #{id}
    </select>
 
    <select id="getByUpdate" resultMap="BaseResultMap">
@@ -167,7 +198,10 @@
             bif.`author`,
          </if>
       </trim>
-      from book_info bif
-      where bif.`book_info_id` = #{id}
+      from book_info bif,
+      authority auth
+      where auth.id = #{tokenBody.id}
+      and auth.`update_book_info_privilege` = 1
+      and bif.`book_info_id` = #{id}
    </select>
 </mapper>

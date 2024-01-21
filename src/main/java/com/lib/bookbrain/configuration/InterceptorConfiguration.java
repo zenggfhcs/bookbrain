@@ -15,6 +15,27 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class InterceptorConfiguration implements WebMvcConfigurer {
+private static String getIpAddress(HttpServletRequest request) {
+   String[] ips = {
+         request.getHeader("x-forwarded-for"),
+         request.getHeader("Proxy-Client-IP"),
+         request.getHeader("WL-Proxy-Client-IP"),
+         request.getHeader("HTTP_CLIENT_IP"),
+         request.getHeader("HTTP_X_FORWARDED_FOR"),
+         request.getRemoteAddr(),
+   };
+   for (String ip : ips) {
+      if (!isEmpty(ip)) {
+         return ip;
+      }
+   }
+   return null;
+}
+
+private static boolean isEmpty(String ip) {
+   return ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip);
+}
+
 /**
  * 拦截器
  *
@@ -42,26 +63,5 @@ public static class Interceptor implements HandlerInterceptor {
       response.setHeader("token", token);                   // 更新 token
       return true;                                             // 到具体的服务检查权限
    }
-}
-
-private static String getIpAddress(HttpServletRequest request) {
-   String[] ips = {
-         request.getHeader("x-forwarded-for"),
-         request.getHeader("Proxy-Client-IP"),
-         request.getHeader("WL-Proxy-Client-IP"),
-         request.getHeader("HTTP_CLIENT_IP"),
-         request.getHeader("HTTP_X_FORWARDED_FOR"),
-         request.getRemoteAddr(),
-   };
-   for (String ip : ips) {
-      if (!isEmpty(ip)) {
-         return ip;
-      }
-   }
-   return null;
-}
-
-private static boolean isEmpty(String ip) {
-   return ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip);
 }
 }

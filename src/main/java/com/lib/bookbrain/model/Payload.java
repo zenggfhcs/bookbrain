@@ -78,9 +78,10 @@ public static Payload<BaseEntity> parseArgsTo(Object[] args) {
 
 /**
  * 通过实体生成载体
- * @param e 实体对象
- * @return 封装了实体的载体对象
+ *
+ * @param e   实体对象
  * @param <E> BaseEntity
+ * @return 封装了实体的载体对象
  */
 public static <E extends BaseEntity> Payload<E> generateByEntity(E e) {
    Payload<E> _payload = new Payload<>();

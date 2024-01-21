@@ -46,13 +46,12 @@ public static Log generate() {
    return new Log();
 }
 
-public Log fillType(String type) {
+public void fillType(String type) {
    this.setType(type);
-   return this;
 }
 
-public Log fillType(LogType type) {
-   return fillType(type.getValue());
+public void fillType(LogType type) {
+   fillType(type.getValue());
 }
 
 public Log fillServiceName(String serviceName) {

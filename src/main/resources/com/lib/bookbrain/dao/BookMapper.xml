@@ -4,8 +4,8 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.BookMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Book">
-      <id column="book_id" jdbcType="INTEGER" property="bookId"/>
-      <result column="book_damage_level" jdbcType="TINYINT" property="bookDamageLevel"/>
+      <id column="book_id" jdbcType="INTEGER" property="id"/>
+      <result column="book_damage_level" jdbcType="TINYINT" property="damageLevel"/>
       <result column="borrowable" jdbcType="BIT" property="borrowable"/>
       <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
       <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
@@ -17,8 +17,8 @@
    </resultMap>
    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.bookId" keyColumn="book_id"
            parameterType="com.lib.bookbrain.model.Payload">
-      insert into book (book_damage_level, borrowable, book_info_id, created_by, creation_time, updated_by,
-                        last_update_time, revision)
+      insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
+                        `last_update_time`, `revision`)
       VALUES (#{entity.bookDamageLevel}, #{entity.borrowable}, #{entity.bookInfo.bookInfoId}, #{entity.createBy},
               now(),
               #{entity.updateBy}, now(), #{entity.revision})
@@ -50,8 +50,8 @@
    </update>
    <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
       delete
-      from book
-      where book_id = #{id}
+      from book b
+      where b.`id` = #{id}
    </delete>
    <select id="getBy" resultMap="BaseResultMap">
       select b.`book_id`,
@@ -68,8 +68,8 @@
       </where>
    </select>
    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
-      select b.`book_id`,
-             b.`book_damage_level`,
+      select b.`id`,
+             b.`damage_level`,
              b.`borrowable`,
              b.`book_info_id`,
              b.`created_by`,
@@ -78,11 +78,11 @@
              b.`last_update_time`,
              b.`revision`
       from book b
-      where b.`book_id` = #{id}
+      where b.`id` = #{id}
    </select>
    <select id="getByUpdate" resultMap="BaseResultMap">
       select *
       from book b
-      where b.`book_id` = #{id}
+      where b.`id` = #{id}
    </select>
 </mapper>

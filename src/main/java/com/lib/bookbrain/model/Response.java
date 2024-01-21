@@ -20,13 +20,10 @@ public class Response {
  * 响应时间
  */
 private LocalDateTime exp;
-
 /**
  * 响应码
  */
 private Integer code;
-
-
 /**
  * 响应信息
  */
@@ -43,7 +40,7 @@ private Object data;
  * @return 成功请求的 Response 对象（有数据）
  */
 public static Response success(Object data) {
-   return new Response(LocalDateTime.now(), ResponseCode.DEFAULT.getCode(), "", data);
+   return new Response(LocalDateTime.now(), ResponseCode.SUCCESS.getCode(), "", data);
 }
 
 /**

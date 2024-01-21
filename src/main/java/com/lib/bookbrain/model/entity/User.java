@@ -20,7 +20,7 @@ public class User extends BaseEntity {
  * 用户 id
  */
 
-private Integer userId;
+private Integer id;
 /**
  * 用户验证字符串
  */
@@ -33,12 +33,12 @@ private String displayName;
 /**
  * 用户邮箱
  */
-private String userEmail;
+private String email;
 
 /**
  * 用户电话号码
  */
-private String userPhoneNumber;
+private String phoneNumber;
 
 /**
  * 状态聚合值
@@ -48,7 +48,7 @@ private Integer condition;
 /**
  * 权限聚合值
  */
-private Integer authority;
+private Long authority;
 /**
  * 姓
  */
@@ -70,41 +70,35 @@ private Short age;
  */
 private LocalDateTime lastLoginTime;
 
-///**
-// * @param userAuthority 用户权限值
-// * @param authority     权限类型
-// * @return 权限检查结果
-// */
-//public static boolean hasAuthority(int userAuthority, Authority authority) {
-//   return (userAuthority & authority.getValue()) != 0;
-//}
-//
-///**
-// * @param userState 用户状态值
-// * @param state     状态类型
-// * @return 状态检查结果
-// */
-//public static boolean isCondition(int userState, int state) {
-//   return (userState & state) != 0;
-//}
-//
-//private static int set(int a, int local, int state) {
-//   // 此处没有对数据进行校验，如果不按照规则传数据，会出现意料之外的结果
-//   return a & (~local) | (local * state);
-//}
-//
-//public static void checkAuthority(TokenBody tokenBody, Authority authority) {
-//   if (tokenBody != null && hasAuthority(tokenBody.getAuthority(), authority)) {
-//      return;
-//   }
-//   throw new MissPermissionException();
-//}
-//
-//public void updateAuthority(Authority authority, State state) {
-//   this.authority = set(this.authority, authority.getValue(), state.getValue());
-//}
-//
-//public void updateCondition(UserCondition condition, State state) {
-//   this.condition = set(this.condition, condition.getValue(), state.getValue());
-//}
+
+/*
+public static boolean hasAuthority(int userAuthority, Authority authority) {
+   return (userAuthority & authority.getValue()) != 0;
+}
+
+public static boolean isCondition(int userState, int state) {
+   return (userState & state) != 0;
+}
+
+private static int set(int a, int local, int state) {
+   // 此处没有对数据进行校验，如果不按照规则传数据，会出现意料之外的结果
+   return a & (~local) | (local * state);
+}
+
+public static void checkAuthority(TokenBody tokenBody, Authority authority) {
+   if (tokenBody != null && hasAuthority(tokenBody.getAuthority(), authority)) {
+      return;
+   }
+   throw new MissPermissionException();
+}
+
+public void updateAuthority(Authority authority, State state) {
+   this.authority = set(this.authority, authority.getValue(), state.getValue());
+}
+
+public void updateCondition(UserCondition condition, State state) {
+   this.condition = set(this.condition, condition.getValue(), state.getValue());
+}
+
+ */
 }

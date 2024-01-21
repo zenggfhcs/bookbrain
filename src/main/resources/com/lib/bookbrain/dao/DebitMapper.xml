@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.DebitMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Debit">
-      <id column="debit_id" jdbcType="INTEGER" property="debitId"/>
+      <id column="debit_id" jdbcType="INTEGER" property="id"/>
       <result column="return_deadline" jdbcType="DATE" property="returnDeadline"/>
       <result column="return_date" jdbcType="DATE" property="returnDate"/>
       <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
@@ -87,6 +87,6 @@
    <select id="getByUpdate" resultMap="BaseResultMap">
       select *
       from debit d
-      where book_id = #{id}
+      where d.`debit_id` = #{id}
    </select>
 </mapper>

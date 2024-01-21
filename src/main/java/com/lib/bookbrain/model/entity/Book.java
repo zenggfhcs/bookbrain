@@ -18,12 +18,12 @@ public class Book extends BaseEntity {
 /**
  * 书籍唯一标识
  */
-private Integer bookId;
+private Integer id;
 
 /**
  * 书籍破损级别
  */
-private Short bookDamageLevel;
+private Short damageLevel;
 
 /**
  * 可借的

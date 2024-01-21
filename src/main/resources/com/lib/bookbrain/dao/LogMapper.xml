@@ -8,7 +8,8 @@
    </resultMap>
    <insert id="create" keyProperty="id" keyColumn="id"
            useGeneratedKeys="true" parameterType="com.lib.bookbrain.model.entity.Log">
-      insert into log(type, service_name, data_id, input, output, elapsed_time, creation_time, created_by)
+      insert into log(`type`, `service_name`, `data_id`, `input`, `output`, `elapsed_time`, `creation_time`,
+                      `created_by`)
       values (#{type}, #{serviceName}, #{dataId}, #{input}, #{output}, #{elapsedTime}, now(), #{createdBy})
    </insert>
    <update id="alter" parameterType="com.lib.bookbrain.model.entity.Log">
