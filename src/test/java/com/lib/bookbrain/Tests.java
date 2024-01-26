@@ -1,6 +1,6 @@
 package com.lib.bookbrain;
 
-import com.lib.bookbrain.configuration.SecurityConfiguration;
+import com.lib.bookbrain.security.SecurityConfiguration;
 import com.lib.bookbrain.controller.TokenController;
 import com.lib.bookbrain.controller.UserController;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

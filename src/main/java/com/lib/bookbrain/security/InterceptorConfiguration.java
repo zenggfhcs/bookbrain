@@ -1,4 +1,4 @@
-package com.lib.bookbrain.configuration;
+package com.lib.bookbrain.security;
 
 import com.lib.bookbrain.utils.Jwt;
 import jakarta.servlet.http.HttpServletRequest;

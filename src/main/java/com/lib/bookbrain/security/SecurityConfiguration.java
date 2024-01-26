@@ -1,4 +1,4 @@
-package com.lib.bookbrain.configuration;
+package com.lib.bookbrain.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +15,19 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-   http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-         .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
+   System.out.println('1');
+   http
+         .csrf(Customizer.withDefaults())                // 调用 csrfFilter 防止 csrf 攻击
+         .authorizeHttpRequests(authorize -> authorize
+               .requestMatchers("/**").hasRole("admin")
+               .anyRequest().authenticated()
+         )
+//         .formLogin(formLogin -> formLogin
+//               .loginPage("/login")
+//               .permitAll()
+//         )
+         .rememberMe(Customizer.withDefaults());
+   
    return http.build();
 }
 }
