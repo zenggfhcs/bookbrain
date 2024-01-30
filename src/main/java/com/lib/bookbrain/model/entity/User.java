@@ -71,6 +71,13 @@ private Short age;
 private LocalDateTime lastLoginTime;
 
 
+public static User DEFAULT = new User();
+
+static {
+   DEFAULT.setId(1);
+   DEFAULT.setDisplayName("admin");
+}
+
 /*
 public static boolean hasAuthority(int userAuthority, Authority authority) {
    return (userAuthority & authority.getValue()) != 0;

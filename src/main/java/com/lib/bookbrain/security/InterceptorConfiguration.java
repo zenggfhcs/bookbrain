@@ -45,8 +45,8 @@ private static boolean isEmpty(String ip) {
 public void addInterceptors(InterceptorRegistry registry) {
    registry
          .addInterceptor(new Interceptor())
-         .excludePathPatterns("users/login", "users/register")
-         .addPathPatterns("/**");
+         .addPathPatterns("/**")
+         .excludePathPatterns("/users/login", "/users/register", "/token");
 }
 
 /**

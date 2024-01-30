@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users/login")
 public class LoginController {
-@PostMapping
+@PostMapping("")
 public Response login(@RequestBody(required = false) Payload<User> payload) {
    return Response.success();
 }
