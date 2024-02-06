@@ -1,4 +1,4 @@
-package com.lib.bookbrain.security;
+package com.lib.bookbrain.config;
 
 import org.springframework.context.annotation.Configuration;
 

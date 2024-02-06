@@ -2,8 +2,6 @@ package com.lib.bookbrain.aop;
 
 import com.lib.bookbrain.constants.LogType;
 import com.lib.bookbrain.dao.LogMapper;
-import com.lib.bookbrain.exception.Assert;
-import com.lib.bookbrain.exception.PayloadMissException;
 import com.lib.bookbrain.fnuction.TriConsumer;
 import com.lib.bookbrain.model.BaseEntity;
 import com.lib.bookbrain.model.Payload;
@@ -99,8 +97,6 @@ public Object aroundConduct(ProceedingJoinPoint point) throws Throwable {
  */
 private Object log(ProceedingJoinPoint point, TriConsumer<Log, Signature, Payload<BaseEntity>> before, TriConsumer<Log, Long, Object> after) throws Throwable {
    /* ===================== 前 ===================== */
-   Assert.isCorrect(() -> point.getArgs().length > 0                    // 断言
-         , new PayloadMissException());                                 // 断言失败将会抛出的异常
    Payload<BaseEntity> _payload = Payload.getOrNew(point.getArgs()[0]); // 解析参数
    Log _log = Log.generate();                                           // 创建日志
    before.accept(_log, point.getSignature(), _payload);                 // 填充日志

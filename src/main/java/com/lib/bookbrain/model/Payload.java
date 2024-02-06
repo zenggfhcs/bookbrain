@@ -1,5 +1,6 @@
 package com.lib.bookbrain.model;
 
+import com.lib.bookbrain.constants.EException;
 import com.lib.bookbrain.exception.Assert;
 import com.lib.bookbrain.exception.PayloadMissException;
 import com.lib.bookbrain.utils.Jwt;
@@ -58,8 +59,6 @@ public static Payload<BaseEntity> getOrNew(Object arg) {
  * @return 2
  */
 public static Payload<BaseEntity> parseArgsTo(Object[] args) {
-   Assert.isCorrect(() -> args != null && args.length > 0,     // 检查参数
-         new PayloadMissException());
    Payload<BaseEntity> _payload = Payload.getOrNew(args[0]);   // 解析参数 => parameter
    {
       String token = args.length > 1                           // 获取 token

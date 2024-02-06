@@ -2,8 +2,6 @@ package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.constants.Message;
 import com.lib.bookbrain.dao.BaseMapper;
-import com.lib.bookbrain.exception.Assert;
-import com.lib.bookbrain.exception.UpdateErrorException;
 import com.lib.bookbrain.model.BaseEntity;
 import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.Response;
@@ -66,10 +64,6 @@ public Response update(Payload<T> payload) {
    _newEntityData.setRevision(_oldEntityData.getRevision());// 使用旧数据的版本号设置新数据的版本号（乐观锁），更新时使用
    int _uc = baseMapper.update(payload);                    // 更新
    // payload.setEntity(_newEntityData);                    // 记录新数据
-   Assert.isCorrect(                                        // 断言
-         () -> _uc <= 1,                                    // 检查：最多更新一条
-         new UpdateErrorException()                         // 异常更新了多条，抛出异常进行事务回滚
-   );
    if (_uc == 0) {                                          // 未知原因更新失败
       return Response.error(Message.UPDATE_ERROR);          // 返回错误
    }
@@ -85,14 +79,10 @@ public Response delete(Payload<T> payload) {
       return Response.error(Message.DELETE_DATA_ERROR);  // 返回错误
    }
    int _dc = baseMapper.delete(payload);                 // 找到了，删除它
-   Assert.isCorrect(
-         () -> _dc <= 1,                                 // 检查：删除最多一条
-         new UpdateErrorException()                      // 抛出异常回滚事务
-   );
    if (_dc == 0) {                                       // 未知原因删除失败
       return Response.error(Message.DELETE_ERROR);       // 返回错误
    }
-   // payload.setEntity(_entity);                           // 将需要删除的对象绑定到 payload 中
+   
    return Response.success(_entity);                     // 返回成功
 }
 

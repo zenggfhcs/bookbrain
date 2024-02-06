@@ -9,8 +9,14 @@ import lombok.Getter;
  */
 @Getter
 public enum State {
-   CLOSE(Value.i00),                      // 关
-   OPEN(Value.i01),                       // 开
+   /**
+    * 关
+    */
+   CLOSE(Value.i00),
+   /**
+    * 开
+    */
+   OPEN(Value.i01),
    ;
 
 private final Integer value;
