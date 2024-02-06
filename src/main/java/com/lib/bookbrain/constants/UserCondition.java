@@ -10,7 +10,9 @@ import lombok.Getter;
 @Getter
 public enum UserCondition {
    IS_ENABLE(Value.i01),                  // 已启用 is_enable
+
    EMAIL_VERIFIED(Value.i02),             // 邮箱已验证 email_verified
+
    PHONE_NUMBER_VERIFIED(Value.i03),      // 电话号码已验证 phone_number_verified
    ;
 

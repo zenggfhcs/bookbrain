@@ -20,7 +20,7 @@
       <!-- spring -->
       <actuator.version>3.1.2</actuator.version>
       <web.version>3.2.2</web.version>
-      <spring.boot.version>3.0.2</spring.boot.version>
+      <mybatis.spring.version>3.0.3</mybatis.spring.version>
       <aop.version>3.1.5</aop.version>
       <lombok.version>1.18.30</lombok.version>
       <mariadb.version>3.1.4</mariadb.version>
@@ -50,7 +50,7 @@
       <dependency>
          <groupId>org.mybatis.spring.boot</groupId>
          <artifactId>mybatis-spring-boot-starter</artifactId>
-         <version>${spring.boot.version}</version>
+         <version>${mybatis.spring.version}</version>
       </dependency>
       <dependency>
          <groupId>org.springframework.boot</groupId>

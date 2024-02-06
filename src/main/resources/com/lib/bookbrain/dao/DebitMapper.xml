@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.DebitMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Debit">
-      <id column="debit_id" jdbcType="INTEGER" property="id"/>
+      <id column="id" jdbcType="INTEGER" property="id"/>
       <result column="return_deadline" jdbcType="DATE" property="returnDeadline"/>
       <result column="return_date" jdbcType="DATE" property="returnDate"/>
       <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
@@ -14,7 +14,7 @@
                    select="com.lib.bookbrain.dao.BookMapper.getById"/>
    </resultMap>
    <select id="getBy" resultMap="BaseResultMap">
-      select distinct d.`debit_id`,
+      select distinct d.`id`,
       d.`book_id`,
       d.`return_deadline`,
       d.`return_date`,
@@ -30,7 +30,7 @@
    </select>
 
    <select id="getById" parameterType="com.lib.bookbrain.model.Payload" resultMap="BaseResultMap">
-      select distinct d.`debit_id`,
+      select distinct d.`id`,
                       d.`book_id`,
                       d.`return_deadline`,
                       d.`return_date`,
@@ -40,13 +40,13 @@
                       d.`last_update_time`,
                       d.`revision`
       from debit d
-      where d.`debit_id` = #{id}
+      where d.`id` = #{id}
    </select>
 
    <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
       delete
       from debit d
-      where d.`debit_id` = #{id}
+      where d.`id` = #{id}
    </delete>
 
    <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
@@ -81,12 +81,12 @@
             d.`revision` = (1 + b.`revision`) % 2147483647,
          </if>
       </set>
-      where d.`debit_id` = #{id}
+      where d.`id` = #{id}
    </update>
 
    <select id="getByUpdate" resultMap="BaseResultMap">
       select *
       from debit d
-      where d.`debit_id` = #{id}
+      where d.`id` = #{id}
    </select>
 </mapper>

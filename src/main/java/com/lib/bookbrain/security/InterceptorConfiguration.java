@@ -33,7 +33,9 @@ private static String getIpAddress(HttpServletRequest request) {
 }
 
 private static boolean isEmpty(String ip) {
-   return ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip);
+   return (ip == null
+         || ip.isEmpty()
+         || "unknown".equalsIgnoreCase(ip));
 }
 
 /**

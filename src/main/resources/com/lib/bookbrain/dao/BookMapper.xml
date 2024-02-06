@@ -4,7 +4,7 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.BookMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Book">
-      <id column="book_id" jdbcType="INTEGER" property="id"/>
+      <id column="id" jdbcType="INTEGER" property="id"/>
       <result column="book_damage_level" jdbcType="TINYINT" property="damageLevel"/>
       <result column="borrowable" jdbcType="BIT" property="borrowable"/>
       <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
@@ -15,7 +15,7 @@
       <association column="{id=book_info_id}" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
                    select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
    </resultMap>
-   <insert id="insert" useGeneratedKeys="true" keyProperty="entity.bookId" keyColumn="book_id"
+   <insert id="insert" useGeneratedKeys="true" keyProperty="entity.bookId" keyColumn="id"
            parameterType="com.lib.bookbrain.model.Payload">
       insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
                         `last_update_time`, `revision`)
@@ -45,7 +45,7 @@
             b.`revision` = (1 + b.`revision`) % 2147483647,
          </if>
       </set>
-      where b.`book_id` = #{id}
+      where b.`id` = #{id}
       and b.`revision` = #{revision}
    </update>
    <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
@@ -54,7 +54,7 @@
       where b.`id` = #{id}
    </delete>
    <select id="getBy" resultMap="BaseResultMap">
-      select b.`book_id`,
+      select b.`id`,
       b.`book_damage_level`,
       b.`borrowable`,
       b.`book_info_id`,

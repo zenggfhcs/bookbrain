@@ -4,7 +4,7 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.BookInfoMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.BookInfo">
-      <id property="id" column="book_info_id" jdbcType="INTEGER"/>
+      <id property="id" column="id" jdbcType="INTEGER"/>
       <result property="publishPlace" column="publish_place" jdbcType="VARCHAR"/>
       <result property="isbn" column="isbn" jdbcType="VARCHAR"/>
       <result property="cip" column="cip" jdbcType="VARCHAR"/>
@@ -114,7 +114,7 @@
       </set>
       where auth.`id` = #{tokenBody.id}
       and auth.`update_book_info_privilege` = 1
-      and bif.`book_info_id` = #{id}
+      and bif.`id` = #{id}
       and bif.`revision` = #{entity.revision}
    </update>
    <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
@@ -126,7 +126,7 @@
         and bif.`id` = #{id}
    </delete>
    <select id="getBy" resultMap="BaseResultMap">
-      select distinct bif.`book_info_id`,
+      select distinct bif.`id`,
       bif.`publish_id`,
       bif.`publish_place`,
       bif.`isbn`,
@@ -154,7 +154,7 @@
          </if>
          <if test="entity != null">
             <if test="entity.bookInfoId != null">
-               and bif.`book_info_id` = #{entity.bookInfoId}
+               and bif.`id` = #{entity.bookInfoId}
             </if>
             <if test="entity.bookName != null">
                and bif.`book_name` like concat('%', #{entity.bookName}, '%')
@@ -202,6 +202,6 @@
       authority auth
       where auth.id = #{tokenBody.id}
       and auth.`update_book_info_privilege` = 1
-      and bif.`book_info_id` = #{id}
+      and bif.`id` = #{id}
    </select>
 </mapper>

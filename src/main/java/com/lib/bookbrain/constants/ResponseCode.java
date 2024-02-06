@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public enum ResponseCode {
    SUCCESS(200),                          // default success 200
-   
+
    ERROR(-1),                             // diy error code -1
    ;
 

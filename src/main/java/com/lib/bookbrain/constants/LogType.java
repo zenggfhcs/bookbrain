@@ -4,7 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum LogType {
-   C("create"), U("update"), R("read"), D("delete"),
+   C("create"),         //
+   U("update"),         //
+   R("select"),         //
+   D("delete"),         //
    ;
 
 

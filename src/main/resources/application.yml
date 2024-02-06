@@ -25,7 +25,7 @@ spring:
 mybatis:
   mapper-locations: classpath:com/lib/bookbrain/dao/*.xml
   configuration:
-    #    命令行输入 sql 日志
+    #    命令行输出 sql 日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #    开启驼峰命名和下划线的匹配：user_id => userId
     map-underscore-to-camel-case: true

@@ -22,28 +22,28 @@ public PublisherController(PublisherService publisherService) {
    this.publisherService = publisherService;
 }
 
-@GetMapping
+@PostMapping("/list/select")
 public Response getPublishers(@RequestBody(required = false) Payload<Publisher> payload) {
    return publisherService.getBy(payload);
 }
 
-@PostMapping
+@PostMapping("/list/create")
 public Response createPublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String ignoredToken) {
    return publisherService.create(payload);
 }
 
-@GetMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/select")
 public Response getPublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return publisherService.getById(payload);
 }
 
 
-@PatchMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/update")
 public Response updatePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return publisherService.update(payload);
 }
 
-@DeleteMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/delete")
 public Response deletePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return publisherService.delete(payload);
 }

@@ -26,28 +26,29 @@ public BookController(BookService bookService) {
 }
 
 
-@GetMapping
+@PostMapping("/list/select")
 public Response getBooks(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken) {
    return bookService.getBy(payload);
 }
 
-@PostMapping
+@PostMapping("/list/create")
 public Response createBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken) {
    return bookService.create(payload);
 }
 
-@GetMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/select")
 public Response getBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return bookService.getById(payload);
 }
 
-@PatchMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/update")
 public Response updateBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return bookService.update(payload);
 }
 
-@DeleteMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/delete")
 public Response deleteBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return bookService.delete(payload);
 }
+
 }

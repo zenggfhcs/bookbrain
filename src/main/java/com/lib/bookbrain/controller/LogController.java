@@ -5,10 +5,7 @@ import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.Response;
 import com.lib.bookbrain.model.entity.Log;
 import com.lib.bookbrain.service.LogService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * log controller
@@ -25,7 +22,7 @@ public LogController(LogService logService) {
    this.logService = logService;
 }
 
-@GetMapping
+@PostMapping("/list/select")
 public Response getLogs(@RequestBody(required = false) Payload<Log> payload) {
    return logService.getBy(payload);
 }

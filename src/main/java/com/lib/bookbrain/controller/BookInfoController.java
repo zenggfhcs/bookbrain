@@ -22,27 +22,27 @@ public BookInfoController(BookInfoService bookInfoService) {
    this.bookInfoService = bookInfoService;
 }
 
-@GetMapping
+@PostMapping("/list/select")
 public Response getBookInfos(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader("token") String ignoredToken) {
    return bookInfoService.getBy(payload);
 }
 
-@PostMapping
+@PostMapping("/list/create")
 public Response createBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader("token") String ignoredToken) {
    return bookInfoService.create(payload);
 }
 
-@GetMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/select")
 public Response getBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return bookInfoService.getById(payload);
 }
 
-@PatchMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/update")
 public Response updateBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return bookInfoService.update(payload);
 }
 
-@DeleteMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/delete")
 public Response deleteBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return bookInfoService.delete(payload);
 }

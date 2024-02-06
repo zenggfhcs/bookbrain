@@ -24,27 +24,27 @@ public DebitController(DebitService debitService) {
    this.debitService = debitService;
 }
 
-@GetMapping
+@PostMapping("/list/select")
 public Response getDebits(@RequestBody(required = false) Payload<Debit> payload) {
    return debitService.getBy(payload);
 }
 
-@PostMapping
+@PostMapping("/list/create")
 public Response createDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader("token") String ignoredToken) {
    return debitService.create(payload);
 }
 
-@GetMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/select")
 public Response getDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return debitService.getById(payload);
 }
 
-@PatchMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/update")
 public Response updateDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return debitService.update(payload);
 }
 
-@DeleteMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/delete")
 public Response deleteDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return debitService.delete(payload);
 }

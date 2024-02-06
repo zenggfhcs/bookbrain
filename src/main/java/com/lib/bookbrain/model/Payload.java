@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
 /**
@@ -51,18 +52,20 @@ public static Payload<BaseEntity> getOrNew(Object arg) {
 }
 
 /**
+ * 理想 args = [payload, token, id]
+ *
  * @param args 1
  * @return 2
  */
 public static Payload<BaseEntity> parseArgsTo(Object[] args) {
-   Assert.isCorrect(() -> args.length > 0,                    // 检查参数
+   Assert.isCorrect(() -> args != null && args.length > 0,     // 检查参数
          new PayloadMissException());
    Payload<BaseEntity> _payload = Payload.getOrNew(args[0]);   // 解析参数 => parameter
    {
       String token = args.length > 1                           // 获取 token
             ? args[1].toString()
             : "";
-      TokenBody tokenBody = Jwt.decoder(token);                // token => tokenBody
+      TokenBody tokenBody = Jwt.decoder(token);                // 解析token，token => tokenBody
       _payload.setTokenBody(tokenBody);                        // payload 记录 tokenBody
    }
    {

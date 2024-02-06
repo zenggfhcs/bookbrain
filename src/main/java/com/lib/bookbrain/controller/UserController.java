@@ -26,27 +26,27 @@ public UserController(UserService userService) {
    this.userService = userService;
 }
 
-@GetMapping
+@PostMapping("/list/select")
 public Response getUsers(@RequestBody(required = false) Payload<User> payload) {
    return userService.getBy(payload);
 }
 
-@PostMapping
+@PostMapping("/list/create")
 public Response createUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken) {
    return userService.create(payload);
 }
 
-@GetMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/select")
 public Response getUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return userService.getById(payload);
 }
 
-@PatchMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/update")
 public Response updateUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return userService.update(payload);
 }
 
-@DeleteMapping("/{ignoredId}")
+@PostMapping("/{ignoredId}/delete")
 public Response deleteUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
    return userService.delete(payload);
 }
