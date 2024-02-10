@@ -13,10 +13,12 @@ public enum Error {
     * body（payload）缺失异常
     */
    PayloadMissException,
+   
    /**
     * 权限缺失异常
     */
    PermissionMissException,
+   
    /**
     * 更新错误异常
     */

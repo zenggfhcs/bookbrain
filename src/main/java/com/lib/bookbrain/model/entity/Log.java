@@ -68,9 +68,8 @@ public Log fillInput(String input) {
    return this;
 }
 
-public Log fillCreatedBy(Integer createdBy) {
+public void fillCreatedBy(Integer createdBy) {
    this.setCreatedBy(createdBy);
-   return this;
 }
 
 public Log fillElapsedTime(Long time) {
@@ -78,8 +77,7 @@ public Log fillElapsedTime(Long time) {
    return this;
 }
 
-public Log fillOutput(String output) {
+public void fillOutput(String output) {
    setOutput(output);
-   return this;
 }
 }

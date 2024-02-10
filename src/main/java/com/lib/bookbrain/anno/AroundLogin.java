@@ -1,4 +1,4 @@
-package com.lib.bookbrain.annotation;
+package com.lib.bookbrain.anno;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

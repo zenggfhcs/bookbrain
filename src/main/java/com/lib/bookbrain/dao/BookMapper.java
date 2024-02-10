@@ -3,7 +3,6 @@ package com.lib.bookbrain.dao;
 import com.lib.bookbrain.model.dto.Payload;
 import com.lib.bookbrain.model.entity.Book;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface BookMapper extends BaseMapper<Book> {
 /* ============================ 继承 ============================ */
 Book getById(Payload<Book> payload);
 
-List<Book> getBy(@Param("payload") Payload<Book> payload);
+List<Book> getBy(Payload<Book> payload);
 
 int insert(Payload<Book> payload);
 

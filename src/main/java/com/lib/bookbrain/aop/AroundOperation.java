@@ -16,7 +16,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 /**
- * 运行前后的操作
+ * aop 运行前后的操作
  *
  * @author yunxia
  */
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class AroundOperation {
 /**
- * 日志
+ * 日志服务
  */
 private final LogMapper logMapper;
 
@@ -34,9 +34,9 @@ private final LogMapper logMapper;
  *
  * @param point 方法代理对象
  * @return 方法的返回值（代理对象执行）
- * @throws Throwable 方法执行的异常
+ * @throws Throwable 方法执行可能会出现异常，需要标记抛出
  */
-@Around("@annotation(com.lib.bookbrain.annotation.AroundGet)")
+@Around("@annotation(com.lib.bookbrain.anno.AroundGet)")
 public Object logGet(ProceedingJoinPoint point) throws Throwable {
    return log(point, this::fillBeforeGet, this::fillAfter);    // 日志
 }
@@ -53,7 +53,7 @@ private void fillBeforeGet(Log log, Signature signature, Payload<BaseEntity> pay
  * @return 方法的返回值（代理对象执行）
  * @throws Throwable 方法执行的异常
  */
-@Around("@annotation(com.lib.bookbrain.annotation.AroundUpdate)")
+@Around("@annotation(com.lib.bookbrain.anno.AroundUpdate)")
 public Object logUpdate(ProceedingJoinPoint point) throws Throwable {
    return log(point, this::fillBeforeUpdate, this::fillAfter); // 日志
 }
@@ -63,7 +63,7 @@ private void fillBeforeUpdate(Log log, Signature signature, Payload<BaseEntity> 
    log.fillType(LogType.U);                  // 设置日志类型
 }
 
-@Around("@annotation(com.lib.bookbrain.annotation.AroundDelete)")
+@Around("@annotation(com.lib.bookbrain.anno.AroundDelete)")
 public Object logDelete(ProceedingJoinPoint point) throws Throwable {
    return log(point, this::fillBeforeDelete, this::fillAfter); // 日志
 }
@@ -78,7 +78,7 @@ private void fillBeforeDelete(Log log, Signature signature, Payload<BaseEntity> 
  *
  * @param point service-method
  */
-@Around("@within(com.lib.bookbrain.annotation.AroundConduct)")
+@Around("@within(com.lib.bookbrain.anno.AroundConduct)")
 public Object aroundConduct(ProceedingJoinPoint point) throws Throwable {
    Object[] args = point.getArgs();                            // 预期参数为 { payload, token(, id)? }
    Payload<BaseEntity> _payload = Payload.parseArgsTo(args);   // 解析参数
@@ -101,9 +101,11 @@ private Object log(ProceedingJoinPoint point, TriConsumer<Log, Signature, Payloa
    Log _log = Log.generate();                                           // 创建日志
    before.accept(_log, point.getSignature(), _payload);                 // 填充日志
    logMapper.create(_log);                                              // 插入日志
+   
    /* ===================== 运行 ===================== */
    long _startTime = System.currentTimeMillis();                        // 运行起始时间
    Object _res = point.proceed();                                       // 运行
+   
    /* ===================== 后 ===================== */
    long _endTime = System.currentTimeMillis();                          // 运行结束时间
    long _time = _endTime - _startTime;                                  // 运行耗时（毫秒值）
@@ -114,29 +116,29 @@ private Object log(ProceedingJoinPoint point, TriConsumer<Log, Signature, Payloa
 }
 
 /**
- * fill
+ * 执行前填充日志
  *
- * @param log       fill
- * @param signature fill
- * @param payload   fill
+ * @param log       需要填充的日志对象
+ * @param signature 用于生成日志信息的 signature
+ * @param payload   用于生成日志信息的 payload
  */
 private void fillBefore(Log log, Signature signature, Payload<BaseEntity> payload) {
-   log.fillServiceName(generateServiceName(signature))      // 1
-         .fillDataId(payload.getId())                       // 2
-         .fillInput(Json.stringify(payload))                // 3
-         .fillCreatedBy(payload.getTokenBody().getId());    // 4
+   log.fillServiceName(generateServiceName(signature))      // 服务名
+         .fillDataId(payload.getId())                       // 对应的数据 id（可能为 null）
+         .fillInput(Json.stringify(payload))                // 序列化：请求的参数载体
+         .fillCreatedBy(payload.getTokenBody().getId());    // 操作人
 }
 
 /**
- * fill
+ * 执行后填充日志
  *
- * @param log  fill
- * @param time fill
- * @param res  fill
+ * @param log  需要填充的日志对象
+ * @param time 用于生成日志信息：执行耗时
+ * @param res  用户生成日志信息：操作影响到的数据，或者查询到的结果
  */
 private void fillAfter(Log log, Long time, Object res) {
-   log.fillElapsedTime(time)                       // 5
-         .fillOutput(Json.stringify(res));         // 6
+   log.fillElapsedTime(time)                       // 执行耗时
+         .fillOutput(Json.stringify(res));         // 序列化：操作数据
 }
 
 /**
@@ -152,4 +154,5 @@ private String generateServiceName(Signature signature) {
    return String.format("%s.%s", serviceName, method);                  // 格式化并返回
 // Parse.serviceToDataClass(signature.getDeclaringType().getName()) + signature.getName()
 }
+
 }

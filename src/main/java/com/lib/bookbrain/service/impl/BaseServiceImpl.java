@@ -6,9 +6,6 @@ import com.lib.bookbrain.model.dto.Payload;
 import com.lib.bookbrain.model.dto.Response;
 import com.lib.bookbrain.model.entity.BaseEntity;
 import com.lib.bookbrain.service.BaseService;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

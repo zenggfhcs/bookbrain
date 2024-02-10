@@ -6,4 +6,10 @@
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.Condition">
 
    </resultMap>
+   <insert id="insert"></insert>
+   <update id="update"></update>
+   <delete id="delete"></delete>
+   <select id="getById" resultType="com.lib.bookbrain.model.Condition"></select>
+   <select id="getBy" resultType="com.lib.bookbrain.model.Condition"></select>
+   <select id="getToUpdate" resultType="com.lib.bookbrain.model.Condition"></select>
 </mapper>

@@ -3,7 +3,9 @@ package com.lib.bookbrain.utils;
 import com.lib.bookbrain.context.MyApplicationContext;
 import org.springframework.context.ApplicationContext;
 
-
+/**
+ * 封装 get bean
+ */
 public class JBean {
 private static final ApplicationContext context;
 

@@ -3,7 +3,6 @@ package com.lib.bookbrain.dao;
 import com.lib.bookbrain.model.dto.Payload;
 import com.lib.bookbrain.model.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

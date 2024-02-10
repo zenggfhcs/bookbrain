@@ -1,7 +1,7 @@
 package com.lib.bookbrain.controller;
 
 
-import com.lib.bookbrain.annotation.AroundConduct;
+import com.lib.bookbrain.anno.AroundConduct;
 import com.lib.bookbrain.model.dto.Payload;
 import com.lib.bookbrain.model.dto.Response;
 import com.lib.bookbrain.model.entity.User;
