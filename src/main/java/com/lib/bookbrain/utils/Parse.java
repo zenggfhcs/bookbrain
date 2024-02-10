@@ -17,4 +17,8 @@ static {
 public static String serviceToDataClass(String serviceClass) {
    return PM.getGroup(serviceClass, ".*\\.(.*)ServiceImpl", 1);
 }
+
+public static String firstLower(String s) {
+   return s.toLowerCase().charAt(0) + s.substring(1);
+}
 }

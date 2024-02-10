@@ -1,8 +1,6 @@
 package com.lib.bookbrain.model.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -10,16 +8,14 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Publisher extends BaseEntity {
+public class Author extends BaseEntity {
 /**
- * 出版社 Id
+ * 作者 id
  */
 private Integer id;
 
 /**
- * 出版社名称
+ * 名字
  */
 private String name;
 }

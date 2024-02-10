@@ -1,8 +1,8 @@
-package com.lib.bookbrain.model;
+package com.lib.bookbrain.model.dto;
 
 
-import com.lib.bookbrain.constants.Message;
-import com.lib.bookbrain.constants.ResponseCode;
+import com.lib.bookbrain.constant.Message;
+import com.lib.bookbrain.constant.ResponseCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

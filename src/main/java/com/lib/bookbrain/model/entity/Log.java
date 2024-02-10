@@ -1,7 +1,6 @@
 package com.lib.bookbrain.model.entity;
 
-import com.lib.bookbrain.constants.LogType;
-import com.lib.bookbrain.model.BaseEntity;
+import com.lib.bookbrain.constant.LogType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

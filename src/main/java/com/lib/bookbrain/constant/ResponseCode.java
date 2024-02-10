@@ -1,4 +1,4 @@
-package com.lib.bookbrain.constants;
+package com.lib.bookbrain.constant;
 
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ public enum ResponseCode {
     */
    SUCCESS(200),
    /**
-    *  error -1
+    * error -1
     */
    ERROR(-1),
    ;

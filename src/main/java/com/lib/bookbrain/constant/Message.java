@@ -1,4 +1,4 @@
-package com.lib.bookbrain.constants;
+package com.lib.bookbrain.constant;
 
 import lombok.Getter;
 
@@ -18,7 +18,7 @@ public enum Message {
     */
    TOKEN_ERROR("Token error"),
    /**
-    * 
+    *
     */
    CREATE_ERROR("Creation failed"),
    /**

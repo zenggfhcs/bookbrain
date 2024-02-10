@@ -1,14 +1,11 @@
-package com.lib.bookbrain.model;
+package com.lib.bookbrain.model.dto;
 
-import com.lib.bookbrain.constants.EException;
-import com.lib.bookbrain.exception.Assert;
-import com.lib.bookbrain.exception.PayloadMissException;
+import com.lib.bookbrain.model.entity.BaseEntity;
 import com.lib.bookbrain.utils.Jwt;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
 /**

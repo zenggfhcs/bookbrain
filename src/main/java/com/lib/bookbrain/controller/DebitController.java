@@ -1,8 +1,8 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.annotation.AroundConduct;
-import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.dto.Payload;
+import com.lib.bookbrain.model.dto.Response;
 import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.service.DebitService;
 import org.springframework.beans.factory.annotation.Autowired;

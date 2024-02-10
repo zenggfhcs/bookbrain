@@ -1,11 +1,14 @@
 package com.lib.bookbrain.service.impl;
 
-import com.lib.bookbrain.constants.Message;
+import com.lib.bookbrain.constant.Message;
 import com.lib.bookbrain.dao.BaseMapper;
-import com.lib.bookbrain.model.BaseEntity;
-import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.dto.Payload;
+import com.lib.bookbrain.model.dto.Response;
+import com.lib.bookbrain.model.entity.BaseEntity;
 import com.lib.bookbrain.service.BaseService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -57,7 +60,7 @@ public Response update(Payload<T> payload) {
    if (_newEntityData == null) {                            // 用来更新的数据是空的
       return Response.error(Message.UPDATE_DATA_ERROR);     // 返回错误
    }
-   T _oldEntityData = baseMapper.getByUpdate(payload);      // 获取需要被更新数据
+   T _oldEntityData = baseMapper.getToUpdate(payload);      // 获取需要被更新数据
    if (_oldEntityData == null) {                            // 需要被更新的数据不存在
       return Response.error(Message.UPDATE_OLD_DATE_ERROR); // 返回错误
    }

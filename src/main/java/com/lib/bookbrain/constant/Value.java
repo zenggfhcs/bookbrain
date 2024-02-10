@@ -1,4 +1,4 @@
-package com.lib.bookbrain.constants;
+package com.lib.bookbrain.constant;
 
 /**
  * 数据类

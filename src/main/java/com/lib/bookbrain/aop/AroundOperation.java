@@ -1,10 +1,10 @@
 package com.lib.bookbrain.aop;
 
-import com.lib.bookbrain.constants.LogType;
+import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.dao.LogMapper;
 import com.lib.bookbrain.fnuction.TriConsumer;
-import com.lib.bookbrain.model.BaseEntity;
-import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.dto.Payload;
+import com.lib.bookbrain.model.entity.BaseEntity;
 import com.lib.bookbrain.model.entity.Log;
 import com.lib.bookbrain.utils.Json;
 import com.lib.bookbrain.utils.Parse;

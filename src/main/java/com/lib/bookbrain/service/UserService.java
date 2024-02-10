@@ -1,7 +1,7 @@
 package com.lib.bookbrain.service;
 
-import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.dto.Payload;
+import com.lib.bookbrain.model.dto.Response;
 import com.lib.bookbrain.model.entity.User;
 
 public interface UserService extends BaseService<User> {

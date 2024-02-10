@@ -1,4 +1,4 @@
-package com.lib.bookbrain.model;
+package com.lib.bookbrain.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

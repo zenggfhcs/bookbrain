@@ -8,7 +8,7 @@
       <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
       <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
       <result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
-      <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+      <result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
       <result column="revision" jdbcType="INTEGER" property="revision"/>
       <association property="book" javaType="com.lib.bookbrain.model.entity.Book" column="{id=book_id}"
                    select="com.lib.bookbrain.dao.BookMapper.getById"/>
@@ -29,7 +29,7 @@
       </where>
    </select>
 
-   <select id="getById" parameterType="com.lib.bookbrain.model.Payload" resultMap="BaseResultMap">
+   <select id="getById" parameterType="com.lib.bookbrain.model.dto.Payload" resultMap="BaseResultMap">
       select distinct d.`id`,
                       d.`book_id`,
                       d.`return_deadline`,
@@ -37,29 +37,29 @@
                       d.`created_by`,
                       d.`creation_time`,
                       d.`updated_by`,
-                      d.`last_update_time`,
+                      d.`last_updated_time`,
                       d.`revision`
       from debit d
       where d.`id` = #{id}
    </select>
 
-   <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.dto.Payload">
       delete
       from debit d
       where d.`id` = #{id}
    </delete>
 
-   <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.dto.Payload" useGeneratedKeys="true"
            keyProperty="entity.debitId">
       insert into debit (`book_id`, `return_deadline`,
                          `return_date`, `created_by`, `creation_time`,
-                         `updated_by`, `last_update_time`, `revision`)
+                         `updated_by`, `last_updated_time`, `revision`)
       values (#{entity.book.bookId}, #{entity.returnDeadline},
               #{entity.returnDate}, #{entity.createBy}, NOW(),
               #{entity.updateBy}, NOW(), #{entity.revision})
    </insert>
 
-   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.dto.Payload">
       update debit d
       <set>
          <if test="entity != null">
@@ -84,7 +84,7 @@
       where d.`id` = #{id}
    </update>
 
-   <select id="getByUpdate" resultMap="BaseResultMap">
+   <select id="getToUpdate" resultMap="BaseResultMap">
       select *
       from debit d
       where d.`id` = #{id}

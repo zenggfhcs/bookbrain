@@ -10,7 +10,7 @@
       <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
       <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
       <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
-      <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+      <result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
    </resultMap>
    <select id="getBy" resultMap="BaseResultMap">
@@ -45,14 +45,14 @@
          </if>
       </where>
    </select>
-   <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.dto.Payload" useGeneratedKeys="true"
            keyColumn="entity.publishId">
-      insert into publisher(`name`, `remark`, `created_by`, `creation_time`, `updated_by`, `last_update_time`,
+      insert into publisher(`name`, `remark`, `created_by`, `creation_time`, `updated_by`, `last_updated_time`,
                             `revision`)
       values (#{name}, #{remark}, #{tokenBody.id}, NOW(), #{tokenBody.id}, NOW(),
               0)
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.dto.Payload">
       update publisher p
       <set>
          <if test="entity != null">
@@ -73,25 +73,25 @@
       </set>
       where p.`id` = #{id} and p.`revision` = #{entity.revision};
    </update>
-   <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.dto.Payload">
       delete
       from publisher p
       where p.`id` = #{id}
    </delete>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.dto.Payload">
       select p.`id`,
              p.`name`,
              p.`remark`,
              p.`created_by`,
              p.`creation_time`,
              p.`updated_by`,
-             p.`last_update_time`,
+             p.`last_updated_time`,
              p.`revision`
       from publisher p
       where p.`id` = #{id}
    </select>
 
-   <select id="getByUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="getToUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.dto.Payload">
       select
       <trim suffixOverrides=",">
          <if test="name != null and name != ''">

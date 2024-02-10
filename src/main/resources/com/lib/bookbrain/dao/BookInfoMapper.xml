@@ -21,41 +21,38 @@
       <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
       <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
       <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
-      <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+      <result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
       <association property="publisher" column="{id=publish_id}" javaType="com.lib.bookbrain.model.entity.Publisher"
                    select="com.lib.bookbrain.dao.PublisherMapper.getById"/>
    </resultMap>
-   <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.dto.Payload" useGeneratedKeys="true"
            keyProperty="entity.bookInfoId">
       insert into book_info (`publisher_id`, `publish_place`, `isbn`, `cip`, `book_name`,
                              `book_type`, `cover`, `author`, `describe`, `publish_date`,
                              `keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
-                             `updated_by`, `last_update_time`, `revision`)
-      select #{entity.publisher.id}
-           , #{entity.publishPlace}
-           , #{entity.isbn}
-           , #{entity.cip}
-           , #{entity.bookName}
-           , #{entity.bookType}
-           , #{entity.cover}
-           , #{entity.author}
-           , #{entity.describe}
-           , #{entity.publishDate}
-           , #{entity.keyword}
-           , #{entity.lang}
-           , #{entity.price}
-           , #{entity.stock}
-           , #{entity.createdBy}
-           , NOW()
-           , #{entity.updatedBy}
-           , now()
-           , 0
-      from authority a
-      where a.`id` = #{tokenBody.id}
-        and a.`insert_book_info_privilege` = 1
+                             `updated_by`, `last_updated_time`, `revision`)
+      values ( #{entity.publisher.id}
+             , #{entity.publishPlace}
+             , #{entity.isbn}
+             , #{entity.cip}
+             , #{entity.bookName}
+             , #{entity.bookType}
+             , #{entity.cover}
+             , #{entity.author}
+             , #{entity.describe}
+             , #{entity.publishDate}
+             , #{entity.keyword}
+             , #{entity.lang}
+             , #{entity.price}
+             , #{entity.stock}
+             , #{entity.createdBy}
+             , NOW()
+             , #{entity.updatedBy}
+             , now()
+             , 0)
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.dto.Payload">
       update book_info bif, authority auth
       <set>
          <if test="entity != null">
@@ -106,24 +103,18 @@
             </if>
          </if>
          <if test="1 == 1">
-         </if>
-         <if test="1 == 1">
             bif.`last_update_time` = NOW(),
             bif.`revision` = (1 + bif.`revision`) % 2147483647,
          </if>
       </set>
-      where auth.`id` = #{tokenBody.id}
-      and auth.`update_book_info_privilege` = 1
-      and bif.`id` = #{id}
+      where bif.`id` = #{id}
       and bif.`revision` = #{entity.revision}
    </update>
-   <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.dto.Payload">
       delete bif
       from book_info bif,
            authority a
-      where a.`id` = #{tokenBody.id}
-        and a.delete_book_info_privilege = 1
-        and bif.`id` = #{id}
+      where bif.`id` = #{id}
    </delete>
    <select id="getBy" resultMap="BaseResultMap">
       select distinct bif.`id`,
@@ -148,10 +139,6 @@
       bif.`revision`
       from book_info bif, authority auth
       <where>
-         <if test="1 == 1">
-            and auth.`id` = #{tokenBody.id}
-            and auth.`select_book_info_privilege` = 1
-         </if>
          <if test="entity != null">
             <if test="entity.bookInfoId != null">
                and bif.`id` = #{entity.bookInfoId}
@@ -163,7 +150,7 @@
       </where>
       limit #{filter.pageStart}, #{filter.pageSize}
    </select>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.dto.Payload">
       select distinct bif.`id`,
                       bif.`publisher_id`,
                       bif.`publish_place`,
@@ -182,26 +169,20 @@
                       bif.`created_by`,
                       bif.`creation_time`,
                       bif.`updated_by`,
-                      bif.`last_update_time`,
+                      bif.`last_updated_time`,
                       bif.`revision`
-      from book_info bif,
-           authority auth
-      where auth.id = #{tokenBody.id}
-        and auth.`select_book_info_privilege` = 1
-        and bif.`id` = #{id}
+      from book_info bif
+      where bif.`id` = #{id}
    </select>
 
-   <select id="getByUpdate" resultMap="BaseResultMap">
+   <select id="getToUpdate" resultMap="BaseResultMap">
       select
       <trim suffixOverrides=",">
          <if test="entity.author != null">
             bif.`author`,
          </if>
       </trim>
-      from book_info bif,
-      authority auth
-      where auth.id = #{tokenBody.id}
-      and auth.`update_book_info_privilege` = 1
-      and bif.`id` = #{id}
+      from book_info bif
+      where bif.`id` = #{id}
    </select>
 </mapper>

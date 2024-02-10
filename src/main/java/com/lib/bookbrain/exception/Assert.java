@@ -1,6 +1,6 @@
 package com.lib.bookbrain.exception;
 
-import com.lib.bookbrain.constants.EException;
+import com.lib.bookbrain.constant.Error;
 import org.apache.logging.log4j.util.Supplier;
 
 /**
@@ -9,10 +9,17 @@ import org.apache.logging.log4j.util.Supplier;
  * @author yunxia
  */
 public class Assert {
-public static void isCorrect(Supplier<Boolean> supplier, EException ee) {
+/**
+ * 对 supplier 进行断言，当断言失败时，抛出一个运行时异常
+ * 这个异常的具体类型由 ee 的具体值决定
+ *
+ * @param supplier 断言 lambda
+ * @param ee       异常枚举值
+ */
+public static void isCorrect(Supplier<Boolean> supplier, Error ee) {
    if (supplier.get()) {
       return;
    }
-   throw ee.generateExp();
+   throw ee.generateError();
 }
 }

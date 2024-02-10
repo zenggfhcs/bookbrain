@@ -10,20 +10,20 @@
       <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
       <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
       <result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
-      <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+      <result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
       <result column="revision" jdbcType="INTEGER" property="revision"/>
       <association column="{id=book_info_id}" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
                    select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
    </resultMap>
    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.bookId" keyColumn="id"
-           parameterType="com.lib.bookbrain.model.Payload">
+           parameterType="com.lib.bookbrain.model.dto.Payload">
       insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
-                        `last_update_time`, `revision`)
+                        `last_updated_time`, `revision`)
       VALUES (#{entity.bookDamageLevel}, #{entity.borrowable}, #{entity.bookInfo.bookInfoId}, #{entity.createBy},
               now(),
               #{entity.updateBy}, now(), #{entity.revision})
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.dto.Payload">
       update book b
       <set>
          <if test="entity != null">
@@ -48,7 +48,7 @@
       where b.`id` = #{id}
       and b.`revision` = #{revision}
    </update>
-   <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.dto.Payload">
       delete
       from book b
       where b.`id` = #{id}
@@ -67,7 +67,7 @@
       <where>
       </where>
    </select>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.dto.Payload">
       select b.`id`,
              b.`damage_level`,
              b.`borrowable`,
@@ -75,12 +75,12 @@
              b.`created_by`,
              b.`creation_time`,
              b.`updated_by`,
-             b.`last_update_time`,
+             b.`last_updated_time`,
              b.`revision`
       from book b
       where b.`id` = #{id}
    </select>
-   <select id="getByUpdate" resultMap="BaseResultMap">
+   <select id="getToUpdate" resultMap="BaseResultMap">
       select *
       from book b
       where b.`id` = #{id}

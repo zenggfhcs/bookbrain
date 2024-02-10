@@ -15,24 +15,23 @@
       <result property="name" column="name" jdbcType="VARCHAR"/>
       <result property="age" column="age" jdbcType="TINYINT"/>
       <result property="sex" column="sex" jdbcType="TINYINT"/>
-      <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
       <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
       <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
       <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
-      <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+      <result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
    </resultMap>
    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.userId"
-           parameterType="com.lib.bookbrain.model.Payload">
+           parameterType="com.lib.bookbrain.model.dto.Payload">
       insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
-                       `condition`, `authority`, `surname`, `name`, `age`, `sex`, `last_login_time`,
-                       `created_by`, `creation_time`, `updated_by`, `last_update_time`, `revision`)
+                       `condition`, `authority`, `surname`, `name`, `age`, `sex`,
+                       `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
       values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.userEmail},
               #{entity.userPhoneNumber}, #{entity.condition}, #{entity.authority}, #{entity.surname},
-              #{entity.name}, #{entity.age}, #{entity.sex}, now(), #{entity.createdBy}, now(), #{entity.updatedBy},
+              #{entity.name}, #{entity.age}, #{entity.sex}, #{entity.createdBy}, now(), #{entity.updatedBy},
               now(), 0);
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.dto.Payload">
       update user u
       <set>
          <if test="entity != null">
@@ -74,12 +73,12 @@
       </set>
       where u.`id` = #{id}
    </update>
-   <update id="delete" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="delete" parameterType="com.lib.bookbrain.model.dto.Payload">
       update user u
       set u.`condition` = #{entity.condition}
       where u.`id` = #{id};
    </update>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.dto.Payload">
       select u.`id`,
              u.`display_name`,
              u.`email`,
@@ -90,37 +89,22 @@
              u.`name`,
              u.`age`,
              u.`sex`,
-             u.`last_login_time`,
              u.`created_by`,
              u.`creation_time`,
              u.`updated_by`,
-             u.`last_update_time`,
+             u.`last_updated_time`,
              u.`revision`
       from user u
       where u.`id` = #{id};
    </select>
-   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.dto.Payload">
       select u.`id`,
-             u.`display_name`,
-             u.`email`,
-             u.`phone_number`,
-             u.`condition`,
-             u.`authority`,
-             u.`surname`,
-             u.`name`,
-             u.`age`,
-             u.`sex`,
-             u.`last_login_time`,
-             u.`created_by`,
-             u.`creation_time`,
-             u.`updated_by`,
-             u.`last_update_time`,
-             u.`revision`
+             u.`display_name`
       from user u
-      where u.`id` = #{userId}
+      where u.`id` = #{id}
         and u.`authentication_string` = MD5(#{authenticationString});
    </select>
-   <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.dto.Payload">
       select count(*)
       from user u
       where u.`id` = #{id};
@@ -136,7 +120,6 @@
       u.`name`,
       u.`age`,
       u.`sex`,
-      u.`last_login_time`,
       u.`created_by`,
       u.`creation_time`,
       u.`updated_by`,
@@ -166,7 +149,6 @@
          </if>
          <if test="filter != null">
             and u.`age` between #{lowerAge} and #{upperAge}
-            and u.`last_login_time` between #{lowerLastLoginTime} and #{upperLastLoginTime}
             and u.`creation_time` between #{lowerCreateTime} and #{upperCreateTime}
             and u.`last_update_time` between #{lowerUpdateTime} and #{upperUpdateTime}
          </if>
@@ -174,7 +156,9 @@
       limit #{pageStart}, #{pageSize}
    </select>
 
-   <select id="getByUpdate" resultMap="BaseResultMap">
+   <select id="getToUpdate" resultMap="BaseResultMap">
+      select *
+      from user
    </select>
    <select id="getByToken" resultMap="BaseResultMap">
       select u.`id`,

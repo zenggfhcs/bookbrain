@@ -1,7 +1,7 @@
 package com.lib.bookbrain.controller;
 
-import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.dto.Payload;
+import com.lib.bookbrain.model.dto.Response;
 import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.service.UserService;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users/register")
 public class RegisterController {
 private final UserService userService;
+
 @PostMapping
 public Response register(@RequestBody(required = false) Payload<User> payload) {
    return userService.login(payload);

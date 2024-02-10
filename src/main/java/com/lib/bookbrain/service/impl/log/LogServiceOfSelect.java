@@ -1,13 +1,13 @@
-package com.lib.bookbrain.service.impl;
+package com.lib.bookbrain.service.impl.log;
 
-import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.dto.Payload;
+import com.lib.bookbrain.model.dto.Response;
 import com.lib.bookbrain.model.entity.Log;
 import com.lib.bookbrain.service.LogService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LogServiceImpl implements LogService {
+public class LogServiceOfSelect implements LogService {
 
 public void log(Log log) {
    Payload<Log> _payload = Payload.generateByEntity(log);

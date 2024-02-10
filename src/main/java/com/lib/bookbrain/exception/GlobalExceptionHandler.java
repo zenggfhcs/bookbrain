@@ -1,8 +1,8 @@
 package com.lib.bookbrain.exception;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.lib.bookbrain.constants.Message;
-import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.constant.Message;
+import com.lib.bookbrain.model.dto.Response;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
