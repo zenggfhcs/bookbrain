@@ -1,6 +1,6 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.dto.Payload;
+import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.entity.Publisher;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

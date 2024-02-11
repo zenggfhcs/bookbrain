@@ -1,7 +1,6 @@
-package com.lib.bookbrain.model.dto;
+package com.lib.bookbrain.model;
 
 import com.lib.bookbrain.model.entity.BaseEntity;
-import com.lib.bookbrain.utils.Jwt;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,18 +16,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Payload<T extends BaseEntity> {
+
 /**
  * id
  */
 protected Integer id;
+
 /**
  * 参数实体
  */
 protected T entity;
-/**
- * 请求者
- */
-protected transient TokenBody tokenBody;
+
 /**
  * 过滤
  */
@@ -58,13 +56,6 @@ public static Payload<BaseEntity> getOrNew(Object arg) {
 public static Payload<BaseEntity> parseArgsTo(Object[] args) {
    Payload<BaseEntity> _payload = Payload.getOrNew(args[0]);   // 解析参数 => parameter
    {
-      String token = args.length > 1                           // 获取 token
-            ? args[1].toString()
-            : "";
-      TokenBody tokenBody = Jwt.decoder(token);                // 解析token，token => tokenBody
-      _payload.setTokenBody(tokenBody);                        // payload 记录 tokenBody
-   }
-   {
       Integer _id = args.length > 2                            //
             ? Integer.parseInt(args[2].toString())             // payload 记录 id
             : 0;
@@ -86,15 +77,6 @@ public static <E extends BaseEntity> Payload<E> generateByEntity(E e) {
    Payload<E> _payload = new Payload<>();
    _payload.setEntity(e);
    return _payload;
-}
-
-/**
- * 清理载荷信息，只保留实体
- */
-public void clear() {
-   setId(null);
-   setTokenBody(null);
-   setFilter(null);
 }
 
 @Data

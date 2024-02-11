@@ -2,8 +2,8 @@ package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.constant.Message;
 import com.lib.bookbrain.dao.BaseMapper;
-import com.lib.bookbrain.model.dto.Payload;
-import com.lib.bookbrain.model.dto.Response;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.Response;
 import com.lib.bookbrain.model.entity.BaseEntity;
 import com.lib.bookbrain.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,8 @@ public Response create(Payload<T> payload) {
    if (payload.getEntity() == null) {                    // 需要创建的数据是空的
       return Response.error(Message.CREATE_DATA_ERROR);  // 返回错误
    }
-   // 此处没有对数据完整性进行校验，如果出现错误会抛出异常
+   
+   // todo 此处没有对数据完整性进行校验，如果出现错误会抛出异常
    int _cc = baseMapper.insert(payload);                 // 创建数据
    if (_cc == 0) {                                       // 创建失败
       return Response.error(Message.CREATE_ERROR);       // 返回错误

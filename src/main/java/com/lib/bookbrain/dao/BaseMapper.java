@@ -1,6 +1,6 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.dto.Payload;
+import com.lib.bookbrain.model.Payload;
 import com.lib.bookbrain.model.entity.BaseEntity;
 
 import java.util.List;

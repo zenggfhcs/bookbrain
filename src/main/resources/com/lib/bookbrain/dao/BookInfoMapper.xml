@@ -26,7 +26,7 @@
       <association property="publisher" column="{id=publish_id}" javaType="com.lib.bookbrain.model.entity.Publisher"
                    select="com.lib.bookbrain.dao.PublisherMapper.getById"/>
    </resultMap>
-   <insert id="insert" parameterType="com.lib.bookbrain.model.dto.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
            keyProperty="entity.bookInfoId">
       insert into book_info (`publisher_id`, `publish_place`, `isbn`, `cip`, `book_name`,
                              `book_type`, `cover`, `author`, `describe`, `publish_date`,
@@ -52,7 +52,7 @@
              , now()
              , 0)
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.dto.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
       update book_info bif, authority auth
       <set>
          <if test="entity != null">
@@ -110,7 +110,7 @@
       where bif.`id` = #{id}
       and bif.`revision` = #{entity.revision}
    </update>
-   <delete id="delete" parameterType="com.lib.bookbrain.model.dto.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
       delete bif
       from book_info bif,
            authority a
@@ -150,7 +150,7 @@
       </where>
       limit #{filter.pageStart}, #{filter.pageSize}
    </select>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.dto.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
       select distinct bif.`id`,
                       bif.`publisher_id`,
                       bif.`publish_place`,

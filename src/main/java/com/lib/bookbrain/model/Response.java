@@ -1,4 +1,4 @@
-package com.lib.bookbrain.model.dto;
+package com.lib.bookbrain.model;
 
 
 import com.lib.bookbrain.constant.Message;

@@ -4,7 +4,7 @@ package com.lib.bookbrain.utils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.lib.bookbrain.model.dto.TokenBody;
+import com.lib.bookbrain.model.TokenBody;
 import com.lib.bookbrain.model.entity.User;
 
 import java.nio.charset.StandardCharsets;
@@ -58,10 +58,14 @@ public static String encoder(User user) {
  * @return token
  */
 private static String coder(Integer id, String name) {
+   return coder(id, name, System.currentTimeMillis() + EFFECTIVE_DURATION);
+}
+
+private static String coder(Integer id, String name, Long time) {
    return JWT.create()
-         .withClaim("id", id)                                                 // id
-         .withClaim("name", name)                                             // name
-         .withExpiresAt(new Date(System.currentTimeMillis() + EFFECTIVE_DURATION))  // 有效时间
+         .withClaim("id", id)             // id
+         .withClaim("name", name)         // name
+         .withExpiresAt(new Date(time * 1000))  // 有效时间
          .sign(algorithm);
 }
 
@@ -76,7 +80,6 @@ public static TokenBody decoder(String token) {
    String payload = deJwt.getPayload();                                 // 获取 payload 是 base64 形式
    byte[] payloadBytes = Base64.getDecoder().decode(payload);           // 解码为字节数组
    String data = new String(payloadBytes, StandardCharsets.UTF_8);      // 将字节数组转换为字符串（使用UTF-8字符集）
-   
    return Json.parse(data, TokenBody.class);
 }
 
@@ -85,7 +88,7 @@ public static void main(String[] args) {
    User user = new User();
    user.setId(1);
    user.setDisplayName("admin");
-   user.setAuthority(Long.MAX_VALUE);
    System.out.println(encoder(user));
 }
+
 }

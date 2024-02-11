@@ -1,6 +1,6 @@
 package com.lib.bookbrain.constant;
 
-import com.lib.bookbrain.utils.JBean;
+import com.lib.bookbrain.utils.MyBean;
 import com.lib.bookbrain.utils.Parse;
 
 /**
@@ -9,6 +9,7 @@ import com.lib.bookbrain.utils.Parse;
  * @author yunxia
  */
 public enum Error {
+   
    /**
     * body（payload）缺失异常
     */
@@ -32,6 +33,6 @@ public enum Error {
  */
 public RuntimeException generateError() {
    String _beanName = Parse.firstLower(this.name());
-   return JBean.get(_beanName, RuntimeException.class);
+   return MyBean.get(_beanName, RuntimeException.class);
 }
 }

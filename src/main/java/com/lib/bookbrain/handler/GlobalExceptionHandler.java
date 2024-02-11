@@ -4,7 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.lib.bookbrain.constant.Message;
 import com.lib.bookbrain.exception.PermissionMissException;
 import com.lib.bookbrain.exception.UpdateErrorException;
-import com.lib.bookbrain.model.dto.Response;
+import com.lib.bookbrain.model.Response;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

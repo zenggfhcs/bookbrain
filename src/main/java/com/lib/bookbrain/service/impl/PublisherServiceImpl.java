@@ -3,9 +3,10 @@ package com.lib.bookbrain.service.impl;
 import com.lib.bookbrain.anno.AroundDelete;
 import com.lib.bookbrain.anno.AroundGet;
 import com.lib.bookbrain.anno.AroundUpdate;
+import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.PublisherMapper;
-import com.lib.bookbrain.model.dto.Payload;
-import com.lib.bookbrain.model.dto.Response;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.Response;
 import com.lib.bookbrain.model.entity.Publisher;
 import com.lib.bookbrain.service.PublisherService;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,12 @@ public class PublisherServiceImpl implements PublisherService {
 private final PublisherMapper publisherMapper;
 private final BaseServiceImpl<Publisher> baseService;
 
-public PublisherServiceImpl(PublisherMapper publisherMapper) {
+private final SimpleThreadContext<Integer> threadContext;
+
+public PublisherServiceImpl(PublisherMapper publisherMapper, SimpleThreadContext<Integer> threadContext) {
    this.publisherMapper = publisherMapper;
    baseService = new BaseServiceImpl<>(publisherMapper);
+   this.threadContext = threadContext;
 }
 
 @AroundGet

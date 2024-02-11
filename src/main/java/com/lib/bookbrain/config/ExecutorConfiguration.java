@@ -31,7 +31,7 @@ private int queueCapacity;
 @Value("${async.executor.thread.name.prefix}")
 private String namePrefix;
 
-@Bean(name = "asyncServiceExecutor")
+@Bean
 public Executor asyncServiceExecutor() {
    //   logger.info("start asyncServiceExecutor");
    /* ============================ 配置线程池 ============================ */

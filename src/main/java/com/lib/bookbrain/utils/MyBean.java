@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * 封装 get bean
  */
-public class JBean {
+public class MyBean {
 private static final ApplicationContext context;
 
 static {

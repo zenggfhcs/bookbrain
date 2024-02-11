@@ -1,7 +1,7 @@
 package com.lib.bookbrain.controller;
 
-import com.lib.bookbrain.model.dto.Payload;
-import com.lib.bookbrain.model.dto.Response;
+import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.Response;
 import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.service.UserService;
 import lombok.AllArgsConstructor;

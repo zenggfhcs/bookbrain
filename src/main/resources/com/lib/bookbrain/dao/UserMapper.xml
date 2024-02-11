@@ -22,7 +22,7 @@
       <result property="revision" column="revision" jdbcType="INTEGER"/>
    </resultMap>
    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.userId"
-           parameterType="com.lib.bookbrain.model.dto.Payload">
+           parameterType="com.lib.bookbrain.model.Payload">
       insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
                        `condition`, `authority`, `surname`, `name`, `age`, `sex`,
                        `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
@@ -31,7 +31,7 @@
               #{entity.name}, #{entity.age}, #{entity.sex}, #{entity.createdBy}, now(), #{entity.updatedBy},
               now(), 0);
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.dto.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
       update user u
       <set>
          <if test="entity != null">
@@ -73,12 +73,12 @@
       </set>
       where u.`id` = #{id}
    </update>
-   <update id="delete" parameterType="com.lib.bookbrain.model.dto.Payload">
+   <update id="delete" parameterType="com.lib.bookbrain.model.Payload">
       update user u
       set u.`condition` = #{entity.condition}
       where u.`id` = #{id};
    </update>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.dto.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
       select u.`id`,
              u.`display_name`,
              u.`email`,
@@ -97,14 +97,14 @@
       from user u
       where u.`id` = #{id};
    </select>
-   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.dto.Payload">
+   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
       select u.`id`,
              u.`display_name`
       from user u
       where u.`id` = #{id}
         and u.`authentication_string` = MD5(#{authenticationString});
    </select>
-   <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.dto.Payload">
+   <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
       select count(*)
       from user u
       where u.`id` = #{id};
@@ -165,9 +165,9 @@
              u.`display_name`,
              u.`authority`
       from user u,
-           token_used t
+           token_access_record t
       where t.token = #{token}
         and u.id = t.id
-        and t.`last_use_time` > SUBDATE(NOW(), 7)
+        and t.`used_time` > SUBDATE(NOW(), 7)
    </select>
 </mapper>
