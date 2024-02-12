@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
  *
  * @author yunxia
  */
-@Component
+@Component("PermissionMissException")
 public class PermissionMissException extends RuntimeException {
 }

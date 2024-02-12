@@ -3,7 +3,7 @@ package com.lib.bookbrain.context;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SimpleThreadContext<T> {
+public class SimpleThreadContext<T> { // 相同类型T的注入获取到的对象是同一个，不同类型T之间在单例模式下有无冲突有待验证
 private final ThreadLocal<T> threadLocal;
 
 public SimpleThreadContext() {
@@ -21,4 +21,5 @@ public T get() {
 public void remove() {
    threadLocal.remove();
 }
+
 }

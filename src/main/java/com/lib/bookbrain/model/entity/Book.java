@@ -14,6 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Book extends BaseEntity {
+
 /**
  * 书籍唯一标识
  */
@@ -33,4 +34,5 @@ private Boolean borrowable;
  * 书籍出版信息
  */
 private BookInfo bookInfo;
+
 }

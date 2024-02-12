@@ -11,30 +11,37 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Log extends BaseEntity {
+
 /**
  *
  */
 private Integer id;
+
 /**
  *
  */
 private String type;
+
 /**
  *
  */
 private String serviceName;
+
 /**
  *
  */
 private Integer dataId;
+
 /**
  *
  */
 private String input;
+
 /**
  *
  */
 private String output = "{}";
+
 /**
  *
  */

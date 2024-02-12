@@ -1,7 +1,7 @@
 package com.lib.bookbrain.config;
 
 import com.lib.bookbrain.context.SimpleThreadContext;
-import com.lib.bookbrain.model.TokenBody;
+import com.lib.bookbrain.model.comm.TokenBody;
 import com.lib.bookbrain.utils.Jwt;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -70,7 +70,7 @@ public void addInterceptors(InterceptorRegistry registry) {
 @AllArgsConstructor
 static class Interceptor implements HandlerInterceptor {
    private static final String tokenHeader;
-
+   
    static {
       tokenHeader = "token";
    }

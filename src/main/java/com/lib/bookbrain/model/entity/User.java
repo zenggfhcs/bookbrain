@@ -58,10 +58,12 @@ private String surname;
  * 名
  */
 private String name;
+
 /**
  * 性别
  */
-private Short sex;
+private Short gender;
+
 /**
  * 年龄
  */

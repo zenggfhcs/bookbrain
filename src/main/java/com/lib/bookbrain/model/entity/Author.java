@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Author extends BaseEntity {
+
 /**
  * 作者 id
  */

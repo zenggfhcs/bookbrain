@@ -1,7 +1,7 @@
 package com.lib.bookbrain.service;
 
-import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.comm.Payload;
+import com.lib.bookbrain.model.comm.Response;
 import com.lib.bookbrain.model.entity.Log;
 
 public interface LogService extends BaseService<Log> {

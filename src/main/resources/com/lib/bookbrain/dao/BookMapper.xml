@@ -16,14 +16,14 @@
                    select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
    </resultMap>
    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.bookId" keyColumn="id"
-           parameterType="com.lib.bookbrain.model.Payload">
+           parameterType="com.lib.bookbrain.model.comm.Payload">
       insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
                         `last_updated_time`, `revision`)
       VALUES (#{entity.bookDamageLevel}, #{entity.borrowable}, #{entity.bookInfo.bookInfoId}, #{entity.createBy},
               now(),
               #{entity.updateBy}, now(), #{entity.revision})
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.comm.Payload">
       update book b
       <set>
          <if test="entity != null">
@@ -48,7 +48,7 @@
       where b.`id` = #{id}
       and b.`revision` = #{revision}
    </update>
-   <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.comm.Payload">
       delete
       from book b
       where b.`id` = #{id}
@@ -67,7 +67,7 @@
       <where>
       </where>
    </select>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.Payload">
       select b.`id`,
              b.`damage_level`,
              b.`borrowable`,

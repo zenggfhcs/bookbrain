@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
  *
  * @author yunxia
  */
-@Component
+@Component("UpdateErrorException")
 public class UpdateErrorException extends RuntimeException {
 }

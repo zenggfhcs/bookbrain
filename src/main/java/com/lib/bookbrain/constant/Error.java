@@ -1,7 +1,6 @@
 package com.lib.bookbrain.constant;
 
 import com.lib.bookbrain.utils.MyBean;
-import com.lib.bookbrain.utils.Parse;
 
 /**
  * Exception Enum
@@ -32,7 +31,6 @@ public enum Error {
  * @return {@link RuntimeException} diy 的异常类对象
  */
 public RuntimeException generateError() {
-   String _beanName = Parse.firstLower(this.name());
-   return MyBean.get(_beanName, RuntimeException.class);
+   return MyBean.get(this.name(), RuntimeException.class);
 }
 }

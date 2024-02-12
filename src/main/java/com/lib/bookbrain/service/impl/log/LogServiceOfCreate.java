@@ -1,7 +1,7 @@
 package com.lib.bookbrain.service.impl.log;
 
-import com.lib.bookbrain.model.Payload;
-import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.comm.Payload;
+import com.lib.bookbrain.model.comm.Response;
 import com.lib.bookbrain.model.entity.Log;
 import com.lib.bookbrain.service.LogService;
 

@@ -29,7 +29,7 @@
       </where>
    </select>
 
-   <select id="getById" parameterType="com.lib.bookbrain.model.Payload" resultMap="BaseResultMap">
+   <select id="getById" parameterType="com.lib.bookbrain.model.comm.Payload" resultMap="BaseResultMap">
       select distinct d.`id`,
                       d.`book_id`,
                       d.`return_deadline`,
@@ -43,13 +43,13 @@
       where d.`id` = #{id}
    </select>
 
-   <delete id="delete" parameterType="com.lib.bookbrain.model.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.comm.Payload">
       delete
       from debit d
       where d.`id` = #{id}
    </delete>
 
-   <insert id="insert" parameterType="com.lib.bookbrain.model.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.comm.Payload" useGeneratedKeys="true"
            keyProperty="entity.debitId">
       insert into debit (`book_id`, `return_deadline`,
                          `return_date`, `created_by`, `creation_time`,
@@ -59,7 +59,7 @@
               #{entity.updateBy}, NOW(), #{entity.revision})
    </insert>
 
-   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.comm.Payload">
       update debit d
       <set>
          <if test="entity != null">

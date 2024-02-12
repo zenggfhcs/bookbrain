@@ -1,6 +1,6 @@
 package com.lib.bookbrain.controller;
 
-import com.lib.bookbrain.model.Response;
+import com.lib.bookbrain.model.comm.Response;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

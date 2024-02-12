@@ -1,4 +1,4 @@
-package com.lib.bookbrain.model;
+package com.lib.bookbrain.model.comm;
 
 
 import com.lib.bookbrain.constant.Message;

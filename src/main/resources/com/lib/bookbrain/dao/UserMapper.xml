@@ -14,7 +14,7 @@
       <result property="surname" column="surname" jdbcType="VARCHAR"/>
       <result property="name" column="name" jdbcType="VARCHAR"/>
       <result property="age" column="age" jdbcType="TINYINT"/>
-      <result property="sex" column="sex" jdbcType="TINYINT"/>
+      <result property="gender" column="gender" jdbcType="TINYINT"/>
       <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
       <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
       <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
@@ -22,16 +22,16 @@
       <result property="revision" column="revision" jdbcType="INTEGER"/>
    </resultMap>
    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.userId"
-           parameterType="com.lib.bookbrain.model.Payload">
+           parameterType="com.lib.bookbrain.model.comm.Payload">
       insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
-                       `condition`, `authority`, `surname`, `name`, `age`, `sex`,
+                       `condition`, `authority`, `surname`, `name`, `age`, `gender`,
                        `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
       values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.userEmail},
               #{entity.userPhoneNumber}, #{entity.condition}, #{entity.authority}, #{entity.surname},
-              #{entity.name}, #{entity.age}, #{entity.sex}, #{entity.createdBy}, now(), #{entity.updatedBy},
+              #{entity.name}, #{entity.age}, #{entity.gender}, #{entity.createdBy}, now(), #{entity.updatedBy},
               now(), 0);
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.comm.Payload">
       update user u
       <set>
          <if test="entity != null">
@@ -59,8 +59,8 @@
             <if test="entity.age != null">
                u.`age` = #{entity.age},
             </if>
-            <if test="entity.sex != null">
-               u.`sex` = #{entity.sex},
+            <if test="entity.gender != null">
+               u.`gender` = #{entity.gender},
             </if>
             <if test="entity.updateBy != null">
                u.`updated_by` = #{entity.updateBy},
@@ -73,12 +73,12 @@
       </set>
       where u.`id` = #{id}
    </update>
-   <update id="delete" parameterType="com.lib.bookbrain.model.Payload">
+   <update id="delete" parameterType="com.lib.bookbrain.model.comm.Payload">
       update user u
       set u.`condition` = #{entity.condition}
       where u.`id` = #{id};
    </update>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.Payload">
       select u.`id`,
              u.`display_name`,
              u.`email`,
@@ -88,7 +88,7 @@
              u.`surname`,
              u.`name`,
              u.`age`,
-             u.`sex`,
+             u.`gender`,
              u.`created_by`,
              u.`creation_time`,
              u.`updated_by`,
@@ -97,14 +97,14 @@
       from user u
       where u.`id` = #{id};
    </select>
-   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.Payload">
       select u.`id`,
              u.`display_name`
       from user u
       where u.`id` = #{id}
         and u.`authentication_string` = MD5(#{authenticationString});
    </select>
-   <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.Payload">
+   <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.comm.Payload">
       select count(*)
       from user u
       where u.`id` = #{id};
@@ -119,7 +119,7 @@
       u.`surname`,
       u.`name`,
       u.`age`,
-      u.`sex`,
+      u.`gender`,
       u.`created_by`,
       u.`creation_time`,
       u.`updated_by`,

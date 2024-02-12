@@ -1,6 +1,6 @@
 package com.lib.bookbrain.controller;
 
-import com.lib.bookbrain.model.Payload;
+import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.entity.User;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

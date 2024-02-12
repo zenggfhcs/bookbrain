@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
  *
  * @author yunxia
  */
-@Component
+@Component("PayloadMissException")
 public class PayloadMissException extends RuntimeException {
 }

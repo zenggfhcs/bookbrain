@@ -43,4 +43,5 @@ protected Integer revision;
  * 备注
  */
 protected String remark;
+
 }

@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class BookInfo extends BaseEntity {
+
 /**
  * 书籍信息 Id
  */
@@ -91,4 +92,5 @@ private Double price;
  * 库存量
  */
 private Integer stock;
+
 }
