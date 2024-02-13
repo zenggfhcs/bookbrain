@@ -14,42 +14,42 @@
       <result property="revision" column="revision" jdbcType="INTEGER"/>
    </resultMap>
    <select id="getBy" resultMap="BaseResultMap">
-      select distinct
-      p.`id`,
-      p.`name`,
-      p.`remark`,
-      p.`created_by`,
-      p.`creation_time`,
-      p.`updated_by`,
-      p.`last_update_time`,
-      p.`revision`
+      select distinct p.`id`,
+                      p.`name`,
+                      p.`remark`,
+                      p.`created_by`,
+                      p.`creation_time`,
+                      p.`updated_by`,
+                      p.`last_updated_time`,
+                      p.`revision`
       from publisher p
       <where>
          <if test="entity != null">
-            <if test="entity.publishId != null">
-               p.`id` = #{entity.publishId}
+            <if test="entity.id != null">
+               p.`id` = #{entity.id}
             </if>
             <if test="entity.createdBy != null">
                and p.`created_by` = #{entity.createdBy}
             </if>
-            <if test="entity.updateBy != null">
-               and p.`updated_by` = #{entity.updateBy}
+            <if test="entity.updatedBy != null">
+               and p.`updated_by` = #{entity.updatedBy}
             </if>
             <if test="entity.name != null and entity.name != ''">
                and p.`name` like concat('%', #{entity.name}, '%')
             </if>
          </if>
          <if test="1 == 1">
-            # and p.`creation_time` between #{minCreateTime} and #{maxCreateTime}
-            # and p.`last_update_time` between #{minUpdateTime} and #{maxUpdateTime}
+            and p.`creation_time` between #{filter.creationTime.start} and #{filter.creationTime.end}
+            and p.`last_updated_time` between #{filter.lastUpdatedTime.start} and #{filter.lastUpdatedTime.end}
          </if>
       </where>
+      limit #{filter.page.start}, #{filter.page.end}
    </select>
    <insert id="insert" parameterType="com.lib.bookbrain.model.comm.Payload" useGeneratedKeys="true"
-           keyColumn="entity.publishId">
+           keyColumn="entity.id">
       insert into publisher(`name`, `remark`, `created_by`, `creation_time`, `updated_by`, `last_updated_time`,
                             `revision`)
-      values (#{name}, #{remark}, #{tokenBody.id}, NOW(), #{tokenBody.id}, NOW(),
+      values (#{entity.name}, #{entity.remark}, #{entity.createdBy}, NOW(), #{entity.updatedBy}, NOW(),
               0)
    </insert>
    <update id="update" parameterType="com.lib.bookbrain.model.comm.Payload">
@@ -62,16 +62,17 @@
             <if test="entity.remark != null and entity.remark != ''">
                p.`remark` = #{entity.remark},
             </if>
-            <if test="entity.updateBy != null">
-               p.`updated_by` = #{entity.updateBy},
+            <if test="entity.updatedBy != null">
+               p.`updated_by` = #{entity.updatedBy},
             </if>
          </if>
          <if test="1 == 1">
-            p.`last_update_time` = NOW(),
-            p.`revision` = (p.`revision` + 1) % 2147483647
+            p.`last_updated_time` = NOW(),
+            p.`revision`          = (p.`revision` + 1) % 2147483647
          </if>
       </set>
-      where p.`id` = #{id} and p.`revision` = #{entity.revision};
+      where p.`id` = #{id}
+        and p.`revision` = #{entity.revision};
    </update>
    <delete id="delete" parameterType="com.lib.bookbrain.model.comm.Payload">
       delete
@@ -94,14 +95,16 @@
    <select id="getToUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.Payload">
       select
       <trim suffixOverrides=",">
-         <if test="name != null and name != ''">
-            p.`name`,
-         </if>
-         <if test="remark != null and remark != ''">
-            p.`remark`,
-         </if>
-         <if test="1 == 1">
-            p.`revision`
+         <if test="entity != null">
+            <if test="entity.name != null and entity.name != ''">
+               p.`name`,
+            </if>
+            <if test="entity.remark != null and entity.remark != ''">
+               p.`remark`,
+            </if>
+            <if test="1 == 1">
+               p.`revision`
+            </if>
          </if>
       </trim>
       from publisher p

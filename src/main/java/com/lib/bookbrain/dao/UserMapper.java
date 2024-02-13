@@ -1,6 +1,8 @@
 package com.lib.bookbrain.dao;
 
+import com.lib.bookbrain.model.comm.FilterPayload;
 import com.lib.bookbrain.model.comm.Payload;
+import com.lib.bookbrain.model.comm.filters.UserFilter;
 import com.lib.bookbrain.model.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -12,9 +14,9 @@ import java.util.List;
  */
 @Component
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends BaseMapper<User, UserFilter> {
 /* ============================ 继承 ============================ */
-List<User> getBy(Payload<User> payload);
+List<User> getBy(FilterPayload<User, UserFilter> payload);
 
 int insert(Payload<User> payload);
 

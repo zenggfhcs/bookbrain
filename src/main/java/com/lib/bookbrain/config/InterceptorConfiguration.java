@@ -60,7 +60,8 @@ public void addInterceptors(InterceptorRegistry registry) {
          .excludePathPatterns(      // 在拦截路径中排除以下路径
                "/users/login",      //
                "/users/register",   //
-               "/token"             //
+               "/token",             //
+               "/"
          );
 }
 

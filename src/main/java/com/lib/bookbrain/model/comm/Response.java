@@ -1,8 +1,7 @@
 package com.lib.bookbrain.model.comm;
 
 
-import com.lib.bookbrain.constant.Message;
-import com.lib.bookbrain.constant.ResponseCode;
+import com.lib.bookbrain.constant.ResponseInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,7 +39,19 @@ private Object data;
  * @return 成功请求的 Response 对象（有数据）
  */
 public static Response success(Object data) {
-   return new Response(LocalDateTime.now(), ResponseCode.SUCCESS.getCode(), "", data);
+   return success(data, ResponseInfo.SUCCESS);
+}
+
+/**
+ * 请求成功
+ *
+ * @param data data
+ * @param info info
+ * @return response
+ */
+public static Response success(Object data, ResponseInfo info) {
+   BaseResponseInfo responseInfo = info.getInfo();
+   return new Response(LocalDateTime.now(), responseInfo.getCode(), responseInfo.getMessage(), data);
 }
 
 /**
@@ -55,18 +66,22 @@ public static Response success() {
 /**
  * 请求失败
  *
- * @param msg 失败相关信息
- * @return 失败请求的 Response 对象
+ * @param code    code
+ * @param message msg
+ * @return response
  */
-public static Response error(String msg) {
-   return new Response(LocalDateTime.now(), ResponseCode.ERROR.getCode(), msg, null);
-}
-
-public static Response error(Message message) {
-   return error(message.getMsg());
-}
-
 public static Response error(Integer code, String message) {
    return new Response(LocalDateTime.now(), code, message, null);
+}
+
+/**
+ * 请求失败
+ *
+ * @param info info
+ * @return response
+ */
+public static Response error(ResponseInfo info) {
+   BaseResponseInfo responseInfo = info.getInfo();
+   return error(responseInfo.getCode(), responseInfo.getMessage());
 }
 }

@@ -21,7 +21,7 @@
       d.`created_by`,
       d.`creation_time`,
       d.`updated_by`,
-      d.`last_update_time`,
+      d.`last_updated_time`,
       d.`revision`
       from debit d
       <where>
@@ -54,17 +54,17 @@
       insert into debit (`book_id`, `return_deadline`,
                          `return_date`, `created_by`, `creation_time`,
                          `updated_by`, `last_updated_time`, `revision`)
-      values (#{entity.book.bookId}, #{entity.returnDeadline},
-              #{entity.returnDate}, #{entity.createBy}, NOW(),
-              #{entity.updateBy}, NOW(), #{entity.revision})
+      values (#{entity.book.id}, #{entity.returnDeadline},
+              #{entity.returnDate}, #{entity.createdBy}, NOW(),
+              #{entity.updatedBy}, NOW(), #{entity.revision})
    </insert>
 
    <update id="update" parameterType="com.lib.bookbrain.model.comm.Payload">
       update debit d
       <set>
          <if test="entity != null">
-            <if test="entity.bookId != null">
-               d.`book_id` = #{entity.bookId,jdbcType=INTEGER},
+            <if test="entity.id != null">
+               d.`book_id` = #{entity.id,jdbcType=INTEGER},
             </if>
             <if test="entity.returnDeadline != null">
                d.`return_deadline` = #{entity.returnDeadline,jdbcType=DATE},
@@ -72,13 +72,13 @@
             <if test="entity.returnDate != null">
                d.`return_date` = #{entity.returnDate,jdbcType=DATE},
             </if>
-            <if test="entity.updateBy != null">
-               d.`updated_by` = #{entity.updateBy,jdbcType=INTEGER},
+            <if test="entity.updatedBy != null">
+               d.`updated_by` = #{entity.updatedBy,jdbcType=INTEGER},
             </if>
          </if>
          <if test="1 == 1">
-            d.`last_update_time` = now(),
-            d.`revision` = (1 + b.`revision`) % 2147483647,
+            d.`last_updated_time` = now(),
+            d.`revision` = (1 + d.`revision`) % 2147483647,
          </if>
       </set>
       where d.`id` = #{id}

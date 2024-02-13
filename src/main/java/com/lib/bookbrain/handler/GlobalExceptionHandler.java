@@ -1,7 +1,7 @@
 package com.lib.bookbrain.handler;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.lib.bookbrain.constant.Message;
+import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.exception.PermissionMissException;
 import com.lib.bookbrain.exception.UpdateErrorException;
 import com.lib.bookbrain.model.comm.Response;
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
  */
 @ExceptionHandler(SQLException.class)
 public Response sqlEx() {
-   return Response.error(Message.SQL_RUN_ERROR);
+   return Response.error(ResponseInfo.SQL_EXEC_ERROR);
 }
 
 /**
@@ -35,7 +35,7 @@ public Response sqlEx() {
  */
 @ExceptionHandler(JWTVerificationException.class)
 public Response jwtEx() {
-   return Response.error(Message.TOKEN_ERROR);
+   return Response.error(ResponseInfo.TOKEN_ERROR);
 }
 
 /**
@@ -45,7 +45,7 @@ public Response jwtEx() {
  */
 @ExceptionHandler(PermissionMissException.class)
 public Response missPermission() {
-   return Response.error(Message.MISS_PERMISSION);
+   return Response.error(ResponseInfo.MISS_PERMISSION);
 }
 
 /**
@@ -55,11 +55,11 @@ public Response missPermission() {
  */
 @ExceptionHandler(UpdateErrorException.class)
 public Response updateError() {
-   return Response.error(Message.UPDATE_ERROR);
+   return Response.error(ResponseInfo.UPDATE_ERROR);
 }
 
-// @ExceptionHandler(Exception.class)
-// public Response tokenEx(Exception e) {
-//    return Response.error("请求失败:" + e.getMessage());
-// }
+@ExceptionHandler(Exception.class)
+public Response error(Exception e) {
+   return Response.error(-1, e.getMessage());
+}
 }

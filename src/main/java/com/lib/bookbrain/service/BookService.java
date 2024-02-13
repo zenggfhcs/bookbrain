@@ -1,12 +1,14 @@
 package com.lib.bookbrain.service;
 
+import com.lib.bookbrain.model.comm.FilterPayload;
 import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.comm.Response;
+import com.lib.bookbrain.model.comm.filters.BookFilter;
 import com.lib.bookbrain.model.entity.Book;
 
-public interface BookService extends BaseService<Book> {
+public interface BookService extends BaseService<Book, BookFilter> {
 @Override
-Response getBy(Payload<Book> payload);
+Response getBy(FilterPayload<Book, BookFilter> payload);
 
 @Override
 Response create(Payload<Book> payload);

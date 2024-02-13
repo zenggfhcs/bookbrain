@@ -5,7 +5,7 @@
 <mapper namespace="com.lib.bookbrain.dao.BookMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Book">
       <id column="id" jdbcType="INTEGER" property="id"/>
-      <result column="book_damage_level" jdbcType="TINYINT" property="damageLevel"/>
+      <result column="damage_level" jdbcType="TINYINT" property="damageLevel"/>
       <result column="borrowable" jdbcType="BIT" property="borrowable"/>
       <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
       <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
@@ -19,34 +19,34 @@
            parameterType="com.lib.bookbrain.model.comm.Payload">
       insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
                         `last_updated_time`, `revision`)
-      VALUES (#{entity.bookDamageLevel}, #{entity.borrowable}, #{entity.bookInfo.bookInfoId}, #{entity.createBy},
+      VALUES (#{entity.damageLevel}, #{entity.borrowable}, #{entity.bookInfo.id}, #{entity.createdBy},
               now(),
-              #{entity.updateBy}, now(), #{entity.revision})
+              #{entity.updatedBy}, now(), #{entity.revision})
    </insert>
    <update id="update" parameterType="com.lib.bookbrain.model.comm.Payload">
       update book b
       <set>
          <if test="entity != null">
-            <if test="entity.bookDamageLevel != null">
-               b.`book_damage_level` = #{entity.bookDamageLevel},
+            <if test="entity.damageLevel != null">
+               b.`damage_level` = #{entity.damageLevel},
             </if>
             <if test="entity.borrowable != null">
                b.`borrowable` = #{entity.borrowable},
             </if>
-            <if test="entity.bookInfo.bookInfoId != null">
-               b.`book_info_id` = #{entity.bookInfo.bookInfoId},
+            <if test="entity.bookInfo.id != null">
+               b.`book_info_id` = #{entity.bookInfo.id},
             </if>
-            <if test="entity.updateBy != null">
-               b.`updated_by` = #{entity.updateBy},
+            <if test="entity.updatedBy != null">
+               b.`updated_by` = #{entity.updatedBy},
             </if>
          </if>
          <if test="1 == 1">
-            b.`last_update_time` = now(),
+            b.`last_updated_time` = now(),
             b.`revision` = (1 + b.`revision`) % 2147483647,
          </if>
       </set>
       where b.`id` = #{id}
-      and b.`revision` = #{revision}
+      and b.`revision` = #{entity.revision}
    </update>
    <delete id="delete" parameterType="com.lib.bookbrain.model.comm.Payload">
       delete
@@ -55,13 +55,13 @@
    </delete>
    <select id="getBy" resultMap="BaseResultMap">
       select b.`id`,
-      b.`book_damage_level`,
+      b.`damage_level`,
       b.`borrowable`,
       b.`book_info_id`,
       b.`created_by`,
       b.`creation_time`,
       b.`updated_by`,
-      b.`last_update_time`,
+      b.`last_updated_time`,
       b.`revision`
       from book b
       <where>

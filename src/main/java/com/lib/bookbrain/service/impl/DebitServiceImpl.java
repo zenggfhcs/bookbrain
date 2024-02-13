@@ -3,9 +3,13 @@ package com.lib.bookbrain.service.impl;
 import com.lib.bookbrain.anno.AroundDelete;
 import com.lib.bookbrain.anno.AroundGet;
 import com.lib.bookbrain.anno.AroundUpdate;
+import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.DebitMapper;
+import com.lib.bookbrain.model.comm.FilterPayload;
 import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.comm.Response;
+import com.lib.bookbrain.model.comm.TokenBody;
+import com.lib.bookbrain.model.comm.filters.DebitFilter;
 import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.service.DebitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +22,17 @@ import org.springframework.stereotype.Service;
 public class DebitServiceImpl implements DebitService {
 
 private final DebitMapper debitMapper;
-private final BaseServiceImpl<Debit> baseService;
+private final BaseServiceImpl<Debit, DebitFilter> baseService;
 
 @Autowired
-public DebitServiceImpl(DebitMapper debitMapper) {
+public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenBody> threadContext) {
    this.debitMapper = debitMapper;
-   baseService = new BaseServiceImpl<>(debitMapper);
+   baseService = new BaseServiceImpl<>(threadContext, debitMapper);
 }
 
 @AroundGet
 @Override
-public Response getBy(Payload<Debit> payload) {
+public Response getBy(FilterPayload<Debit, DebitFilter> payload) {
    return baseService.getBy(payload);
 }
 

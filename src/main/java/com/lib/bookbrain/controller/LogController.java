@@ -1,8 +1,9 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
-import com.lib.bookbrain.model.comm.Payload;
+import com.lib.bookbrain.model.comm.FilterPayload;
 import com.lib.bookbrain.model.comm.Response;
+import com.lib.bookbrain.model.comm.filters.LogFilter;
 import com.lib.bookbrain.model.entity.Log;
 import com.lib.bookbrain.service.LogService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/logs")
 @AroundConduct
 public class LogController {
+
 private final LogService logService;
 
 public LogController(LogService logService) {
@@ -26,7 +28,7 @@ public LogController(LogService logService) {
 }
 
 @PostMapping("/list/select")
-public Response getLogs(@RequestBody(required = false) Payload<Log> payload) {
+public Response getLogs(@RequestBody(required = false) FilterPayload<Log, LogFilter> payload) {
    return logService.getBy(payload);
 }
 }

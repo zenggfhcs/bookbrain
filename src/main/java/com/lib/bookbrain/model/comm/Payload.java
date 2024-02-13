@@ -1,7 +1,7 @@
 package com.lib.bookbrain.model.comm;
 
 import com.lib.bookbrain.constant.Default;
-import com.lib.bookbrain.model.entity.BaseEntity;
+import com.lib.bookbrain.model.BaseEntity;
 import com.lib.bookbrain.utils.MyArrays;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,12 +26,6 @@ protected Integer id;
  * 参数实体
  */
 protected T entity;
-
-/**
- * 过滤
- */
-protected Filter filter;
-
 
 /**
  * 将 objPayload 强制转换成 Payload 对象
@@ -59,7 +53,7 @@ public static Payload<BaseEntity> getOrNew(Object objPayload) {
 public static Payload<BaseEntity> parseArgsTo(Object[] args) {
    /* ===================== args[0] ===================== */
    Payload<BaseEntity> _payload =
-         Payload.getOrNew(args[Default.payloadIndexInArgs]);// 解析参数 => payload
+         Payload.getOrNew(args[Default.PAYLOAD_INDEX_IN_ARGS]);// 解析参数 => payload
    
    /* ===================== args[1] ===================== */
    {                                                        // token 在拦截器处解析，故此处不处理
@@ -69,7 +63,7 @@ public static Payload<BaseEntity> parseArgsTo(Object[] args) {
    /* ===================== args[2] ===================== */
    {
       Integer _id =
-            (Integer) MyArrays.getOrDefault(args, Default.idIndexInArgs);
+            (Integer) MyArrays.getOrDefault(args, Default.ID_INDEX_IN_ARGS);
       _payload.setId(_id);                                  // payload 记录 id
    }
    

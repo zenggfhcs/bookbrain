@@ -21,13 +21,13 @@
       <result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
    </resultMap>
-   <insert id="insert" useGeneratedKeys="true" keyProperty="entity.userId"
+   <insert id="insert" useGeneratedKeys="true" keyProperty="entity.id"
            parameterType="com.lib.bookbrain.model.comm.Payload">
       insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
                        `condition`, `authority`, `surname`, `name`, `age`, `gender`,
                        `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
-      values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.userEmail},
-              #{entity.userPhoneNumber}, #{entity.condition}, #{entity.authority}, #{entity.surname},
+      values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email},
+              #{entity.phoneNumber}, #{entity.condition}, #{entity.authority}, #{entity.surname},
               #{entity.name}, #{entity.age}, #{entity.gender}, #{entity.createdBy}, now(), #{entity.updatedBy},
               now(), 0);
    </insert>
@@ -41,8 +41,8 @@
             <if test="entity.displayName != null and entity.displayName != ''">
                u.`display_name` = #{entity.displayName},
             </if>
-            <if test="entity.userEmail != null and entity.userEmail != ''">
-               u.`email` = #{entity.userEmail},
+            <if test="entity.email != null and entity.email != ''">
+               u.`email` = #{entity.email},
             </if>
             <if test="entity.condition != null">
                u.`condition` = #{entity.condition},
@@ -62,12 +62,12 @@
             <if test="entity.gender != null">
                u.`gender` = #{entity.gender},
             </if>
-            <if test="entity.updateBy != null">
-               u.`updated_by` = #{entity.updateBy},
+            <if test="entity.updatedBy != null">
+               u.`updated_by` = #{entity.updatedBy},
             </if>
          </if>
          <if test="1 == 1">
-            u.`last_update_time` = now(),
+            u.`last_updated_time` = now(),
             u.`revision` = (1 + u.`revision`) % 2147483647,
          </if>
       </set>
@@ -102,14 +102,14 @@
              u.`display_name`
       from user u
       where u.`id` = #{id}
-        and u.`authentication_string` = MD5(#{authenticationString});
+        and u.`authentication_string` = MD5(#{entity.authenticationString});
    </select>
    <select id="has" resultType="java.lang.Integer" parameterType="com.lib.bookbrain.model.comm.Payload">
       select count(*)
       from user u
       where u.`id` = #{id};
    </select>
-   <select id="getBy" resultMap="BaseResultMap">
+   <select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.FilterPayload">
       select u.`id`,
       u.`display_name`,
       u.`email`,
@@ -123,13 +123,13 @@
       u.`created_by`,
       u.`creation_time`,
       u.`updated_by`,
-      u.`last_update_time`,
+      u.`last_updated_time`,
       u.`revision`
       from user u
       <where>
          <if test="entity != null">
-            <if test="entity.userId != null">
-               u.`id` = #{entity.userId}
+            <if test="entity.id != null">
+               u.`id` = #{entity.id}
             </if>
             <if test="entity.surname != null and entity.surname != ''">
                and u.`surname` = #{entity.surname}
@@ -137,23 +137,23 @@
             <if test="entity.name != null and entity.name != ''">
                and u.`name` = #{entity.name}
             </if>
-            <if test="entity.userEmail != null and entity.userEmail != ''">
-               and u.`email` = #{entity.userEmail}
+            <if test="entity.email != null and entity.email != ''">
+               and u.`email` = #{entity.email}
             </if>
-            <if test="entity.userPhoneNumber != null and entity.userPhoneNumber != ''">
-               and u.`phone_number` like CONCAT(#{entity.userPhoneNumber}, '%')
+            <if test="entity.phoneNumber != null and entity.phoneNumber != ''">
+               and u.`phone_number` like CONCAT(#{entity.phoneNumber}, '%')
             </if>
             <if test="entity.name != null and entity.name != ''">
                and u.`name` like CONCAT('%', #{entity.name}, '%')
             </if>
          </if>
          <if test="filter != null">
-            and u.`age` between #{lowerAge} and #{upperAge}
-            and u.`creation_time` between #{lowerCreateTime} and #{upperCreateTime}
-            and u.`last_update_time` between #{lowerUpdateTime} and #{upperUpdateTime}
+            and u.`age` between #{filter.age.start} and #{filter.age.end}
+            and u.`creation_time` between #{filter.creationTime.start} and #{filter.creationTime.end}
+            and u.`last_updated_time` between #{filter.lastUpdatedTime.start} and #{filter.lastUpdatedTime.end}
          </if>
       </where>
-      limit #{pageStart}, #{pageSize}
+      limit #{filter.page.start}, #{filter.page.end}
    </select>
 
    <select id="getToUpdate" resultMap="BaseResultMap">

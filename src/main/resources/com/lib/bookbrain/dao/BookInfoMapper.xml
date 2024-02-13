@@ -27,7 +27,7 @@
                    select="com.lib.bookbrain.dao.PublisherMapper.getById"/>
    </resultMap>
    <insert id="insert" parameterType="com.lib.bookbrain.model.comm.Payload" useGeneratedKeys="true"
-           keyProperty="entity.bookInfoId">
+           keyProperty="entity.id">
       insert into book_info (`publisher_id`, `publish_place`, `isbn`, `cip`, `book_name`,
                              `book_type`, `cover`, `author`, `describe`, `publish_date`,
                              `keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
@@ -56,8 +56,8 @@
       update book_info bif, authority auth
       <set>
          <if test="entity != null">
-            <if test="entity.publishId != null">
-               bif.`publish_id` = #{entity.publishId},
+            <if test="entity.id != null">
+               bif.`id` = #{entity.id},
             </if>
             <if test="entity.publishPlace != null and entity.publishPlace != ''">
                bif.`publish_place` = #{entity.publishPlace},
@@ -77,7 +77,7 @@
             <if test="entity.cover != null and entity.cover != ''">
                bif.`cover` = #{entity.cover},
             </if>
-            <if test="author != null and author != ''">
+            <if test="entity.author != null and entity.author != ''">
                bif.`author` = #{entity.author},
             </if>
             <if test="entity.publishDate != null">
@@ -95,15 +95,15 @@
             <if test="entity.stock != null">
                bif.`stock` = #{entity.stock},
             </if>
-            <if test="entity.updateBy != null">
-               bif.`updated_by` = #{entity.updateBy},
+            <if test="entity.updatedBy != null">
+               bif.`updated_by` = #{entity.updatedBy},
             </if>
             <if test="entity.describe != null">
                bif.`describe` = #{entity.describe},
             </if>
          </if>
          <if test="1 == 1">
-            bif.`last_update_time` = NOW(),
+            bif.`last_updated_time` = NOW(),
             bif.`revision` = (1 + bif.`revision`) % 2147483647,
          </if>
       </set>
@@ -118,7 +118,7 @@
    </delete>
    <select id="getBy" resultMap="BaseResultMap">
       select distinct bif.`id`,
-      bif.`publish_id`,
+      bif.`id`,
       bif.`publish_place`,
       bif.`isbn`,
       bif.`cip`,
@@ -135,24 +135,23 @@
       bif.`created_by`,
       bif.`creation_time`,
       bif.`updated_by`,
-      bif.`last_update_time`,
+      bif.`last_updated_time`,
       bif.`revision`
       from book_info bif, authority auth
       <where>
          <if test="entity != null">
-            <if test="entity.bookInfoId != null">
-               and bif.`id` = #{entity.bookInfoId}
+            <if test="entity.id != null">
+               and bif.`id` = #{entity.id}
             </if>
             <if test="entity.bookName != null">
                and bif.`book_name` like concat('%', #{entity.bookName}, '%')
             </if>
          </if>
       </where>
-      limit #{filter.pageStart}, #{filter.pageSize}
+      limit #{filter.page.start}, #{filter.page.end}
    </select>
    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.Payload">
       select distinct bif.`id`,
-                      bif.`publisher_id`,
                       bif.`publish_place`,
                       bif.`isbn`,
                       bif.`cip`,

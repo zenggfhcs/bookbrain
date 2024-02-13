@@ -1,8 +1,11 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
+import com.lib.bookbrain.constant.HeaderName;
+import com.lib.bookbrain.model.comm.FilterPayload;
 import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.comm.Response;
+import com.lib.bookbrain.model.comm.filters.DebitFilter;
 import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.service.DebitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,27 +28,27 @@ public DebitController(DebitService debitService) {
 }
 
 @PostMapping("/list/select")
-public Response getDebits(@RequestBody(required = false) Payload<Debit> payload) {
+public Response getDebits(@RequestBody(required = false) FilterPayload<Debit, DebitFilter> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken) {
    return debitService.getBy(payload);
 }
 
 @PostMapping("/list/create")
-public Response createDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader("token") String ignoredToken) {
+public Response createDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken) {
    return debitService.create(payload);
 }
 
 @PostMapping("/{ignoredId}/select")
-public Response getDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
+public Response getDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
    return debitService.getById(payload);
 }
 
 @PostMapping("/{ignoredId}/update")
-public Response updateDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
+public Response updateDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
    return debitService.update(payload);
 }
 
 @PostMapping("/{ignoredId}/delete")
-public Response deleteDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader("token") String ignoredToken, @PathVariable Integer ignoredId) {
+public Response deleteDebit(@RequestBody(required = false) Payload<Debit> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
    return debitService.delete(payload);
 }
 }

@@ -5,8 +5,11 @@ import com.lib.bookbrain.anno.AroundGet;
 import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.PublisherMapper;
+import com.lib.bookbrain.model.comm.FilterPayload;
 import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.comm.Response;
+import com.lib.bookbrain.model.comm.TokenBody;
+import com.lib.bookbrain.model.comm.filters.PublisherFilter;
 import com.lib.bookbrain.model.entity.Publisher;
 import com.lib.bookbrain.service.PublisherService;
 import org.springframework.stereotype.Service;
@@ -17,19 +20,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class PublisherServiceImpl implements PublisherService {
 private final PublisherMapper publisherMapper;
-private final BaseServiceImpl<Publisher> baseService;
+private final BaseServiceImpl<Publisher, PublisherFilter> baseService;
 
-private final SimpleThreadContext<Integer> threadContext;
-
-public PublisherServiceImpl(PublisherMapper publisherMapper, SimpleThreadContext<Integer> threadContext) {
+public PublisherServiceImpl(PublisherMapper publisherMapper, SimpleThreadContext<TokenBody> threadContext) {
    this.publisherMapper = publisherMapper;
-   baseService = new BaseServiceImpl<>(publisherMapper);
-   this.threadContext = threadContext;
+   baseService = new BaseServiceImpl<>(threadContext, publisherMapper);
 }
 
 @AroundGet
 @Override
-public Response getBy(Payload<Publisher> payload) {
+public Response getBy(FilterPayload<Publisher, PublisherFilter> payload) {
    return baseService.getBy(payload);
 }
 

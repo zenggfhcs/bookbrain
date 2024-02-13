@@ -1,6 +1,5 @@
 package com.lib.bookbrain.controller;
 
-import com.lib.bookbrain.constant.ResponseCode;
 import com.lib.bookbrain.model.comm.Response;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public ExceptionController(ErrorAttributes errorAttributes, List<ErrorViewResolv
 @GetMapping
 public Response customError(HttpServletRequest request) {
    Map<String, Object> attr = getAttr(request);
-   Integer code = (Integer) attr.getOrDefault("status", ResponseCode.ERROR);
+   Integer code = (Integer) attr.getOrDefault("status", 404);
    String msg = attr.get("error") + " " + attr.get("path");
    return Response.error(code, msg);
 }

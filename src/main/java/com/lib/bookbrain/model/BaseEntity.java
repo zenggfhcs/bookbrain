@@ -1,4 +1,4 @@
-package com.lib.bookbrain.model.entity;
+package com.lib.bookbrain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
