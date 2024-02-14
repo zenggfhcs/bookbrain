@@ -13,6 +13,7 @@ protected FilterItem<LocalDateTime> creationTime;
 protected FilterItem<LocalDateTime> lastUpdatedTime;
 
 protected FilterItem<Integer> page;
+
 public Filter() {
    super();
    creationTime = Default.LOCAL_DATE_TIME_RANGE;

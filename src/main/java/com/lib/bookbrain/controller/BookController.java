@@ -39,19 +39,22 @@ public Response createBook(@RequestBody(required = false) Payload<Book> payload,
    return bookService.create(payload);
 }
 
-@PostMapping("/{ignoredId}/select")
-public Response getBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
+@PostMapping("/{id}/select")
+public Response getBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+   payload.setId(id);
    return bookService.getById(payload);
 }
 
-@PostMapping("/{ignoredId}/update")
-public Response updateBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
+@PostMapping("/{id}/update")
+public Response updateBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+   payload.setId(id);
    return bookService.update(payload);
 }
 
-@PostMapping("/{ignoredId}/delete")
-public Response deleteBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
+@PostMapping("/{id}/delete")
+public Response deleteBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+   payload.setId(id);
    return bookService.delete(payload);
 }
-
+   
 }

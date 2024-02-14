@@ -60,3 +60,7 @@ async:
       name:
         prefix: async-service-
 
+controller:
+  user:
+    getBy: 1
+    getById: 1

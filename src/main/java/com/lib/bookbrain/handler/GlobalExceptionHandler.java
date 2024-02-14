@@ -2,8 +2,7 @@ package com.lib.bookbrain.handler;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.lib.bookbrain.constant.ResponseInfo;
-import com.lib.bookbrain.exception.PermissionMissException;
-import com.lib.bookbrain.exception.UpdateErrorException;
+import com.lib.bookbrain.exception.BaseException;
 import com.lib.bookbrain.model.comm.Response;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -25,7 +24,7 @@ public class GlobalExceptionHandler {
  */
 @ExceptionHandler(SQLException.class)
 public Response sqlEx() {
-   return Response.error(ResponseInfo.SQL_EXEC_ERROR);
+   return Response.error(ResponseInfo.SQL_EXEC_FAILED);
 }
 
 /**
@@ -35,27 +34,12 @@ public Response sqlEx() {
  */
 @ExceptionHandler(JWTVerificationException.class)
 public Response jwtEx() {
-   return Response.error(ResponseInfo.TOKEN_ERROR);
+   return Response.error(ResponseInfo.TOKEN_FAILED);
 }
 
-/**
- * 权限缺失
- *
- * @return 规范返回
- */
-@ExceptionHandler(PermissionMissException.class)
-public Response missPermission() {
-   return Response.error(ResponseInfo.MISS_PERMISSION);
-}
-
-/**
- * 更新蔓延抛出异常
- *
- * @return 规范返回
- */
-@ExceptionHandler(UpdateErrorException.class)
-public Response updateError() {
-   return Response.error(ResponseInfo.UPDATE_ERROR);
+@ExceptionHandler(BaseException.class)
+public Response ex(BaseException be) {
+   return Response.error(be.getInfo());
 }
 
 @ExceptionHandler(Exception.class)

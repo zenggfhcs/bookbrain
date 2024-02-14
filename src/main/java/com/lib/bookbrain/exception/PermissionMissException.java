@@ -1,5 +1,6 @@
 package com.lib.bookbrain.exception;
 
+import com.lib.bookbrain.constant.ResponseInfo;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,5 +9,8 @@ import org.springframework.stereotype.Component;
  * @author yunxia
  */
 @Component("PermissionMissException")
-public class PermissionMissException extends RuntimeException {
+public class PermissionMissException extends BaseException {
+{
+   info = ResponseInfo.MISS_PERMISSION;
+}
 }

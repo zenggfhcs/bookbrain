@@ -1,5 +1,6 @@
 package com.lib.bookbrain.exception;
 
+import com.lib.bookbrain.constant.ResponseInfo;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,5 +9,8 @@ import org.springframework.stereotype.Component;
  * @author yunxia
  */
 @Component("UpdateErrorException")
-public class UpdateErrorException extends RuntimeException {
+public class UpdateErrorException extends BaseException {
+{
+   info = ResponseInfo.ERROR;
+}
 }

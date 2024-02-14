@@ -1,5 +1,6 @@
 package com.lib.bookbrain.exception;
 
+import com.lib.bookbrain.constant.ResponseInfo;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,5 +9,8 @@ import org.springframework.stereotype.Component;
  * @author yunxia
  */
 @Component("PayloadMissException")
-public class PayloadMissException extends RuntimeException {
+public class PayloadMissException extends BaseException {
+{
+   info = ResponseInfo.ERROR;
+}
 }

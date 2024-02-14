@@ -14,12 +14,12 @@ public enum ResponseInfo {
    /**
     * 登录失败提示信息：用户名或者密码错误
     */
-   LOGIN_FAILED("Username or password error"),
+   ID_OR_PASSWORD_FAILED("Username or password error"),
    
    /**
     * token 创建或者解析时异常
     */
-   TOKEN_ERROR("Token error"),
+   TOKEN_FAILED("Token error"),
    
    /**
     *
@@ -34,7 +34,7 @@ public enum ResponseInfo {
    /**
     *
     */
-   GET_ERROR("The data does not exist"),
+   DATA_NOT_EXIST("The data does not exist"),
    
    /**
     *
@@ -64,13 +64,17 @@ public enum ResponseInfo {
    /**
     *
     */
-   MISS_PERMISSION("Delete failed"),
+   MISS_PERMISSION("You don't have enough permission to do this"),
    
    /**
     *
     */
-   SQL_EXEC_ERROR("Sql execution failed"),
-   ;
+   SQL_EXEC_FAILED("Sql execution failed"),
+   
+   /**
+    *
+    */
+   ERROR("service error");
 
 private final BaseResponseInfo info;
 
@@ -79,10 +83,10 @@ ResponseInfo(BaseResponseInfo info) {
 }
 
 ResponseInfo(Integer code, String msg) {
-   this.info = BaseResponseInfo.builder()
+   this(BaseResponseInfo.builder()
          .message(msg)
          .code(code)
-         .build();
+         .build());
 }
 
 ResponseInfo(String msg) {

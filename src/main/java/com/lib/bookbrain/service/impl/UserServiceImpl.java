@@ -35,7 +35,7 @@ public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenBody> thr
 public Response login(Payload<User> payload) {
    User _user = userMapper.login(payload);            // 登录
    if (_user == null) {                               // 登录失败
-      return Response.error(ResponseInfo.LOGIN_FAILED);    // 返回登录失败
+      return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED);    // 返回登录失败
    }
    return Response.success();                         // 返回成功
 }

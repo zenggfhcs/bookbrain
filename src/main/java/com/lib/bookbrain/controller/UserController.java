@@ -39,18 +39,21 @@ public Response createUser(@RequestBody(required = false) Payload<User> payload,
    return userService.create(payload);
 }
 
-@PostMapping("/{ignoredId}/select")
-public Response getUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
+@PostMapping("/{id}/select")
+public Response getUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+   payload.setId(id);
    return userService.getById(payload);
 }
 
-@PostMapping("/{ignoredId}/update")
-public Response updateUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
+@PostMapping("/{id}/update")
+public Response updateUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+   payload.setId(id);
    return userService.update(payload);
 }
 
-@PostMapping("/{ignoredId}/delete")
-public Response deleteUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
+@PostMapping("/{id}/delete")
+public Response deleteUser(@RequestBody(required = false) Payload<User> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+   payload.setId(id);
    return userService.delete(payload);
 }
 }

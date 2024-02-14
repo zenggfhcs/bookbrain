@@ -1,8 +1,6 @@
 package com.lib.bookbrain.model.comm;
 
-import com.lib.bookbrain.constant.Default;
 import com.lib.bookbrain.model.BaseEntity;
-import com.lib.bookbrain.utils.MyArrays;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,35 +39,6 @@ public static Payload<BaseEntity> getOrNew(Object objPayload) {
    }
    return new Payload<>();
 }
-
-/**
- * 对理想的 args 进行解析
- * <br/>得到一个 payload
- * <br/>里面包含了args 里面所有需要用到的信息
- *
- * @param args 参数数组 理想 args = [payload, token, id]
- * @return 集合了 args 所有信息的 payload
- */
-public static Payload<BaseEntity> parseArgsTo(Object[] args) {
-   /* ===================== args[0] ===================== */
-   Payload<BaseEntity> _payload =
-         Payload.getOrNew(args[Default.PAYLOAD_INDEX_IN_ARGS]);// 解析参数 => payload
-   
-   /* ===================== args[1] ===================== */
-   {                                                        // token 在拦截器处解析，故此处不处理
-      // args[Default.tokenIndexInArgs] => token
-   }
-   
-   /* ===================== args[2] ===================== */
-   {
-      Integer _id =
-            (Integer) MyArrays.getOrDefault(args, Default.ID_INDEX_IN_ARGS);
-      _payload.setId(_id);                                  // payload 记录 id
-   }
-   
-   return _payload;
-}
-
 
 /**
  * 通过实体生成载体

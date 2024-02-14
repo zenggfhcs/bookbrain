@@ -22,7 +22,7 @@ public class BookInfo extends BaseEntity {
 /**
  * 书籍信息 Id
  */
-private Integer id;
+private Long id;
 
 /**
  * 出版社

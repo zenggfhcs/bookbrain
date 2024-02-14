@@ -14,7 +14,7 @@ public class Author extends BaseEntity {
 /**
  * 作者 id
  */
-private Integer id;
+private Long id;
 
 /**
  * 名字

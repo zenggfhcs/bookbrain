@@ -35,19 +35,22 @@ public Response createPublisher(@RequestBody(required = false) Payload<Publisher
    return publisherService.create(payload);
 }
 
-@PostMapping("/{ignoredId}/select")
-public Response getPublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
+@PostMapping("/{id}/select")
+public Response getPublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+   payload.setId(id);
    return publisherService.getById(payload);
 }
 
 
-@PostMapping("/{ignoredId}/update")
-public Response updatePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
+@PostMapping("/{id}/update")
+public Response updatePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+   payload.setId(id);
    return publisherService.update(payload);
 }
 
-@PostMapping("/{ignoredId}/delete")
-public Response deletePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer ignoredId) {
+@PostMapping("/{id}/delete")
+public Response deletePublisher(@RequestBody(required = false) Payload<Publisher> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+   payload.setId(id);
    return publisherService.delete(payload);
 }
 }
