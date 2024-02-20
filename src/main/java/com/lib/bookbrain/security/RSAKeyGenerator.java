@@ -2,7 +2,6 @@ package com.lib.bookbrain.security;
 
 import com.lib.bookbrain.utils.MyFile;
 
-import java.io.IOException;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -44,7 +43,7 @@ public static PrivateKey getPrivateKeyByPath(String path) {
    }
 }
 
-public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+public static void main(String[] args) {
    String publicKeyString = MyFile.read("jwt-rsa-pub.key"); //Files.readString(Path.of("resources/jwt-rsa-pub.key"));
    String privateKeyString = MyFile.read("jwt-rsa-pri.key"); // Files.readString(Path.of("resources/jwt-rsa-pri.key"));
    

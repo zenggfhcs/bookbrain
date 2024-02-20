@@ -13,7 +13,7 @@ public static final Algorithm HMAC;
 public static final Algorithm RSA;
 /* ============================ HMAC ============================ */
 /* ============================ HMAC ============================ */
-private static final String rsaPubKeyFileName = "jwt-rsa-pub.key";
+public static final String rsaPubKeyFileName = "jwt-rsa-pub.key";
 private static final String hmacKeyFileName = "jwt-hmac.key";
 private static final String rsaPriKeyFileName = "jwt-rsa-pri.key";
 /* ============================ RSA ============================ */
