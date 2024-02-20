@@ -2,6 +2,7 @@ package com.lib.bookbrain.security;
 
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.lib.bookbrain.model.comm.TokenInfo;
 import com.lib.bookbrain.model.entity.User;
@@ -30,15 +31,15 @@ static {
 }
 
 /* ============================ encoder ============================ */
-public static String encoder(User user, AlgorithmType type) {
-   return coder(user.getId(), type);
+public static String encoder(User user, Algorithm algorithm) {
+   return coder(user.getId(), algorithm);
 }
 
-private static String coder(Integer id, AlgorithmType type) {
-   return coder(id, System.currentTimeMillis(), type);
+private static String coder(Integer id, Algorithm algorithm) {
+   return coder(id, System.currentTimeMillis(), algorithm);
 }
 
-private static String coder(Integer id, Long time, AlgorithmType type) {
+private static String coder(Integer id, Long time, Algorithm algorithm) {
    return JWT.create()
          .withIssuer("sys")
          .withSubject("Valid")
@@ -46,7 +47,7 @@ private static String coder(Integer id, Long time, AlgorithmType type) {
          .withNotBefore(new Date(culTime(time + EFFECTIVE_DURATION)))
          .withExpiresAt(new Date(culTime(time)))
          .withJWTId(UUID.randomUUID().toString())
-         .sign(type.algorithm);
+         .sign(algorithm);
 }
 
 private static Long culTime(Long time) {
@@ -64,11 +65,11 @@ private static Long culTime(Long time) {
  * @return 解码后的 TokenBody 对象
  */
 public static TokenInfo decoder(String token) {
-   return decoder(token, AlgorithmType.HMAC);
+   return decoder(token, PreDefinedAlgorithm.HMAC);
 }
 
-public static TokenInfo decoder(String token, AlgorithmType type) {
-   DecodedJWT deJwt = JWT.require(type.algorithm)
+public static TokenInfo decoder(String token, Algorithm algorithm) {
+   DecodedJWT deJwt = JWT.require(algorithm)
          .build()
          .verify(token);     // 解析 jwt
    
@@ -87,7 +88,7 @@ public static void main(String[] args) {
    /* ------------------------ test ------------------------ */
    User user = new User();
    user.setId(1);
-   System.out.println(encoder(user, AlgorithmType.RSA));
+   System.out.println(encoder(user, PreDefinedAlgorithm.RSA));
 }
 
 }

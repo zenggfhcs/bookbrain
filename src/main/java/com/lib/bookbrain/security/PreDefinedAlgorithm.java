@@ -7,12 +7,17 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Objects;
 
-public class MyAlgorithm {
-public static final String rsaPubKeyFileName = "jwt-rsa-pub.key";
+public class PreDefinedAlgorithm {
 public static final Algorithm HMAC;
+/* ============================ RSA ============================ */
 public static final Algorithm RSA;
+/* ============================ HMAC ============================ */
+/* ============================ HMAC ============================ */
+private static final String rsaPubKeyFileName = "jwt-rsa-pub.key";
 private static final String hmacKeyFileName = "jwt-hmac.key";
 private static final String rsaPriKeyFileName = "jwt-rsa-pri.key";
+/* ============================ RSA ============================ */
+
 
 static {
    HMAC = Algorithm.HMAC256(Objects.requireNonNull(MyFile.read(hmacKeyFileName)));

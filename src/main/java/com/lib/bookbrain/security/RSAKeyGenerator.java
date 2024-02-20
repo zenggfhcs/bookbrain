@@ -20,9 +20,10 @@ public class RSAKeyGenerator {
 
 public static PublicKey getPublicKeyByPath(String path) {
    String publicKeyString = MyFile.read(path);
-   System.out.println(publicKeyString);
+   
    byte[] publicKeyBytes = Base64.getDecoder().decode(publicKeyString);
    X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
+   
    try {
       return KeyFactory.getInstance("RSA").generatePublic(keySpec);
    } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
@@ -32,8 +33,10 @@ public static PublicKey getPublicKeyByPath(String path) {
 
 public static PrivateKey getPrivateKeyByPath(String path) {
    String privateKeyString = MyFile.read(path);
+   
    byte[] privateKeyBytes = Base64.getDecoder().decode(privateKeyString);
    PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
+   
    try {
       return KeyFactory.getInstance("RSA").generatePrivate(keySpec);
    } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {

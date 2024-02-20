@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.exception.BaseException;
 import com.lib.bookbrain.model.comm.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +15,7 @@ import java.sql.SQLException;
  *
  * @author yunxia
  */
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -45,7 +47,7 @@ public Response ex(BaseException be) {
 @ExceptionHandler(Exception.class)
 public Response error(Exception e) {
    // todo 用于调试
-   e.printStackTrace();
+   log.error(e.toString());
    return Response.error(-1, e.getMessage());
 }
 }

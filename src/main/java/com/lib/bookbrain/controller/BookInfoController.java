@@ -1,7 +1,7 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
-import com.lib.bookbrain.constant.HeaderName;
+import com.lib.bookbrain.constant.Header;
 import com.lib.bookbrain.model.comm.FilterPayload;
 import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.comm.Response;
@@ -26,29 +26,29 @@ public BookInfoController(BookInfoService bookInfoService) {
 }
 
 @PostMapping("/list/select")
-public Response getBookInfos(@RequestBody(required = false) FilterPayload<BookInfo, BookInfoFilter> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken) {
+public Response getBookInfos(@RequestBody(required = false) FilterPayload<BookInfo, BookInfoFilter> payload, @RequestHeader(Header.TOKEN) String ignoredToken) {
    return bookInfoService.getBy(payload);
 }
 
 @PostMapping("/list/create")
-public Response createBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken) {
+public Response createBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader(Header.TOKEN) String ignoredToken) {
    return bookInfoService.create(payload);
 }
 
 @PostMapping("/{id}/select")
-public Response getBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+public Response getBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
    payload.setId(id);
    return bookInfoService.getById(payload);
 }
 
 @PostMapping("/{id}/update")
-public Response updateBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+public Response updateBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
    payload.setId(id);
    return bookInfoService.update(payload);
 }
 
 @PostMapping("/{id}/delete")
-public Response deleteBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader(HeaderName.TOKEN) String ignoredToken, @PathVariable Integer id) {
+public Response deleteBookInfo(@RequestBody(required = false) Payload<BookInfo> payload, @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
    payload.setId(id);
    return bookInfoService.delete(payload);
 }

@@ -1,5 +1,6 @@
 package com.lib.bookbrain.config;
 
+import com.lib.bookbrain.constant.Header;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.model.comm.TokenInfo;
 import com.lib.bookbrain.security.Jwt;
@@ -58,9 +59,9 @@ public void addInterceptors(InterceptorRegistry registry) {
    registry.addInterceptor(new Interceptor(threadContext))
          .addPathPatterns("/**")    // 添加拦截路径
          .excludePathPatterns(      // 在拦截路径中排除以下路径
-               "/users/login",      //
-               "/users/register",   //
-               "/token",             //
+               "/users/login",
+               "/users/register",
+               "/token",
                "/"
          );
 }
@@ -70,18 +71,12 @@ public void addInterceptors(InterceptorRegistry registry) {
  */
 @AllArgsConstructor
 static class Interceptor implements HandlerInterceptor {
-   private static final String tokenHeader;
-   
-   static {
-      tokenHeader = "token";
-   }
    
    private SimpleThreadContext<TokenInfo> threadContext;
    
    @Override
    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
-      System.out.println(getIpAddress(request));      // todo 凑数
-      String token = request.getHeader(tokenHeader);  // 获取 token
+      String token = request.getHeader(Header.TOKEN);  // 获取 token
       TokenInfo _info = Jwt.decoder(token);           // 解析 token，如果解析失败会抛出异常，交由全局异常处理器处理
       threadContext.set(_info);                       // 记录操作者
       return true;                                    // 放行

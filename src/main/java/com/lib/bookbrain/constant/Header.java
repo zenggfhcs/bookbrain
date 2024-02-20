@@ -1,6 +1,6 @@
 package com.lib.bookbrain.constant;
 
-public class HeaderName {
+public class Header {
 /**
  * token header name
  */

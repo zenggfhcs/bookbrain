@@ -10,11 +10,6 @@ public static final Object OBJECT_VALUE = null;
 
 public static final Integer INTEGER = 0;
 
-public static final Integer PAYLOAD_INDEX_IN_ARGS = 0;
-
-public static final Integer TOKEN_INDEX_IN_ARGS = 1;
-
-public static final Integer ID_INDEX_IN_ARGS = 2;
 
 /* ============================ filter ============================ */
 public static final LocalDateTime FILTER_MIN_TIME = LocalDateTime.of(2023, 1, 1, 0, 0);

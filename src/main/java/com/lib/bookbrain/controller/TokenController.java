@@ -3,7 +3,7 @@ package com.lib.bookbrain.controller;
 import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.comm.Response;
 import com.lib.bookbrain.model.entity.TokenBody;
-import com.lib.bookbrain.security.MyAlgorithm;
+import com.lib.bookbrain.security.PreDefinedAlgorithm;
 import com.lib.bookbrain.utils.MyFile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +25,8 @@ public Response token(@RequestBody(required = false) Payload<TokenBody> payload)
    return null;
 }
 
-@PostMapping
+@PostMapping("/key")
 public String rsaPublic() {
-   return MyFile.read(MyAlgorithm.rsaPubKeyFileName);
+   return MyFile.read(PreDefinedAlgorithm.rsaPubKeyFileName);
 }
 }
