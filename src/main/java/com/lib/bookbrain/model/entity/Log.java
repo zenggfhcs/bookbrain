@@ -15,7 +15,7 @@ public class Log extends BaseEntity {
 /**
  *
  */
-private Integer id;
+private Long id;
 
 /**
  *
@@ -58,6 +58,8 @@ public static Log before(String serviceName, Payload<BaseEntity> payload) {
          .serviceName(serviceName)
          .dataId(payload.getId())
          .input(Json.stringify(payload))
+         .output("{}")
+         .elapsedTime(-1L)
          .build();
 }
 

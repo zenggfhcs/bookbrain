@@ -9,7 +9,7 @@ import com.lib.bookbrain.dao.UserMapper;
 import com.lib.bookbrain.model.comm.FilterPayload;
 import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.comm.TokenBody;
+import com.lib.bookbrain.model.comm.TokenInfo;
 import com.lib.bookbrain.model.comm.filters.UserFilter;
 import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.service.UserService;
@@ -25,7 +25,7 @@ private final UserMapper userMapper;
 private final BaseServiceImpl<User, UserFilter> baseService;
 
 @Autowired
-public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenBody> threadContext) {
+public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> threadContext) {
    this.userMapper = userMapper;
    baseService = new BaseServiceImpl<>(threadContext, userMapper);
 }

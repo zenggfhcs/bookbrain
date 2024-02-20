@@ -22,7 +22,7 @@ public class BaseServiceImpl<T extends BaseEntity, F extends Filter> implements 
 /**
  * 线程共享的 tokenBody 对象，用于存放操作人信息
  */
-protected final SimpleThreadContext<TokenBody> threadContext;
+protected final SimpleThreadContext<TokenInfo> threadContext;
 
 /**
  * baseMapper
@@ -36,7 +36,7 @@ protected final BaseMapper<T, F> baseMapper;
  * @param threadContext tokenBody 线程局部变量
  * @param baseMapper    基础数据操作接口
  */
-public BaseServiceImpl(SimpleThreadContext<TokenBody> threadContext, BaseMapper<T, F> baseMapper) {
+public BaseServiceImpl(SimpleThreadContext<TokenInfo> threadContext, BaseMapper<T, F> baseMapper) {
    this.threadContext = threadContext;
    this.baseMapper = baseMapper;
 }
@@ -71,9 +71,9 @@ public Response create(Payload<T> payload) {
       return Response.error(ResponseInfo.CREATE_DATA_ERROR);
    }
    {
-      TokenBody _body = threadContext.get();
-      _entity.setCreatedBy(_body.getId());
-      _entity.setUpdatedBy(_body.getId());
+      TokenInfo _info = threadContext.get();
+      _entity.setCreatedBy(_info.getAud());
+      _entity.setUpdatedBy(_info.getAud());
    }
    
    int _cc = baseMapper.insert(payload);
@@ -99,8 +99,8 @@ public Response update(Payload<T> payload) {
    
    _newEntity.setRevision(_oldEntity.getRevision());
    {
-      TokenBody body = threadContext.get();
-      _newEntity.setUpdatedBy(body.getId());
+      TokenInfo _info = threadContext.get();
+      _newEntity.setUpdatedBy(_info.getAud());
    }
    
    int _uc = baseMapper.update(payload);

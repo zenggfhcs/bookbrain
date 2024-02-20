@@ -2,7 +2,7 @@ package com.lib.bookbrain.aop;
 
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.TokenAccessRecordMapper;
-import com.lib.bookbrain.model.comm.TokenBody;
+import com.lib.bookbrain.model.comm.TokenInfo;
 import com.lib.bookbrain.model.entity.TokenUsedRecord;
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -24,7 +24,7 @@ private final TokenAccessRecordMapper tokenMapper;
 /**
  * tokenBody 线程局部变量
  */
-private final SimpleThreadContext<TokenBody> threadContext;
+private final SimpleThreadContext<TokenInfo> threadContext;
 
 /**
  * 将 token 封装到 payload 里面去
@@ -40,12 +40,12 @@ public Object aroundConduct(ProceedingJoinPoint point) throws Throwable {
 /**
  * 记录 token 使用
  *
- * @param body  body
+ * @param info  body
  * @param token token
  */
-private void logTokenUsed(TokenBody body, String token) {
+private void logTokenUsed(TokenInfo info, String token) {
    TokenUsedRecord tur = TokenUsedRecord.builder()
-         .userId(body.getId())
+         .userId(info.getAud())
          .token(token)
          .build();
    tokenMapper.insert(tur);

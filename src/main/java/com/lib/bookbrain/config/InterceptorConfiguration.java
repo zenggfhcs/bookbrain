@@ -1,8 +1,8 @@
 package com.lib.bookbrain.config;
 
 import com.lib.bookbrain.context.SimpleThreadContext;
-import com.lib.bookbrain.model.comm.TokenBody;
-import com.lib.bookbrain.utils.Jwt;
+import com.lib.bookbrain.model.comm.TokenInfo;
+import com.lib.bookbrain.security.Jwt;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @AllArgsConstructor
 public class InterceptorConfiguration implements WebMvcConfigurer {
-private SimpleThreadContext<TokenBody> threadContext;
+private SimpleThreadContext<TokenInfo> threadContext;
 
 /**
  * 获取客户端 ip：通过轮询请求所携带的请求头，查询客户端的真实 ip
@@ -76,16 +76,15 @@ static class Interceptor implements HandlerInterceptor {
       tokenHeader = "token";
    }
    
-   private SimpleThreadContext<TokenBody> threadContext;
+   private SimpleThreadContext<TokenInfo> threadContext;
    
    @Override
    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
       System.out.println(getIpAddress(request));      // todo 凑数
       String token = request.getHeader(tokenHeader);  // 获取 token
-      TokenBody body = Jwt.decoder(token);            // 解析 token，如果解析失败会抛出异常，交由全局异常处理器处理
-      threadContext.set(body);                        // 记录操作者
-      // response.setHeader(HeaderName.TOKEN, token);    // 更新 token
-      return true;                                    // 到具体的服务检查权限
+      TokenInfo _info = Jwt.decoder(token);           // 解析 token，如果解析失败会抛出异常，交由全局异常处理器处理
+      threadContext.set(_info);                       // 记录操作者
+      return true;                                    // 放行
    }
    
 }

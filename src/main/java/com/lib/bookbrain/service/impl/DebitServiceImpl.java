@@ -8,7 +8,7 @@ import com.lib.bookbrain.dao.DebitMapper;
 import com.lib.bookbrain.model.comm.FilterPayload;
 import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.comm.TokenBody;
+import com.lib.bookbrain.model.comm.TokenInfo;
 import com.lib.bookbrain.model.comm.filters.DebitFilter;
 import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.service.DebitService;
@@ -25,7 +25,7 @@ private final DebitMapper debitMapper;
 private final BaseServiceImpl<Debit, DebitFilter> baseService;
 
 @Autowired
-public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenBody> threadContext) {
+public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> threadContext) {
    this.debitMapper = debitMapper;
    baseService = new BaseServiceImpl<>(threadContext, debitMapper);
 }

@@ -33,7 +33,6 @@ private String namePrefix;
 
 @Bean
 public Executor asyncServiceExecutor() {
-   //   logger.info("start asyncServiceExecutor");
    /* ============================ 配置线程池 ============================ */
    ThreadPoolTaskExecutor executor
          = new ThreadPoolTaskExecutor();                    // 创建线程池

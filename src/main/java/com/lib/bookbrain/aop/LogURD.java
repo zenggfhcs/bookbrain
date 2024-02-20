@@ -5,7 +5,7 @@ import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.LogMapper;
 import com.lib.bookbrain.model.BaseEntity;
 import com.lib.bookbrain.model.comm.Payload;
-import com.lib.bookbrain.model.comm.TokenBody;
+import com.lib.bookbrain.model.comm.TokenInfo;
 import com.lib.bookbrain.model.entity.Log;
 import com.lib.bookbrain.utils.Json;
 import com.lib.bookbrain.utils.Parse;
@@ -34,7 +34,7 @@ private final LogMapper logMapper;
 /**
  * tokenBody 线程局部变量
  */
-private final SimpleThreadContext<TokenBody> threadContext;
+private final SimpleThreadContext<TokenInfo> threadContext;
 
 /**
  * 记录查询
@@ -66,7 +66,6 @@ public Object logDelete(ProceedingJoinPoint point) throws Throwable {
 }
 
 
-
 /**
  * 日志基础记录
  *
@@ -80,7 +79,7 @@ private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable 
    Payload<BaseEntity> _payload = Payload.getOrNew(point.getArgs()[0]);
    Log _log = Log.before(generateServiceName(point.getSignature()), _payload);
    {
-      _log.setCreatedBy(threadContext.get().getId());
+      _log.setCreatedBy(threadContext.get().getAud());
       _log.setType(logType.getValue());
    }
    logMapper.create(_log);
@@ -100,7 +99,6 @@ private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable 
    
    return _res;
 }
-
 
 
 /**

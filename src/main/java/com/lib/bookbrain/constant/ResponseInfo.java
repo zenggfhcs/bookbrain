@@ -19,7 +19,7 @@ public enum ResponseInfo {
    /**
     * token 创建或者解析时异常
     */
-   TOKEN_FAILED("Token error"),
+   TOKEN_FAILED("TokenInfo error"),
    
    /**
     *
@@ -74,7 +74,13 @@ public enum ResponseInfo {
    /**
     *
     */
-   ERROR("service error");
+   ERROR("service error"),
+   
+   /**
+    *
+    */
+   FILE_NOT_EXIST("This path does not have a corresponding file"),
+   ;
 
 private final BaseResponseInfo info;
 

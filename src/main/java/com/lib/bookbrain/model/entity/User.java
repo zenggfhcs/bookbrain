@@ -18,7 +18,7 @@ public class User extends BaseEntity {
 /**
  * 用户 id
  */
-private Long id;
+private Integer id;
 
 /**
  * 用户验证字符串

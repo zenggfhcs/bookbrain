@@ -15,11 +15,6 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
 /**
- * 实体 id
- */
-protected Long id;
-
-/**
  * 创建人
  */
 protected Integer createdBy;
