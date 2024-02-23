@@ -8,7 +8,6 @@ import com.lib.bookbrain.model.comm.Response;
 import com.lib.bookbrain.model.comm.filters.BookFilter;
 import com.lib.bookbrain.model.entity.Book;
 import com.lib.bookbrain.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,38 +22,41 @@ public class BookController {
 
 private final BookService bookService;
 
-@Autowired
 public BookController(BookService bookService) {
    this.bookService = bookService;
 }
 
-
 @PostMapping("/list/select")
-public Response getBooks(@RequestBody(required = false) FilterPayload<Book, BookFilter> payload, @RequestHeader(Header.TOKEN) String ignoredToken) {
+public Response getBooks(@RequestBody(required = false) FilterPayload<Book, BookFilter> payload,
+                         @RequestHeader(Header.TOKEN) String ignoredToken) {
    return bookService.getBy(payload);
 }
 
 @PostMapping("/list/create")
-public Response createBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(Header.TOKEN) String ignoredToken) {
+public Response createBook(@RequestBody(required = false) Payload<Book> payload,
+                           @RequestHeader(Header.TOKEN) String ignoredToken) {
    return bookService.create(payload);
 }
 
 @PostMapping("/{id}/select")
-public Response getBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
+public Response getBook(@RequestBody(required = false) Payload<Book> payload,
+                        @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
    payload.setId(id);
    return bookService.getById(payload);
 }
 
 @PostMapping("/{id}/update")
-public Response updateBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
+public Response updateBook(@RequestBody(required = false) Payload<Book> payload,
+                           @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
    payload.setId(id);
    return bookService.update(payload);
 }
 
 @PostMapping("/{id}/delete")
-public Response deleteBook(@RequestBody(required = false) Payload<Book> payload, @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
+public Response deleteBook(@RequestBody(required = false) Payload<Book> payload,
+                           @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
    payload.setId(id);
    return bookService.delete(payload);
 }
-   
+
 }

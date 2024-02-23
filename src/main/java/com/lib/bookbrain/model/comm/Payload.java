@@ -34,8 +34,8 @@ protected T entity;
  */
 @SuppressWarnings("unchecked")
 public static Payload<BaseEntity> getOrNew(Object objPayload) {
-   if (objPayload instanceof Payload<? extends BaseEntity>) {
-      return (Payload<BaseEntity>) objPayload; //
+   if (objPayload.getClass() == Payload.class) {
+      return (Payload<BaseEntity>) objPayload;
    }
    return new Payload<>();
 }
@@ -53,6 +53,4 @@ public static <E extends BaseEntity> Payload<E> generateByEntity(E e) {
    return _payload;
 }
 
-
 }
-
