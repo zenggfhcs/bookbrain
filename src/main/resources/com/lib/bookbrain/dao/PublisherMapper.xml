@@ -15,13 +15,13 @@
    </resultMap>
    <select id="getBy" resultMap="BaseResultMap">
       select distinct p.`id`,
-                      p.`name`,
-                      p.`remark`,
-                      p.`created_by`,
-                      p.`creation_time`,
-                      p.`updated_by`,
-                      p.`last_updated_time`,
-                      p.`revision`
+      p.`name`,
+      p.`remark`,
+      p.`created_by`,
+      p.`creation_time`,
+      p.`updated_by`,
+      p.`last_updated_time`,
+      p.`revision`
       from publisher p
       <where>
          <if test="entity != null">
@@ -68,11 +68,11 @@
          </if>
          <if test="1 == 1">
             p.`last_updated_time` = NOW(),
-            p.`revision`          = (p.`revision` + 1) % 2147483647
+            p.`revision` = (p.`revision` + 1) % 2147483647
          </if>
       </set>
       where p.`id` = #{id}
-        and p.`revision` = #{entity.revision};
+      and p.`revision` = #{entity.revision};
    </update>
    <delete id="delete" parameterType="com.lib.bookbrain.model.comm.Payload">
       delete

@@ -42,7 +42,7 @@ private static String coder(Integer id, Algorithm algorithm) {
 private static String coder(Integer id, Long time, Algorithm algorithm) {
    return JWT.create()
          .withIssuer("sys")
-         .withSubject("Valid")
+         .withSubject("valid")
          .withAudience(id.toString())
          .withNotBefore(new Date(culTime(time + EFFECTIVE_DURATION)))
          .withExpiresAt(new Date(culTime(time)))

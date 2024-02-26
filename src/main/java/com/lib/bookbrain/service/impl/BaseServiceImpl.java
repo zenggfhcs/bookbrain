@@ -97,7 +97,6 @@ public Response update(Payload<T> payload) {
       return Response.error(ResponseInfo.UPDATE_OLD_DATE_ERROR);
    }
    
-   _newEntity.setRevision(_oldEntity.getRevision());
    {
       TokenInfo _info = threadContext.get();
       _newEntity.setUpdatedBy(_info.getAud());

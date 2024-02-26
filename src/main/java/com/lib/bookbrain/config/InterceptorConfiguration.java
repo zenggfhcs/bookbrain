@@ -1,15 +1,14 @@
 package com.lib.bookbrain.config;
 
-import com.lib.bookbrain.constant.Header;
 import com.lib.bookbrain.context.SimpleThreadContext;
+import com.lib.bookbrain.interceptor.OptionsInterceptor;
+import com.lib.bookbrain.interceptor.RequestInterceptor;
 import com.lib.bookbrain.model.comm.TokenInfo;
-import com.lib.bookbrain.security.Jwt;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -56,32 +55,29 @@ private static boolean isEmpty(String ip) {
  */
 @Override
 public void addInterceptors(InterceptorRegistry registry) {
-   registry.addInterceptor(new Interceptor(threadContext))
+   registry.addInterceptor(new OptionsInterceptor())
+         .addPathPatterns("/**");
+   registry.addInterceptor(new RequestInterceptor(threadContext))
          .addPathPatterns("/**")    // 添加拦截路径
          .excludePathPatterns(      // 在拦截路径中排除以下路径
-               "/users/login",
-               "/users/register",
+               "/login",
+               "/register",
                "/token",
                "/"
          );
 }
 
-/**
- * 自定义拦截器
- */
-@AllArgsConstructor
-static class Interceptor implements HandlerInterceptor {
-   
-   private SimpleThreadContext<TokenInfo> threadContext;
-   
-   @Override
-   public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
-      String token = request.getHeader(Header.TOKEN);  // 获取 token
-      TokenInfo _info = Jwt.decoder(token);           // 解析 token，如果解析失败会抛出异常，交由全局异常处理器处理
-      threadContext.set(_info);                       // 记录操作者
-      return true;                                    // 放行
-   }
-   
-}
 
+/**
+ * 跨域问题处理
+ *
+ * @param registry registry
+ */
+@Override
+public void addCorsMappings(CorsRegistry registry) {
+   registry.addMapping("/**")
+         .allowedOrigins("http://localhost:5173")
+         .allowedMethods(CorsConfiguration.ALL)
+         .allowedHeaders("*");
+}
 }

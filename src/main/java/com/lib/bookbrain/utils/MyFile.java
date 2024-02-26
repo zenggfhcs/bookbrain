@@ -19,7 +19,7 @@ public static String read(String path) {
    if (data.containsKey(path)) {
       return data.get(path);
    }
-   System.out.println(path);
+   
    try (InputStream reader = classLoader.getResourceAsStream(path)) {
       if (reader != null) {
          String _value = new String(reader.readAllBytes());

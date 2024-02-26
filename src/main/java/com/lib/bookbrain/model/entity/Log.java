@@ -54,13 +54,7 @@ private Long elapsedTime = 0L;
  * @param payload     用于生成日志信息的 payload
  */
 public static Log before(String serviceName, Payload<BaseEntity> payload) {
-   return Log.builder()
-         .serviceName(serviceName)
-         .dataId(payload.getId())
-         .input(Json.stringify(payload))
-         .output("{}")
-         .elapsedTime(-1L)
-         .build();
+   return Log.builder().serviceName(serviceName).dataId(payload.getId()).input(Json.stringify(payload)).output("{}").elapsedTime(-1L).build();
 }
-
+   
 }

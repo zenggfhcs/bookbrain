@@ -25,7 +25,6 @@
       d.`revision`
       from debit d
       <where>
-
       </where>
    </select>
 

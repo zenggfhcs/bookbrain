@@ -4,7 +4,6 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.LogMapper">
    <resultMap id="id" type="integer">
-
    </resultMap>
    <insert id="create" keyProperty="id" keyColumn="id"
            useGeneratedKeys="true" parameterType="com.lib.bookbrain.model.entity.Log">
