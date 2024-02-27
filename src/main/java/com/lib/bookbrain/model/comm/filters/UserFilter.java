@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 public class UserFilter extends Filter {
 
-private FilterItem<Integer> age;
+   private FilterItem<Integer> age;
 
-public UserFilter() {
-   super();
-   age = new FilterItem<>(0, 348);
-}
+   public UserFilter() {
+      super();
+      age = new FilterItem<>(0, 348);
+   }
 
 }

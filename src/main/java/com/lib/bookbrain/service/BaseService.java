@@ -7,13 +7,13 @@ import com.lib.bookbrain.model.comm.Payload;
 import com.lib.bookbrain.model.comm.Response;
 
 public interface BaseService<T extends BaseEntity, F extends Filter> {
-Response getBy(FilterPayload<T, F> payload);
+    Response getBy(FilterPayload<T, F> payload);
 
-Response create(Payload<T> payload);
+    Response create(Payload<T> payload);
 
-Response getById(Payload<T> payload);
+    Response getById(Payload<T> payload);
 
-Response update(Payload<T> payload);
+    Response update(Payload<T> payload);
 
-Response delete(Payload<T> payload);
+    Response delete(Payload<T> payload);
 }

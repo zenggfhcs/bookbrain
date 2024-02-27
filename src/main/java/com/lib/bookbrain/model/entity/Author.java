@@ -11,13 +11,13 @@ import lombok.Setter;
 @Setter
 public class Author extends BaseEntity {
 
-/**
- * 作者 id
- */
-private Integer id;
+    /**
+     * 作者 id
+     */
+    private Integer id;
 
-/**
- * 名字
- */
-private String name;
+    /**
+     * 名字
+     */
+    private String name;
 }

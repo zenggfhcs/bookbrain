@@ -9,28 +9,27 @@ import java.time.LocalDateTime;
 @Builder
 public class TokenUsedRecord {
 
-/**
- * id
- */
-private Integer id;
+   /**
+    * id
+    */
+   private Integer id;
 
-/**
- * 用户 id
- */
-private Integer userId;
+   /**
+    * 用户 id
+    */
+   private Integer userId;
 
-/**
- * token
- */
-private String token;
+   /**
+    * token
+    */
+   private String token;
 
-/**
- * token 使用时间
- */
-private LocalDateTime usedTime;
+   /**
+    * token 使用时间
+    */
+   private LocalDateTime usedTime;
 
-
-public static TokenUsedRecord generate() {
-   return new TokenUsedRecord(null, null, null, null);
-}
+   public static TokenUsedRecord generate() {
+      return new TokenUsedRecord(null, null, null, null);
+   }
 }

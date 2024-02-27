@@ -15,59 +15,59 @@ import lombok.Setter;
 @AllArgsConstructor
 public class User extends BaseEntity {
 
-/**
- * 用户 id
- */
-private Integer id;
+    /**
+     * 用户 id
+     */
+    private Integer id;
 
-/**
- * 用户验证字符串
- */
-private String authenticationString;
+    /**
+     * 用户验证字符串
+     */
+    private String authenticationString;
 
-/**
- * 用户名
- */
-private String displayName;
+    /**
+     * 用户名
+     */
+    private String displayName;
 
-/**
- * 用户邮箱
- */
-private String email;
+    /**
+     * 用户邮箱
+     */
+    private String email;
 
-/**
- * 用户电话号码
- */
-private String phoneNumber;
+    /**
+     * 用户电话号码
+     */
+    private String phoneNumber;
 
-/**
- * 状态聚合值
- */
-private Integer condition;
+    /**
+     * 状态聚合值
+     */
+    private Integer condition;
 
-/**
- * 权限聚合值
- */
-private Long authority;
+    /**
+     * 权限聚合值
+     */
+    private Long authority;
 
-/**
- * 姓
- */
-private String surname;
+    /**
+     * 姓
+     */
+    private String surname;
 
-/**
- * 名
- */
-private String name;
+    /**
+     * 名
+     */
+    private String name;
 
-/**
- * 性别
- */
-private Short gender;
+    /**
+     * 性别
+     */
+    private Short gender;
 
-/**
- * 年龄
- */
-private Short age;
+    /**
+     * 年龄
+     */
+    private Short age;
 
 }

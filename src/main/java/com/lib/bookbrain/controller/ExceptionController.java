@@ -22,26 +22,25 @@ import java.util.Map;
 @RestController
 @RequestMapping("/error")
 public class ExceptionController extends AbstractErrorController {
-@Autowired
-public ExceptionController(ErrorAttributes errorAttributes) {
-   super(errorAttributes);
-}
+   @Autowired
+   public ExceptionController(ErrorAttributes errorAttributes) {
+      super(errorAttributes);
+   }
 
-public ExceptionController(ErrorAttributes errorAttributes, List<ErrorViewResolver> errorViewResolvers) {
-   super(errorAttributes, errorViewResolvers);
-}
+   public ExceptionController(ErrorAttributes errorAttributes, List<ErrorViewResolver> errorViewResolvers) {
+      super(errorAttributes, errorViewResolvers);
+   }
 
-@GetMapping
-public Response customError(HttpServletRequest request) {
-   Map<String, Object> attr = getAttr(request);
-   Integer code = (Integer) attr.getOrDefault("status", 404);
-   String msg = attr.get("error") + " " + attr.get("path");
-   return Response.error(code, msg);
-}
+   @GetMapping
+   public Response customError(HttpServletRequest request) {
+      Map<String, Object> attr = getAttr(request);
+      Integer code = (Integer) attr.getOrDefault("status", 404);
+      String msg = attr.get("error") + " " + attr.get("path");
+      return Response.error(code, msg);
+   }
 
-private Map<String, Object> getAttr(HttpServletRequest request) {
-   return getErrorAttributes(request, ErrorAttributeOptions.defaults());
-}
-
+   private Map<String, Object> getAttr(HttpServletRequest request) {
+      return getErrorAttributes(request, ErrorAttributeOptions.defaults());
+   }
 
 }

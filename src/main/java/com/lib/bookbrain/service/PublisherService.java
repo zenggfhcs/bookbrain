@@ -7,13 +7,13 @@ import com.lib.bookbrain.model.comm.filters.PublisherFilter;
 import com.lib.bookbrain.model.entity.Publisher;
 
 public interface PublisherService extends BaseService<Publisher, PublisherFilter> {
-Response getBy(FilterPayload<Publisher, PublisherFilter> payload);
+    Response getBy(FilterPayload<Publisher, PublisherFilter> payload);
 
-Response create(Payload<Publisher> payload);
+    Response create(Payload<Publisher> payload);
 
-Response getById(Payload<Publisher> payload);
+    Response getById(Payload<Publisher> payload);
 
-Response update(Payload<Publisher> payload);
+    Response update(Payload<Publisher> payload);
 
-Response delete(Payload<Publisher> payload);
+    Response delete(Payload<Publisher> payload);
 }

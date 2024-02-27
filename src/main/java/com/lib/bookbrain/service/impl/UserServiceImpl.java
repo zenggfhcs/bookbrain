@@ -21,54 +21,51 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
-private final UserMapper userMapper;
-private final BaseServiceImpl<User, UserFilter> baseService;
+   private final UserMapper userMapper;
+   private final BaseServiceImpl<User, UserFilter> baseService;
 
-@Autowired
-public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> threadContext) {
-   this.userMapper = userMapper;
-   baseService = new BaseServiceImpl<>(threadContext, userMapper);
-}
-
-
-@Override
-public Response login(Payload<User> payload) {
-   User _user = userMapper.login(payload);            // 登录
-   if (_user == null) {                               // 登录失败
-      return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED);    // 返回登录失败
+   @Autowired
+   public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> threadContext) {
+      this.userMapper = userMapper;
+      baseService = new BaseServiceImpl<>(threadContext, userMapper);
    }
-   return Response.success();                         // 返回成功
+
+   @Override
+   public Response login(Payload<User> payload) {
+      User _user = userMapper.login(payload); // 登录
+      if (_user == null) { // 登录失败
+         return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED); // 返回登录失败
+      }
+      return Response.success(); // 返回成功
+   }
+
+   @AroundGet
+   @Override
+   public Response getBy(FilterPayload<User, UserFilter> payload) {
+      return baseService.getBy(payload);
+   }
+
+   @Override
+   public Response create(Payload<User> payload) {
+      return baseService.create(payload);
+   }
+
+   @AroundGet
+   @Override
+   public Response getById(Payload<User> payload) {
+      return baseService.getById(payload);
+   }
+
+   @AroundUpdate
+   @Override
+   public Response update(Payload<User> payload) {
+      return baseService.update(payload);
+   }
+
+   @AroundDelete
+   @Override
+   public Response delete(Payload<User> payload) {
+      return baseService.delete(payload);
+   }
+
 }
-
-@AroundGet
-@Override
-public Response getBy(FilterPayload<User, UserFilter> payload) {
-   return baseService.getBy(payload);
-}
-
-
-@Override
-public Response create(Payload<User> payload) {
-   return baseService.create(payload);
-}
-
-@AroundGet
-@Override
-public Response getById(Payload<User> payload) {
-   return baseService.getById(payload);
-}
-
-@AroundUpdate
-@Override
-public Response update(Payload<User> payload) {
-   return baseService.update(payload);
-}
-
-@AroundDelete
-@Override
-public Response delete(Payload<User> payload) {
-   return baseService.delete(payload);
-}
-
-}
-

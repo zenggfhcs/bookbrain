@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @AroundConduct
 public class LogController {
 
-private final LogService logService;
+   private final LogService logService;
 
-public LogController(LogService logService) {
-   this.logService = logService;
-}
+   public LogController(LogService logService) {
+      this.logService = logService;
+   }
 
-@PostMapping("/list/select")
-public Response getLogs(@RequestBody(required = false) FilterPayload<Log, LogFilter> payload) {
-   return logService.getBy(payload);
-}
+   @PostMapping("/list/select")
+   public Response getLogs(@RequestBody(required = false) FilterPayload<Log, LogFilter> payload) {
+      return logService.getBy(payload);
+   }
 }

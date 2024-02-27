@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TokenServiceImpl implements TokenService {
-@Override
-public Response parse(Payload<TokenBody> payload) {
-   TokenBody body = payload.getEntity();
-   
-   return null;
-}
+   @Override
+   public Response parse(Payload<TokenBody> payload) {
+      TokenBody body = payload.getEntity();
 
-@Override
-public Response generate(Payload<TokenBody> payload) {
-   return null;
-}
+      return null;
+   }
+
+   @Override
+   public Response generate(Payload<TokenBody> payload) {
+      return null;
+   }
 }

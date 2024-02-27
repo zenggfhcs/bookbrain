@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TokenBody extends BaseEntity {
-private String token;
+    private String token;
 }

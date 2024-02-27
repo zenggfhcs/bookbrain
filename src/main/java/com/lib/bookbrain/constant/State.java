@@ -19,9 +19,9 @@ public enum State {
    ENABLE(Value.i01),
    ;
 
-private final Integer value;
+   private final Integer value;
 
-State(Integer value) {
-   this.value = value;
-}
+   State(Integer value) {
+      this.value = value;
+   }
 }

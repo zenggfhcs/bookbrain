@@ -15,14 +15,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Publisher extends BaseEntity {
 
-/**
- * 出版社 Id
- */
-private Integer id;
+    /**
+     * 出版社 Id
+     */
+    private Integer id;
 
-/**
- * 出版社名称
- */
-private String name;
+    /**
+     * 出版社名称
+     */
+    private String name;
 
 }

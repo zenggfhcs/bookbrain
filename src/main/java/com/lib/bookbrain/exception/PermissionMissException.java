@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("PermissionMissException")
 public class PermissionMissException extends BaseException {
-{
-   info = ResponseInfo.MISS_PERMISSION;
-}
+   {
+      info = ResponseInfo.MISS_PERMISSION;
+   }
 }

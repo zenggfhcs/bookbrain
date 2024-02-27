@@ -5,5 +5,5 @@ package com.lib.bookbrain.fnuction;
  */
 @FunctionalInterface
 public interface Predicate {
-boolean test();
+    boolean test();
 }

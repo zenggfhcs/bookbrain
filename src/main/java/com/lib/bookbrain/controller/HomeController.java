@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 public class HomeController {
-
-@PostMapping
-public Object test(@RequestBody FilterPayload<User, UserFilter> payload) {
-   return "a";
-}
+   @PostMapping
+   public Object test(@RequestBody FilterPayload<User, UserFilter> payload) {
+      return "a";
+   }
 
 }

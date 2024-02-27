@@ -13,18 +13,18 @@ import java.util.List;
  */
 @Mapper
 public interface DebitMapper extends BaseMapper<Debit, DebitFilter> {
-/* ============================  ============================ */
-Debit getById(Payload<Debit> payload);
+    /* ============================ ============================ */
+    Debit getById(Payload<Debit> payload);
 
-List<Debit> getBy(FilterPayload<Debit, DebitFilter> payload);
+    List<Debit> getBy(FilterPayload<Debit, DebitFilter> payload);
 
-int insert(Payload<Debit> payload);
+    int insert(Payload<Debit> payload);
 
-int update(Payload<Debit> payload);
+    int update(Payload<Debit> payload);
 
-int delete(Payload<Debit> payload);
+    int delete(Payload<Debit> payload);
 
-Debit getToUpdate(Payload<Debit> payload);
-/* ============================  ============================ */
+    Debit getToUpdate(Payload<Debit> payload);
+    /* ============================ ============================ */
 
 }

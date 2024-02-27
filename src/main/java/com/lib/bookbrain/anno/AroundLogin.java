@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
  * @author yunxia
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 public @interface AroundLogin {
 }

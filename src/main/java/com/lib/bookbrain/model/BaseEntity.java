@@ -14,34 +14,34 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BaseEntity {
 
-/**
- * 创建人
- */
-protected Integer createdBy;
+    /**
+     * 创建人
+     */
+    protected Integer createdBy;
 
-/**
- * 创建时间
- */
-protected LocalDateTime creationTime = LocalDateTime.now();
+    /**
+     * 创建时间
+     */
+    protected LocalDateTime creationTime = LocalDateTime.now();
 
-/**
- * 最后更新者
- */
-protected Integer updatedBy;
+    /**
+     * 最后更新者
+     */
+    protected Integer updatedBy;
 
-/**
- * 最后更新时间
- */
-protected LocalDateTime lastUpdatedTime;
+    /**
+     * 最后更新时间
+     */
+    protected LocalDateTime lastUpdatedTime;
 
-/**
- * 版本号，乐观锁
- */
-protected Integer revision;
+    /**
+     * 版本号，乐观锁
+     */
+    protected Integer revision;
 
-/**
- * 备注
- */
-protected String remark;
+    /**
+     * 备注
+     */
+    protected String remark;
 
 }

@@ -9,5 +9,5 @@ package com.lib.bookbrain.fnuction;
  */
 @FunctionalInterface
 public interface TriPredicate<K, V, S> {
-Boolean test(K k, V v, S s);
+    Boolean test(K k, V v, S s);
 }

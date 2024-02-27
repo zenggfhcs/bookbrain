@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("UpdateErrorException")
 public class UpdateErrorException extends BaseException {
-{
-   info = ResponseInfo.ERROR;
-}
+   {
+      info = ResponseInfo.ERROR;
+   }
 }

@@ -20,41 +20,41 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BookServiceImpl implements BookService {
-private final BookMapper bookMapper;
-private final BaseServiceImpl<Book, BookFilter> baseService;
+   private final BookMapper bookMapper;
+   private final BaseServiceImpl<Book, BookFilter> baseService;
 
-@Autowired
-public BookServiceImpl(BookMapper bookMapper, SimpleThreadContext<TokenInfo> threadContext) {
-   this.bookMapper = bookMapper;
-   baseService = new BaseServiceImpl<>(threadContext, bookMapper);
-}
+   @Autowired
+   public BookServiceImpl(BookMapper bookMapper, SimpleThreadContext<TokenInfo> threadContext) {
+      this.bookMapper = bookMapper;
+      baseService = new BaseServiceImpl<>(threadContext, bookMapper);
+   }
 
-@AroundGet
-@Override
-public Response getBy(FilterPayload<Book, BookFilter> payload) {
-   return baseService.getBy(payload);
-}
+   @AroundGet
+   @Override
+   public Response getBy(FilterPayload<Book, BookFilter> payload) {
+      return baseService.getBy(payload);
+   }
 
-@Override
-public Response create(Payload<Book> payload) {
-   return baseService.create(payload);
-}
+   @Override
+   public Response create(Payload<Book> payload) {
+      return baseService.create(payload);
+   }
 
-@AroundGet
-@Override
-public Response getById(Payload<Book> payload) {
-   return baseService.getById(payload);
-}
+   @AroundGet
+   @Override
+   public Response getById(Payload<Book> payload) {
+      return baseService.getById(payload);
+   }
 
-@AroundUpdate
-@Override
-public Response update(Payload<Book> payload) {
-   return baseService.getById(payload);
-}
+   @AroundUpdate
+   @Override
+   public Response update(Payload<Book> payload) {
+      return baseService.getById(payload);
+   }
 
-@AroundDelete
-@Override
-public Response delete(Payload<Book> payload) {
-   return baseService.delete(payload);
-}
+   @AroundDelete
+   @Override
+   public Response delete(Payload<Book> payload) {
+      return baseService.delete(payload);
+   }
 }
