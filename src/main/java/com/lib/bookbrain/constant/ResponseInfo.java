@@ -84,7 +84,10 @@ public enum ResponseInfo {
 	/**
 	 * 邮箱重复注册时返回
 	 */
-	THIS_EMAIL_IS_EXIST("THIS_EMAIL_ADDRESS_IS_ALREADY_REGISTERED");
+	THIS_EMAIL_IS_EXIST("THIS_EMAIL_ADDRESS_IS_ALREADY_REGISTERED"),
+
+	REGISTER_FIELD("REGISTER_FIELD"),
+	;
 
 private final BaseResponseInfo info;
 

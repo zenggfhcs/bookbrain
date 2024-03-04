@@ -44,17 +44,26 @@ public Response register(Payload<User> payload) {
 	if (userMapper.getByEmail(_entity.getEmail()) > 0) {
 		return Response.error(ResponseInfo.THIS_EMAIL_IS_EXIST);
 	}
-	userMapper.register(payload);
+	int _cc = userMapper.register(payload);
+
+	// 判断注册插入是否成功
+	if (_cc != 1) {
+		return Response.error(ResponseInfo.REGISTER_FIELD);
+	}
+
+	// 成功之后，发送邮件 todo
+
+
 	return Response.success();
 }
 
 @Override
 public Response login(Payload<User> payload) {
-	User _user = userMapper.login(payload); // 登录
-	if (_user == null) { // 登录失败
-		return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED); // 返回登录失败
+	User _user = userMapper.login(payload);
+	if (_user == null) {
+		return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED);
 	}
-	return Response.success(); // 返回成功
+	return Response.success();
 }
 
 @AroundGet
