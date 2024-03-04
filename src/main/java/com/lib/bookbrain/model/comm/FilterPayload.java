@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class FilterPayload<T extends BaseEntity, F extends Filter> extends Payload<T> {
 
-    protected F filter;
+protected F filter;
 
 }

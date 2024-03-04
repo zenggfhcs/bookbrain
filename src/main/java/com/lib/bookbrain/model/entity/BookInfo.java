@@ -18,79 +18,79 @@ import java.time.LocalDate;
 @Setter
 public class BookInfo extends BaseEntity {
 
-    /**
-     * 书籍信息 Id
-     */
-    private Long id;
+/**
+ * 书籍信息 Id
+ */
+private Long id;
 
-    /**
-     * 出版社
-     */
-    private Publisher publisher;
+/**
+ * 出版社
+ */
+private Publisher publisher;
 
-    /**
-     * 出版地
-     */
-    private String publishPlace;
+/**
+ * 出版地
+ */
+private String publishPlace;
 
-    /**
-     * 书籍 ISBN 号
-     */
-    private String isbn;
+/**
+ * 书籍 ISBN 号
+ */
+private String isbn;
 
-    /**
-     * CIP 核验号
-     */
-    private String cip;
+/**
+ * CIP 核验号
+ */
+private String cip;
 
-    /**
-     * 书籍名称
-     */
-    private String bookName;
+/**
+ * 书籍名称
+ */
+private String bookName;
 
-    /**
-     * 书籍类型
-     */
-    private String bookType;
+/**
+ * 书籍类型
+ */
+private String bookType;
 
-    /**
-     * 书籍封面
-     */
-    private String cover;
+/**
+ * 书籍封面
+ */
+private String cover;
 
-    /**
-     * 作者
-     */
-    private String author;
+/**
+ * 作者
+ */
+private String author;
 
-    /**
-     * 书籍描述
-     */
-    private String describe;
+/**
+ * 书籍描述
+ */
+private String describe;
 
-    /**
-     * 出版时间
-     */
-    private LocalDate publishDate;
+/**
+ * 出版时间
+ */
+private LocalDate publishDate;
 
-    /**
-     * 关键字
-     */
-    private String keyword;
+/**
+ * 关键字
+ */
+private String keyword;
 
-    /**
-     * 正文语种
-     */
-    private String lang;
+/**
+ * 正文语种
+ */
+private String lang;
 
-    /**
-     * 出版价格
-     */
-    private Double price;
+/**
+ * 出版价格
+ */
+private Double price;
 
-    /**
-     * 库存量
-     */
-    private Integer stock;
+/**
+ * 库存量
+ */
+private Integer stock;
 
 }

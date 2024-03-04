@@ -5,7 +5,7 @@ import com.lib.bookbrain.model.comm.Response;
 import com.lib.bookbrain.model.entity.TokenBody;
 
 public interface TokenService {
-    Response parse(Payload<TokenBody> payload);
+Response parse(Payload<TokenBody> payload);
 
-    Response generate(Payload<TokenBody> payload);
+Response generate(Payload<TokenBody> payload);
 }

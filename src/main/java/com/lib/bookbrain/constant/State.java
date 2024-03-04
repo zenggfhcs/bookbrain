@@ -9,19 +9,19 @@ import lombok.Getter;
  */
 @Getter
 public enum State {
-   /**
-    * 关
-    */
-   DISABLE(Value.i00),
-   /**
-    * 开
-    */
-   ENABLE(Value.i01),
-   ;
+	/**
+	 * 关
+	 */
+	DISABLE(Value.i00),
+	/**
+	 * 开
+	 */
+	ENABLE(Value.i01),
+	;
 
-   private final Integer value;
+private final Integer value;
 
-   State(Integer value) {
-      this.value = value;
-   }
+State(Integer value) {
+	this.value = value;
+}
 }

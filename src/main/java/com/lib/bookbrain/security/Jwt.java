@@ -19,73 +19,73 @@ import java.util.UUID;
  */
 public class Jwt {
 
-   /**
-    * 有效时长 毫秒值 七天
-    * 7 * 24 * 60 * 60 * 1000
-    */
-   public static final long EFFECTIVE_DURATION;
+/**
+ * 有效时长 毫秒值 七天
+ * 7 * 24 * 60 * 60 * 1000
+ */
+public static final long EFFECTIVE_DURATION;
 
-   static {
-      EFFECTIVE_DURATION = 1_411_200_000;
-   }
+static {
+	EFFECTIVE_DURATION = 1_411_200_000;
+}
 
-   /* ============================ encoder ============================ */
-   public static String encoder(User user, Algorithm algorithm) {
-      return coder(user.getId(), algorithm);
-   }
+/* ============================ encoder ============================ */
+public static String encoder(User user, Algorithm algorithm) {
+	return coder(user.getId(), algorithm);
+}
 
-   private static String coder(Integer id, Algorithm algorithm) {
-      return coder(id, System.currentTimeMillis(), algorithm);
-   }
+private static String coder(Integer id, Algorithm algorithm) {
+	return coder(id, System.currentTimeMillis(), algorithm);
+}
 
-   private static String coder(Integer id, Long time, Algorithm algorithm) {
-      return JWT.create()
-            .withIssuer("sys")
-            .withSubject("valid")
-            .withAudience(id.toString())
-            .withNotBefore(new Date(culTime(time + EFFECTIVE_DURATION)))
-            .withExpiresAt(new Date(culTime(time)))
-            .withJWTId(UUID.randomUUID().toString())
-            .sign(algorithm);
-   }
+private static String coder(Integer id, Long time, Algorithm algorithm) {
+	return JWT.create()
+			.withIssuer("sys")
+			.withSubject("valid")
+			.withAudience(id.toString())
+			.withNotBefore(new Date(culTime(time + EFFECTIVE_DURATION)))
+			.withExpiresAt(new Date(culTime(time)))
+			.withJWTId(UUID.randomUUID().toString())
+			.sign(algorithm);
+}
 
-   private static Long culTime(Long time) {
-      return (time) * 1000;
-   }
-   /* ============================ encoder ============================ */
+private static Long culTime(Long time) {
+	return (time) * 1000;
+}
+/* ============================ encoder ============================ */
 
-   /* ============================ decoder ============================ */
+/* ============================ decoder ============================ */
 
-   /**
-    * jwt 解码
-    *
-    * @param token jwt token
-    * @return 解码后的 TokenBody 对象
-    */
-   public static TokenInfo decoder(String token) {
-      return decoder(token, PreDefinedAlgorithm.HMAC);
-   }
+/**
+ * jwt 解码
+ *
+ * @param token jwt token
+ * @return 解码后的 TokenBody 对象
+ */
+public static TokenInfo decoder(String token) {
+	return decoder(token, PreDefinedAlgorithm.HMAC);
+}
 
-   public static TokenInfo decoder(String token, Algorithm algorithm) {
-      DecodedJWT deJwt = JWT.require(algorithm)
-            .build()
-            .verify(token); // 解析 jwt
+public static TokenInfo decoder(String token, Algorithm algorithm) {
+	DecodedJWT deJwt = JWT.require(algorithm)
+			.build()
+			.verify(token); // 解析 jwt
 
-      String payload = deJwt.getPayload(); // 获取 payload 是 base64 形式
+	String payload = deJwt.getPayload(); // 获取 payload 是 base64 形式
 
-      byte[] payloadBytes = Base64.getDecoder().decode(payload); // 解码为字节数组
+	byte[] payloadBytes = Base64.getDecoder().decode(payload); // 解码为字节数组
 
-      String data = new String(payloadBytes, StandardCharsets.UTF_8); // 将字节数组转换为字符串（使用UTF-8字符集）
+	String data = new String(payloadBytes, StandardCharsets.UTF_8); // 将字节数组转换为字符串（使用UTF-8字符集）
 
-      return Json.parse(data, TokenInfo.class);
-   }
-   /* ============================ decoder ============================ */
+	return Json.parse(data, TokenInfo.class);
+}
+/* ============================ decoder ============================ */
 
-   public static void main(String[] args) {
-      /* ------------------------ test ------------------------ */
-      User user = new User();
-      user.setId(1);
-      System.out.println(encoder(user, PreDefinedAlgorithm.RSA));
-   }
+public static void main(String[] args) {
+	/* ------------------------ test ------------------------ */
+	User user = new User();
+	user.setId(1);
+	System.out.println(encoder(user, PreDefinedAlgorithm.RSA));
+}
 
 }

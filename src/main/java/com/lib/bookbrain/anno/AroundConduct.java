@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
  * @author yunxia
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 public @interface AroundConduct {
 }

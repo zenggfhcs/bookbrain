@@ -7,17 +7,17 @@ import java.util.List;
 
 @Mapper
 public interface ConditionMapper {
-    /* ============================ 继承 ============================ */
-    Condition getById(Integer id);
+/* ============================ 继承 ============================ */
+Condition getById(Integer id);
 
-    List<Condition> getBy();
+List<Condition> getBy();
 
-    int insert(Condition condition);
+int insert(Condition condition);
 
-    int update(Condition condition);
+int update(Condition condition);
 
-    int delete(Integer id);
+int delete(Integer id);
 
-    Condition getToUpdate(Condition condition);
-    /* ============================ 继承 ============================ */
+Condition getToUpdate(Condition condition);
+/* ============================ 继承 ============================ */
 }

@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/users/register")
+@RequestMapping("/register")
 public class RegisterController {
-   private final UserService userService;
+private final UserService userService;
 
-   @PostMapping
-   public Response register(@RequestBody(required = false) Payload<User> payload) {
-      return userService.login(payload);
-   }
+@PostMapping
+public Response register(@RequestBody(required = false) Payload<User> payload) {
+	return userService.register(payload);
+}
 }

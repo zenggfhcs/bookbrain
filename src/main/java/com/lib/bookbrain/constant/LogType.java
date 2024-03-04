@@ -5,18 +5,18 @@ import lombok.Getter;
 @Getter
 public enum LogType {
 
-   C("create"),
+	C("create"),
 
-   U("update"),
+	U("update"),
 
-   R("select"),
+	R("select"),
 
-   D("delete"),
-   ;
+	D("delete"),
+	;
 
-   private final String value;
+private final String value;
 
-   LogType(String value) {
-      this.value = value;
-   }
+LogType(String value) {
+	this.value = value;
+}
 }

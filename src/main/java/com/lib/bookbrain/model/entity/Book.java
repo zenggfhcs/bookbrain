@@ -15,24 +15,24 @@ import lombok.Setter;
 @Setter
 public class Book extends BaseEntity {
 
-    /**
-     * 书籍唯一标识
-     */
-    private Long id;
+/**
+ * 书籍唯一标识
+ */
+private Long id;
 
-    /**
-     * 书籍破损级别
-     */
-    private Short damageLevel;
+/**
+ * 书籍破损级别
+ */
+private Short damageLevel;
 
-    /**
-     * 可借的
-     */
-    private Boolean borrowable;
+/**
+ * 可借的
+ */
+private Boolean borrowable;
 
-    /**
-     * 书籍出版信息
-     */
-    private BookInfo bookInfo;
+/**
+ * 书籍出版信息
+ */
+private BookInfo bookInfo;
 
 }

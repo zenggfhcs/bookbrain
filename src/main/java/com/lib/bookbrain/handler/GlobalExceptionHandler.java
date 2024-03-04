@@ -19,35 +19,35 @@ import java.sql.SQLException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-   /**
-    * sql 执行失败异常处理
-    *
-    * @return 规范返回
-    */
-   @ExceptionHandler(SQLException.class)
-   public Response sqlEx() {
-      return Response.error(ResponseInfo.SQL_EXEC_FAILED);
-   }
+/**
+ * sql 执行失败异常处理
+ *
+ * @return 规范返回
+ */
+@ExceptionHandler(SQLException.class)
+public Response sqlEx() {
+	return Response.error(ResponseInfo.SQL_EXEC_FAILED);
+}
 
-   /**
-    * jwt error
-    *
-    * @return 规范返回
-    */
-   @ExceptionHandler(JWTVerificationException.class)
-   public Response jwtEx() {
-      return Response.error(ResponseInfo.TOKEN_FAILED);
-   }
+/**
+ * jwt error
+ *
+ * @return 规范返回
+ */
+@ExceptionHandler(JWTVerificationException.class)
+public Response jwtEx() {
+	return Response.error(ResponseInfo.TOKEN_FAILED);
+}
 
-   @ExceptionHandler(BaseException.class)
-   public Response ex(BaseException be) {
-      return Response.error(be.getInfo());
-   }
+@ExceptionHandler(BaseException.class)
+public Response ex(BaseException be) {
+	return Response.error(be.getInfo());
+}
 
-   @ExceptionHandler(Exception.class)
-   public Response error(Exception e) {
-      // todo 用于调试
-      log.error(e.toString());
-      return Response.error(-1, e.getMessage());
-   }
+@ExceptionHandler(Exception.class)
+public Response error(Exception e) {
+	// todo 用于调试
+	log.error(e.toString());
+	return Response.error(-1, e.getMessage());
+}
 }

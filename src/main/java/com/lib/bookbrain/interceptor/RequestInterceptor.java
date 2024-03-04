@@ -16,15 +16,15 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @AllArgsConstructor
 public class RequestInterceptor implements HandlerInterceptor {
 
-   private SimpleThreadContext<TokenInfo> threadContext;
+private SimpleThreadContext<TokenInfo> threadContext;
 
-   @Override
-   public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-         @NonNull Object handler) {
-      String token = request.getHeader(Header.TOKEN); // 获取 token
-      TokenInfo _info = Jwt.decoder(token); // 解析 token，如果解析失败会抛出异常，交由全局异常处理器处理
-      threadContext.set(_info); // 记录操作者
-      return true; // 放行
-   }
+@Override
+public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+								 @NonNull Object handler) {
+	String token = request.getHeader(Header.TOKEN); // 获取 token
+	TokenInfo _info = Jwt.decoder(token); // 解析 token，如果解析失败会抛出异常，交由全局异常处理器处理
+	threadContext.set(_info); // 记录操作者
+	return true; // 放行
+}
 
 }

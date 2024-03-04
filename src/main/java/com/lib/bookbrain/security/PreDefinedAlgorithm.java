@@ -8,21 +8,18 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.Objects;
 
 public class PreDefinedAlgorithm {
-   public static final Algorithm HMAC;
-   /* ============================ RSA ============================ */
-   public static final Algorithm RSA;
-   /* ============================ HMAC ============================ */
-   /* ============================ HMAC ============================ */
-   public static final String rsaPubKeyFileName = "jwt-rsa-pub.key";
-   private static final String hmacKeyFileName = "jwt-hmac.key";
-   private static final String rsaPriKeyFileName = "jwt-rsa-pri.key";
-   /* ============================ RSA ============================ */
+public static final Algorithm HMAC;
+public static final Algorithm RSA;
+public static final String rsaPubKeyFileName = "jwt-rsa-pub.key";
+private static final String hmacKeyFileName = "jwt-hmac.key";
+private static final String rsaPriKeyFileName = "jwt-rsa-pri.key";
 
-   static {
-      HMAC = Algorithm.HMAC256(Objects.requireNonNull(MyFile.read(hmacKeyFileName)));
+public static RSAPublicKey publicKey = (RSAPublicKey) RSAKeyGenerator.getPublicKeyByPath(rsaPubKeyFileName);
+public static RSAPrivateKey privateKey = (RSAPrivateKey) RSAKeyGenerator.getPrivateKeyByPath(rsaPriKeyFileName);
 
-      RSAPublicKey publicKey = (RSAPublicKey) RSAKeyGenerator.getPublicKeyByPath(rsaPubKeyFileName);
-      RSAPrivateKey privateKey = (RSAPrivateKey) RSAKeyGenerator.getPrivateKeyByPath(rsaPriKeyFileName);
-      RSA = Algorithm.RSA256(publicKey, privateKey);
-   }
+static {
+	HMAC = Algorithm.HMAC256(Objects.requireNonNull(MyFile.read(hmacKeyFileName)));
+
+	RSA = Algorithm.RSA256(publicKey, privateKey);
+}
 }

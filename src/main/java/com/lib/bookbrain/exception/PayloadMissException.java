@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("PayloadMissException")
 public class PayloadMissException extends BaseException {
-   {
-      info = ResponseInfo.ERROR;
-   }
+{
+	info = ResponseInfo.ERROR;
+}
 }

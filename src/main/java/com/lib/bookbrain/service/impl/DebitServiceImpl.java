@@ -12,7 +12,6 @@ import com.lib.bookbrain.model.comm.TokenInfo;
 import com.lib.bookbrain.model.comm.filters.DebitFilter;
 import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.service.DebitService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,41 +20,41 @@ import org.springframework.stereotype.Service;
 @Service
 public class DebitServiceImpl implements DebitService {
 
-   private final DebitMapper debitMapper;
-   private final BaseServiceImpl<Debit, DebitFilter> baseService;
+private final DebitMapper debitMapper;
 
-   @Autowired
-   public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> threadContext) {
-      this.debitMapper = debitMapper;
-      baseService = new BaseServiceImpl<>(threadContext, debitMapper);
-   }
+private final BaseServiceImpl<Debit, DebitFilter> baseService;
 
-   @AroundGet
-   @Override
-   public Response getBy(FilterPayload<Debit, DebitFilter> payload) {
-      return baseService.getBy(payload);
-   }
+public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> threadContext) {
+	this.debitMapper = debitMapper;
+	baseService = new BaseServiceImpl<>(threadContext, debitMapper);
+}
 
-   @Override
-   public Response create(Payload<Debit> payload) {
-      return baseService.create(payload);
-   }
+@AroundGet
+@Override
+public Response getBy(FilterPayload<Debit, DebitFilter> payload) {
+	return baseService.getBy(payload);
+}
 
-   @AroundGet
-   @Override
-   public Response getById(Payload<Debit> payload) {
-      return baseService.getById(payload);
-   }
+@Override
+public Response create(Payload<Debit> payload) {
+	return baseService.create(payload);
+}
 
-   @AroundUpdate
-   @Override
-   public Response update(Payload<Debit> payload) {
-      return baseService.update(payload);
-   }
+@AroundGet
+@Override
+public Response getById(Payload<Debit> payload) {
+	return baseService.getById(payload);
+}
 
-   @AroundDelete
-   @Override
-   public Response delete(Payload<Debit> payload) {
-      return baseService.delete(payload);
-   }
+@AroundUpdate
+@Override
+public Response update(Payload<Debit> payload) {
+	return baseService.update(payload);
+}
+
+@AroundDelete
+@Override
+public Response delete(Payload<Debit> payload) {
+	return baseService.delete(payload);
+}
 }

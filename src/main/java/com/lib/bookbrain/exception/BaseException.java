@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BaseException extends RuntimeException {
-    protected ResponseInfo info;
+protected ResponseInfo info;
 }

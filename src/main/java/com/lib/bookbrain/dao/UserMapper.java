@@ -15,25 +15,27 @@ import java.util.List;
 @Component
 @Mapper
 public interface UserMapper extends BaseMapper<User, UserFilter> {
-    /* ============================ 继承 ============================ */
-    List<User> getBy(FilterPayload<User, UserFilter> payload);
+/* ============================ 继承 ============================ */
+List<User> getBy(FilterPayload<User, UserFilter> payload);
 
-    int insert(Payload<User> payload);
+int insert(Payload<User> payload);
 
-    User getById(Payload<User> payload);
+User getById(Payload<User> payload);
 
-    int delete(Payload<User> payload);
+int delete(Payload<User> payload);
 
-    int update(Payload<User> payload);
+int update(Payload<User> payload);
 
-    User getToUpdate(Payload<User> payload);
-    /* ============================ 继承 ============================ */
+User getToUpdate(Payload<User> payload);
+/* ============================ 继承 ============================ */
 
-    /* ============================ 拓展 ============================ */
-    User getByToken(String token);
+/* ============================ 拓展 ============================ */
+User getByToken(String token);
 
-    int has(Payload<User> payload);
+int register(Payload<User> payload);
 
-    User login(Payload<User> payload);
-    /* ============================ 拓展 ============================ */
+User login(Payload<User> payload);
+
+int getByEmail(String email);
+/* ============================ 拓展 ============================ */
 }

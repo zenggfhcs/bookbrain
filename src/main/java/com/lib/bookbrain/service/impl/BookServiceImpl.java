@@ -12,7 +12,6 @@ import com.lib.bookbrain.model.comm.TokenInfo;
 import com.lib.bookbrain.model.comm.filters.BookFilter;
 import com.lib.bookbrain.model.entity.Book;
 import com.lib.bookbrain.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,41 +19,42 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BookServiceImpl implements BookService {
-   private final BookMapper bookMapper;
-   private final BaseServiceImpl<Book, BookFilter> baseService;
 
-   @Autowired
-   public BookServiceImpl(BookMapper bookMapper, SimpleThreadContext<TokenInfo> threadContext) {
-      this.bookMapper = bookMapper;
-      baseService = new BaseServiceImpl<>(threadContext, bookMapper);
-   }
+private final BookMapper bookMapper;
 
-   @AroundGet
-   @Override
-   public Response getBy(FilterPayload<Book, BookFilter> payload) {
-      return baseService.getBy(payload);
-   }
+private final BaseServiceImpl<Book, BookFilter> baseService;
 
-   @Override
-   public Response create(Payload<Book> payload) {
-      return baseService.create(payload);
-   }
+public BookServiceImpl(BookMapper bookMapper, SimpleThreadContext<TokenInfo> threadContext) {
+	this.bookMapper = bookMapper;
+	baseService = new BaseServiceImpl<>(threadContext, bookMapper);
+}
 
-   @AroundGet
-   @Override
-   public Response getById(Payload<Book> payload) {
-      return baseService.getById(payload);
-   }
+@AroundGet
+@Override
+public Response getBy(FilterPayload<Book, BookFilter> payload) {
+	return baseService.getBy(payload);
+}
 
-   @AroundUpdate
-   @Override
-   public Response update(Payload<Book> payload) {
-      return baseService.getById(payload);
-   }
+@Override
+public Response create(Payload<Book> payload) {
+	return baseService.create(payload);
+}
 
-   @AroundDelete
-   @Override
-   public Response delete(Payload<Book> payload) {
-      return baseService.delete(payload);
-   }
+@AroundGet
+@Override
+public Response getById(Payload<Book> payload) {
+	return baseService.getById(payload);
+}
+
+@AroundUpdate
+@Override
+public Response update(Payload<Book> payload) {
+	return baseService.getById(payload);
+}
+
+@AroundDelete
+@Override
+public Response delete(Payload<Book> payload) {
+	return baseService.delete(payload);
+}
 }

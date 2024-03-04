@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/token")
 public class TokenController {
-   @PostMapping
-   public Response token(@RequestBody(required = false) Payload<TokenBody> payload) {
-      return null;
-   }
+@PostMapping
+public Response token(@RequestBody(required = false) Payload<TokenBody> payload) {
+	return null;
+}
 
-   @PostMapping("/key")
-   public String rsaPublic() {
-      return MyFile.read(PreDefinedAlgorithm.rsaPubKeyFileName);
-   }
+@PostMapping("/key")
+public String rsaPublic() {
+	return MyFile.read(PreDefinedAlgorithm.rsaPubKeyFileName);
+}
 }

@@ -5,9 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TokenAccessRecordMapper {
-    void updateByToken(String token);
+void updateByToken(String token);
 
-    int getByToken(String token);
+int getByToken(String token);
 
-    void insert(TokenUsedRecord tur);
+void insert(TokenUsedRecord tur);
 }

@@ -9,12 +9,12 @@ package com.lib.bookbrain.fnuction;
  */
 @FunctionalInterface
 public interface TriConsumer<K, V, S> {
-    /**
-     * fill or
-     *
-     * @param k 1
-     * @param v 2
-     * @param s 3
-     */
-    void accept(K k, V v, S s);
+/**
+ * fill or
+ *
+ * @param k 1
+ * @param v 2
+ * @param s 3
+ */
+void accept(K k, V v, S s);
 }

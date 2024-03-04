@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class LoginController {
 
-   private final UserService userService;
+private final UserService userService;
 
-   @PostMapping
-   public Response login(@RequestBody(required = false) Payload<User> payload) {
-      return userService.login(payload);
-   }
+@PostMapping
+public Response login(@RequestBody(required = false) Payload<User> payload) {
+	return userService.login(payload);
+}
 }

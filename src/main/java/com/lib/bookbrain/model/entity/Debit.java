@@ -17,24 +17,24 @@ import java.time.LocalDate;
 @Setter
 public class Debit extends BaseEntity {
 
-    /**
-     *
-     */
-    private Long id;
+/**
+ *
+ */
+private Long id;
 
-    /**
-     *
-     */
-    private Book book;
+/**
+ *
+ */
+private Book book;
 
-    /**
-     *
-     */
-    private LocalDate returnDeadline;
+/**
+ *
+ */
+private LocalDate returnDeadline;
 
-    /**
-     *
-     */
-    private LocalDate returnDate;
+/**
+ *
+ */
+private LocalDate returnDate;
 
 }

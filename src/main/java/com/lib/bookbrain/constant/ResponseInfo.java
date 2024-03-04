@@ -6,96 +6,100 @@ import lombok.Getter;
 @Getter
 public enum ResponseInfo {
 
-   /**
-    *
-    */
-   SUCCESS(200, ""),
+	/**
+	 *
+	 */
+	SUCCESS(200, ""),
 
-   /**
-    * 登录失败提示信息：用户名或者密码错误
-    */
-   ID_OR_PASSWORD_FAILED("Username or password error"),
+	/**
+	 * 登录失败提示信息：用户名或者密码错误
+	 */
+	ID_OR_PASSWORD_FAILED("Username or password error"),
 
-   /**
-    * token 创建或者解析时异常
-    */
-   TOKEN_FAILED("TokenInfo error"),
+	/**
+	 * token 创建或者解析时异常
+	 */
+	TOKEN_FAILED("TokenInfo error"),
 
-   /**
-    *
-    */
-   CREATE_ERROR("Creation failed"),
+	/**
+	 *
+	 */
+	CREATE_ERROR("Creation failed"),
 
-   /**
-    *
-    */
-   CREATE_DATA_ERROR("The data required to create a new one is empty"),
+	/**
+	 *
+	 */
+	CREATE_DATA_ERROR("The data required to create a new one is empty"),
 
-   /**
-    *
-    */
-   DATA_NOT_EXIST("The data does not exist"),
+	/**
+	 *
+	 */
+	DATA_NOT_EXIST("The data does not exist"),
 
-   /**
-    *
-    */
-   UPDATE_DATA_ERROR("The data required for update is empty"),
+	/**
+	 *
+	 */
+	UPDATE_DATA_ERROR("The data required for update is empty"),
 
-   /**
-    *
-    */
-   UPDATE_OLD_DATE_ERROR("The data to be updated is empty"),
+	/**
+	 *
+	 */
+	UPDATE_OLD_DATE_ERROR("The data to be updated is empty"),
 
-   /**
-    *
-    */
-   UPDATE_ERROR("Update failed"),
+	/**
+	 *
+	 */
+	UPDATE_ERROR("Update failed"),
 
-   /**
-    *
-    */
-   DELETE_DATA_ERROR("The data to be deleted is empty"),
+	/**
+	 *
+	 */
+	DELETE_DATA_ERROR("The data to be deleted is empty"),
 
-   /**
-    *
-    */
-   DELETE_ERROR("Delete error"),
+	/**
+	 *
+	 */
+	DELETE_ERROR("Delete error"),
 
-   /**
-    *
-    */
-   MISS_PERMISSION("You don't have enough permission to do this"),
+	/**
+	 *
+	 */
+	MISS_PERMISSION("You don't have enough permission to do this"),
 
-   /**
-    *
-    */
-   SQL_EXEC_FAILED("Sql execution failed"),
+	/**
+	 *
+	 */
+	SQL_EXEC_FAILED("Sql execution failed"),
 
-   /**
-    *
-    */
-   ERROR("service error"),
+	/**
+	 *
+	 */
+	ERROR("service error"),
 
-   /**
-    *
-    */
-   FILE_NOT_EXIST("This path does not have a corresponding file"),
-   ;
+	/**
+	 *
+	 */
+	FILE_NOT_EXIST("This path does not have a corresponding file"),
 
-   private final BaseResponseInfo info;
+	/**
+	 * 邮箱重复注册时返回
+	 */
+	THIS_EMAIL_IS_EXIST("THIS_EMAIL_ADDRESS_IS_ALREADY_REGISTERED");
 
-   ResponseInfo(BaseResponseInfo info) {
-      this.info = info;
-   }
+private final BaseResponseInfo info;
 
-   ResponseInfo(Integer code, String msg) {
-      this(BaseResponseInfo.builder()
-            .message(msg)
-            .code(code)
-            .build());
-   }
+ResponseInfo(BaseResponseInfo info) {
+	this.info = info;
+}
 
-   ResponseInfo(String msg) {
-      this(-1, msg);
-   }
+ResponseInfo(Integer code, String msg) {
+	this(BaseResponseInfo.builder()
+			.message(msg)
+			.code(code)
+			.build());
+}
+
+ResponseInfo(String msg) {
+	this(-1, msg);
+}
 }

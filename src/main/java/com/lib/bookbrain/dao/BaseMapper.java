@@ -13,15 +13,15 @@ import java.util.List;
  * @author yunxia
  */
 public interface BaseMapper<T extends BaseEntity, F extends Filter> {
-    T getById(Payload<T> payload);
+T getById(Payload<T> payload);
 
-    List<T> getBy(FilterPayload<T, F> payload);
+List<T> getBy(FilterPayload<T, F> payload);
 
-    int update(Payload<T> payload);
+int update(Payload<T> payload);
 
-    int insert(Payload<T> payload);
+int insert(Payload<T> payload);
 
-    int delete(Payload<T> payload);
+int delete(Payload<T> payload);
 
-    T getToUpdate(Payload<T> payload);
+T getToUpdate(Payload<T> payload);
 }
