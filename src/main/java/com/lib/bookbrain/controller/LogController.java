@@ -1,10 +1,10 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
-import com.lib.bookbrain.model.comm.FilterPayload;
-import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.comm.filters.LogFilter;
-import com.lib.bookbrain.model.entity.Log;
+import com.lib.bookbrain.dto.FilterPayload;
+import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.dto.filter.LogFilter;
+import com.lib.bookbrain.entity.Log;
 import com.lib.bookbrain.service.LogService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

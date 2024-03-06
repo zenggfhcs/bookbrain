@@ -1,8 +1,8 @@
 package com.lib.bookbrain.service.impl;
 
-import com.lib.bookbrain.model.comm.Payload;
-import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.entity.TokenBody;
+import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.entity.TokenBody;
 import com.lib.bookbrain.service.TokenService;
 import org.springframework.stereotype.Service;
 

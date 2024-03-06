@@ -3,8 +3,12 @@ package com.lib.bookbrain.service.impl;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BaseMapper;
-import com.lib.bookbrain.model.BaseEntity;
-import com.lib.bookbrain.model.comm.*;
+import com.lib.bookbrain.dto.FilterPayload;
+import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.dto.filter.BaseFilter;
+import com.lib.bookbrain.entity.BaseEntity;
 import com.lib.bookbrain.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +22,7 @@ import java.util.List;
  *
  * @author yunxia
  */
-public class BaseServiceImpl<T extends BaseEntity, F extends Filter> implements BaseService<T, F> {
+public class BaseServiceImpl<T extends BaseEntity, F extends BaseFilter> implements BaseService<T, F> {
 
 /**
  * 线程共享的 tokenBody 对象，用于存放操作人信息

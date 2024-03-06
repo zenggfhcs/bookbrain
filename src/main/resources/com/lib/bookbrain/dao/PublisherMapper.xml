@@ -3,7 +3,7 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.PublisherMapper">
-   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Publisher">
+   <resultMap id="BaseResultMap" type="com.lib.bookbrain.entity.Publisher">
       <id property="id" column="id" jdbcType="INTEGER"/>
       <result property="name" column="name" jdbcType="INTEGER"/>
       <result property="remark" column="remark" jdbcType="VARCHAR"/>
@@ -45,14 +45,14 @@
       </where>
       limit #{filter.page.start}, #{filter.page.end}
    </select>
-   <insert id="insert" parameterType="com.lib.bookbrain.model.comm.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.dto.Payload" useGeneratedKeys="true"
            keyColumn="entity.id">
       insert into publisher(`name`, `remark`, `created_by`, `creation_time`, `updated_by`, `last_updated_time`,
                             `revision`)
       values (#{entity.name}, #{entity.remark}, #{entity.createdBy}, NOW(), #{entity.updatedBy}, NOW(),
               0)
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.comm.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.dto.Payload">
       update publisher p
       <set>
          <if test="entity != null">
@@ -74,12 +74,12 @@
       where p.`id` = #{id}
       and p.`revision` = #{entity.revision};
    </update>
-   <delete id="delete" parameterType="com.lib.bookbrain.model.comm.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.dto.Payload">
       delete
       from publisher p
       where p.`id` = #{id}
    </delete>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.Payload">
       select p.`id`,
              p.`name`,
              p.`remark`,
@@ -92,7 +92,7 @@
       where p.`id` = #{id}
    </select>
 
-   <select id="getToUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.Payload">
+   <select id="getToUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.Payload">
       select
       <trim suffixOverrides=",">
          <if test="entity != null">

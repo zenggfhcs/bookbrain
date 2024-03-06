@@ -1,6 +1,6 @@
 package com.lib.bookbrain.constant;
 
-import com.lib.bookbrain.model.comm.BaseResponseInfo;
+import com.lib.bookbrain.pojo.BaseResponseInfo;
 import lombok.Getter;
 
 @Getter
@@ -87,6 +87,12 @@ public enum ResponseInfo {
 	THIS_EMAIL_IS_EXIST("THIS_EMAIL_ADDRESS_IS_ALREADY_REGISTERED"),
 
 	REGISTER_FIELD("REGISTER_FIELD"),
+
+
+	DATA_STRUCTURE_FAILED("DATA_STRUCTURE_FAILED"),
+
+	SEND_EMAIL_ERROR("EMAIL_SEND_FAILED: 如果该邮箱使用正常，请联系管理员(1635276938@qq.com)"),
+
 	;
 
 private final BaseResponseInfo info;

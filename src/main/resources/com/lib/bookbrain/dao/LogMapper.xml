@@ -6,12 +6,12 @@
    <resultMap id="id" type="integer">
    </resultMap>
    <insert id="create" keyProperty="id" keyColumn="id"
-           useGeneratedKeys="true" parameterType="com.lib.bookbrain.model.entity.Log">
+           useGeneratedKeys="true" parameterType="com.lib.bookbrain.entity.Log">
       insert into log(`type`, `service_name`, `data_id`, `input`, `output`, `elapsed_time`, `creation_time`,
                       `created_by`)
       values (#{type}, #{serviceName}, #{dataId}, #{input}, #{output}, #{elapsedTime}, now(), #{createdBy})
    </insert>
-   <update id="alter" parameterType="com.lib.bookbrain.model.entity.Log">
+   <update id="alter" parameterType="com.lib.bookbrain.entity.Log">
       update log l
       set l.`elapsed_time` = #{elapsedTime},
           l.`output`=#{output}

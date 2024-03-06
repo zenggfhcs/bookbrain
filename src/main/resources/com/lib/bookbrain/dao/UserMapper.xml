@@ -3,7 +3,7 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.UserMapper">
-   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.User">
+   <resultMap id="BaseResultMap" type="com.lib.bookbrain.entity.User">
       <id property="id" column="id" jdbcType="INTEGER"/>
       <result property="authenticationString" column="authentication_string" jdbcType="VARCHAR"/>
       <result property="displayName" column="display_name" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
    </resultMap>
 
    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.id"
-           parameterType="com.lib.bookbrain.model.comm.Payload">
+           parameterType="com.lib.bookbrain.dto.Payload">
       insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
                        `condition`, `authority`, `surname`, `name`, `age`, `gender`,
                        `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
@@ -35,7 +35,7 @@
               now(), 0);
    </insert>
 
-   <update id="update" parameterType="com.lib.bookbrain.model.comm.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.dto.Payload">
       update user u
       <set>
          <if test="entity != null">
@@ -78,13 +78,13 @@
       where u.`id` = #{id}
    </update>
 
-   <update id="delete" parameterType="com.lib.bookbrain.model.comm.Payload">
+   <update id="delete" parameterType="com.lib.bookbrain.dto.Payload">
       update user u
       set u.`condition` = #{entity.condition}
       where u.`id` = #{id};
    </update>
 
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.Payload">
       select u.`id`,
              u.`display_name`,
              u.`email`,
@@ -103,7 +103,7 @@
       from user u
       where u.`id` = #{id};
    </select>
-   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.Payload">
+   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.Payload">
       select u.`id`,
              u.`display_name`
       from user u
@@ -111,7 +111,7 @@
         and u.`authentication_string` = MD5(#{entity.authenticationString});
    </select>
 
-   <select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.comm.FilterPayload">
+   <select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.FilterPayload">
       select u.`id`,
       u.`display_name`,
       u.`email`,
@@ -174,7 +174,7 @@
    </select>
 
    <insert id="register" useGeneratedKeys="true" keyProperty="entity.id"
-           parameterType="com.lib.bookbrain.model.comm.Payload">
+           parameterType="com.lib.bookbrain.dto.Payload">
       insert into user(authentication_string, display_name, email)
       values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email});
    </insert>

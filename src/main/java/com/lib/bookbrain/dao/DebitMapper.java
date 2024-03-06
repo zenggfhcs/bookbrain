@@ -1,9 +1,9 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.comm.FilterPayload;
-import com.lib.bookbrain.model.comm.Payload;
-import com.lib.bookbrain.model.comm.filters.DebitFilter;
-import com.lib.bookbrain.model.entity.Debit;
+import com.lib.bookbrain.dto.FilterPayload;
+import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.dto.filter.DebitFilter;
+import com.lib.bookbrain.entity.Debit;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

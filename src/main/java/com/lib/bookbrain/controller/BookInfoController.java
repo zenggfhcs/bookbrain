@@ -2,11 +2,11 @@ package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
 import com.lib.bookbrain.constant.Header;
-import com.lib.bookbrain.model.comm.FilterPayload;
-import com.lib.bookbrain.model.comm.Payload;
-import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.comm.filters.BookInfoFilter;
-import com.lib.bookbrain.model.entity.BookInfo;
+import com.lib.bookbrain.dto.FilterPayload;
+import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.dto.filter.BookInfoFilter;
+import com.lib.bookbrain.entity.BookInfo;
 import com.lib.bookbrain.service.BookInfoService;
 import org.springframework.web.bind.annotation.*;
 

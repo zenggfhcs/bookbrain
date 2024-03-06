@@ -1,9 +1,11 @@
 package com.lib.bookbrain.service.impl.log;
 
-import com.lib.bookbrain.model.comm.FilterPayload;
-import com.lib.bookbrain.model.comm.Payload;
-import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.entity.Log;
+
+import com.lib.bookbrain.dto.FilterPayload;
+import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.dto.filter.LogFilter;
+import com.lib.bookbrain.entity.Log;
 import com.lib.bookbrain.service.LogService;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,7 @@ public void log(Log log) {
 }
 
 @Override
-public Response getBy(FilterPayload payload) {
+public Response getBy(FilterPayload<Log, LogFilter> payload) {
 	return null;
 }
 

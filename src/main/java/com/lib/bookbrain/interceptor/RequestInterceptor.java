@@ -2,7 +2,7 @@ package com.lib.bookbrain.interceptor;
 
 import com.lib.bookbrain.constant.Header;
 import com.lib.bookbrain.context.SimpleThreadContext;
-import com.lib.bookbrain.model.comm.TokenInfo;
+import com.lib.bookbrain.pojo.TokenInfo;
 import com.lib.bookbrain.security.Jwt;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

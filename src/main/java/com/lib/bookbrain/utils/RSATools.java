@@ -1,5 +1,6 @@
 package com.lib.bookbrain.utils;
 
+import com.lib.bookbrain.exception.DataStructureException;
 import com.lib.bookbrain.security.PreDefinedAlgorithm;
 
 import javax.crypto.BadPaddingException;
@@ -20,7 +21,8 @@ private static String decrypt(byte[] data) {
 		return new String(cipher.doFinal(data));
 	} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
 				InvalidKeyException e) {
-		throw new RuntimeException(e);
+		// todo 记录异常情况
+		throw new DataStructureException();
 	}
 }
 
@@ -37,7 +39,8 @@ public static String encrypt(String data) {
 		return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes()));
 	} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
 				InvalidKeyException e) {
-		throw new RuntimeException(e);
+		// todo 记录异常情况
+		throw new DataStructureException();
 	}
 }
 }

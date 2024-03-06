@@ -1,10 +1,10 @@
 package com.lib.bookbrain.service;
 
-import com.lib.bookbrain.model.comm.FilterPayload;
-import com.lib.bookbrain.model.comm.Payload;
-import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.comm.filters.DebitFilter;
-import com.lib.bookbrain.model.entity.Debit;
+import com.lib.bookbrain.dto.FilterPayload;
+import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.dto.filter.DebitFilter;
+import com.lib.bookbrain.entity.Debit;
 
 public interface DebitService extends BaseService<Debit, DebitFilter> {
 @Override

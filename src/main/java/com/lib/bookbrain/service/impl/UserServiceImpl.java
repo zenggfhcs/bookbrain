@@ -6,16 +6,18 @@ import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.UserMapper;
-import com.lib.bookbrain.model.comm.FilterPayload;
-import com.lib.bookbrain.model.comm.Payload;
-import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.comm.TokenInfo;
-import com.lib.bookbrain.model.comm.filters.UserFilter;
-import com.lib.bookbrain.model.entity.User;
+import com.lib.bookbrain.dto.FilterPayload;
+import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.dto.filter.UserFilter;
+import com.lib.bookbrain.entity.User;
+import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.service.MailService;
 import com.lib.bookbrain.service.UserService;
 import com.lib.bookbrain.utils.RSATools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author yunxia
@@ -24,14 +26,17 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 private final UserMapper userMapper;
 private final BaseServiceImpl<User, UserFilter> baseService;
+private final MailService mailService;
 
 @Autowired
-public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> threadContext) {
+public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> threadContext, MailService mailService) {
 	this.userMapper = userMapper;
 	baseService = new BaseServiceImpl<>(threadContext, userMapper);
+	this.mailService = mailService;
 }
 
 @Override
+@Transactional
 public Response register(Payload<User> payload) {
 	// 解密
 	User _entity = payload.getEntity();
@@ -44,14 +49,14 @@ public Response register(Payload<User> payload) {
 	if (userMapper.getByEmail(_entity.getEmail()) > 0) {
 		return Response.error(ResponseInfo.THIS_EMAIL_IS_EXIST);
 	}
-	int _cc = userMapper.register(payload);
 
-	// 判断注册插入是否成功
-	if (_cc != 1) {
-		return Response.error(ResponseInfo.REGISTER_FIELD);
+	// 先发送邮件再插入数据
+	mailService.send(_entity, "注册");
+
+	{ // 插入数据
+		userMapper.register(payload);
+		// 插入权限表 todo
 	}
-
-	// 成功之后，发送邮件 todo
 
 
 	return Response.success();

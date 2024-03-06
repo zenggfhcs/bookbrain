@@ -3,7 +3,7 @@ package com.lib.bookbrain.config;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.interceptor.OptionsInterceptor;
 import com.lib.bookbrain.interceptor.RequestInterceptor;
-import com.lib.bookbrain.model.comm.TokenInfo;
+import com.lib.bookbrain.pojo.TokenInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -65,6 +65,7 @@ public void addInterceptors(InterceptorRegistry registry) {
 					"/login",
 					"/register",
 					"/token",
+					"/verify",
 					"/");
 }
 

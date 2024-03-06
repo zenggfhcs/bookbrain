@@ -1,10 +1,10 @@
 package com.lib.bookbrain.service;
 
-import com.lib.bookbrain.model.comm.FilterPayload;
-import com.lib.bookbrain.model.comm.Payload;
-import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.comm.filters.UserFilter;
-import com.lib.bookbrain.model.entity.User;
+import com.lib.bookbrain.dto.FilterPayload;
+import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.dto.filter.UserFilter;
+import com.lib.bookbrain.entity.User;
 
 public interface UserService extends BaseService<User, UserFilter> {
 Response register(Payload<User> payload);

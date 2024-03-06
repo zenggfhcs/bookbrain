@@ -3,6 +3,7 @@ package com.lib.bookbrain.utils;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONReader;
 import com.alibaba.fastjson2.JSONWriter;
+import com.lib.bookbrain.exception.DataStructureException;
 
 /**
  * 对 fastjson 的封装
@@ -17,9 +18,14 @@ public class Json {
  * @return 转换后的 json 字符串
  */
 public static String stringify(Object o) {
-	return JSON.toJSONString(o,
-			JSONWriter.Feature.NotWriteDefaultValue, // 不写字段默认值
-			JSONWriter.Feature.NotWriteEmptyArray); // 不写空数组
+	try {
+		return JSON.toJSONString(o,
+				JSONWriter.Feature.NotWriteDefaultValue, // 不写字段默认值
+				JSONWriter.Feature.NotWriteEmptyArray); // 不写空数组
+	} catch (Exception e) {
+		// todo
+		throw new DataStructureException();
+	}
 }
 
 /**
@@ -31,6 +37,11 @@ public static String stringify(Object o) {
  * @return 反序列化对象
  */
 public static <T> T parse(String s, Class<T> c) {
-	return JSON.parseObject(s, c, JSONReader.Feature.TrimString);
+	try {
+		return JSON.parseObject(s, c, JSONReader.Feature.TrimString);
+	} catch (Exception e) {
+		// todo
+		throw new DataStructureException();
+	}
 }
 }

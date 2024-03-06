@@ -1,6 +1,6 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.entity.TokenUsedRecord;
+import com.lib.bookbrain.entity.TokenUsedRecord;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

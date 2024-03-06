@@ -1,11 +1,14 @@
 package com.lib.bookbrain.service;
 
 import com.lib.bookbrain.constant.TemplateInfo;
-import com.lib.bookbrain.model.entity.User;
+import com.lib.bookbrain.entity.User;
+import com.lib.bookbrain.exception.SendEmailException;
+import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.utils.Base64Coder;
+import com.lib.bookbrain.utils.Json;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -65,15 +68,25 @@ public void send(String recipient, String sub) {
 			String content = gc(
 					TemplateInfo.REGISTER_CONFIRMED
 							.fill("email", "1635276937@qq.com")
-							.fill("link", "https://www.baidu.com")
+							.fill("link", "http://localhost:5173/verify?token=" + gToken(recipient))
 			);
 			helper.setText(content, true);
+			sender.send(message);
 		}
-	} catch (MessagingException e) {
-		throw new RuntimeException();
+	} catch (Exception e) {
+		// e 异常的情况需要记录 todo
+		throw new SendEmailException();
 	}
+}
 
-	sender.send(message);
+private String gToken(String email) {
+	TokenInfo _tokenInfo = new TokenInfo();
+	{
+		_tokenInfo.setExp(System.currentTimeMillis() + 86_400_000);
+		_tokenInfo.setNbf(System.currentTimeMillis());
+		_tokenInfo.setJti(email);
+	}
+	return Base64Coder.encode(Json.stringify(_tokenInfo), true);
 }
 
 private String gc(TemplateInfo templateInfo) {

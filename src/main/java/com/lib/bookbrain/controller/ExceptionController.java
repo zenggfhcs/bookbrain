@@ -1,6 +1,6 @@
 package com.lib.bookbrain.controller;
 
-import com.lib.bookbrain.model.comm.Response;
+import com.lib.bookbrain.dto.Response;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;

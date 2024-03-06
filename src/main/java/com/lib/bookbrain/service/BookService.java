@@ -1,10 +1,10 @@
 package com.lib.bookbrain.service;
 
-import com.lib.bookbrain.model.comm.FilterPayload;
-import com.lib.bookbrain.model.comm.Payload;
-import com.lib.bookbrain.model.comm.Response;
-import com.lib.bookbrain.model.comm.filters.BookFilter;
-import com.lib.bookbrain.model.entity.Book;
+import com.lib.bookbrain.dto.FilterPayload;
+import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.dto.filter.BookFilter;
+import com.lib.bookbrain.entity.Book;
 
 public interface BookService extends BaseService<Book, BookFilter> {
 @Override
