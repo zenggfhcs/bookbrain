@@ -70,6 +70,12 @@
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-test</artifactId>
          <scope>test</scope>
+         <exclusions>
+            <exclusion>
+               <groupId>com.jayway.jsonpath</groupId>
+               <artifactId>json-path</artifactId>
+            </exclusion>
+         </exclusions>
       </dependency>
       <dependency>
          <groupId>org.mybatis.spring.boot</groupId>

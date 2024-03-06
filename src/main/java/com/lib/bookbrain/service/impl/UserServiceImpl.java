@@ -12,6 +12,8 @@ import com.lib.bookbrain.dto.Response;
 import com.lib.bookbrain.dto.filter.UserFilter;
 import com.lib.bookbrain.entity.User;
 import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.security.Jwt;
+import com.lib.bookbrain.security.PreDefinedAlgorithm;
 import com.lib.bookbrain.service.MailService;
 import com.lib.bookbrain.service.UserService;
 import com.lib.bookbrain.utils.RSATools;
@@ -33,6 +35,19 @@ public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> thr
 	this.userMapper = userMapper;
 	baseService = new BaseServiceImpl<>(threadContext, userMapper);
 	this.mailService = mailService;
+}
+
+
+@Override
+public Response logout(Payload<User> payload) {
+	// todo 退出登录逻辑
+
+	return Response.success();
+}
+
+@Override
+public int check(Integer id, String url) {
+	return userMapper.check(id, url);
 }
 
 @Override
@@ -68,6 +83,8 @@ public Response login(Payload<User> payload) {
 	if (_user == null) {
 		return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED);
 	}
+	// todo 生成 token 返回
+	Jwt.encoder(_user, PreDefinedAlgorithm.RSA);
 	return Response.success();
 }
 
@@ -99,5 +116,6 @@ public Response update(Payload<User> payload) {
 public Response delete(Payload<User> payload) {
 	return baseService.delete(payload);
 }
+
 
 }

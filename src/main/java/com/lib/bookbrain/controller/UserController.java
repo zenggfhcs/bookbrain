@@ -8,7 +8,6 @@ import com.lib.bookbrain.dto.Response;
 import com.lib.bookbrain.dto.filter.UserFilter;
 import com.lib.bookbrain.entity.User;
 import com.lib.bookbrain.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,7 +22,6 @@ public class UserController {
 
 private final UserService userService;
 
-@Autowired
 public UserController(UserService userService) {
 	this.userService = userService;
 }

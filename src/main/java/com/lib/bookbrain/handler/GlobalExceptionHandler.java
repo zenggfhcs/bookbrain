@@ -47,7 +47,8 @@ public Response ex(BaseException be) {
 @ExceptionHandler(Exception.class)
 public Response error(Exception e) {
 	// todo 用于调试
-	log.error(e.toString());
+//	log.error(e.toString());
+	e.printStackTrace();
 	return Response.error(-1, e.getMessage());
 }
 }

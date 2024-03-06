@@ -21,4 +21,7 @@ Response update(Payload<User> payload);
 
 Response delete(Payload<User> payload);
 
+Response logout(Payload<User> payload);
+
+int check(Integer id, String url);
 }

@@ -3,8 +3,8 @@ package com.lib.bookbrain.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.lib.bookbrain.pojo.TokenInfo;
 import com.lib.bookbrain.entity.User;
+import com.lib.bookbrain.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Json;
 
 import java.nio.charset.StandardCharsets;
@@ -20,42 +20,39 @@ import java.util.UUID;
 public class Jwt {
 
 /**
- * 有效时长 毫秒值 七天
- * 7 * 24 * 60 * 60 * 1000
+ * 有效时长 秒值
  */
 public static final long EFFECTIVE_DURATION;
 
 static {
-	EFFECTIVE_DURATION = 1_411_200_000;
+	EFFECTIVE_DURATION = 7 * 24 * 60 * 60 * 1000;
 }
 
-/* ============================ encoder ============================ */
+//#region encoder
+/* === === === === === === === === === === === === ===  === === === === === === === === === === === === === */
 public static String encoder(User user, Algorithm algorithm) {
 	return coder(user.getId(), algorithm);
 }
 
-private static String coder(Integer id, Algorithm algorithm) {
+private static String coder(int id, Algorithm algorithm) {
 	return coder(id, System.currentTimeMillis(), algorithm);
 }
 
-private static String coder(Integer id, Long time, Algorithm algorithm) {
+private static String coder(int id, long time, Algorithm algorithm) {
 	return JWT.create()
 			.withIssuer("sys")
 			.withSubject("valid")
-			.withAudience(id.toString())
-			.withNotBefore(new Date(culTime(time + EFFECTIVE_DURATION)))
-			.withExpiresAt(new Date(culTime(time)))
+			.withAudience(String.valueOf(id))
+			.withNotBefore(new Date(time))
+			.withExpiresAt(new Date(time + EFFECTIVE_DURATION))
 			.withJWTId(UUID.randomUUID().toString())
 			.sign(algorithm);
 }
+/* === === === === === === === === === === === === ===  === === === === === === === === === === === === === */
+//#endregion
 
-private static Long culTime(Long time) {
-	return (time) * 1000;
-}
-/* ============================ encoder ============================ */
-
-/* ============================ decoder ============================ */
-
+//#region decoder
+/* === === === === === === === === === === === === ===  === === === === === === === === === === === === === */
 /**
  * jwt 解码
  *
@@ -79,13 +76,20 @@ public static TokenInfo decoder(String token, Algorithm algorithm) {
 
 	return Json.parse(data, TokenInfo.class);
 }
-/* ============================ decoder ============================ */
+/* === === === === === === === === === === === === ===  === === === === === === === === === === === === === */
+//#endregion
 
 public static void main(String[] args) {
 	/* ------------------------ test ------------------------ */
 	User user = new User();
 	user.setId(1);
-	System.out.println(encoder(user, PreDefinedAlgorithm.RSA));
+	String token = encoder(user, PreDefinedAlgorithm.HMAC);
+	System.out.println(token);
+
+	TokenInfo info = decoder(token);
+
+	System.out.println(info.getNbf());
+	System.out.println(info.getExp());
 }
 
 }

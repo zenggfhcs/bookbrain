@@ -35,7 +35,7 @@ protected T entity;
  */
 @SuppressWarnings("unchecked")
 public static Payload<BaseEntity> getOrNew(Object objPayload) {
-	if (objPayload.getClass() == Payload.class) {
+	if (objPayload != null && objPayload.getClass() == Payload.class) {
 		return (Payload<BaseEntity>) objPayload;
 	}
 	return new Payload<>();

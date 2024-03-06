@@ -16,7 +16,7 @@ public class RSATools {
 private static String decrypt(byte[] data) {
 	try {
 		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.DECRYPT_MODE, PreDefinedAlgorithm.privateKey);
+		cipher.init(Cipher.DECRYPT_MODE, PreDefinedAlgorithm.Key.RSA_PRIVATE_KEY);
 
 		return new String(cipher.doFinal(data));
 	} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
@@ -35,7 +35,7 @@ public static String decrypt(String dataString) {
 public static String encrypt(String data) {
 	try {
 		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.ENCRYPT_MODE, PreDefinedAlgorithm.publicKey);
+		cipher.init(Cipher.ENCRYPT_MODE, PreDefinedAlgorithm.Key.RSA_PUBLIC_KEY);
 		return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes()));
 	} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
 				InvalidKeyException e) {

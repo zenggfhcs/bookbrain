@@ -16,10 +16,9 @@ import java.util.Base64;
  */
 
 public class RSAKeyGenerator {
-public static PublicKey getPublicKeyByPath(String path) {
-	String publicKeyString = MyFile.read(path);
 
-	byte[] publicKeyBytes = Base64.getDecoder().decode(publicKeyString);
+public static PublicKey getPublicKeyPyStringKey(String key) {
+	byte[] publicKeyBytes = Base64.getDecoder().decode(key);
 	X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
 
 	try {
@@ -29,10 +28,13 @@ public static PublicKey getPublicKeyByPath(String path) {
 	}
 }
 
-public static PrivateKey getPrivateKeyByPath(String path) {
-	String privateKeyString = MyFile.read(path);
+public static PublicKey getPublicKeyByPath(String path) {
+	String publicKeyString = MyFile.read(path);
+	return getPublicKeyPyStringKey(publicKeyString);
+}
 
-	byte[] privateKeyBytes = Base64.getDecoder().decode(privateKeyString);
+public static PrivateKey getPrivateKeyByKeyString(String key) {
+	byte[] privateKeyBytes = Base64.getDecoder().decode(key);
 	PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
 
 	try {
@@ -42,16 +44,13 @@ public static PrivateKey getPrivateKeyByPath(String path) {
 	}
 }
 
-public static void main(String[] args) {
-//      generate();
-//      String publicKeyString = MyFile.read("jwt-rsa-pub.key"); // Files.readString(Path.of("resources/jwt-rsa-pub.key"));
-//      String privateKeyString = MyFile.read("jwt-rsa-pri.key"); // Files.readString(Path.of("resources/jwt-rsa-pri.key"));
-//
-//      PublicKey publicKey = getPublicKeyByPath(publicKeyString);
-//      PrivateKey privateKey = getPrivateKeyByPath(privateKeyString);
-//
-//      System.out.println("Public Key: " + publicKey);
-//      System.out.println("Private Key: " + privateKey);
+public static PrivateKey getPrivateKeyByPath(String path) {
+	String privateKeyString = MyFile.read(path);
+	return getPrivateKeyByKeyString(privateKeyString);
+}
+
+public static void main(String[] args) throws NoSuchAlgorithmException {
+	generate();
 }
 
 

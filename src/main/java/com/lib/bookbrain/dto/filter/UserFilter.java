@@ -8,5 +8,14 @@ import lombok.Setter;
 public class UserFilter extends BaseFilter {
 
 protected FilterItem<Integer> age;
+
+public UserFilter() {
+	init();
+}
+
+private void init() {
+	age = new FilterItem<>(0, 222);
+}
+
 }
 

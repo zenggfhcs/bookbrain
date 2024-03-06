@@ -49,6 +49,7 @@ public BaseServiceImpl(SimpleThreadContext<TokenInfo> threadContext, BaseMapper<
 
 @Override
 public Response getBy(FilterPayload<T, F> payload) {
+	// todo 校验 filter
 	List<T> _list = baseMapper.getBy(payload);
 	return Response.success(_list);
 }
