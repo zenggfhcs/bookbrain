@@ -1,10 +1,10 @@
 package com.lib.bookbrain.service;
 
-import com.lib.bookbrain.dto.FilterPayload;
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.Response;
-import com.lib.bookbrain.dto.filter.PublisherFilter;
-import com.lib.bookbrain.entity.Publisher;
+import com.lib.bookbrain.model.entity.Publisher;
+import com.lib.bookbrain.model.exchange.FilterPayload;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.PublisherFilter;
 
 public interface PublisherService extends BaseService<Publisher, PublisherFilter> {
 Response getBy(FilterPayload<Publisher, PublisherFilter> payload);

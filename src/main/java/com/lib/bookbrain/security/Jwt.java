@@ -3,7 +3,7 @@ package com.lib.bookbrain.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.lib.bookbrain.entity.User;
+import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Json;
 

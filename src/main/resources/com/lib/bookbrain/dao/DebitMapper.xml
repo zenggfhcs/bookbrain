@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.DebitMapper">
-   <resultMap id="BaseResultMap" type="com.lib.bookbrain.entity.Debit">
+   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Debit">
       <id column="id" jdbcType="INTEGER" property="id"/>
       <result column="return_deadline" jdbcType="DATE" property="returnDeadline"/>
       <result column="return_date" jdbcType="DATE" property="returnDate"/>
@@ -10,7 +10,7 @@
       <result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
       <result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
       <result column="revision" jdbcType="INTEGER" property="revision"/>
-      <association property="book" javaType="com.lib.bookbrain.entity.Book" column="{id=book_id}"
+      <association property="book" javaType="com.lib.bookbrain.model.entity.Book" column="{id=book_id}"
                    select="com.lib.bookbrain.dao.BookMapper.getById"/>
    </resultMap>
    <select id="getBy" resultMap="BaseResultMap">
@@ -26,9 +26,10 @@
       from debit d
       <where>
       </where>
+      limit #{filter.page.start}, #{filter.page.end};
    </select>
 
-   <select id="getById" parameterType="com.lib.bookbrain.dto.Payload" resultMap="BaseResultMap">
+   <select id="getById" parameterType="com.lib.bookbrain.model.exchange.Payload" resultMap="BaseResultMap">
       select distinct d.`id`,
                       d.`book_id`,
                       d.`return_deadline`,
@@ -42,13 +43,13 @@
       where d.`id` = #{id}
    </select>
 
-   <delete id="delete" parameterType="com.lib.bookbrain.dto.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
       delete
       from debit d
       where d.`id` = #{id}
    </delete>
 
-   <insert id="insert" parameterType="com.lib.bookbrain.dto.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
            keyProperty="entity.debitId">
       insert into debit (`book_id`, `return_deadline`,
                          `return_date`, `created_by`, `creation_time`,
@@ -58,7 +59,7 @@
               #{entity.updatedBy}, NOW(), #{entity.revision})
    </insert>
 
-   <update id="update" parameterType="com.lib.bookbrain.dto.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
       update debit d
       <set>
          <if test="entity != null">
@@ -87,5 +88,10 @@
       select *
       from debit d
       where d.`id` = #{id}
+   </select>
+
+   <select id="getCountByFilter" resultType="int">
+      select count(*)
+      from debit;
    </select>
 </mapper>

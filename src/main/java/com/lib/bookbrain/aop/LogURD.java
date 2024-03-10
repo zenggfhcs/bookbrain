@@ -3,10 +3,10 @@ package com.lib.bookbrain.aop;
 import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.LogMapper;
-import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.model.entity.Entity;
+import com.lib.bookbrain.model.entity.Log;
+import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.pojo.TokenInfo;
-import com.lib.bookbrain.entity.BaseEntity;
-import com.lib.bookbrain.entity.Log;
 import com.lib.bookbrain.utils.Json;
 import com.lib.bookbrain.utils.Parse;
 import lombok.AllArgsConstructor;
@@ -75,7 +75,7 @@ public Object logDelete(ProceedingJoinPoint point) throws Throwable {
 private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable {
 
 	/* ===================== 前 ===================== */
-	Payload<BaseEntity> _payload = Payload.getOrNew(point.getArgs()[0]);
+	Payload<Entity> _payload = Payload.getOrNew(point.getArgs()[0]);
 	Log _log = Log.before(generateServiceName(point.getSignature()), _payload);
 	{
 		_log.setCreatedBy(threadContext.get().getAud());
@@ -107,9 +107,7 @@ private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable 
  */
 private String generateServiceName(Signature signature) {
 	String serviceFullName = signature.getDeclaringType().getName();
-	String serviceName = Parse.serviceToDataClass(serviceFullName);
-	String method = signature.getName();
-	return String.format("%s.%s", serviceName, method);
+	return Parse.serviceToDataClass(serviceFullName);
 }
 
 }

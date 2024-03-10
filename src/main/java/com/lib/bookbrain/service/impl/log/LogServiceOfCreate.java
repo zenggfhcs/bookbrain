@@ -1,11 +1,10 @@
 package com.lib.bookbrain.service.impl.log;
 
-
-import com.lib.bookbrain.dto.FilterPayload;
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.Response;
-import com.lib.bookbrain.dto.filter.LogFilter;
-import com.lib.bookbrain.entity.Log;
+import com.lib.bookbrain.model.entity.Log;
+import com.lib.bookbrain.model.exchange.FilterPayload;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.LogFilter;
 import com.lib.bookbrain.service.LogService;
 
 public class LogServiceOfCreate implements LogService {

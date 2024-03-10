@@ -3,6 +3,7 @@ package com.lib.bookbrain.interceptor;
 import com.lib.bookbrain.constant.Header;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.exception.JWTException;
+import com.lib.bookbrain.exception.PermissionMissException;
 import com.lib.bookbrain.pojo.TokenInfo;
 import com.lib.bookbrain.security.Jwt;
 import com.lib.bookbrain.service.UserService;
@@ -44,11 +45,9 @@ public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServl
 		throw new JWTException();
 	}
 
-	// todo 检查权限 难点：确定操作需要的权限 request.getRequestURI() 可以获取到请求的url，通过查表法，可以将 url 和 需要的权限对应起来
 	String _url = request.getRequestURI();
-	if (userService.check(_info.getAud(), _url) == 0) { // todo 返回 false 之后没有返回值
-		// todo 应当抛出一个异常
-		return false;
+	if (userService.check(_info.getAud(), _url) == 0) {
+		throw new PermissionMissException();
 	}
 
 	threadContext.set(_info); // 记录操作者

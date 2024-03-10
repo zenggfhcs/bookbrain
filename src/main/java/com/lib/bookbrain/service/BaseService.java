@@ -1,19 +1,19 @@
 package com.lib.bookbrain.service;
 
-import com.lib.bookbrain.dto.FilterPayload;
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.Response;
-import com.lib.bookbrain.dto.filter.BaseFilter;
-import com.lib.bookbrain.entity.BaseEntity;
+import com.lib.bookbrain.model.entity.Entity;
+import com.lib.bookbrain.model.exchange.FilterPayload;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.BaseFilter;
 
-public interface BaseService<T extends BaseEntity, F extends BaseFilter> {
-Response getBy(FilterPayload<T, F> payload);
+public interface BaseService<E extends Entity, F extends BaseFilter> {
+Response getBy(FilterPayload<E, F> payload);
 
-Response create(Payload<T> payload);
+Response create(Payload<E> payload);
 
-Response getById(Payload<T> payload);
+Response getById(Payload<E> payload);
 
-Response update(Payload<T> payload);
+Response update(Payload<E> payload);
 
-Response delete(Payload<T> payload);
+Response delete(Payload<E> payload);
 }

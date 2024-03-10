@@ -1,18 +1,17 @@
-package com.lib.bookbrain.entity;
+package com.lib.bookbrain.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 /**
  * @author yunxia
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class BaseEntity {
+@Getter
+@Setter
+public class Entity {
+
 
 /**
  * 创建人
@@ -43,5 +42,4 @@ protected Integer revision;
  * 备注
  */
 protected String remark;
-
 }

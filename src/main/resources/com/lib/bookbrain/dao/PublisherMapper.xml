@@ -3,7 +3,7 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.PublisherMapper">
-   <resultMap id="BaseResultMap" type="com.lib.bookbrain.entity.Publisher">
+   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Publisher">
       <id property="id" column="id" jdbcType="INTEGER"/>
       <result property="name" column="name" jdbcType="INTEGER"/>
       <result property="remark" column="remark" jdbcType="VARCHAR"/>
@@ -38,21 +38,35 @@
                and p.`name` like concat('%', #{entity.name}, '%')
             </if>
          </if>
-         <if test="1 == 1">
-            and p.`creation_time` between #{filter.creationTime.start} and #{filter.creationTime.end}
-            and p.`last_updated_time` between #{filter.lastUpdatedTime.start} and #{filter.lastUpdatedTime.end}
+         <if test="filter != null">
+            <if test="filter.creationTime != null">
+               <if test="filter.creationTime.start != null">
+                  and p.`creation_time` >= #{filter.creationTime.start}
+               </if>
+               <if test="filter.creationTime.end != null">
+                  and #{filter.creationTime.end} >= p.`creation_time`
+               </if>
+            </if>
+            <if test="filter.lastUpdatedTime != null">
+               <if test="filter.lastUpdatedTime.start != null">
+                  and p.`last_updated_time` >= #{filter.lastUpdatedTime.start}
+               </if>
+               <if test="filter.lastUpdatedTime.end != null">
+                  and #{filter.lastUpdatedTime.end} >= p.`last_updated_time`
+               </if>
+            </if>
          </if>
       </where>
       limit #{filter.page.start}, #{filter.page.end}
    </select>
-   <insert id="insert" parameterType="com.lib.bookbrain.dto.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
            keyColumn="entity.id">
       insert into publisher(`name`, `remark`, `created_by`, `creation_time`, `updated_by`, `last_updated_time`,
                             `revision`)
       values (#{entity.name}, #{entity.remark}, #{entity.createdBy}, NOW(), #{entity.updatedBy}, NOW(),
               0)
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.dto.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
       update publisher p
       <set>
          <if test="entity != null">
@@ -74,12 +88,12 @@
       where p.`id` = #{id}
       and p.`revision` = #{entity.revision};
    </update>
-   <delete id="delete" parameterType="com.lib.bookbrain.dto.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
       delete
-      from publisher p
-      where p.`id` = #{id}
+      from publisher
+      where `id` = #{id}
    </delete>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
       select p.`id`,
              p.`name`,
              p.`remark`,
@@ -92,7 +106,7 @@
       where p.`id` = #{id}
    </select>
 
-   <select id="getToUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.Payload">
+   <select id="getToUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
       select
       <trim suffixOverrides=",">
          <if test="entity != null">
@@ -109,5 +123,16 @@
       </trim>
       from publisher p
       where p.`id` = #{id}
+   </select>
+
+   <select id="getCountByFilter" resultType="int">
+      select count(*)
+      from publisher;
+   </select>
+
+   <select id="getByName" resultType="int">
+      select count(*)
+      from  publisher p
+      where p.`name` = #{entity.name}
    </select>
 </mapper>

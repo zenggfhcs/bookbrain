@@ -1,8 +1,6 @@
-package com.lib.bookbrain.entity;
+package com.lib.bookbrain.model.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -13,9 +11,7 @@ import java.util.UUID;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class User extends BaseEntity {
+public class User extends Entity {
 
 /**
  * 用户 id
@@ -30,12 +26,7 @@ private String authenticationString;
 /**
  * 用户名
  */
-private String displayName = renderDisplayName();
-
-/**
- * 用户邮箱
- */
-private String email;
+private String displayName;
 
 /**
  * 用户电话号码
@@ -43,14 +34,9 @@ private String email;
 private String phoneNumber;
 
 /**
- * 状态聚合值
+ * 用户邮箱
  */
-private Integer condition = 2;
-
-/**
- * 权限聚合值
- */
-private Long authority = 111111111L;
+private String email;
 
 /**
  * 姓
@@ -63,23 +49,26 @@ private String surname;
 private String name;
 
 /**
+ * 年龄
+ */
+private Short age;
+
+/**
  * 性别
  */
 private Short gender;
+
+/**
+ * 出生日期
+ */
+private LocalDateTime birthday;
 
 /**
  * 最后登录时间
  */
 private LocalDateTime lastLoginTime;
 
-/**
- * 出生日期
- */
-private LocalDateTime birthday;
-/**
- * 年龄
- */
-private Short age;
+private Audit auditInfo;
 
 private static String renderDisplayName() {
 	UUID uuid = UUID.randomUUID();

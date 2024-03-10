@@ -1,6 +1,6 @@
-package com.lib.bookbrain.dto;
+package com.lib.bookbrain.model.exchange;
 
-import com.lib.bookbrain.entity.BaseEntity;
+import com.lib.bookbrain.model.entity.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Payload<T extends BaseEntity> {
+public class Payload<E extends Entity> {
 
 /**
  * id
@@ -23,7 +23,7 @@ protected Integer id;
 /**
  * 参数实体
  */
-protected T entity;
+protected E entity;
 
 /**
  * 将 objPayload 强制转换成 Payload 对象
@@ -34,9 +34,9 @@ protected T entity;
  * @return objPayload 对应的 Payload 对象
  */
 @SuppressWarnings("unchecked")
-public static Payload<BaseEntity> getOrNew(Object objPayload) {
+public static Payload<Entity> getOrNew(Object objPayload) {
 	if (objPayload != null && objPayload.getClass() == Payload.class) {
-		return (Payload<BaseEntity>) objPayload;
+		return (Payload<Entity>) objPayload;
 	}
 	return new Payload<>();
 }
@@ -48,7 +48,7 @@ public static Payload<BaseEntity> getOrNew(Object objPayload) {
  * @param <E> AuditInfo
  * @return 封装了实体的载体对象
  */
-public static <E extends BaseEntity> Payload<E> generateByEntity(E e) {
+public static <E extends Entity> Payload<E> generateByEntity(E e) {
 	Payload<E> _payload = new Payload<>();
 	_payload.setEntity(e);
 	return _payload;

@@ -2,16 +2,16 @@ package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
 import com.lib.bookbrain.constant.Header;
-import com.lib.bookbrain.dto.FilterPayload;
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.Response;
-import com.lib.bookbrain.dto.filter.UserFilter;
-import com.lib.bookbrain.entity.User;
+import com.lib.bookbrain.model.entity.User;
+import com.lib.bookbrain.model.exchange.FilterPayload;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.UserFilter;
 import com.lib.bookbrain.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * user controller
+ * User controller
  *
  * @author yunxia
  */

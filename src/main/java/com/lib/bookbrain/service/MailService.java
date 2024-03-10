@@ -1,8 +1,8 @@
 package com.lib.bookbrain.service;
 
 import com.lib.bookbrain.constant.TemplateInfo;
-import com.lib.bookbrain.entity.User;
 import com.lib.bookbrain.exception.SendEmailException;
+import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Base64Coder;
 import com.lib.bookbrain.utils.Json;
@@ -82,7 +82,6 @@ public void send(String recipient, String sub) {
 private String gToken(String email) {
 	TokenInfo _tokenInfo = new TokenInfo();
 	{
-		_tokenInfo.setExp(System.currentTimeMillis() + 86_400_000);
 		_tokenInfo.setNbf(System.currentTimeMillis());
 		_tokenInfo.setJti(email);
 	}

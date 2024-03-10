@@ -3,7 +3,7 @@ package com.lib.bookbrain.aop;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.TokenAccessRecordMapper;
 import com.lib.bookbrain.pojo.TokenInfo;
-import com.lib.bookbrain.entity.TokenUsedRecord;
+import com.lib.bookbrain.model.entity.TokenAccessRecord;
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -46,7 +46,7 @@ public Object aroundConduct(ProceedingJoinPoint point) throws Throwable {
  * @param token token
  */
 private void logTokenUsed(TokenInfo info, String token) {
-	TokenUsedRecord tur = TokenUsedRecord.builder()
+	TokenAccessRecord tur = TokenAccessRecord.builder()
 			.userId(info.getAud())
 			.token(token)
 			.build();

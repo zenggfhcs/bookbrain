@@ -3,7 +3,7 @@ package com.lib.bookbrain.handler;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.exception.BaseException;
-import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.model.exchange.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

@@ -3,14 +3,12 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.UserMapper">
-   <resultMap id="BaseResultMap" type="com.lib.bookbrain.entity.User">
+   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.User">
       <id property="id" column="id" jdbcType="INTEGER"/>
       <result property="authenticationString" column="authentication_string" jdbcType="VARCHAR"/>
       <result property="displayName" column="display_name" jdbcType="VARCHAR"/>
       <result property="email" column="email" jdbcType="VARCHAR"/>
       <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
-      <result property="condition" column="condition" jdbcType="INTEGER"/>
-      <result property="authority" column="authority" jdbcType="INTEGER"/>
       <result property="surname" column="surname" jdbcType="VARCHAR"/>
       <result property="name" column="name" jdbcType="VARCHAR"/>
       <result property="age" column="age" jdbcType="TINYINT"/>
@@ -25,17 +23,17 @@
    </resultMap>
 
    <insert id="insert" useGeneratedKeys="true" keyProperty="entity.id"
-           parameterType="com.lib.bookbrain.dto.Payload">
+           parameterType="com.lib.bookbrain.model.exchange.Payload">
       insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
-                       `condition`, `authority`, `surname`, `name`, `age`, `gender`,
+                       `surname`, `name`, `age`, `gender`,
                        `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
       values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email},
-              #{entity.phoneNumber}, #{entity.condition}, #{entity.authority}, #{entity.surname},
+              #{entity.phoneNumber}, #{entity.surname},
               #{entity.name}, #{entity.age}, #{entity.gender}, #{entity.createdBy}, now(), #{entity.updatedBy},
               now(), 0);
    </insert>
 
-   <update id="update" parameterType="com.lib.bookbrain.dto.Payload">
+   <update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
       update user u
       <set>
          <if test="entity != null">
@@ -47,12 +45,6 @@
             </if>
             <if test="entity.email != null and entity.email != ''">
                u.`email` = #{entity.email},
-            </if>
-            <if test="entity.condition != null">
-               u.`condition` = #{entity.condition},
-            </if>
-            <if test="entity.authority != null">
-               u.`authority` = #{entity.authority},
             </if>
             <if test="entity.surname != null">
                u.`surname` = #{entity.surname},
@@ -72,19 +64,19 @@
          </if>
          <if test="1 == 1">
             u.`last_updated_time` = now(),
-            u.`revision` = (1 + u.`revision`) % 2147483647,
+            u.`revision`          = (1 + u.`revision`) % 2147483647,
          </if>
       </set>
       where u.`id` = #{id}
    </update>
 
-   <update id="delete" parameterType="com.lib.bookbrain.dto.Payload">
-      update user u
-      set u.`condition` = #{entity.condition}
-      where u.`id` = #{id};
+   <update id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
+      update user_condition uc
+      set uc.`is_enable` = 0
+      where uc.`user_id` = #{id};
    </update>
 
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
       select u.`id`,
              u.`display_name`,
              u.`email`,
@@ -103,30 +95,28 @@
       from user u
       where u.`id` = #{id};
    </select>
-   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.Payload">
+   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
       select u.`id`,
-             u.`display_name`
+             u.email
       from user u
-      where u.`id` = #{id}
+      where u.email = #{entity.email}
         and u.`authentication_string` = MD5(#{entity.authenticationString});
    </select>
 
-   <select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.FilterPayload">
+   <select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.FilterPayload">
       select u.`id`,
-      u.`display_name`,
-      u.`email`,
-      u.`phone_number`,
-      u.`condition`,
-      u.`authority`,
-      u.`surname`,
-      u.`name`,
-      u.`age`,
-      u.`gender`,
-      u.`created_by`,
-      u.`creation_time`,
-      u.`updated_by`,
-      u.`last_updated_time`,
-      u.`revision`
+             u.`display_name`,
+             u.`email`,
+             u.`phone_number`,
+             u.`surname`,
+             u.`name`,
+             u.`age`,
+             u.`gender`,
+             u.`created_by`,
+             u.`creation_time`,
+             u.`updated_by`,
+             u.`last_updated_time`,
+             u.`revision`
       from user u
       <where>
          <if test="entity != null">
@@ -150,9 +140,38 @@
             </if>
          </if>
          <if test="filter != null">
-            and u.`age` between #{filter.age.start} and #{filter.age.end}
-            and u.`creation_time` between #{filter.creationTime.start} and #{filter.creationTime.end}
-            and u.`last_updated_time` between #{filter.lastUpdatedTime.start} and #{filter.lastUpdatedTime.end}
+            <if test="filter.age != null">
+               <if test="filter.age.start != null">
+                  and u.`age` >= #{filter.age.start}
+               </if>
+               <if test="filter.age.end != null">
+                  and #{filter.age.end} >= u.`age`
+               </if>
+            </if>
+            <if test="filter.creationTime != null">
+               <if test="filter.creationTime.start != null">
+                  and u.`creation_time` >= #{filter.creationTime.start}
+               </if>
+               <if test="filter.creationTime.end != null">
+                  and #{filter.creationTime.end} >= u.`creation_time`
+               </if>
+            </if>
+            <if test="filter.lastUpdatedTime != null">
+               <if test="filter.lastUpdatedTime.start != null">
+                  and u.`last_updated_time` >= #{filter.lastUpdatedTime.start}
+               </if>
+               <if test="filter.lastUpdatedTime.end != null">
+                  and #{filter.lastUpdatedTime.end} >= u.`last_updated_time`
+               </if>
+            </if>
+            <if test="filter.lastLoginTime != null">
+               <if test="filter.lastLoginTime.start != null">
+                  and u.`last_login_time` >= #{filter.lastLoginTime.start}
+               </if>
+               <if test="filter.lastLoginTime.end != null">
+                  and #{filter.lastLoginTime.end} >= u.`last_login_time`
+               </if>
+            </if>
          </if>
       </where>
       limit #{filter.page.start}, #{filter.page.end}
@@ -174,7 +193,7 @@
    </select>
 
    <insert id="register" useGeneratedKeys="true" keyProperty="entity.id"
-           parameterType="com.lib.bookbrain.dto.Payload">
+           parameterType="com.lib.bookbrain.model.exchange.Payload">
       insert into user(authentication_string, display_name, email)
       values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email});
    </insert>
@@ -187,5 +206,27 @@
                   concat(substring_index(substring_index(#{email}, '@', 1), '+', 1),
                          '@',
                          substring_index(#{email}, '@', -1));
+   </select>
+
+   <insert id="addUserRole">
+      insert into user_role(user_id, role_id)
+      values (#{entity.id}, 4);
+   </insert>
+
+   <insert id="addUserCondition">
+      insert into user_condition(user_id, is_enable, email_verified, phone_number_verified)
+      VALUES (#{entity.id}, 1, 0, 0);
+   </insert>
+
+   <update id="verifyEmail">
+      update user_condition uc, user u
+      set uc.email_verified = 1
+      where u.email = #{email}
+        and u.id = uc.user_id;
+   </update>
+
+   <select id="getCountByFilter" resultType="int">
+      select count(*)
+      from user;
    </select>
 </mapper>

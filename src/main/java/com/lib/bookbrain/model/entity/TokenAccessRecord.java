@@ -1,4 +1,4 @@
-package com.lib.bookbrain.entity;
+package com.lib.bookbrain.model.entity;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class TokenUsedRecord {
+public class TokenAccessRecord extends Entity {
 
 /**
  * id
@@ -29,7 +29,7 @@ private String token;
  */
 private LocalDateTime usedTime;
 
-public static TokenUsedRecord generate() {
-	return new TokenUsedRecord(null, null, null, null);
+public static TokenAccessRecord generate() {
+	return new TokenAccessRecord(null, null, null, null);
 }
 }

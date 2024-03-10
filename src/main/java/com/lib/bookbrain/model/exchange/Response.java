@@ -1,4 +1,4 @@
-package com.lib.bookbrain.dto;
+package com.lib.bookbrain.model.exchange;
 
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.pojo.BaseResponseInfo;

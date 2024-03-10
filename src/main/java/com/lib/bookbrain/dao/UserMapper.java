@@ -1,9 +1,9 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.dto.FilterPayload;
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.filter.UserFilter;
-import com.lib.bookbrain.entity.User;
+import com.lib.bookbrain.model.entity.User;
+import com.lib.bookbrain.model.exchange.FilterPayload;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.filter.UserFilter;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -19,6 +19,8 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User, UserFilter> {
 /* ============================ 继承 ============================ */
 List<User> getBy(FilterPayload<User, UserFilter> payload);
+
+int getCountByFilter(UserFilter filter);
 
 int insert(Payload<User> payload);
 
@@ -40,8 +42,14 @@ User login(Payload<User> payload);
 
 int getByEmail(String email);
 
-@Select("select count(*) from user_permission where user_id = #{id} and url = #{url}")
+@Select("select count(*) from user_permission where user_id = #{id} and #{url} regexp url")
 int check(@Param("id") Integer id, @Param("url") String url);
 
+
+void addUserRole(Payload<User> payload);
+
+void addUserCondition(Payload<User> payload);
+
+void verifyEmail(String email);
 /* ============================ 拓展 ============================ */
 }

@@ -1,6 +1,6 @@
-package com.lib.bookbrain.entity;
+package com.lib.bookbrain.model.entity;
 
-import com.lib.bookbrain.dto.Payload;
+import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.utils.Json;
 import lombok.*;
 
@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Log extends BaseEntity {
+public class Log extends Entity {
 
 /**
  *
@@ -52,7 +52,7 @@ private Long elapsedTime;
  * @param serviceName 服务名称
  * @param payload     用于生成日志信息的 payload
  */
-public static Log before(String serviceName, Payload<BaseEntity> payload) {
+public static Log before(String serviceName, Payload<Entity> payload) {
 	return Log.builder().serviceName(serviceName).dataId(payload.getId()).input(Json.stringify(payload)).output("{}")
 			.elapsedTime(-1L).build();
 }

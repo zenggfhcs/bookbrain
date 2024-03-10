@@ -1,8 +1,8 @@
 package com.lib.bookbrain.controller;
 
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.Response;
-import com.lib.bookbrain.entity.TokenBody;
+import com.lib.bookbrain.model.entity.TokenBody;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.service.VerifyService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

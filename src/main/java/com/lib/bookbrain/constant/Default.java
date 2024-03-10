@@ -1,6 +1,6 @@
 package com.lib.bookbrain.constant;
 
-import com.lib.bookbrain.dto.filter.FilterItem;
+import com.lib.bookbrain.model.filter.FilterItem;
 
 import java.time.LocalDateTime;
 

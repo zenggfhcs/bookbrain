@@ -1,9 +1,9 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.dto.FilterPayload;
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.filter.BaseFilter;
-import com.lib.bookbrain.entity.BaseEntity;
+import com.lib.bookbrain.model.exchange.FilterPayload;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.filter.BaseFilter;
+import com.lib.bookbrain.model.entity.Entity;
 
 import java.util.List;
 
@@ -12,16 +12,18 @@ import java.util.List;
  *
  * @author yunxia
  */
-public interface BaseMapper<T extends BaseEntity, F extends BaseFilter> {
-T getById(Payload<T> payload);
+public interface BaseMapper<E extends Entity, F extends BaseFilter> {
+E getById(Payload<E> payload);
 
-List<T> getBy(FilterPayload<T, F> payload);
+List<E> getBy(FilterPayload<E, F> payload);
 
-int update(Payload<T> payload);
+int update(Payload<E> payload);
 
-int insert(Payload<T> payload);
+int insert(Payload<E> payload);
 
-int delete(Payload<T> payload);
+int delete(Payload<E> payload);
 
-T getToUpdate(Payload<T> payload);
+E getToUpdate(Payload<E> payload);
+
+int getCountByFilter(F filter);
 }

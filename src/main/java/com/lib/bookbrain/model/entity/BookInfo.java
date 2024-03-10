@@ -1,4 +1,4 @@
-package com.lib.bookbrain.entity;
+package com.lib.bookbrain.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BookInfo extends BaseEntity {
+public class BookInfo extends Entity {
 
 /**
  * 书籍信息 Id

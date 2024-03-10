@@ -23,6 +23,11 @@ spring:
             class: javax.net.ssl.SSLSocketFactory
           starttls:
             enable: true
+  mvc:
+    format:
+      date: "yyyy-MM-dd"
+      time: "HH:mm:ss"
+      datetime: "yyyy-MM-dd HH:mm:ss"
 
 # mybatis 相关配置
 mybatis:
@@ -46,8 +51,6 @@ logging:
 # 端口
 server:
   port: 9090
-
-# diy
 
 # 异步线程配置
 async:

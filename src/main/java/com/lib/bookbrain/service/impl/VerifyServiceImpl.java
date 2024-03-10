@@ -1,16 +1,21 @@
 package com.lib.bookbrain.service.impl;
 
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.Response;
-import com.lib.bookbrain.entity.TokenBody;
+import com.lib.bookbrain.dao.UserMapper;
+import com.lib.bookbrain.model.entity.TokenBody;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.pojo.TokenInfo;
 import com.lib.bookbrain.service.VerifyService;
 import com.lib.bookbrain.utils.Base64Coder;
 import com.lib.bookbrain.utils.Json;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class VerifyServiceImpl implements VerifyService {
+
+private final UserMapper userMapper;
 
 @Override
 public Response verify(Payload<TokenBody> payload) {
@@ -21,15 +26,10 @@ public Response verify(Payload<TokenBody> payload) {
 	TokenInfo _info = Json.parse(_json, TokenInfo.class);
 	System.out.println(_info);
 
-	// todo 重复验证检查
-
-	// todo 怎么防伪造，伪造会导致什么后果
-
-	// todo 进行验证
+	// 不进行伪造识别、重复验证
 	{
-
+		userMapper.verifyEmail(_info.getJti());
 	}
-
 
 	return Response.success();
 }

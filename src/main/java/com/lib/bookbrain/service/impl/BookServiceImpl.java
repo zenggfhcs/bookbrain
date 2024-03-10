@@ -5,12 +5,12 @@ import com.lib.bookbrain.anno.AroundGet;
 import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BookMapper;
-import com.lib.bookbrain.dto.FilterPayload;
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.Response;
+import com.lib.bookbrain.model.entity.Book;
+import com.lib.bookbrain.model.exchange.FilterPayload;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.BookFilter;
 import com.lib.bookbrain.pojo.TokenInfo;
-import com.lib.bookbrain.dto.filter.BookFilter;
-import com.lib.bookbrain.entity.Book;
 import com.lib.bookbrain.service.BookService;
 import org.springframework.stereotype.Service;
 

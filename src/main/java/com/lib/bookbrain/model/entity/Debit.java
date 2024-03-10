@@ -1,4 +1,4 @@
-package com.lib.bookbrain.entity;
+package com.lib.bookbrain.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Debit extends BaseEntity {
+public class Debit extends Entity {
 
 /**
  *

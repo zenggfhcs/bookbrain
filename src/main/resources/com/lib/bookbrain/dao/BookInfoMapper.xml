@@ -3,7 +3,7 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.BookInfoMapper">
-   <resultMap id="BaseResultMap" type="com.lib.bookbrain.entity.BookInfo">
+   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.BookInfo">
       <id property="id" column="id" jdbcType="INTEGER"/>
       <result property="publishPlace" column="publish_place" jdbcType="VARCHAR"/>
       <result property="isbn" column="isbn" jdbcType="VARCHAR"/>
@@ -23,10 +23,10 @@
       <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
       <result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
-      <association property="publisher" column="{id=publish_id}" javaType="com.lib.bookbrain.entity.Publisher"
+      <association property="publisher" column="{id=publish_id}" javaType="com.lib.bookbrain.model.entity.Publisher"
                    select="com.lib.bookbrain.dao.PublisherMapper.getById"/>
    </resultMap>
-   <insert id="insert" parameterType="com.lib.bookbrain.dto.Payload" useGeneratedKeys="true"
+   <insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
            keyProperty="entity.id">
       insert into book_info (`publisher_id`, `publish_place`, `isbn`, `cip`, `book_name`,
                              `book_type`, `cover`, `author`, `describe`, `publish_date`,
@@ -52,8 +52,8 @@
              , now()
              , 0)
    </insert>
-   <update id="update" parameterType="com.lib.bookbrain.dto.Payload">
-      update book_info bif, authority auth
+   <update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
+      update book_info bif
       <set>
          <if test="entity != null">
             <if test="entity.id != null">
@@ -110,10 +110,9 @@
       where bif.`id` = #{id}
       and bif.`revision` = #{entity.revision}
    </update>
-   <delete id="delete" parameterType="com.lib.bookbrain.dto.Payload">
+   <delete id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
       delete bif
-      from book_info bif,
-           authority a
+      from book_info bif
       where bif.`id` = #{id}
    </delete>
    <select id="getBy" resultMap="BaseResultMap">
@@ -137,7 +136,7 @@
       bif.`updated_by`,
       bif.`last_updated_time`,
       bif.`revision`
-      from book_info bif, authority auth
+      from book_info bif
       <where>
          <if test="entity != null">
             <if test="entity.id != null">
@@ -150,7 +149,7 @@
       </where>
       limit #{filter.page.start}, #{filter.page.end}
    </select>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.dto.Payload">
+   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
       select distinct bif.`id`,
                       bif.`publish_place`,
                       bif.`isbn`,
@@ -182,6 +181,12 @@
          </if>
       </trim>
       from book_info bif
-      where bif.`id` = #{id}
+      where bif.`id` = #{id};
+   </select>
+
+   <select id="getCountByFilter" resultType="int">
+      select count(*)
+      from book_info bif
+      ;
    </select>
 </mapper>

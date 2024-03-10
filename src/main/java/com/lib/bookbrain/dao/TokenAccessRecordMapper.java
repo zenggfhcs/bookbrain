@@ -1,6 +1,6 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.entity.TokenUsedRecord;
+import com.lib.bookbrain.model.entity.TokenAccessRecord;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -9,5 +9,5 @@ void updateByToken(String token);
 
 int getByToken(String token);
 
-void insert(TokenUsedRecord tur);
+void insert(TokenAccessRecord tur);
 }

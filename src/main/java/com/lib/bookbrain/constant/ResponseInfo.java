@@ -84,7 +84,7 @@ public enum ResponseInfo {
 	/**
 	 * 邮箱重复注册时返回
 	 */
-	THIS_EMAIL_IS_EXIST("THIS_EMAIL_ADDRESS_IS_ALREADY_REGISTERED"),
+	THIS_EMAIL_IS_EXIST("THIS_EMAIL_ADDRESS_IS_ALREADY_REGISTERED: 该邮箱已经注册"),
 
 	REGISTER_FIELD("REGISTER_FIELD"),
 
@@ -93,7 +93,7 @@ public enum ResponseInfo {
 
 	SEND_EMAIL_ERROR("EMAIL_SEND_FAILED: 如果该邮箱使用正常，请联系管理员(1635276938@qq.com)"),
 
-	;
+	PUBLISHER_NAME_REPEAT("NAME_REPEAT: 已经存在名称相同的出版社了");
 
 private final BaseResponseInfo info;
 

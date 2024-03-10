@@ -1,4 +1,4 @@
-package com.lib.bookbrain.dto.filter;
+package com.lib.bookbrain.model.filter;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.lib.bookbrain.entity;
+package com.lib.bookbrain.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Book extends BaseEntity {
+public class Book extends Entity {
 
 /**
  * 书籍唯一标识

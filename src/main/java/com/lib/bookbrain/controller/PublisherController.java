@@ -2,16 +2,16 @@ package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
 import com.lib.bookbrain.constant.Header;
-import com.lib.bookbrain.dto.FilterPayload;
-import com.lib.bookbrain.dto.Payload;
-import com.lib.bookbrain.dto.Response;
-import com.lib.bookbrain.dto.filter.PublisherFilter;
-import com.lib.bookbrain.entity.Publisher;
+import com.lib.bookbrain.model.entity.Publisher;
+import com.lib.bookbrain.model.exchange.FilterPayload;
+import com.lib.bookbrain.model.exchange.Payload;
+import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.PublisherFilter;
 import com.lib.bookbrain.service.PublisherService;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * publisher controller
+ * Publisher controller
  *
  * @author yunxia
  */
