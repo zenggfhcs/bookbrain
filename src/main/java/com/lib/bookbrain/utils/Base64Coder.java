@@ -1,7 +1,6 @@
 package com.lib.bookbrain.utils;
 
 import com.lib.bookbrain.exception.DataStructureException;
-import com.lib.bookbrain.pojo.TokenInfo;
 
 import java.util.Base64;
 
@@ -73,19 +72,7 @@ public static byte[] decode(byte[] data) {
 }
 
 public static void main(String[] args) {
-
-	TokenInfo _info = new TokenInfo();
-	{
-		_info.setAud(1);
-		_info.setNbf(System.currentTimeMillis());
-		_info.setExp(System.currentTimeMillis() + 7 * 24 * 3600);
-		_info.setJti("1635276938@qq.com");
-	}
-	String data = Json.stringify(_info);
-	System.out.println(encode(data));
-	data = encode(data, true);
-	System.out.println(data.length());
-	System.out.println(decode(data));
+	System.out.println(decode("clqvhplcu2t3xyzdrmi7uifa2lbibb5qlgobvvtadjoy2hvkgdanhnx4ywagpfutjyr45an3pbe2i"));
 
 }
 }

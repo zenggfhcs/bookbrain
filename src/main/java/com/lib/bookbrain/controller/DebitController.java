@@ -27,33 +27,33 @@ public DebitController(DebitService debitService) {
 
 @PostMapping("/list/select")
 public Response getDebits(@RequestBody(required = false) FilterPayload<Debit, DebitFilter> payload,
-								  @RequestHeader(Header.TOKEN) String ignoredToken) {
+                          @RequestHeader(Header.TOKEN) String ignoredToken) {
 	return debitService.getBy(payload);
 }
 
 @PostMapping("/list/create")
 public Response createDebit(@RequestBody(required = false) Payload<Debit> payload,
-									 @RequestHeader(Header.TOKEN) String ignoredToken) {
+                            @RequestHeader(Header.TOKEN) String ignoredToken) {
 	return debitService.create(payload);
 }
 
 @PostMapping("/{id}/select")
 public Response getDebit(@RequestBody(required = false) Payload<Debit> payload,
-								 @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
+                         @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
 	payload.setId(id);
 	return debitService.getById(payload);
 }
 
 @PostMapping("/{id}/update")
 public Response updateDebit(@RequestBody(required = false) Payload<Debit> payload,
-									 @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
+                            @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
 	payload.setId(id);
 	return debitService.update(payload);
 }
 
 @PostMapping("/{id}/delete")
 public Response deleteDebit(@RequestBody(required = false) Payload<Debit> payload,
-									 @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
+                            @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
 	payload.setId(id);
 	return debitService.delete(payload);
 }

@@ -53,6 +53,7 @@ private static String coder(int id, long time, Algorithm algorithm) {
 
 //#region decoder
 /* === === === === === === === === === === === === ===  === === === === === === === === === === === === === */
+
 /**
  * jwt 解码
  *

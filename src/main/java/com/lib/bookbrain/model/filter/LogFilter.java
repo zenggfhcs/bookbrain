@@ -5,5 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LogFilter  extends BaseFilter {
+public class LogFilter extends BaseFilter {
+private FilterItem<Long> elapsedTime;
 }

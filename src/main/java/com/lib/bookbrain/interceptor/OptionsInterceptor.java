@@ -11,7 +11,7 @@ public class OptionsInterceptor implements HandlerInterceptor {
 @Override
 
 public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-								 @NonNull Object handler) {
+                         @NonNull Object handler) {
 	if (request.getMethod().equals("OPTIONS")) {
 		// 对于OPTIONS请求，直接返回成功
 		response.setStatus(HttpServletResponse.SC_OK);

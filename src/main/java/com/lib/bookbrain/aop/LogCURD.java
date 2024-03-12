@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 @AllArgsConstructor
-public class LogURD {
+public class LogCURD {
 
 /**
  * 日志数据操作
@@ -35,6 +35,11 @@ private final LogMapper logMapper;
  * tokenBody 线程局部变量
  */
 private final SimpleThreadContext<TokenInfo> threadContext;
+
+@Around("@annotation(com.lib.bookbrain.anno.AroundAdd)")
+public Object logAdd(ProceedingJoinPoint point) throws Throwable {
+	return log(point, LogType.C);
+}
 
 /**
  * 记录查询

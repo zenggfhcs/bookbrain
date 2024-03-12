@@ -88,7 +88,7 @@
 
    <select id="getCountByFilter" resultType="int">
       select count(*)
-      from  book
+      from book
       ;
    </select>
 </mapper>

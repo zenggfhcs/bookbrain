@@ -18,7 +18,7 @@ import java.util.Base64;
 public class RSAKeyGenerator {
 
 public static PublicKey getPublicKeyPyStringKey(String key) {
-	byte[] publicKeyBytes = Base64.getDecoder().decode(key);
+	byte[] publicKeyBytes = Base64.getMimeDecoder().decode(key);
 	X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
 
 	try {
@@ -34,7 +34,7 @@ public static PublicKey getPublicKeyByPath(String path) {
 }
 
 public static PrivateKey getPrivateKeyByKeyString(String key) {
-	byte[] privateKeyBytes = Base64.getDecoder().decode(key);
+	byte[] privateKeyBytes = Base64.getMimeDecoder().decode(key);
 	PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
 
 	try {

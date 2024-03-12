@@ -57,7 +57,7 @@ public Response getBy(FilterPayload<E, F> payload) {
 		List<E> _list = baseMapper.getBy(payload);
 		map.put("data", _list);
 		// todo 修改 sql 条件
-		int count = baseMapper.getCountByFilter(payload.getFilter());
+		int count = baseMapper.getCountByFilter(payload);
 		map.put("count", count);
 	}
 	return Response.success(map);

@@ -1,9 +1,9 @@
 package com.lib.bookbrain.dao;
 
+import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.filter.BookInfoFilter;
-import com.lib.bookbrain.model.entity.BookInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

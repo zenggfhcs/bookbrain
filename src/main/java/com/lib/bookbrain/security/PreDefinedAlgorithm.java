@@ -9,6 +9,15 @@ import java.util.Objects;
 
 public class PreDefinedAlgorithm {
 
+public static final Algorithm HMAC;
+public static final Algorithm RSA;
+
+static {
+	HMAC = Algorithm.HMAC256(Key.HMAC_KEY);
+
+	RSA = Algorithm.RSA256(Key.RSA_PUBLIC_KEY, Key.RSA_PRIVATE_KEY);
+}
+
 public static class KeyPath {
 	static final String RSA_PUB_KEY = "jwt-rsa-pub.key";
 
@@ -42,14 +51,5 @@ public static class Key {
 		HMAC_KEY = Objects.requireNonNull(MyFile.read(KeyPath.HMAC_KEY));
 	}
 
-}
-
-public static final Algorithm HMAC;
-public static final Algorithm RSA;
-
-static {
-	HMAC = Algorithm.HMAC256(Key.HMAC_KEY);
-
-	RSA = Algorithm.RSA256(Key.RSA_PUBLIC_KEY, Key.RSA_PRIVATE_KEY);
 }
 }

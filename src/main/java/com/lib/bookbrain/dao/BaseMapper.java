@@ -1,9 +1,9 @@
 package com.lib.bookbrain.dao;
 
+import com.lib.bookbrain.model.entity.Entity;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.filter.BaseFilter;
-import com.lib.bookbrain.model.entity.Entity;
 
 import java.util.List;
 
@@ -25,5 +25,5 @@ int delete(Payload<E> payload);
 
 E getToUpdate(Payload<E> payload);
 
-int getCountByFilter(F filter);
+int getCountByFilter(FilterPayload<E, F> payload);
 }

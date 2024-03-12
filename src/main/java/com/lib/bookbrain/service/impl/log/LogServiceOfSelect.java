@@ -42,7 +42,7 @@ public Response create(Payload<Log> payload) {
 
 @Override
 public Response getById(Payload<Log> payload) {
-	return null;
+	return baseService.getById(payload);
 }
 
 @Override

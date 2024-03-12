@@ -20,7 +20,7 @@ private static String decrypt(byte[] data) {
 
 		return new String(cipher.doFinal(data));
 	} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
-				InvalidKeyException e) {
+	         InvalidKeyException e) {
 		// todo 记录异常情况
 		throw new DataStructureException();
 	}
@@ -38,7 +38,7 @@ public static String encrypt(String data) {
 		cipher.init(Cipher.ENCRYPT_MODE, PreDefinedAlgorithm.Key.RSA_PUBLIC_KEY);
 		return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes()));
 	} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
-				InvalidKeyException e) {
+	         InvalidKeyException e) {
 		// todo 记录异常情况
 		throw new DataStructureException();
 	}

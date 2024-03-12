@@ -1,10 +1,10 @@
 package com.lib.bookbrain.dao;
 
 import com.lib.bookbrain.model.entity.Log;
+import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.filter.LogFilter;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,7 +14,9 @@ void create(Log log);
 
 void alter(Log log);
 
-List<Log> getBy(@Param("payload") Payload<Log> payload, @Param("filter") LogFilter filter);
+List<Log> getBy(FilterPayload<Log, LogFilter> payload);
 
-int getCountByFilter(LogFilter filter);
+int getCountByFilter(FilterPayload<Log, LogFilter> payload);
+
+Log getById(Payload<Log> payload);
 }

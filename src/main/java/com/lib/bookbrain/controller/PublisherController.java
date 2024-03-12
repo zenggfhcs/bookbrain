@@ -27,33 +27,33 @@ public PublisherController(PublisherService publisherService) {
 
 @PostMapping("/list/select")
 public Response getPublishers(@RequestBody(required = false) FilterPayload<Publisher, PublisherFilter> payload,
-										@RequestHeader(Header.TOKEN) String ignoredToken) {
+                              @RequestHeader(Header.TOKEN) String ignoredToken) {
 	return publisherService.getBy(payload);
 }
 
 @PostMapping("/list/create")
 public Response createPublisher(@RequestBody(required = false) Payload<Publisher> payload,
-										  @RequestHeader(Header.TOKEN) String ignoredToken) {
+                                @RequestHeader(Header.TOKEN) String ignoredToken) {
 	return publisherService.create(payload);
 }
 
 @PostMapping("/{id}/select")
 public Response getPublisher(@RequestBody(required = false) Payload<Publisher> payload,
-									  @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
+                             @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
 	payload.setId(id);
 	return publisherService.getById(payload);
 }
 
 @PostMapping("/{id}/update")
 public Response updatePublisher(@RequestBody(required = false) Payload<Publisher> payload,
-										  @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
+                                @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
 	payload.setId(id);
 	return publisherService.update(payload);
 }
 
 @PostMapping("/{id}/delete")
 public Response deletePublisher(@RequestBody(required = false) Payload<Publisher> payload,
-										  @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
+                                @RequestHeader(Header.TOKEN) String ignoredToken, @PathVariable Integer id) {
 	payload.setId(id);
 	return publisherService.delete(payload);
 }

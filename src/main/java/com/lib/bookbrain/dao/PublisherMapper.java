@@ -16,7 +16,7 @@ public interface PublisherMapper extends BaseMapper<Publisher, PublisherFilter> 
 /* ============================ 继承 ============================ */
 List<Publisher> getBy(FilterPayload<Publisher, PublisherFilter> payload);
 
-int getCountByFilter(PublisherFilter filter);
+int getCountByFilter(FilterPayload<Publisher, PublisherFilter> payload);
 
 Publisher getById(Payload<Publisher> payload);
 

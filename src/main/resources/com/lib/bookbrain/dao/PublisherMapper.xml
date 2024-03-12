@@ -127,12 +127,47 @@
 
    <select id="getCountByFilter" resultType="int">
       select count(*)
-      from publisher;
+      from publisher p
+      <where>
+         <if test="entity != null">
+            <if test="entity.id != null">
+               p.`id` = #{entity.id}
+            </if>
+            <if test="entity.createdBy != null">
+               and p.`created_by` = #{entity.createdBy}
+            </if>
+            <if test="entity.updatedBy != null">
+               and p.`updated_by` = #{entity.updatedBy}
+            </if>
+            <if test="entity.name != null and entity.name != ''">
+               and p.`name` like concat('%', #{entity.name}, '%')
+            </if>
+         </if>
+         <if test="filter != null">
+            <if test="filter.creationTime != null">
+               <if test="filter.creationTime.start != null">
+                  and p.`creation_time` >= #{filter.creationTime.start}
+               </if>
+               <if test="filter.creationTime.end != null">
+                  and #{filter.creationTime.end} >= p.`creation_time`
+               </if>
+            </if>
+            <if test="filter.lastUpdatedTime != null">
+               <if test="filter.lastUpdatedTime.start != null">
+                  and p.`last_updated_time` >= #{filter.lastUpdatedTime.start}
+               </if>
+               <if test="filter.lastUpdatedTime.end != null">
+                  and #{filter.lastUpdatedTime.end} >= p.`last_updated_time`
+               </if>
+            </if>
+         </if>
+      </where>
+      ;
    </select>
 
    <select id="getByName" resultType="int">
       select count(*)
-      from  publisher p
+      from publisher p
       where p.`name` = #{entity.name}
    </select>
 </mapper>

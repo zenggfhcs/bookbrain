@@ -31,15 +31,79 @@
       select *
       from log l
       <where>
+         <if test="entity != null">
+            <if test="entity.id != null">
+               and l.`id` = #{entity.id}
+            </if>
+            <if test="entity.type != null and entity.type != ''">
+               and l.`type` = #{entity.type}
+            </if>
+            <if test="entity.serviceName != null and entity.serviceName != ''">
+               and l.`service_name` = #{entity.serviceName}
+            </if>
+         </if>
+         <if test="filter != null">
+            <if test="filter.creationTime != null">
+               <if test="filter.creationTime.start != null">
+                  and l.`creation_time` >= #{filter.creationTime.start}
+               </if>
+               <if test="filter.creationTime.end != null">
+                  and #{filter.creationTime.end} >= l.`creation_time`
+               </if>
+            </if>
+            <if test="filter.elapsedTime != null">
+               <if test="filter.elapsedTime.start != null">
+                  and l.`elapsed_time` >= #{filter.elapsedTime.start}
+               </if>
+               <if test="filter.elapsedTime.end != null">
+                  and #{filter.elapsedTime.end} >= l.`elapsed_time`
+               </if>
+            </if>
+         </if>
       </where>
       limit #{filter.page.start}, #{filter.page.end};
    </select>
 
-   <select id="getCountByFilter" resultType="Integer" >
+   <select id="getCountByFilter" resultType="Integer">
       select count(*)
       from log l
       <where>
+         <if test="entity != null">
+            <if test="entity.id != null">
+               and l.`id` = #{entity.id}
+            </if>
+            <if test="entity.type != null and entity.type != ''">
+               and l.`type` = #{entity.type}
+            </if>
+            <if test="entity.serviceName != null and entity.serviceName != ''">
+               and l.`service_name` = #{entity.serviceName}
+            </if>
+         </if>
+         <if test="filter != null">
+            <if test="filter.creationTime != null">
+               <if test="filter.creationTime.start != null">
+                  and l.`creation_time` >= #{filter.creationTime.start}
+               </if>
+               <if test="filter.creationTime.end != null">
+                  and #{filter.creationTime.end} >= l.`creation_time`
+               </if>
+            </if>
+            <if test="filter.elapsedTime != null">
+               <if test="filter.elapsedTime.start != null">
+                  and l.`elapsed_time` >= #{filter.elapsedTime.start}
+               </if>
+               <if test="filter.elapsedTime.end != null">
+                  and #{filter.elapsedTime.end} >= l.`elapsed_time`
+               </if>
+            </if>
+         </if>
+      </where>
+      ;
+   </select>
 
-      </where>;
+   <select id="getById" resultMap="BaseResultMap">
+      select *
+      from log l
+      where l.`id` = #{id};
    </select>
 </mapper>

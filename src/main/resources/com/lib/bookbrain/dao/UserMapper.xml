@@ -64,7 +64,7 @@
          </if>
          <if test="1 == 1">
             u.`last_updated_time` = now(),
-            u.`revision`          = (1 + u.`revision`) % 2147483647,
+            u.`revision` = (1 + u.`revision`) % 2147483647,
          </if>
       </set>
       where u.`id` = #{id}
@@ -81,8 +81,6 @@
              u.`display_name`,
              u.`email`,
              u.`phone_number`,
-             u.`condition`,
-             u.`authority`,
              u.`surname`,
              u.`name`,
              u.`age`,
@@ -105,18 +103,18 @@
 
    <select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.FilterPayload">
       select u.`id`,
-             u.`display_name`,
-             u.`email`,
-             u.`phone_number`,
-             u.`surname`,
-             u.`name`,
-             u.`age`,
-             u.`gender`,
-             u.`created_by`,
-             u.`creation_time`,
-             u.`updated_by`,
-             u.`last_updated_time`,
-             u.`revision`
+      u.`display_name`,
+      u.`email`,
+      u.`phone_number`,
+      u.`surname`,
+      u.`name`,
+      u.`age`,
+      u.`gender`,
+      u.`created_by`,
+      u.`creation_time`,
+      u.`updated_by`,
+      u.`last_updated_time`,
+      u.`revision`
       from user u
       <where>
          <if test="entity != null">

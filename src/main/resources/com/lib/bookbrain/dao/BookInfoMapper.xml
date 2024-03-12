@@ -5,6 +5,7 @@
 <mapper namespace="com.lib.bookbrain.dao.BookInfoMapper">
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.BookInfo">
       <id property="id" column="id" jdbcType="INTEGER"/>
+      <result property="publisher.id" column="publisher_id" jdbcType="INTEGER"/>
       <result property="publishPlace" column="publish_place" jdbcType="VARCHAR"/>
       <result property="isbn" column="isbn" jdbcType="VARCHAR"/>
       <result property="cip" column="cip" jdbcType="VARCHAR"/>
@@ -23,7 +24,7 @@
       <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
       <result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
       <result property="revision" column="revision" jdbcType="INTEGER"/>
-      <association property="publisher" column="{id=publish_id}" javaType="com.lib.bookbrain.model.entity.Publisher"
+      <association property="publisher" column="{id=publisher_id}" javaType="com.lib.bookbrain.model.entity.Publisher"
                    select="com.lib.bookbrain.dao.PublisherMapper.getById"/>
    </resultMap>
    <insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
@@ -117,7 +118,7 @@
    </delete>
    <select id="getBy" resultMap="BaseResultMap">
       select distinct bif.`id`,
-      bif.`id`,
+      bif.`publisher_id`,
       bif.`publish_place`,
       bif.`isbn`,
       bif.`cip`,
@@ -151,6 +152,7 @@
    </select>
    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
       select distinct bif.`id`,
+                      bif.`publisher_id`,
                       bif.`publish_place`,
                       bif.`isbn`,
                       bif.`cip`,

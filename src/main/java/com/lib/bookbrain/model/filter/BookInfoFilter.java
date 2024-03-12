@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BookInfoFilter  extends BaseFilter {
+public class BookInfoFilter extends BaseFilter {
 }
 

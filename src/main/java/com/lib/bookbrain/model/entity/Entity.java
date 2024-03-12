@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 public class Entity {
 
-
 /**
  * 创建人
  */
