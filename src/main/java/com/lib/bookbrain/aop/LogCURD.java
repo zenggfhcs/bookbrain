@@ -105,7 +105,7 @@ private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable 
 }
 
 /**
- * 生成服务名（数据类名称 + 方法名）
+ * 生成服务名（数据类名称）
  *
  * @param signature 1
  * @return dataClass.method

@@ -67,7 +67,7 @@
             u.`revision` = (1 + u.`revision`) % 2147483647,
          </if>
       </set>
-      where u.`id` = #{id}
+      where u.`id` = #{id} and u.`revision` = #{entity.revision}
    </update>
 
    <update id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -181,8 +181,7 @@
    </select>
    <select id="getByToken" resultMap="BaseResultMap">
       select u.`id`,
-             u.`display_name`,
-             u.`authority`
+             u.`display_name`
       from user u,
            token_access_record t
       where t.token = #{token}

@@ -6,7 +6,6 @@
    <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.BookInfo">
       <id property="id" column="id" jdbcType="INTEGER"/>
       <result property="publisher.id" column="publisher_id" jdbcType="INTEGER"/>
-      <result property="publishPlace" column="publish_place" jdbcType="VARCHAR"/>
       <result property="isbn" column="isbn" jdbcType="VARCHAR"/>
       <result property="cip" column="cip" jdbcType="VARCHAR"/>
       <result property="bookName" column="book_name" jdbcType="VARCHAR"/>
@@ -29,12 +28,11 @@
    </resultMap>
    <insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
            keyProperty="entity.id">
-      insert into book_info (`publisher_id`, `publish_place`, `isbn`, `cip`, `book_name`,
+      insert into book_info (`publisher_id`, `isbn`, `cip`, `book_name`,
                              `book_type`, `cover`, `author`, `describe`, `publish_date`,
                              `keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
                              `updated_by`, `last_updated_time`, `revision`)
       values ( #{entity.publisher.id}
-             , #{entity.publishPlace}
              , #{entity.isbn}
              , #{entity.cip}
              , #{entity.bookName}
@@ -119,7 +117,6 @@
    <select id="getBy" resultMap="BaseResultMap">
       select distinct bif.`id`,
       bif.`publisher_id`,
-      bif.`publish_place`,
       bif.`isbn`,
       bif.`cip`,
       bif.`book_name`,
@@ -153,7 +150,6 @@
    <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
       select distinct bif.`id`,
                       bif.`publisher_id`,
-                      bif.`publish_place`,
                       bif.`isbn`,
                       bif.`cip`,
                       bif.`book_name`,

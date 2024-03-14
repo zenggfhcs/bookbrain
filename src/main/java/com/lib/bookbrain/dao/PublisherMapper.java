@@ -28,7 +28,7 @@ int delete(Payload<Publisher> payload);
 
 Publisher getToUpdate(Payload<Publisher> payload);
 
-int getByName(Payload<Publisher> payload);
+int getCountByName(Payload<Publisher> payload);
 /* ============================ 继承 ============================ */
 
 }

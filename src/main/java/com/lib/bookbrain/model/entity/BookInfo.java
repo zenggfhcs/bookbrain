@@ -28,11 +28,6 @@ private Long id;
 private Publisher publisher;
 
 /**
- * 出版地
- */
-private String publishPlace;
-
-/**
  * 书籍 ISBN 号
  */
 private String isbn;

@@ -90,6 +90,8 @@ public Response login(Payload<User> payload) {
 		return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED);
 	}
 
+	// todo 进行判断，没有进行登录后的验证的返回错误
+
 	String _token = Jwt.encoder(_user, PreDefinedAlgorithm.HMAC);
 	TokenBody _body = new TokenBody();
 	_body.setToken(_token);

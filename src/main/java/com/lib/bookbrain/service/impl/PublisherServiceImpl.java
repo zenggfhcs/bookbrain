@@ -38,7 +38,7 @@ public Response getBy(FilterPayload<Publisher, PublisherFilter> payload) {
 @AroundAdd
 @Override
 public Response create(Payload<Publisher> payload) {
-	int _cc = publisherMapper.getByName(payload);
+	int _cc = publisherMapper.getCountByName(payload);
 	if (_cc != 0) {
 		return Response.error(ResponseInfo.PUBLISHER_NAME_REPEAT);
 	}
@@ -55,7 +55,7 @@ public Response getById(Payload<Publisher> payload) {
 @AroundUpdate
 @Override
 public Response update(Payload<Publisher> payload) {
-	int _cc = publisherMapper.getByName(payload);
+	int _cc = publisherMapper.getCountByName(payload);
 	if (_cc != 0) {
 		return Response.error(ResponseInfo.PUBLISHER_NAME_REPEAT);
 	}

@@ -24,4 +24,8 @@ private Integer id;
  */
 private String name;
 
+/**
+ * 出版地
+ */
+private String place;
 }
