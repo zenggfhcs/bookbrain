@@ -18,6 +18,8 @@ public class User extends Entity {
  */
 private Integer id;
 
+private Role role;
+
 /**
  * 用户验证字符串
  */

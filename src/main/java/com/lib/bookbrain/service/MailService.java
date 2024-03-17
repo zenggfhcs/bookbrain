@@ -72,9 +72,6 @@ public void sendCode(User recipient, String sub, String code) {
 
 /**
  * 给邮箱发邮件
- *
- * @param recipientEmail 收件邮箱
- * @param sub            主题
  */
 public void send(String recipientEmail, String sub, Supplier<String> sup) {
 	MimeMessage message = sender.createMimeMessage();

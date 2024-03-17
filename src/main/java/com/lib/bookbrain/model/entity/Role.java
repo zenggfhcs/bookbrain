@@ -10,6 +10,4 @@ private Integer id;
 
 private String name;
 
-
-private Audit auditInfo;
 }

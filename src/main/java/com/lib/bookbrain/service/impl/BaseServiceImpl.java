@@ -27,7 +27,7 @@ import java.util.Map;
 public class BaseServiceImpl<E extends Entity, F extends BaseFilter> implements BaseService<E, F> {
 
 /**
- * 线程共享的 tokenBody 对象，用于存放操作人信息
+ * 线程共享的 tokenInfo 对象，用于存放操作人信息
  */
 protected final SimpleThreadContext<TokenInfo> threadContext;
 
