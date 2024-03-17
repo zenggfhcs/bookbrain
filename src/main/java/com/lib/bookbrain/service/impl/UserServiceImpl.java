@@ -70,7 +70,7 @@ public Response register(Payload<User> payload) {
 	}
 
 	// 先发送邮件再插入数据
-	mailService.send(_entity, "注册");
+	mailService.sendLink(_entity, "注册");
 
 	{ // 插入数据
 		userMapper.register(payload);
