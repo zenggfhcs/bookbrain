@@ -23,5 +23,9 @@ Response delete(Payload<User> payload);
 
 Response logout(Payload<User> payload);
 
-int check(Integer id, String url);
+int checkPermission(Integer id, String url);
+
+Response sendCode(Payload<User> payload);
+
+Response resetPassword(Payload<User> payload);
 }

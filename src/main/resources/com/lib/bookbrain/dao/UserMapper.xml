@@ -1,229 +1,247 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.UserMapper">
-   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.User">
-      <id property="id" column="id" jdbcType="INTEGER"/>
-      <result property="authenticationString" column="authentication_string" jdbcType="VARCHAR"/>
-      <result property="displayName" column="display_name" jdbcType="VARCHAR"/>
-      <result property="email" column="email" jdbcType="VARCHAR"/>
-      <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
-      <result property="surname" column="surname" jdbcType="VARCHAR"/>
-      <result property="name" column="name" jdbcType="VARCHAR"/>
-      <result property="age" column="age" jdbcType="TINYINT"/>
-      <result property="gender" column="gender" jdbcType="TINYINT"/>
-      <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
-      <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
-      <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
-      <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
-      <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
-      <result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
-      <result property="revision" column="revision" jdbcType="INTEGER"/>
-   </resultMap>
+	<resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.User">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="authenticationString" column="authentication_string" jdbcType="VARCHAR"/>
+		<result property="displayName" column="display_name" jdbcType="VARCHAR"/>
+		<result property="email" column="email" jdbcType="VARCHAR"/>
+		<result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+		<result property="surname" column="surname" jdbcType="VARCHAR"/>
+		<result property="name" column="name" jdbcType="VARCHAR"/>
+		<result property="age" column="age" jdbcType="TINYINT"/>
+		<result property="gender" column="gender" jdbcType="TINYINT"/>
+		<result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+		<result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+		<result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+		<result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
+		<result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
+		<result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
+		<result property="revision" column="revision" jdbcType="INTEGER"/>
+		<association property="role" javaType="com.lib.bookbrain.model.entity.Role" column="id"
+		             select="getRolesByUserId"/>
+	</resultMap>
 
-   <insert id="insert" useGeneratedKeys="true" keyProperty="entity.id"
-           parameterType="com.lib.bookbrain.model.exchange.Payload">
-      insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
-                       `surname`, `name`, `age`, `gender`,
-                       `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
-      values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email},
-              #{entity.phoneNumber}, #{entity.surname},
-              #{entity.name}, #{entity.age}, #{entity.gender}, #{entity.createdBy}, now(), #{entity.updatedBy},
-              now(), 0);
-   </insert>
+	<select id="getRolesByUserId" parameterType="Integer" resultType="com.lib.bookbrain.model.entity.Role">
+		select r.`id`, r.`name`
+		from user_role ur
+			     inner join role r on ur.`role_id` = r.`id`
+		where ur.`user_id` = #{id}
+		limit 1;
+	</select>
 
-   <update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      update user u
-      <set>
-         <if test="entity != null">
-            <if test="entity.authenticationString != null and entity.authenticationString != ''">
-               u.`authentication_string` = MD5(#{entity.authenticationString}),
-            </if>
-            <if test="entity.displayName != null and entity.displayName != ''">
-               u.`display_name` = #{entity.displayName},
-            </if>
-            <if test="entity.email != null and entity.email != ''">
-               u.`email` = #{entity.email},
-            </if>
-            <if test="entity.surname != null">
-               u.`surname` = #{entity.surname},
-            </if>
-            <if test="entity.name != null">
-               u.`name` = #{entity.name},
-            </if>
-            <if test="entity.age != null">
-               u.`age` = #{entity.age},
-            </if>
-            <if test="entity.gender != null">
-               u.`gender` = #{entity.gender},
-            </if>
-            <if test="entity.updatedBy != null">
-               u.`updated_by` = #{entity.updatedBy},
-            </if>
-         </if>
-         <if test="1 == 1">
-            u.`last_updated_time` = now(),
-            u.`revision` = (1 + u.`revision`) % 2147483647,
-         </if>
-      </set>
-      where u.`id` = #{id} and u.`revision` = #{entity.revision}
-   </update>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="entity.id"
+	        parameterType="com.lib.bookbrain.model.exchange.Payload">
+		insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
+		                 `surname`, `name`, `age`, `gender`,
+		                 `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
+		values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email},
+		        #{entity.phoneNumber}, #{entity.surname},
+		        #{entity.name}, #{entity.age}, #{entity.gender}, #{entity.createdBy}, now(), #{entity.updatedBy},
+		        now(), 0);
+	</insert>
 
-   <update id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      update user_condition uc
-      set uc.`is_enable` = 0
-      where uc.`user_id` = #{id};
-   </update>
+	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		update user u
+		<set>
+			<if test="entity != null">
+				<if test="entity.authenticationString != null and entity.authenticationString != ''">
+					u.`authentication_string` = MD5(#{entity.authenticationString}),
+				</if>
+				<if test="entity.displayName != null and entity.displayName != ''">
+					u.`display_name` = #{entity.displayName},
+				</if>
+				<if test="entity.email != null and entity.email != ''">
+					u.`email` = #{entity.email},
+				</if>
+				<if test="entity.surname != null">
+					u.`surname` = #{entity.surname},
+				</if>
+				<if test="entity.name != null">
+					u.`name` = #{entity.name},
+				</if>
+				<if test="entity.age != null">
+					u.`age` = #{entity.age},
+				</if>
+				<if test="entity.gender != null">
+					u.`gender` = #{entity.gender},
+				</if>
+				<if test="entity.updatedBy != null">
+					u.`updated_by` = #{entity.updatedBy},
+				</if>
+			</if>
+			<if test="1 == 1">
+				u.`last_updated_time` = now(),
+				u.`revision`          = (1 + u.`revision`) % 2147483647,
+			</if>
+		</set>
+		where u.`id` = #{id}
+		  and u.`revision` = #{entity.revision}
+	</update>
 
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      select u.`id`,
-             u.`display_name`,
-             u.`email`,
-             u.`phone_number`,
-             u.`surname`,
-             u.`name`,
-             u.`age`,
-             u.`gender`,
-             u.`created_by`,
-             u.`creation_time`,
-             u.`updated_by`,
-             u.`last_updated_time`,
-             u.`revision`
-      from user u
-      where u.`id` = #{id};
-   </select>
-   <select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      select u.`id`,
-             u.email
-      from user u
-      where u.email = #{entity.email}
-        and u.`authentication_string` = MD5(#{entity.authenticationString});
-   </select>
+	<update id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		update user_condition uc
+		set uc.`is_enable` = 0
+		where uc.`user_id` = #{id};
+	</update>
 
-   <select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.FilterPayload">
-      select u.`id`,
-      u.`display_name`,
-      u.`email`,
-      u.`phone_number`,
-      u.`surname`,
-      u.`name`,
-      u.`age`,
-      u.`gender`,
-      u.`created_by`,
-      u.`creation_time`,
-      u.`updated_by`,
-      u.`last_updated_time`,
-      u.`revision`
-      from user u
-      <where>
-         <if test="entity != null">
-            <if test="entity.id != null">
-               u.`id` = #{entity.id}
-            </if>
-            <if test="entity.surname != null and entity.surname != ''">
-               and u.`surname` = #{entity.surname}
-            </if>
-            <if test="entity.name != null and entity.name != ''">
-               and u.`name` = #{entity.name}
-            </if>
-            <if test="entity.email != null and entity.email != ''">
-               and u.`email` = #{entity.email}
-            </if>
-            <if test="entity.phoneNumber != null and entity.phoneNumber != ''">
-               and u.`phone_number` like CONCAT(#{entity.phoneNumber}, '%')
-            </if>
-            <if test="entity.name != null and entity.name != ''">
-               and u.`name` like CONCAT('%', #{entity.name}, '%')
-            </if>
-         </if>
-         <if test="filter != null">
-            <if test="filter.age != null">
-               <if test="filter.age.start != null">
-                  and u.`age` >= #{filter.age.start}
-               </if>
-               <if test="filter.age.end != null">
-                  and #{filter.age.end} >= u.`age`
-               </if>
-            </if>
-            <if test="filter.creationTime != null">
-               <if test="filter.creationTime.start != null">
-                  and u.`creation_time` >= #{filter.creationTime.start}
-               </if>
-               <if test="filter.creationTime.end != null">
-                  and #{filter.creationTime.end} >= u.`creation_time`
-               </if>
-            </if>
-            <if test="filter.lastUpdatedTime != null">
-               <if test="filter.lastUpdatedTime.start != null">
-                  and u.`last_updated_time` >= #{filter.lastUpdatedTime.start}
-               </if>
-               <if test="filter.lastUpdatedTime.end != null">
-                  and #{filter.lastUpdatedTime.end} >= u.`last_updated_time`
-               </if>
-            </if>
-            <if test="filter.lastLoginTime != null">
-               <if test="filter.lastLoginTime.start != null">
-                  and u.`last_login_time` >= #{filter.lastLoginTime.start}
-               </if>
-               <if test="filter.lastLoginTime.end != null">
-                  and #{filter.lastLoginTime.end} >= u.`last_login_time`
-               </if>
-            </if>
-         </if>
-      </where>
-      limit #{filter.page.start}, #{filter.page.end}
-   </select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		select u.`id`,
+		       u.`display_name`,
+		       u.`email`,
+		       u.`phone_number`,
+		       u.`surname`,
+		       u.`name`,
+		       u.`age`,
+		       u.`gender`,
+		       u.`created_by`,
+		       u.`creation_time`,
+		       u.`updated_by`,
+		       u.`last_updated_time`,
+		       u.`revision`
+		from user u
+		where u.`id` = #{id};
+	</select>
+	<select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		select u.`id`,
+		       u.email
+		from user u
+		where u.email = #{entity.email}
+		  and u.`authentication_string` = MD5(#{entity.authenticationString});
+	</select>
 
-   <select id="getToUpdate" resultMap="BaseResultMap">
-      select *
-      from user
-   </select>
-   <select id="getByToken" resultMap="BaseResultMap">
-      select u.`id`,
-             u.`display_name`
-      from user u,
-           token_access_record t
-      where t.token = #{token}
-        and u.id = t.id
-        and t.`used_time` > SUBDATE(NOW(), 7)
-   </select>
+	<select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.FilterPayload">
+		select u.`id`,
+		       u.`display_name`,
+		       u.`email`,
+		       u.`phone_number`,
+		       u.`surname`,
+		       u.`name`,
+		       u.`age`,
+		       u.`gender`,
+		       u.`created_by`,
+		       u.`creation_time`,
+		       u.`updated_by`,
+		       u.`last_updated_time`,
+		       u.`revision`
+		from user u
+		<where>
+			<if test="entity != null">
+				<if test="entity.id != null">
+					u.`id` = #{entity.id}
+				</if>
+				<if test="entity.surname != null and entity.surname != ''">
+					and u.`surname` = #{entity.surname}
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					and u.`name` = #{entity.name}
+				</if>
+				<if test="entity.email != null and entity.email != ''">
+					and u.`email` = #{entity.email}
+				</if>
+				<if test="entity.phoneNumber != null and entity.phoneNumber != ''">
+					and u.`phone_number` like CONCAT(#{entity.phoneNumber}, '%')
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					and u.`name` like CONCAT('%', #{entity.name}, '%')
+				</if>
+			</if>
+			<if test="filter != null">
+				<if test="filter.age != null">
+					<if test="filter.age.start != null">
+						and u.`age` >= #{filter.age.start}
+					</if>
+					<if test="filter.age.end != null">
+						and #{filter.age.end} >= u.`age`
+					</if>
+				</if>
+				<if test="filter.creationTime != null">
+					<if test="filter.creationTime.start != null">
+						and u.`creation_time` >= #{filter.creationTime.start}
+					</if>
+					<if test="filter.creationTime.end != null">
+						and #{filter.creationTime.end} >= u.`creation_time`
+					</if>
+				</if>
+				<if test="filter.lastUpdatedTime != null">
+					<if test="filter.lastUpdatedTime.start != null">
+						and u.`last_updated_time` >= #{filter.lastUpdatedTime.start}
+					</if>
+					<if test="filter.lastUpdatedTime.end != null">
+						and #{filter.lastUpdatedTime.end} >= u.`last_updated_time`
+					</if>
+				</if>
+				<if test="filter.lastLoginTime != null">
+					<if test="filter.lastLoginTime.start != null">
+						and u.`last_login_time` >= #{filter.lastLoginTime.start}
+					</if>
+					<if test="filter.lastLoginTime.end != null">
+						and #{filter.lastLoginTime.end} >= u.`last_login_time`
+					</if>
+				</if>
+			</if>
+		</where>
+		limit #{filter.page.start}, #{filter.page.end}
+	</select>
 
-   <insert id="register" useGeneratedKeys="true" keyProperty="entity.id"
-           parameterType="com.lib.bookbrain.model.exchange.Payload">
-      insert into user(authentication_string, display_name, email)
-      values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email});
-   </insert>
+	<select id="getToUpdate" resultMap="BaseResultMap">
+		select *
+		from user
+	</select>
+	<select id="getByToken" resultMap="BaseResultMap">
+		select u.`id`,
+		       u.`display_name`
+		from user u,
+		     token_access_record t
+		where t.token = #{token}
+		  and u.id = t.id
+		  and t.`used_time` > SUBDATE(NOW(), 7)
+	</select>
 
-   <select id="getByEmail" resultType="int">
-      select count(*)
-      from user
-      where email = #{email}
-               || email_normal =
-                  concat(substring_index(substring_index(#{email}, '@', 1), '+', 1),
-                         '@',
-                         substring_index(#{email}, '@', -1));
-   </select>
+	<insert id="register" useGeneratedKeys="true" keyProperty="entity.id"
+	        parameterType="com.lib.bookbrain.model.exchange.Payload">
+		insert into user(authentication_string, display_name, email)
+		values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email});
+	</insert>
 
-   <insert id="addUserRole">
-      insert into user_role(user_id, role_id)
-      values (#{entity.id}, 4);
-   </insert>
+	<select id="getByEmail" resultType="int">
+		select count(*)
+		from user
+		where email = #{email}
+			      || email_normal =
+			         concat(substring_index(substring_index(#{email}, '@', 1), '+', 1),
+			                '@',
+			                substring_index(#{email}, '@', -1));
+	</select>
 
-   <insert id="addUserCondition">
-      insert into user_condition(user_id, is_enable, email_verified, phone_number_verified)
-      VALUES (#{entity.id}, 1, 0, 0);
-   </insert>
+	<insert id="addUserRole">
+		insert into user_role(user_id, role_id)
+		values (#{entity.id}, 4);
+	</insert>
 
-   <update id="verifyEmail">
-      update user_condition uc, user u
-      set uc.email_verified = 1
-      where u.email = #{email}
-        and u.id = uc.user_id;
-   </update>
+	<insert id="addUserCondition">
+		insert into user_condition(user_id, is_enable, email_verified, phone_number_verified)
+		VALUES (#{entity.id}, 1, 0, 0);
+	</insert>
 
-   <select id="getCountByFilter" resultType="int">
-      select count(*)
-      from user;
-   </select>
+	<update id="verifyEmail">
+		update user_condition uc, user u
+		set uc.email_verified = 1
+		where u.email = #{email}
+		  and u.id = uc.user_id
+		  and uc.email_verified = 0;
+	</update>
+
+	<select id="getCountByFilter" resultType="int">
+		select count(*)
+		from user;
+	</select>
+
+	<update id="resetPassword">
+		update user u
+		set u.authentication_string = MD5(#{entity.authenticationString,jdbcType=VARCHAR})
+		where u.email = #{entity.email};
+	</update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.lib.bookbrain.service;
 
 import com.lib.bookbrain.exception.SendEmailException;
+import com.lib.bookbrain.exception.TemplateReadException;
 import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Base64Coder;
@@ -57,12 +58,12 @@ public void sendLink(User recipient, String sub) {
 	);
 }
 
-public void sendCode(User recipient, String sub, String code) {
+public void sendCode(User recipient, String sub) {
 	send(recipient.getEmail(),
 			sub,
 			() -> {
 				Map<String, Object> _map = MapFactory.Builder.builder()
-						.fill("code", code)
+						.fill("code", recipient.getAuthenticationString())
 						.build().map();
 				return gc(TemplateName.RESET, _map);
 			}
@@ -95,6 +96,7 @@ public void send(String recipientEmail, String sub, Supplier<String> sup) {
 		}
 	} catch (Exception e) {
 		// e 异常的情况需要记录 todo
+		e.printStackTrace();
 		throw new SendEmailException();
 	}
 }
@@ -125,7 +127,9 @@ private String gc(String tempPath, Map<String, Object> map) {
 		template.process(map, writer);
 		return writer.toString();
 	} catch (IOException | TemplateException e) {
-		throw new RuntimeException(e);
+		// todo
+		e.printStackTrace();
+		throw new TemplateReadException();
 	}
 }
 

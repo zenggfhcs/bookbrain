@@ -46,7 +46,7 @@ public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServl
 	}
 
 	String _url = request.getRequestURI();
-	if (userService.check(_info.getAud(), _url) == 0) {
+	if (userService.checkPermission(_info.getAud(), _url) == 0) {
 		throw new PermissionMissException();
 	}
 

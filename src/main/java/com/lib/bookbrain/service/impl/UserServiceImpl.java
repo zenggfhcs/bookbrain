@@ -44,14 +44,37 @@ public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> thr
 
 @Override
 public Response logout(Payload<User> payload) {
-	// todo 退出登录逻辑
-
+	// todo 退出登录逻辑，清除 token
 	return Response.success();
 }
 
 @Override
-public int check(Integer id, String url) {
+public int checkPermission(Integer id, String url) {
 	return userMapper.check(id, url);
+}
+
+@Override
+public Response sendCode(Payload<User> payload) {
+	mailService.sendCode(payload.getEntity(), "重置密码");
+	return Response.success();
+}
+
+@Override
+public Response resetPassword(Payload<User> payload) {
+	// 解密
+	User _entity = payload.getEntity();
+	{
+		_entity.setEmail(RSATools.decrypt(_entity.getEmail()));
+		_entity.setAuthenticationString(RSATools.decrypt(_entity.getAuthenticationString()));
+	}
+
+	int _uc = userMapper.resetPassword(payload);
+
+	if (_uc != 1) {
+		return Response.error(ResponseInfo.ERROR);
+	}
+
+	return Response.success();
 }
 
 @Override
@@ -77,7 +100,6 @@ public Response register(Payload<User> payload) {
 		userMapper.addUserRole(payload);
 		userMapper.addUserCondition(payload);
 	}
-
 
 	return Response.success();
 }

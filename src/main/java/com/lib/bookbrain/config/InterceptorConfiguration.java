@@ -67,6 +67,8 @@ public void addInterceptors(InterceptorRegistry registry) {
 					"/register",
 					"/token",
 					"/verify",
+					"/send/**",
+					"/users/reset/**",
 					"/");
 }
 
