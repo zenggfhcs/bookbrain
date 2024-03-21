@@ -1,15 +1,13 @@
 package com.lib.bookbrain.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 /**
  * @author yunxia
  */
-@Getter
-@Setter
+@Data
 public class Entity {
 
 /**
