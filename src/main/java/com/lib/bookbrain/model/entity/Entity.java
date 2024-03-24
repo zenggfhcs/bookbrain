@@ -18,7 +18,7 @@ protected Integer createdBy;
 /**
  * 创建时间
  */
-protected LocalDateTime creationTime = LocalDateTime.now();
+protected LocalDateTime creationTime;
 
 /**
  * 最后更新者

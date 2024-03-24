@@ -26,7 +26,7 @@ private Integer code;
 /**
  * 响应信息
  */
-private String msg;
+private String message;
 /**
  * 响应数据
  */

@@ -80,11 +80,11 @@
             <if test="entity.name != null and entity.name != ''">
                p.`name` = #{entity.name},
             </if>
-            <if test="entity.remark != null and entity.remark != ''">
+	         <if test="entity.place != null and entity.place != ''">
+		         p.`place` = #{entity.place},
+	         </if>
+            <if test="entity.remark != null">
                p.`remark` = #{entity.remark},
-            </if>
-            <if test="entity.place != null and entity.place != ''">
-               p.`place` = #{entity.place},
             </if>
             <if test="entity.updatedBy != null">
                p.`updated_by` = #{entity.updatedBy},
@@ -127,11 +127,8 @@
             <if test="entity.place != null and entity.place != ''">
                p.`place`,
             </if>
-            <if test="entity.remark != null and entity.remark != ''">
+            <if test="entity.remark != null">
                p.`remark`,
-            </if>
-            <if test="1 == 1">
-               p.`revision`
             </if>
          </if>
       </trim>
