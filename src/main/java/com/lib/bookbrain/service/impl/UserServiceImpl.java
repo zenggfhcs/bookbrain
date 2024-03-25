@@ -13,9 +13,8 @@ import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.UserFilter;
 import com.lib.bookbrain.pojo.TokenInfo;
-import com.lib.bookbrain.security.Jwt;
-import com.lib.bookbrain.security.PreDefinedAlgorithm;
 import com.lib.bookbrain.service.MailService;
+import com.lib.bookbrain.service.TokenService;
 import com.lib.bookbrain.service.UserService;
 import com.lib.bookbrain.utils.RSATools;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +33,14 @@ private final BaseServiceImpl<User, UserFilter> baseService;
 
 private final MailService mailService;
 
+private final TokenService tokenService;
+
 @Autowired
-public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> threadContext, MailService mailService) {
+public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> threadContext, MailService mailService, TokenService tokenService) {
 	this.userMapper = userMapper;
 	baseService = new BaseServiceImpl<>(threadContext, userMapper);
 	this.mailService = mailService;
+	this.tokenService = tokenService;
 }
 
 
@@ -112,14 +114,7 @@ public Response login(Payload<User> payload) {
 		return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED);
 	}
 
-	// todo 进行判断，没有进行登录后的验证的返回错误
-
-	String _token = Jwt.encoder(_user, PreDefinedAlgorithm.HMAC);
-	TokenBody _body = new TokenBody();
-	_body.setToken(_token);
-
-	// todo 记录生成的 token
-
+	TokenBody _body = tokenService.issue(_user.getId(), true, true);
 
 	return Response.success(_body);
 }

@@ -65,10 +65,10 @@ public void addInterceptors(InterceptorRegistry registry) {
 			.excludePathPatterns( // 在拦截路径中排除以下路径
 					"/login",
 					"/register",
-					"/token",
 					"/verify",
 					"/send/**",
 					"/users/reset/**",
+					"/test/**",
 					"/");
 }
 

@@ -30,6 +30,11 @@ spring:
       time: "HH:mm:ss"
       datetime: "yyyy-MM-dd HH:mm:ss"
 
+token:
+  validityTime:
+    short: 86_400_000
+    long: 604_800_000
+
 # mybatis 相关配置
 mybatis:
   mapper-locations: classpath:com/lib/bookbrain/dao/*.xml

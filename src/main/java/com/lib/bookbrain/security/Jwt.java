@@ -3,7 +3,6 @@ package com.lib.bookbrain.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Json;
 
@@ -30,8 +29,8 @@ static {
 
 //#region encoder
 /* === === === === === === === === === === === === ===  === === === === === === === === === === === === === */
-public static String encoder(User user, Algorithm algorithm) {
-	return coder(user.getId(), algorithm);
+public static String encoder(Integer id, long time) {
+	return coder(id, time, PreDefinedAlgorithm.HMAC);
 }
 
 private static String coder(int id, Algorithm algorithm) {
@@ -39,12 +38,13 @@ private static String coder(int id, Algorithm algorithm) {
 }
 
 private static String coder(int id, long time, Algorithm algorithm) {
+	long _currentTimeMillis = System.currentTimeMillis();
 	return JWT.create()
 			.withIssuer("sys")
 			.withSubject("valid")
 			.withAudience(String.valueOf(id))
-			.withNotBefore(new Date(time))
-			.withExpiresAt(new Date(time + EFFECTIVE_DURATION))
+			.withNotBefore(new Date(_currentTimeMillis))
+			.withExpiresAt(new Date(time + _currentTimeMillis))
 			.withJWTId(UUID.randomUUID().toString())
 			.sign(algorithm);
 }
@@ -82,15 +82,14 @@ public static TokenInfo decoder(String token, Algorithm algorithm) {
 
 public static void main(String[] args) {
 	/* ------------------------ test ------------------------ */
-	User user = new User();
-	user.setId(1);
-	String token = encoder(user, PreDefinedAlgorithm.HMAC);
+
+	String token = encoder(1, 0L);
 	System.out.println(token);
-
-	TokenInfo info = decoder(token);
-
-	System.out.println(info.getNbf());
-	System.out.println(info.getExp());
+//
+//	TokenInfo info = decoder(token);
+//
+//	System.out.println(info.getNbf());
+//	System.out.println(info.getExp());
 }
 
 }

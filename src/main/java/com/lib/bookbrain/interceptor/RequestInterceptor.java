@@ -1,5 +1,6 @@
 package com.lib.bookbrain.interceptor;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.lib.bookbrain.constant.Header;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.exception.JWTException;
@@ -39,9 +40,11 @@ public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServl
 	TokenInfo _info;
 	try {
 		_info = Jwt.decoder(token);
+	} catch (TokenExpiredException te) {
+		// token 过期的处理
+		response.setStatus(606);
+		throw te;
 	} catch (Exception e) {
-		// todo 过期的话 要怎么做
-		e.printStackTrace();
 		throw new JWTException();
 	}
 

@@ -1,6 +1,7 @@
 package com.lib.bookbrain.handler;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.exception.BaseException;
 import com.lib.bookbrain.model.exchange.Response;
@@ -27,6 +28,11 @@ public class GlobalExceptionHandler {
 @ExceptionHandler(SQLException.class)
 public Response sqlEx() {
 	return Response.error(ResponseInfo.SQL_EXEC_FAILED);
+}
+
+@ExceptionHandler(TokenExpiredException.class)
+public Response tokenExp() {
+	return Response.error(ResponseInfo.TOKEN_EXPIRED);
 }
 
 /**

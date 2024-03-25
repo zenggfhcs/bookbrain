@@ -96,7 +96,11 @@ public enum ResponseInfo {
 	PUBLISHER_NAME_REPEAT("NAME_REPEAT: 已经存在名称相同的出版社了"),
 
 	TEMPLATE_READ_FAILED("读取模板时发生了错误，请联系管理员(1635276938@qq.com)"),
-	;
+
+	TOKEN_EXPIRED(606, "登录 ? 过期了..."),
+
+	LOGIN_EXPIRED(607, "登录过期了..."),
+	TOKEN_RESET(199, "网络波动~~ 请稍后再试...");
 
 private final BaseResponseInfo info;
 

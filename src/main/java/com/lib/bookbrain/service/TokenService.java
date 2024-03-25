@@ -5,7 +5,11 @@ import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 
 public interface TokenService {
-Response parse(Payload<TokenBody> payload);
+Response parse();
 
-Response generate(Payload<TokenBody> payload);
+Response generate();
+
+Response refresh(Payload<TokenBody> payload);
+
+TokenBody issue(Integer id, boolean refreshShort, boolean refreshLong);
 }
