@@ -1,8 +1,8 @@
 package com.lib.bookbrain.constant;
 
-public class Header {
+public interface Header {
 /**
  * token header name
  */
-public static final String TOKEN = "token";
+String TOKEN = "token";
 }

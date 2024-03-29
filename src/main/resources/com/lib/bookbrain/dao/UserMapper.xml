@@ -27,7 +27,7 @@
 	<select id="getRolesByUserId" parameterType="Integer" resultType="com.lib.bookbrain.model.entity.Role">
 		select r.`id`, r.`name`
 		from user_role ur
-			     inner join role r on ur.`role_id` = r.`id`
+		inner join role r on ur.`role_id` = r.`id`
 		where ur.`user_id` = #{id}
 		limit 1;
 	</select>
@@ -35,12 +35,12 @@
 	<insert id="insert" useGeneratedKeys="true" keyProperty="entity.id"
 	        parameterType="com.lib.bookbrain.model.exchange.Payload">
 		insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
-		                 `surname`, `name`, `age`, `gender`,
-		                 `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
+		`surname`, `name`, `age`, `gender`,
+		`created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
 		values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email},
-		        #{entity.phoneNumber}, #{entity.surname},
-		        #{entity.name}, #{entity.age}, #{entity.gender}, #{entity.createdBy}, now(), #{entity.updatedBy},
-		        now(), 0);
+		#{entity.phoneNumber}, #{entity.surname},
+		#{entity.name}, #{entity.age}, #{entity.gender}, #{entity.createdBy}, now(), #{entity.updatedBy},
+		now(), 0);
 	</insert>
 
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -74,11 +74,11 @@
 			</if>
 			<if test="1 == 1">
 				u.`last_updated_time` = now(),
-				u.`revision`          = (1 + u.`revision`) % 2147483647,
+				u.`revision` = (1 + u.`revision`) % 2147483647,
 			</if>
 		</set>
 		where u.`id` = #{id}
-		  and u.`revision` = #{entity.revision}
+		and u.`revision` = #{entity.revision}
 	</update>
 
 	<update id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -89,43 +89,43 @@
 
 	<select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
 		select u.`id`,
-		       u.`display_name`,
-		       u.`email`,
-		       u.`phone_number`,
-		       u.`surname`,
-		       u.`name`,
-		       u.`age`,
-		       u.`gender`,
-		       u.`created_by`,
-		       u.`creation_time`,
-		       u.`updated_by`,
-		       u.`last_updated_time`,
-		       u.`revision`
+		u.`display_name`,
+		u.`email`,
+		u.`phone_number`,
+		u.`surname`,
+		u.`name`,
+		u.`age`,
+		u.`gender`,
+		u.`created_by`,
+		u.`creation_time`,
+		u.`updated_by`,
+		u.`last_updated_time`,
+		u.`revision`
 		from user u
 		where u.`id` = #{id};
 	</select>
 	<select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
 		select u.`id`,
-		       u.email
+		u.email
 		from user u
 		where u.email = #{entity.email}
-		  and u.`authentication_string` = MD5(#{entity.authenticationString});
+		and u.`authentication_string` = MD5(#{entity.authenticationString});
 	</select>
 
 	<select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.FilterPayload">
 		select u.`id`,
-		       u.`display_name`,
-		       u.`email`,
-		       u.`phone_number`,
-		       u.`surname`,
-		       u.`name`,
-		       u.`age`,
-		       u.`gender`,
-		       u.`created_by`,
-		       u.`creation_time`,
-		       u.`updated_by`,
-		       u.`last_updated_time`,
-		       u.`revision`
+		u.`display_name`,
+		u.`email`,
+		u.`phone_number`,
+		u.`surname`,
+		u.`name`,
+		u.`age`,
+		u.`gender`,
+		u.`created_by`,
+		u.`creation_time`,
+		u.`updated_by`,
+		u.`last_updated_time`,
+		u.`revision`
 		from user u
 		<where>
 			<if test="entity != null">
@@ -192,12 +192,12 @@
 	</select>
 	<select id="getByToken" resultMap="BaseResultMap">
 		select u.`id`,
-		       u.`display_name`
+		u.`display_name`
 		from user u,
-		     token_access_record t
+		token_access_record t
 		where t.token = #{token}
-		  and u.id = t.id
-		  and t.`used_time` > SUBDATE(NOW(), 7)
+		and u.id = t.id
+		and t.`used_time` > SUBDATE(NOW(), 7)
 	</select>
 
 	<insert id="register" useGeneratedKeys="true" keyProperty="entity.id"
@@ -210,10 +210,10 @@
 		select count(*)
 		from user
 		where email = #{email}
-			      || email_normal =
-			         concat(substring_index(substring_index(#{email}, '@', 1), '+', 1),
-			                '@',
-			                substring_index(#{email}, '@', -1));
+		|| email_normal =
+		concat(substring_index(substring_index(#{email}, '@', 1), '+', 1),
+		'@',
+		substring_index(#{email}, '@', -1));
 	</select>
 
 	<insert id="addUserRole">
@@ -230,8 +230,8 @@
 		update user_condition uc, user u
 		set uc.email_verified = 1
 		where u.email = #{email}
-		  and u.id = uc.user_id
-		  and uc.email_verified = 0;
+		and u.id = uc.user_id
+		and uc.email_verified = 0;
 	</update>
 
 	<select id="getCountByFilter" resultType="int">

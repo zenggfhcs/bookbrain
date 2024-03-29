@@ -1,5 +1,6 @@
 package com.lib.bookbrain.config;
 
+import com.lib.bookbrain.constant.ConfigurationProperties;
 import com.lib.bookbrain.interceptor.OptionsInterceptor;
 import com.lib.bookbrain.interceptor.RequestInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,14 +63,8 @@ public void addInterceptors(InterceptorRegistry registry) {
 			.addPathPatterns("/**");
 	registry.addInterceptor(requestInterceptor)
 			.addPathPatterns("/**") // 添加拦截路径
-			.excludePathPatterns( // 在拦截路径中排除以下路径
-					"/login",
-					"/register",
-					"/verify",
-					"/send/**",
-					"/users/reset/**",
-					"/test/**",
-					"/");
+			// 在拦截路径中排除以下路径
+			.excludePathPatterns(ConfigurationProperties.REQUEST_INTERCEPTOR_EXCLUDE);
 }
 
 /**

@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.DebitMapper">
-   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Debit">
-      <id column="id" jdbcType="INTEGER" property="id"/>
-      <result column="return_deadline" jdbcType="DATE" property="returnDeadline"/>
-      <result column="return_date" jdbcType="DATE" property="returnDate"/>
-      <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
-      <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
-      <result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
-      <result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
-      <result column="revision" jdbcType="INTEGER" property="revision"/>
-      <association property="book" javaType="com.lib.bookbrain.model.entity.Book" column="{id=book_id}"
-                   select="com.lib.bookbrain.dao.BookMapper.getById"/>
-   </resultMap>
-   <select id="getBy" resultMap="BaseResultMap">
-      select distinct d.`id`,
-      d.`book_id`,
-      d.`return_deadline`,
-      d.`return_date`,
-      d.`created_by`,
-      d.`creation_time`,
-      d.`updated_by`,
-      d.`last_updated_time`,
-      d.`revision`
-      from debit d
-      <where>
-      </where>
-      limit #{filter.page.start}, #{filter.page.end};
-   </select>
+	<resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Debit">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="return_deadline" jdbcType="DATE" property="returnDeadline"/>
+		<result column="return_date" jdbcType="DATE" property="returnDate"/>
+		<result column="created_by" jdbcType="INTEGER" property="createdBy"/>
+		<result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
+		<result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
+		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
+		<result column="revision" jdbcType="INTEGER" property="revision"/>
+		<association property="book" javaType="com.lib.bookbrain.model.entity.Book" column="{id=book_id}"
+		             select="com.lib.bookbrain.dao.BookMapper.getById"/>
+	</resultMap>
+	<select id="getBy" resultMap="BaseResultMap">
+		select distinct d.`id`,
+		d.`book_id`,
+		d.`return_deadline`,
+		d.`return_date`,
+		d.`created_by`,
+		d.`creation_time`,
+		d.`updated_by`,
+		d.`last_updated_time`,
+		d.`revision`
+		from debit d
+		<where>
+		</where>
+		limit #{filter.page.start}, #{filter.page.end};
+	</select>
 
-   <select id="getById" parameterType="com.lib.bookbrain.model.exchange.Payload" resultMap="BaseResultMap">
-      select distinct d.`id`,
-                      d.`book_id`,
-                      d.`return_deadline`,
-                      d.`return_date`,
-                      d.`created_by`,
-                      d.`creation_time`,
-                      d.`updated_by`,
-                      d.`last_updated_time`,
-                      d.`revision`
-      from debit d
-      where d.`id` = #{id}
-   </select>
+	<select id="getById" parameterType="com.lib.bookbrain.model.exchange.Payload" resultMap="BaseResultMap">
+		select distinct d.`id`,
+		d.`book_id`,
+		d.`return_deadline`,
+		d.`return_date`,
+		d.`created_by`,
+		d.`creation_time`,
+		d.`updated_by`,
+		d.`last_updated_time`,
+		d.`revision`
+		from debit d
+		where d.`id` = #{id}
+	</select>
 
-   <delete id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      delete
-      from debit d
-      where d.`id` = #{id}
-   </delete>
+	<delete id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		delete
+		from debit d
+		where d.`id` = #{id}
+	</delete>
 
-   <insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
-           keyProperty="entity.debitId">
-      insert into debit (`book_id`, `return_deadline`,
-                         `return_date`, `created_by`, `creation_time`,
-                         `updated_by`, `last_updated_time`, `revision`)
-      values (#{entity.book.id}, #{entity.returnDeadline},
-              #{entity.returnDate}, #{entity.createdBy}, NOW(),
-              #{entity.updatedBy}, NOW(), #{entity.revision})
-   </insert>
+	<insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
+	        keyProperty="entity.debitId">
+		insert into debit (`book_id`, `return_deadline`,
+		`return_date`, `created_by`, `creation_time`,
+		`updated_by`, `last_updated_time`, `revision`)
+		values (#{entity.book.id}, #{entity.returnDeadline},
+		#{entity.returnDate}, #{entity.createdBy}, NOW(),
+		#{entity.updatedBy}, NOW(), #{entity.revision})
+	</insert>
 
-   <update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      update debit d
-      <set>
-         <if test="entity != null">
-            <if test="entity.id != null">
-               d.`book_id` = #{entity.id,jdbcType=INTEGER},
-            </if>
-            <if test="entity.returnDeadline != null">
-               d.`return_deadline` = #{entity.returnDeadline,jdbcType=DATE},
-            </if>
-            <if test="entity.returnDate != null">
-               d.`return_date` = #{entity.returnDate,jdbcType=DATE},
-            </if>
-            <if test="entity.updatedBy != null">
-               d.`updated_by` = #{entity.updatedBy,jdbcType=INTEGER},
-            </if>
-         </if>
-         <if test="1 == 1">
-            d.`last_updated_time` = now(),
-            d.`revision` = (1 + d.`revision`) % 2147483647,
-         </if>
-      </set>
-      where d.`id` = #{id}
-   </update>
+	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		update debit d
+		<set>
+			<if test="entity != null">
+				<if test="entity.id != null">
+					d.`book_id` = #{entity.id,jdbcType=INTEGER},
+				</if>
+				<if test="entity.returnDeadline != null">
+					d.`return_deadline` = #{entity.returnDeadline,jdbcType=DATE},
+				</if>
+				<if test="entity.returnDate != null">
+					d.`return_date` = #{entity.returnDate,jdbcType=DATE},
+				</if>
+				<if test="entity.updatedBy != null">
+					d.`updated_by` = #{entity.updatedBy,jdbcType=INTEGER},
+				</if>
+			</if>
+			<if test="1 == 1">
+				d.`last_updated_time` = now(),
+				d.`revision` = (1 + d.`revision`) % 2147483647,
+			</if>
+		</set>
+		where d.`id` = #{id}
+	</update>
 
-   <select id="getToUpdate" resultMap="BaseResultMap">
-      select *
-      from debit d
-      where d.`id` = #{id}
-   </select>
+	<select id="getToUpdate" resultMap="BaseResultMap">
+		select *
+		from debit d
+		where d.`id` = #{id}
+	</select>
 
-   <select id="getCountByFilter" resultType="int">
-      select count(*)
-      from debit;
-   </select>
+	<select id="getCountByFilter" resultType="int">
+		select count(*)
+		from debit;
+	</select>
 </mapper>

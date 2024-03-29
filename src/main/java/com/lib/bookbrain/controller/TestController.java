@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
 private final TokenService tokenService;
+
 @PostMapping("/loginToken")
 public TokenBody testLoginToken(@RequestBody User user) {
 	return null;

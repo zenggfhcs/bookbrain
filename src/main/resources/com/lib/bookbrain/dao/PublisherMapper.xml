@@ -1,187 +1,187 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.PublisherMapper">
-   <resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Publisher">
-      <id property="id" column="id" jdbcType="INTEGER"/>
-      <result property="name" column="name" jdbcType="INTEGER"/>
-      <result property="place" column="place" jdbcType="VARCHAR"/>
-      <result property="remark" column="remark" jdbcType="VARCHAR"/>
-      <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
-      <result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
-      <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
-      <result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
-      <result property="revision" column="revision" jdbcType="INTEGER"/>
-   </resultMap>
-   <select id="getBy" resultMap="BaseResultMap">
-	   select distinct p.`id`,
-	                   p.`name`,
-	                   p.`remark`,
-	                   p.`place`,
-	                   p.`created_by`,
-	                   p.`creation_time`,
-	                   p.`updated_by`,
-	                   p.`last_updated_time`,
-	                   p.`revision`
-	   from publisher p
-	   <where>
-		   <if test="entity != null">
-			   <if test="entity.id != null">
-				   p.`id` = #{entity.id}
-			   </if>
-			   <if test="entity.createdBy != null">
-				   and p.`created_by` = #{entity.createdBy}
-			   </if>
-			   <if test="entity.updatedBy != null">
-				   and p.`updated_by` = #{entity.updatedBy}
-			   </if>
-			   <if test="entity.name != null and entity.name != ''">
-				   and p.`name` like concat('%', #{entity.name}, '%')
-			   </if>
-			   <if test="entity.place != null and entity.place != ''">
-				   and p.`place` like concat('%', #{entity.place}, '%')
-			   </if>
-		   </if>
-		   <if test="filter != null">
-			   <if test="filter.creationTime != null">
-				   <if test="filter.creationTime.start != null">
-					   and p.`creation_time` >= #{filter.creationTime.start}
-				   </if>
-				   <if test="filter.creationTime.end != null">
-					   and #{filter.creationTime.end} >= p.`creation_time`
-				   </if>
-			   </if>
-			   <if test="filter.lastUpdatedTime != null">
-				   <if test="filter.lastUpdatedTime.start != null">
-					   and p.`last_updated_time` >= #{filter.lastUpdatedTime.start}
-				   </if>
-				   <if test="filter.lastUpdatedTime.end != null">
-					   and #{filter.lastUpdatedTime.end} >= p.`last_updated_time`
-				   </if>
-			   </if>
-		   </if>
-	   </where>
-	   <if test="filter != null and filter.page != null">
-		   limit #{filter.page.start}, #{filter.page.end}
-	   </if>
-   </select>
-   <insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
-           keyColumn="entity.id">
-      insert into publisher(`name`, `place`, `remark`, `created_by`, `creation_time`, `updated_by`, `last_updated_time`,
-                            `revision`)
-      values (#{entity.name}, #{entity.place}, #{entity.remark}, #{entity.createdBy}, NOW(), #{entity.updatedBy}, NOW(),
-              0)
-   </insert>
-   <update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      update publisher p
-      <set>
-         <if test="entity != null">
-            <if test="entity.name != null and entity.name != ''">
-               p.`name` = #{entity.name},
-            </if>
-	         <if test="entity.place != null and entity.place != ''">
-		         p.`place` = #{entity.place},
-	         </if>
-            <if test="entity.remark != null">
-               p.`remark` = #{entity.remark},
-            </if>
-            <if test="entity.updatedBy != null">
-               p.`updated_by` = #{entity.updatedBy},
-            </if>
-         </if>
-         <if test="1 == 1">
-            p.`last_updated_time` = NOW(),
-            p.`revision` = (p.`revision` + 1) % 2147483647
-         </if>
-      </set>
-      where p.`id` = #{id}
-      and p.`revision` = #{entity.revision};
-   </update>
-   <delete id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      delete
-      from publisher
-      where `id` = #{id}
-   </delete>
-   <select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      select p.`id`,
-             p.`name`,
-             p.`place`,
-             p.`remark`,
-             p.`created_by`,
-             p.`creation_time`,
-             p.`updated_by`,
-             p.`last_updated_time`,
-             p.`revision`
-      from publisher p
-      where p.`id` = #{id}
-   </select>
+	<resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Publisher">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="name" column="name" jdbcType="INTEGER"/>
+		<result property="place" column="place" jdbcType="VARCHAR"/>
+		<result property="remark" column="remark" jdbcType="VARCHAR"/>
+		<result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+		<result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
+		<result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
+		<result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
+		<result property="revision" column="revision" jdbcType="INTEGER"/>
+	</resultMap>
+	<select id="getBy" resultMap="BaseResultMap">
+		select distinct p.`id`,
+		p.`name`,
+		p.`remark`,
+		p.`place`,
+		p.`created_by`,
+		p.`creation_time`,
+		p.`updated_by`,
+		p.`last_updated_time`,
+		p.`revision`
+		from publisher p
+		<where>
+			<if test="entity != null">
+				<if test="entity.id != null">
+					p.`id` = #{entity.id}
+				</if>
+				<if test="entity.createdBy != null">
+					and p.`created_by` = #{entity.createdBy}
+				</if>
+				<if test="entity.updatedBy != null">
+					and p.`updated_by` = #{entity.updatedBy}
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					and p.`name` like concat('%', #{entity.name}, '%')
+				</if>
+				<if test="entity.place != null and entity.place != ''">
+					and p.`place` like concat('%', #{entity.place}, '%')
+				</if>
+			</if>
+			<if test="filter != null">
+				<if test="filter.creationTime != null">
+					<if test="filter.creationTime.start != null">
+						and p.`creation_time` >= #{filter.creationTime.start}
+					</if>
+					<if test="filter.creationTime.end != null">
+						and #{filter.creationTime.end} >= p.`creation_time`
+					</if>
+				</if>
+				<if test="filter.lastUpdatedTime != null">
+					<if test="filter.lastUpdatedTime.start != null">
+						and p.`last_updated_time` >= #{filter.lastUpdatedTime.start}
+					</if>
+					<if test="filter.lastUpdatedTime.end != null">
+						and #{filter.lastUpdatedTime.end} >= p.`last_updated_time`
+					</if>
+				</if>
+			</if>
+		</where>
+		<if test="filter != null and filter.page != null">
+			limit #{filter.page.start}, #{filter.page.end}
+		</if>
+	</select>
+	<insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
+	        keyColumn="entity.id">
+		insert into publisher(`name`, `place`, `remark`, `created_by`, `creation_time`, `updated_by`, `last_updated_time`,
+		`revision`)
+		values (#{entity.name}, #{entity.place}, #{entity.remark}, #{entity.createdBy}, NOW(), #{entity.updatedBy}, NOW(),
+		0)
+	</insert>
+	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		update publisher p
+		<set>
+			<if test="entity != null">
+				<if test="entity.name != null and entity.name != ''">
+					p.`name` = #{entity.name},
+				</if>
+				<if test="entity.place != null and entity.place != ''">
+					p.`place` = #{entity.place},
+				</if>
+				<if test="entity.remark != null">
+					p.`remark` = #{entity.remark},
+				</if>
+				<if test="entity.updatedBy != null">
+					p.`updated_by` = #{entity.updatedBy},
+				</if>
+			</if>
+			<if test="1 == 1">
+				p.`last_updated_time` = NOW(),
+				p.`revision` = (p.`revision` + 1) % 2147483647
+			</if>
+		</set>
+		where p.`id` = #{id}
+		and p.`revision` = #{entity.revision};
+	</update>
+	<delete id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		delete
+		from publisher
+		where `id` = #{id}
+	</delete>
+	<select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		select p.`id`,
+		p.`name`,
+		p.`place`,
+		p.`remark`,
+		p.`created_by`,
+		p.`creation_time`,
+		p.`updated_by`,
+		p.`last_updated_time`,
+		p.`revision`
+		from publisher p
+		where p.`id` = #{id}
+	</select>
 
-   <select id="getToUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
-      select
-      <trim suffixOverrides=",">
-         <if test="entity != null">
-            <if test="entity.name != null and entity.name != ''">
-               p.`name`,
-            </if>
-            <if test="entity.place != null and entity.place != ''">
-               p.`place`,
-            </if>
-            <if test="entity.remark != null">
-               p.`remark`,
-            </if>
-         </if>
-      </trim>
-      from publisher p
-      where p.`id` = #{id}
-   </select>
+	<select id="getToUpdate" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		select
+		<trim suffixOverrides=",">
+			<if test="entity != null">
+				<if test="entity.name != null and entity.name != ''">
+					p.`name`,
+				</if>
+				<if test="entity.place != null and entity.place != ''">
+					p.`place`,
+				</if>
+				<if test="entity.remark != null">
+					p.`remark`,
+				</if>
+			</if>
+		</trim>
+		from publisher p
+		where p.`id` = #{id}
+	</select>
 
-   <select id="getCountByFilter" resultType="int">
-      select count(*)
-      from publisher p
-      <where>
-         <if test="entity != null">
-            <if test="entity.id != null">
-               p.`id` = #{entity.id}
-            </if>
-            <if test="entity.place != null and entity.place != ''">
-               and p.`place` = #{entity.place}
-            </if>
-            <if test="entity.createdBy != null">
-               and p.`created_by` = #{entity.createdBy}
-            </if>
-            <if test="entity.updatedBy != null">
-               and p.`updated_by` = #{entity.updatedBy}
-            </if>
-            <if test="entity.name != null and entity.name != ''">
-               and p.`name` like concat('%', #{entity.name}, '%')
-            </if>
-         </if>
-         <if test="filter != null">
-            <if test="filter.creationTime != null">
-               <if test="filter.creationTime.start != null">
-                  and p.`creation_time` >= #{filter.creationTime.start}
-               </if>
-               <if test="filter.creationTime.end != null">
-                  and #{filter.creationTime.end} >= p.`creation_time`
-               </if>
-            </if>
-            <if test="filter.lastUpdatedTime != null">
-               <if test="filter.lastUpdatedTime.start != null">
-                  and p.`last_updated_time` >= #{filter.lastUpdatedTime.start}
-               </if>
-               <if test="filter.lastUpdatedTime.end != null">
-                  and #{filter.lastUpdatedTime.end} >= p.`last_updated_time`
-               </if>
-            </if>
-         </if>
-      </where>
-      ;
-   </select>
+	<select id="getCountByFilter" resultType="int">
+		select count(*)
+		from publisher p
+		<where>
+			<if test="entity != null">
+				<if test="entity.id != null">
+					p.`id` = #{entity.id}
+				</if>
+				<if test="entity.place != null and entity.place != ''">
+					and p.`place` = #{entity.place}
+				</if>
+				<if test="entity.createdBy != null">
+					and p.`created_by` = #{entity.createdBy}
+				</if>
+				<if test="entity.updatedBy != null">
+					and p.`updated_by` = #{entity.updatedBy}
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					and p.`name` like concat('%', #{entity.name}, '%')
+				</if>
+			</if>
+			<if test="filter != null">
+				<if test="filter.creationTime != null">
+					<if test="filter.creationTime.start != null">
+						and p.`creation_time` >= #{filter.creationTime.start}
+					</if>
+					<if test="filter.creationTime.end != null">
+						and #{filter.creationTime.end} >= p.`creation_time`
+					</if>
+				</if>
+				<if test="filter.lastUpdatedTime != null">
+					<if test="filter.lastUpdatedTime.start != null">
+						and p.`last_updated_time` >= #{filter.lastUpdatedTime.start}
+					</if>
+					<if test="filter.lastUpdatedTime.end != null">
+						and #{filter.lastUpdatedTime.end} >= p.`last_updated_time`
+					</if>
+				</if>
+			</if>
+		</where>
+		;
+	</select>
 
-   <select id="getCountByName" resultType="int">
-      select count(*)
-      from publisher p
-      where p.`name` = #{entity.name}
-   </select>
+	<select id="getCountByName" resultType="int">
+		select count(*)
+		from publisher p
+		where p.`name` = #{entity.name}
+	</select>
 </mapper>

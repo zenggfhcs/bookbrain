@@ -29,7 +29,7 @@ private final TokenAccessRecordMapper tokenMapper;
 private final SimpleThreadContext<TokenInfo> threadContext;
 
 /**
- * 将 token 封装到 payload 里面去
+ * 记录 token 的使用
  *
  * @param point service-method
  */

@@ -100,7 +100,9 @@ public enum ResponseInfo {
 	TOKEN_EXPIRED(606, "登录 ? 过期了..."),
 
 	LOGIN_EXPIRED(607, "登录过期了..."),
-	TOKEN_RESET(199, "网络波动~~ 请稍后再试...");
+	TOKEN_RESET(199, "网络波动~~ 请稍后再试..."),
+	FILE_UPLOAD_FAILED(601, "文件上传失败，请稍后再试"),
+	;
 
 private final BaseResponseInfo info;
 

@@ -52,6 +52,7 @@ void addUserCondition(Payload<User> payload);
 
 /**
  * 只有没有验证过的邮箱才会进行验证
+ *
  * @param email 邮箱
  */
 void verifyEmail(String email);

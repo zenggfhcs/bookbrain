@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.TokenAccessRecordMapper">
-   <insert id="insert" parameterType="com.lib.bookbrain.model.entity.TokenAccessRecord">
-      insert into token_access_record(token, used_time, user_id)
-      values (#{token}, now(), #{userId});
-   </insert>
+	<insert id="insert" parameterType="com.lib.bookbrain.model.entity.TokenAccessRecord">
+		insert into token_access_record(token, used_time, user_id)
+		values (#{token}, now(), #{userId});
+	</insert>
 
-   <update id="updateByToken" parameterType="string">
-      update token_access_record t
-      set t.used_time = now()
-      where t.`token` = #{token};
-   </update>
-   <select id="getByToken" resultType="java.lang.Integer">
-      select count(*)
-      from token_access_record t
-      where t.`token` = #{token};
-   </select>
+	<update id="updateByToken" parameterType="string">
+		update token_access_record t
+		set t.used_time = now()
+		where t.`token` = #{token};
+	</update>
+	<select id="getByToken" resultType="java.lang.Integer">
+		select count(*)
+		from token_access_record t
+		where t.`token` = #{token};
+	</select>
 </mapper>
