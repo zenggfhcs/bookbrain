@@ -3,7 +3,7 @@ package com.lib.bookbrain.aop;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.TokenAccessRecordMapper;
 import com.lib.bookbrain.model.entity.TokenAccessRecord;
-import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.model.pojo.TokenInfo;
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

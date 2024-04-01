@@ -6,6 +6,4 @@ import org.springframework.web.multipart.MultipartFile;
 public interface UploadService {
 Response upload(MultipartFile file);
 
-// todo 添加类型
-
 }

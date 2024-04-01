@@ -57,4 +57,6 @@ public Response deleteBookInfo(@RequestBody(required = false) Payload<BookInfo> 
 	payload.setId(id);
 	return bookInfoService.delete(payload);
 }
+
+
 }

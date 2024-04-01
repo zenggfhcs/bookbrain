@@ -6,7 +6,7 @@ import com.lib.bookbrain.dao.LogMapper;
 import com.lib.bookbrain.model.entity.Entity;
 import com.lib.bookbrain.model.entity.Log;
 import com.lib.bookbrain.model.exchange.Payload;
-import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Json;
 import com.lib.bookbrain.utils.Parse;
 import lombok.AllArgsConstructor;

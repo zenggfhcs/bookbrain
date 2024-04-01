@@ -12,7 +12,7 @@ import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.UserFilter;
-import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.MailService;
 import com.lib.bookbrain.service.TokenService;
 import com.lib.bookbrain.service.UserService;

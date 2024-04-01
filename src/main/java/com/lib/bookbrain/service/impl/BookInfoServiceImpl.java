@@ -10,7 +10,7 @@ import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.BookInfoFilter;
-import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BookInfoService;
 import org.springframework.stereotype.Service;
 

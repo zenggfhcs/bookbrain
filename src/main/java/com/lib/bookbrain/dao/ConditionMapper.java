@@ -1,6 +1,6 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.pojo.Condition;
+import com.lib.bookbrain.model.pojo.Condition;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

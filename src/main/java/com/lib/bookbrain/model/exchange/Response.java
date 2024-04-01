@@ -1,7 +1,7 @@
 package com.lib.bookbrain.model.exchange;
 
 import com.lib.bookbrain.constant.ResponseInfo;
-import com.lib.bookbrain.pojo.BaseResponseInfo;
+import com.lib.bookbrain.model.pojo.BaseResponseInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

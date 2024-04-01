@@ -4,7 +4,7 @@ import com.lib.bookbrain.dao.UserMapper;
 import com.lib.bookbrain.model.entity.TokenBody;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
-import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.VerifyService;
 import com.lib.bookbrain.utils.Base64Coder;
 import com.lib.bookbrain.utils.Json;

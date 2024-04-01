@@ -1,4 +1,4 @@
-package com.lib.bookbrain.pojo;
+package com.lib.bookbrain.model.pojo;
 
 import lombok.Builder;
 import lombok.Getter;

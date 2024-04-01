@@ -3,7 +3,7 @@ package com.lib.bookbrain.service;
 import com.lib.bookbrain.exception.SendEmailException;
 import com.lib.bookbrain.exception.TemplateReadException;
 import com.lib.bookbrain.model.entity.User;
-import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Base64Coder;
 import com.lib.bookbrain.utils.Json;
 import com.lib.bookbrain.utils.MapFactory;

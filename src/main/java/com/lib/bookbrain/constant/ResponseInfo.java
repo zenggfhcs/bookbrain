@@ -1,6 +1,6 @@
 package com.lib.bookbrain.constant;
 
-import com.lib.bookbrain.pojo.BaseResponseInfo;
+import com.lib.bookbrain.model.pojo.BaseResponseInfo;
 import lombok.Getter;
 
 @Getter

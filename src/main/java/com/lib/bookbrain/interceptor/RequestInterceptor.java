@@ -5,7 +5,7 @@ import com.lib.bookbrain.constant.Header;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.exception.JWTException;
 import com.lib.bookbrain.exception.PermissionMissException;
-import com.lib.bookbrain.pojo.TokenInfo;
+import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.security.Jwt;
 import com.lib.bookbrain.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
