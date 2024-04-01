@@ -18,7 +18,7 @@ import java.util.UUID;
 @Service
 public class UploadServiceImpl implements UploadService {
 
-private final String BASE_URL = "http://localhost/public/";
+private final String BASE_URL = "http://10.3.105.0/public/";
 
 @Override
 public Response upload(MultipartFile file) {
