@@ -52,8 +52,22 @@ private Long elapsedTime;
  * @param serviceName 服务名称
  * @param payload     用于生成日志信息的 payload
  */
+@Deprecated
 public static Log before(String serviceName, Payload<Entity> payload) {
-	return Log.builder().serviceName(serviceName).dataId(payload.getId()).input(Json.stringify(payload)).output("{}")
+	return Log.builder()
+			.serviceName(serviceName)
+			.dataId(payload.getId())
+			.input(Json.stringify(payload))
+			.output("{}")
+			.elapsedTime(-1L).build();
+}
+
+public static Log before(String serviceName) {
+	return Log.builder()
+			.serviceName(serviceName)
+			.dataId(null)
+			.input("{}")
+			.output("{}")
 			.elapsedTime(-1L).build();
 }
 

@@ -1,18 +1,16 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.model.entity.User;
-import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/users/reset")
 public class ResetController {
 
 private final UserService userService;
@@ -22,9 +20,9 @@ private final UserService userService;
  *
  * @return 重置结果
  */
-@PostMapping("/password")
-public Response resetPassword(@RequestBody Payload<User> payload) {
-	return userService.resetPassword(payload);
+@RequestMapping(path = "/users/password:reset", method = RequestMethod.POST)
+public Response resetPassword(@RequestBody User entity) {
+	return userService.resetPassword(entity);
 }
 
 /**
@@ -32,7 +30,7 @@ public Response resetPassword(@RequestBody Payload<User> payload) {
  *
  * @return 重置结果
  */
-@PostMapping("/username")
+@RequestMapping(path = "/users/username:reset", method = RequestMethod.POST)
 public Response resetUserName() {
 	return Response.success();
 }

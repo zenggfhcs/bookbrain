@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/books")
 @AroundConduct
-public class BookController extends BaseController<Book>  {
+public class BookController extends BaseController<Book> {
 
 private final BookService bookService;
 

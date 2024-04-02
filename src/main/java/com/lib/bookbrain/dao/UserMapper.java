@@ -49,6 +49,6 @@ void addUserCondition(Payload<User> payload);
  */
 void verifyEmail(String email);
 
-int resetPassword(Payload<User> payload);
+int resetPassword(User entity);
 /* ============================ 拓展 ============================ */
 }

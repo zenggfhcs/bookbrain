@@ -60,15 +60,14 @@ public Response sendCode(User entity) {
 }
 
 @Override
-public Response resetPassword(Payload<User> payload) {
+public Response resetPassword(User entity) {
 	// 解密
-	User _entity = payload.getEntity();
 	{
-		_entity.setEmail(RSATools.decrypt(_entity.getEmail()));
-		_entity.setAuthenticationString(RSATools.decrypt(_entity.getAuthenticationString()));
+		entity.setEmail(RSATools.decrypt(entity.getEmail()));
+		entity.setAuthenticationString(RSATools.decrypt(entity.getAuthenticationString()));
 	}
 
-	int _uc = userMapper.resetPassword(payload);
+	int _uc = userMapper.resetPassword(entity);
 
 	if (_uc != 1) {
 		return Response.error(ResponseInfo.ERROR);

@@ -23,5 +23,5 @@ int checkPermission(Integer id, String url);
 
 Response sendCode(User entity);
 
-Response resetPassword(Payload<User> payload);
+Response resetPassword(User entity);
 }

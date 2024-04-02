@@ -3,9 +3,7 @@ package com.lib.bookbrain.aop;
 import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.LogMapper;
-import com.lib.bookbrain.model.entity.Entity;
 import com.lib.bookbrain.model.entity.Log;
-import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Json;
 import com.lib.bookbrain.utils.Parse;
@@ -78,11 +76,14 @@ public Object logDelete(ProceedingJoinPoint point) throws Throwable {
  * @throws Throwable 执行可能的操作
  */
 private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable {
-
+	/*
+		预计参数[id]
+	 */
 	/* ===================== 前 ===================== */
-	Payload<Entity> _payload = Payload.getOrNew(point.getArgs()[0]);
-	Log _log = Log.before(generateServiceName(point.getSignature()), _payload);
+	//	Payload<Entity> _payload = Payload.getOrNew(point.getArgs()[0]);
+	Log _log = Log.before(generateServiceName(point.getSignature()));
 	{
+		_log.setDataId((Integer) point.getArgs()[0]);
 		_log.setCreatedBy(threadContext.get().getAud());
 		_log.setType(logType.getValue());
 	}

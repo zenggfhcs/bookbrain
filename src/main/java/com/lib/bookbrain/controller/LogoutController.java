@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/logout")
+@RequestMapping("/users:logout")
 public class LogoutController {
 
 private final UserService userService;

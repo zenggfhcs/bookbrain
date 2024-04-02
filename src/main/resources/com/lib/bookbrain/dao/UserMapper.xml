@@ -249,7 +249,7 @@
 
 	<update id="resetPassword">
 		update user u
-		set u.authentication_string = MD5(#{entity.authenticationString,jdbcType=VARCHAR})
-		where u.email = #{entity.email};
+		set u.authentication_string = MD5(#{authenticationString,jdbcType=VARCHAR})
+		where u.email = #{email};
 	</update>
 </mapper>

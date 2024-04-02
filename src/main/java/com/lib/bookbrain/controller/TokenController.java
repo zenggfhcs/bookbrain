@@ -5,9 +5,9 @@ import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.service.TokenService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/token")
 @AllArgsConstructor
 public class TokenController {
 
 private final TokenService tokenService;
 
-@PostMapping("/refresh")
+
+@RequestMapping(path = "/token:refresh", method = RequestMethod.POST)
 public Response refresh(@RequestBody(required = false) Payload<TokenBody> payload) {
 	return tokenService.refresh(payload);
 }
