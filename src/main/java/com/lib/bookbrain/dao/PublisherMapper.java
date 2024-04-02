@@ -1,34 +1,26 @@
 package com.lib.bookbrain.dao;
 
 import com.lib.bookbrain.model.entity.Publisher;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
-import com.lib.bookbrain.model.filter.PublisherFilter;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * @author yunxia
  */
 @Mapper
-public interface PublisherMapper extends BaseMapper<Publisher, PublisherFilter> {
+public interface PublisherMapper extends BaseMapper<Publisher> {
 /* ============================ 继承 ============================ */
-List<Publisher> getBy(FilterPayload<Publisher, PublisherFilter> payload);
-
-int getCountByFilter(FilterPayload<Publisher, PublisherFilter> payload);
-
 Publisher getById(Payload<Publisher> payload);
 
 int update(Payload<Publisher> payload);
 
-int insert(Payload<Publisher> payload);
+int insert(Publisher entity);
 
-int delete(Payload<Publisher> payload);
+int delete(Integer id);
 
 Publisher getToUpdate(Payload<Publisher> payload);
 
-int getCountByName(Payload<Publisher> payload);
+int getCountByName(String name);
 /* ============================ 继承 ============================ */
 
 }

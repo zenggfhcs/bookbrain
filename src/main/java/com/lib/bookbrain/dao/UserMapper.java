@@ -1,32 +1,24 @@
 package com.lib.bookbrain.dao;
 
 import com.lib.bookbrain.model.entity.User;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
-import com.lib.bookbrain.model.filter.UserFilter;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author yunxia
  */
 @Component
 @Mapper
-public interface UserMapper extends BaseMapper<User, UserFilter> {
+public interface UserMapper extends BaseMapper<User> {
 /* ============================ 继承 ============================ */
-List<User> getBy(FilterPayload<User, UserFilter> payload);
-
-int getCountByFilter(UserFilter filter);
-
-int insert(Payload<User> payload);
+int insert(User entity);
 
 User getById(Payload<User> payload);
 
-int delete(Payload<User> payload);
+int delete(Integer id);
 
 int update(Payload<User> payload);
 
@@ -38,7 +30,7 @@ User getByToken(String token);
 
 int register(Payload<User> payload);
 
-User login(Payload<User> payload);
+User login(User entity);
 
 int getByEmail(String email);
 

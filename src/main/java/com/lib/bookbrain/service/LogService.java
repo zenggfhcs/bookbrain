@@ -1,24 +1,20 @@
 package com.lib.bookbrain.service;
 
 import com.lib.bookbrain.model.entity.Log;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
-import com.lib.bookbrain.model.filter.LogFilter;
 
-public interface LogService extends BaseService<Log, LogFilter> {
-@Override
-Response getBy(FilterPayload<Log, LogFilter> payload);
+public interface LogService extends BaseService<Log> {
 
 @Override
-Response create(Payload<Log> payload);
+Response create(Log entity);
 
 @Override
-Response getById(Payload<Log> payload);
+Response getById(Integer id);
 
 @Override
 Response update(Payload<Log> payload);
 
 @Override
-Response delete(Payload<Log> payload);
+Response delete(Integer id);
 }

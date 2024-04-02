@@ -19,7 +19,7 @@ public enum ResponseInfo {
 	/**
 	 * token 创建或者解析时异常
 	 */
-	TOKEN_FAILED("TOKEN_FAILED: token 创建（解析）时错误，请检查您的登录状态，或者重新登录"),
+	TOKEN_FAILED("TOKEN_FAILED: 请检查您的登录状态，或者重新登录"),
 
 	/**
 	 *

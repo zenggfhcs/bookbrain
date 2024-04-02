@@ -23,147 +23,117 @@
 		<result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
 		<result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
 		<result property="revision" column="revision" jdbcType="INTEGER"/>
-		<association property="publisher" column="{id=publisher_id}" javaType="com.lib.bookbrain.model.entity.Publisher"
+		<association property="publisher" column="publisher_id" javaType="com.lib.bookbrain.model.entity.Publisher"
 		             select="com.lib.bookbrain.dao.PublisherMapper.getById"/>
 	</resultMap>
-	<insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
-	        keyProperty="entity.id">
+	<select id="list" resultMap="BaseResultMap">
+		select *
+		from book_info;
+	</select>
+	<select id="count">
+		select count(*)
+		from book_info;
+	</select>
+	<insert id="insert" parameterType="com.lib.bookbrain.model.entity.BookInfo" useGeneratedKeys="true"
+	        keyProperty="id">
 		insert into book_info (`publisher_id`, `isbn`, `cip`, `book_name`,
-		`book_type`, `cover`, `author`, `describe`, `publish_date`,
-		`keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
-		`updated_by`, `last_updated_time`, `revision`)
-		values ( #{entity.publisher.id}
-		, #{entity.isbn}
-		, #{entity.cip}
-		, #{entity.bookName}
-		, #{entity.bookType}
-		, #{entity.cover}
-		, #{entity.author}
-		, #{entity.describe}
-		, #{entity.publishDate}
-		, #{entity.keyword}
-		, #{entity.lang}
-		, #{entity.price}
-		, #{entity.stock}
-		, #{entity.createdBy}
-		, NOW()
-		, #{entity.updatedBy}
-		, now()
-		, 0)
+		                       `book_type`, `cover`, `author`, `describe`, `publish_date`,
+		                       `keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
+		                       `updated_by`, `last_updated_time`, `revision`)
+		values ( #{publisher.id}
+		       , #{isbn}
+		       , #{cip}
+		       , #{bookName}
+		       , #{bookType}
+		       , #{cover}
+		       , #{author}
+		       , #{describe}
+		       , #{publishDate}
+		       , #{keyword}
+		       , #{lang}
+		       , #{price}
+		       , #{stock}
+		       , #{createdBy}
+		       , NOW()
+		       , #{updatedBy}
+		       , now()
+		       , 0)
 	</insert>
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
 		update book_info bif
 		<set>
-			<if test="entity != null">
-				<if test="entity.id != null">
-					bif.`id` = #{entity.id},
-				</if>
-				<if test="entity.isbn != null and entity.isbn != ''">
-					bif.`isbn` = #{entity.isbn},
-				</if>
-				<if test="entity.cip != null and entity.cip != ''">
-					bif.`cip` = #{entity.cip},
-				</if>
-				<if test="entity.bookName != null and entity.bookName != ''">
-					bif.`book_name` = #{entity.bookName},
-				</if>
-				<if test="entity.bookType != null and entity.bookType != ''">
-					bif.`book_type` = #{entity.bookType},
-				</if>
-				<if test="entity.cover != null and entity.cover != ''">
-					bif.`cover` = #{entity.cover},
-				</if>
-				<if test="entity.author != null and entity.author != ''">
-					bif.`author` = #{entity.author},
-				</if>
-				<if test="entity.publishDate != null">
-					bif.`publish_date` = #{entity.publishDate},
-				</if>
-				<if test="entity.keyword != null and entity.keyword != ''">
-					bif.`keyword` = #{entity.keyword},
-				</if>
-				<if test="entity.lang != null and entity.lang != ''">
-					bif.`lang` = #{entity.lang},
-				</if>
-				<if test="entity.price != null">
-					bif.`price` = #{entity.price},
-				</if>
-				<if test="entity.stock != null">
-					bif.`stock` = #{entity.stock},
-				</if>
-				<if test="entity.updatedBy != null">
-					bif.`updated_by` = #{entity.updatedBy},
-				</if>
-				<if test="entity.describe != null">
-					bif.`describe` = #{entity.describe},
-				</if>
+			<if test="entity.isbn != null and entity.isbn != ''">
+				bif.`isbn` = #{entity.isbn},
+			</if>
+			<if test="entity.cip != null and entity.cip != ''">
+				bif.`cip` = #{entity.cip},
+			</if>
+			<if test="entity.bookName != null and entity.bookName != ''">
+				bif.`book_name` = #{entity.bookName},
+			</if>
+			<if test="entity.bookType != null and entity.bookType != ''">
+				bif.`book_type` = #{entity.bookType},
+			</if>
+			<if test="entity.cover != null and entity.cover != ''">
+				bif.`cover` = #{entity.cover},
+			</if>
+			<if test="entity.author != null and entity.author != ''">
+				bif.`author` = #{entity.author},
+			</if>
+			<if test="entity.publishDate != null">
+				bif.`publish_date` = #{entity.publishDate},
+			</if>
+			<if test="entity.keyword != null and entity.keyword != ''">
+				bif.`keyword` = #{entity.keyword},
+			</if>
+			<if test="entity.lang != null and entity.lang != ''">
+				bif.`lang` = #{entity.lang},
+			</if>
+			<if test="entity.price != null">
+				bif.`price` = #{entity.price},
+			</if>
+			<if test="entity.stock != null">
+				bif.`stock` = #{entity.stock},
+			</if>
+			<if test="entity.updatedBy != null">
+				bif.`updated_by` = #{entity.updatedBy},
+			</if>
+			<if test="entity.describe != null">
+				bif.`describe` = #{entity.describe},
 			</if>
 			<if test="1 == 1">
 				bif.`last_updated_time` = NOW(),
-				bif.`revision` = (1 + bif.`revision`) % 2147483647,
+				bif.`revision`          = (1 + bif.`revision`) % 2147483647,
 			</if>
 		</set>
 		where bif.`id` = #{id}
-		and bif.`revision` = #{entity.revision}
+		  and bif.`revision` = #{entity.revision}
 	</update>
-	<delete id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
+	<delete id="delete">
 		delete bif
 		from book_info bif
 		where bif.`id` = #{id}
 	</delete>
-	<select id="getBy" resultMap="BaseResultMap">
+	<select id="getById" resultMap="BaseResultMap">
 		select distinct bif.`id`,
-		bif.`publisher_id`,
-		bif.`isbn`,
-		bif.`cip`,
-		bif.`book_name`,
-		bif.`book_type`,
-		bif.`cover`,
-		bif.`author`,
-		bif.`describe`,
-		bif.`publish_date`,
-		bif.`keyword`,
-		bif.`lang`,
-		bif.`price`,
-		bif.`stock`,
-		bif.`created_by`,
-		bif.`creation_time`,
-		bif.`updated_by`,
-		bif.`last_updated_time`,
-		bif.`revision`
-		from book_info bif
-		<where>
-			<if test="entity != null">
-				<if test="entity.id != null">
-					and bif.`id` = #{entity.id}
-				</if>
-				<if test="entity.bookName != null">
-					and bif.`book_name` like concat('%', #{entity.bookName}, '%')
-				</if>
-			</if>
-		</where>
-		limit #{filter.page.start}, #{filter.page.end}
-	</select>
-	<select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
-		select distinct bif.`id`,
-		bif.`publisher_id`,
-		bif.`isbn`,
-		bif.`cip`,
-		bif.`book_name`,
-		bif.`book_type`,
-		bif.`cover`,
-		bif.`author`,
-		bif.`describe`,
-		bif.`publish_date`,
-		bif.`keyword`,
-		bif.`lang`,
-		bif.`price`,
-		bif.`stock`,
-		bif.`created_by`,
-		bif.`creation_time`,
-		bif.`updated_by`,
-		bif.`last_updated_time`,
-		bif.`revision`
+		                bif.`publisher_id`,
+		                bif.`isbn`,
+		                bif.`cip`,
+		                bif.`book_name`,
+		                bif.`book_type`,
+		                bif.`cover`,
+		                bif.`author`,
+		                bif.`describe`,
+		                bif.`publish_date`,
+		                bif.`keyword`,
+		                bif.`lang`,
+		                bif.`price`,
+		                bif.`stock`,
+		                bif.`created_by`,
+		                bif.`creation_time`,
+		                bif.`updated_by`,
+		                bif.`last_updated_time`,
+		                bif.`revision`
 		from book_info bif
 		where bif.`id` = #{id}
 	</select>
@@ -177,11 +147,5 @@
 		</trim>
 		from book_info bif
 		where bif.`id` = #{id};
-	</select>
-
-	<select id="getCountByFilter" resultType="int">
-		select count(*)
-		from book_info bif
-		;
 	</select>
 </mapper>

@@ -12,16 +12,30 @@
 		<result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
 		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
 		<result column="revision" jdbcType="INTEGER" property="revision"/>
-		<association column="{id=book_info_id}" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
+		<association column="book_info_id" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
 		             select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
 	</resultMap>
-	<insert id="insert" useGeneratedKeys="true" keyProperty="entity.bookId" keyColumn="id"
-	        parameterType="com.lib.bookbrain.model.exchange.Payload">
+	<select id="list" resultMap="BaseResultMap">
+		select *
+		from book;
+	</select>
+	<select id="count">
+		select count(*)
+		from book;
+	</select>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="bookId" keyColumn="id"
+	        parameterType="com.lib.bookbrain.model.entity.Book">
 		insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
 		`last_updated_time`, `revision`)
-		VALUES (#{entity.damageLevel}, #{entity.borrowable}, #{entity.bookInfo.id}, #{entity.createdBy},
+		VALUES (
+		#{damageLevel},
+		#{borrowable},
+		#{bookInfo.id},
+		#{createdBy},
 		now(),
-		#{entity.updatedBy}, now(), #{entity.revision})
+		#{updatedBy},
+		now(),
+		#{revision})
 	</insert>
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
 		update book b
@@ -48,26 +62,12 @@
 		where b.`id` = #{id}
 		and b.`revision` = #{entity.revision}
 	</update>
-	<delete id="delete" parameterType="com.lib.bookbrain.model.exchange.Payload">
+	<delete id="delete">
 		delete
 		from book b
 		where b.`id` = #{id}
 	</delete>
-	<select id="getBy" resultMap="BaseResultMap">
-		select b.`id`,
-		b.`damage_level`,
-		b.`borrowable`,
-		b.`book_info_id`,
-		b.`created_by`,
-		b.`creation_time`,
-		b.`updated_by`,
-		b.`last_updated_time`,
-		b.`revision`
-		from book b
-		<where>
-		</where>
-	</select>
-	<select id="getById" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
+	<select id="getById" resultMap="BaseResultMap">
 		select b.`id`,
 		b.`damage_level`,
 		b.`borrowable`,
@@ -86,9 +86,4 @@
 		where b.`id` = #{id}
 	</select>
 
-	<select id="getCountByFilter" resultType="int">
-		select count(*)
-		from book
-		;
-	</select>
 </mapper>

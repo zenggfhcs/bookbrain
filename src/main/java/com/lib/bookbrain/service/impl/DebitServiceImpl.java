@@ -6,10 +6,8 @@ import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.DebitMapper;
 import com.lib.bookbrain.model.entity.Debit;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
-import com.lib.bookbrain.model.filter.DebitFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.DebitService;
 import org.springframework.stereotype.Service;
@@ -22,28 +20,27 @@ public class DebitServiceImpl implements DebitService {
 
 private final DebitMapper debitMapper;
 
-private final BaseServiceImpl<Debit, DebitFilter> baseService;
+private final BaseServiceImpl<Debit> baseService;
 
 public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> threadContext) {
 	this.debitMapper = debitMapper;
 	baseService = new BaseServiceImpl<>(threadContext, debitMapper);
 }
 
-@AroundGet
 @Override
-public Response getBy(FilterPayload<Debit, DebitFilter> payload) {
-	return baseService.getBy(payload);
+public Response list() {
+	return baseService.list();
 }
 
 @Override
-public Response create(Payload<Debit> payload) {
-	return baseService.create(payload);
+public Response create(Debit entity) {
+	return baseService.create(entity);
 }
 
 @AroundGet
 @Override
-public Response getById(Payload<Debit> payload) {
-	return baseService.getById(payload);
+public Response getById(Integer id) {
+	return baseService.getById(id);
 }
 
 @AroundUpdate
@@ -54,7 +51,7 @@ public Response update(Payload<Debit> payload) {
 
 @AroundDelete
 @Override
-public Response delete(Payload<Debit> payload) {
-	return baseService.delete(payload);
+public Response delete(Integer id) {
+	return baseService.delete(id);
 }
 }

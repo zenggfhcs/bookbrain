@@ -1,7 +1,6 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.model.entity.User;
-import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.service.UserService;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ public class SendController {
 private final UserService userService;
 
 @PostMapping("/code")
-public Response sendCode(@RequestBody Payload<User> payload) {
-	return userService.sendCode(payload);
+public Response sendCode(@RequestBody User entity) {
+	return userService.sendCode(entity);
 }
 }

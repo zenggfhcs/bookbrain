@@ -1,31 +1,19 @@
 package com.lib.bookbrain.dao;
 
 import com.lib.bookbrain.model.entity.Debit;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
-import com.lib.bookbrain.model.filter.DebitFilter;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * @author yunxia
  */
 @Mapper
-public interface DebitMapper extends BaseMapper<Debit, DebitFilter> {
+public interface DebitMapper extends BaseMapper<Debit> {
 /* ============================ ============================ */
 Debit getById(Payload<Debit> payload);
-
-List<Debit> getBy(FilterPayload<Debit, DebitFilter> payload);
-
-int getCountByFilter(DebitFilter filter);
-
-int insert(Payload<Debit> payload);
-
+int insert(Debit entity);
 int update(Payload<Debit> payload);
-
-int delete(Payload<Debit> payload);
-
+int delete(Integer id);
 Debit getToUpdate(Payload<Debit> payload);
 /* ============================ ============================ */
 

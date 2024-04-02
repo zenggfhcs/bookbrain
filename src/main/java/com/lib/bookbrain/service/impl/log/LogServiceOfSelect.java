@@ -4,10 +4,8 @@ package com.lib.bookbrain.service.impl.log;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.LogMapper;
 import com.lib.bookbrain.model.entity.Log;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
-import com.lib.bookbrain.model.filter.LogFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.LogService;
 import com.lib.bookbrain.service.impl.BaseServiceImpl;
@@ -17,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class LogServiceOfSelect implements LogService {
 
 private final LogMapper logMapper;
-private final BaseServiceImpl<Log, LogFilter> baseService;
+private final BaseServiceImpl<Log> baseService;
 
 public LogServiceOfSelect(SimpleThreadContext<TokenInfo> threadContext, LogMapper logMapper) {
 	this.logMapper = logMapper;
@@ -31,18 +29,18 @@ public void Log(Log Log) {
 }
 
 @Override
-public Response getBy(FilterPayload<Log, LogFilter> payload) {
-	return baseService.getBy(payload);
+public Response list() {
+	return baseService.list();
 }
 
 @Override
-public Response create(Payload<Log> payload) {
+public Response create(Log entity) {
 	return null;
 }
 
 @Override
-public Response getById(Payload<Log> payload) {
-	return baseService.getById(payload);
+public Response getById(Integer id) {
+	return baseService.getById(id);
 }
 
 @Override
@@ -51,7 +49,7 @@ public Response update(Payload<Log> payload) {
 }
 
 @Override
-public Response delete(Payload<Log> payload) {
+public Response delete(Integer id) {
 	return null;
 }
 }

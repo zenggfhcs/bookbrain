@@ -83,7 +83,7 @@ public static TokenInfo decoder(String token, Algorithm algorithm) {
 public static void main(String[] args) {
 	/* ------------------------ test ------------------------ */
 
-	String token = encoder(1, 0L);
+	String token = encoder(1, 100000000L);
 	System.out.println(token);
 //
 //	TokenInfo info = decoder(token);

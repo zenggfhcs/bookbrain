@@ -1,7 +1,6 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.model.entity.User;
-import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.service.UserService;
 import lombok.AllArgsConstructor;
@@ -12,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/users:login")
 public class LoginController {
 
 private final UserService userService;
 
 @PostMapping
-public Response login(@RequestBody(required = false) Payload<User> payload) {
-	return userService.login(payload);
+public Response login(@RequestBody User entity) {
+	return userService.login(entity);
 }
 }

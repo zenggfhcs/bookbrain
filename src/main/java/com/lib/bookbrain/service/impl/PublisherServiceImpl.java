@@ -8,10 +8,8 @@ import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.PublisherMapper;
 import com.lib.bookbrain.model.entity.Publisher;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
-import com.lib.bookbrain.model.filter.PublisherFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.PublisherService;
 import org.springframework.stereotype.Service;
@@ -22,40 +20,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class PublisherServiceImpl implements PublisherService {
 private final PublisherMapper publisherMapper;
-private final BaseServiceImpl<Publisher, PublisherFilter> baseService;
+private final BaseServiceImpl<Publisher> baseService;
 
 public PublisherServiceImpl(PublisherMapper publisherMapper, SimpleThreadContext<TokenInfo> threadContext) {
 	this.publisherMapper = publisherMapper;
 	baseService = new BaseServiceImpl<>(threadContext, publisherMapper);
 }
 
-@AroundGet
 @Override
-public Response getBy(FilterPayload<Publisher, PublisherFilter> payload) {
-	return baseService.getBy(payload);
+public Response list() {
+	return baseService.list();
 }
 
 @AroundAdd
 @Override
-public Response create(Payload<Publisher> payload) {
-	int _cc = publisherMapper.getCountByName(payload);
+public Response create(Publisher entity) {
+	int _cc = publisherMapper.getCountByName(entity.getName());
 	if (_cc != 0) {
 		return Response.error(ResponseInfo.PUBLISHER_NAME_REPEAT);
 	}
 
-	return baseService.create(payload);
+	return baseService.create(entity);
 }
 
 @AroundGet
 @Override
-public Response getById(Payload<Publisher> payload) {
-	return baseService.getById(payload);
+public Response getById(Integer id) {
+	return baseService.getById(id);
 }
 
 @AroundUpdate
 @Override
 public Response update(Payload<Publisher> payload) {
-	int _cc = publisherMapper.getCountByName(payload);
+	// 判断一下，更新的名称是不是重复了
+	int _cc = publisherMapper.getCountByName(payload.getEntity().getName());
 	if (_cc != 0) {
 		return Response.error(ResponseInfo.PUBLISHER_NAME_REPEAT);
 	}
@@ -65,7 +63,7 @@ public Response update(Payload<Publisher> payload) {
 
 @AroundDelete
 @Override
-public Response delete(Payload<Publisher> payload) {
-	return baseService.delete(payload);
+public Response delete(Integer id) {
+	return baseService.delete(id);
 }
 }

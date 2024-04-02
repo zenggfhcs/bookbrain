@@ -8,10 +8,8 @@ import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.UserMapper;
 import com.lib.bookbrain.model.entity.TokenBody;
 import com.lib.bookbrain.model.entity.User;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
-import com.lib.bookbrain.model.filter.UserFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.MailService;
 import com.lib.bookbrain.service.TokenService;
@@ -29,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
 private final UserMapper userMapper;
 
-private final BaseServiceImpl<User, UserFilter> baseService;
+private final BaseServiceImpl<User> baseService;
 
 private final MailService mailService;
 
@@ -56,8 +54,8 @@ public int checkPermission(Integer id, String url) {
 }
 
 @Override
-public Response sendCode(Payload<User> payload) {
-	mailService.sendCode(payload.getEntity(), "重置密码");
+public Response sendCode(User entity) {
+	mailService.sendCode(entity, "重置密码");
 	return Response.success();
 }
 
@@ -107,8 +105,8 @@ public Response register(Payload<User> payload) {
 }
 
 @Override
-public Response login(Payload<User> payload) {
-	User _user = userMapper.login(payload);
+public Response login(User entity) {
+	User _user = userMapper.login(entity);
 
 	if (_user == null) {
 		return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED);
@@ -119,21 +117,20 @@ public Response login(Payload<User> payload) {
 	return Response.success(_body);
 }
 
-@AroundGet
 @Override
-public Response getBy(FilterPayload<User, UserFilter> payload) {
-	return baseService.getBy(payload);
+public Response list() {
+	return baseService.list();
 }
 
 @Override
-public Response create(Payload<User> payload) {
-	return baseService.create(payload);
+public Response create(User entity) {
+	return baseService.create(entity);
 }
 
 @AroundGet
 @Override
-public Response getById(Payload<User> payload) {
-	return baseService.getById(payload);
+public Response getById(Integer id) {
+	return baseService.getById(id);
 }
 
 @AroundUpdate
@@ -144,8 +141,8 @@ public Response update(Payload<User> payload) {
 
 @AroundDelete
 @Override
-public Response delete(Payload<User> payload) {
-	return baseService.delete(payload);
+public Response delete(Integer id) {
+	return baseService.delete(id);
 }
 
 

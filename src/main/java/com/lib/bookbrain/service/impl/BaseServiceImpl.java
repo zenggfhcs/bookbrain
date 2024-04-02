@@ -4,10 +4,8 @@ import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BaseMapper;
 import com.lib.bookbrain.model.entity.Entity;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
-import com.lib.bookbrain.model.filter.BaseFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +22,7 @@ import java.util.Map;
  *
  * @author yunxia
  */
-public class BaseServiceImpl<E extends Entity, F extends BaseFilter> implements BaseService<E, F> {
+public class BaseServiceImpl<E extends Entity> implements BaseService<E> {
 
 /**
  * 线程共享的 tokenInfo 对象，用于存放操作人信息
@@ -36,7 +34,7 @@ protected final SimpleThreadContext<TokenInfo> threadContext;
  * <br>
  * 实际使用时会被他的子接口替换
  */
-protected final BaseMapper<E, F> baseMapper;
+protected final BaseMapper<E> baseMapper;
 
 /**
  * 自动注入
@@ -44,34 +42,30 @@ protected final BaseMapper<E, F> baseMapper;
  * @param threadContext tokenBody 线程局部变量
  * @param baseMapper    基础数据操作接口
  */
-public BaseServiceImpl(SimpleThreadContext<TokenInfo> threadContext, BaseMapper<E, F> baseMapper) {
+public BaseServiceImpl(SimpleThreadContext<TokenInfo> threadContext, BaseMapper<E> baseMapper) {
 	this.threadContext = threadContext;
 	this.baseMapper = baseMapper;
 }
 
 @Override
-public Response getBy(FilterPayload<E, F> payload) {
-	// todo 校验 filter
-	Map<String, Object> map = new HashMap<>();
-	{
-		List<E> _list = baseMapper.getBy(payload);
-		map.put("data", _list);
-		// todo 修改 sql 条件
-		int count = baseMapper.getCountByFilter(payload);
-		map.put("count", count);
-	}
-	return Response.success(map);
+public Response list() {
+	Map<String, Object> _map = new HashMap<>();
+	List<E> _list = baseMapper.list();
+	int _count = baseMapper.count();
+	_map.put("list", _list);
+	_map.put("total", _count);
+	return Response.success(_map);
 }
 
 /**
  * 通过 id 获取实体数据
  *
- * @param payload 载体
+ * @param id 载体
  * @return 统一封装返回结果
  */
 @Override
-public Response getById(Payload<E> payload) {
-	E _entity = baseMapper.getById(payload);
+public Response getById(Integer id) {
+	E _entity = baseMapper.getById(id);
 	if (_entity == null) {
 		return Response.error(ResponseInfo.DATA_NOT_EXIST);
 	}
@@ -80,18 +74,17 @@ public Response getById(Payload<E> payload) {
 }
 
 @Override
-public Response create(Payload<E> payload) {
-	E _entity = payload.getEntity();
-	if (_entity == null) {
+public Response create(E entity) {
+	if (entity == null) {
 		return Response.error(ResponseInfo.CREATE_DATA_ERROR);
 	}
 	{
 		TokenInfo _info = threadContext.get();
-		_entity.setCreatedBy(_info.getAud());
-		_entity.setUpdatedBy(_info.getAud());
+		entity.setCreatedBy(_info.getAud());
+		entity.setUpdatedBy(_info.getAud());
 	}
 
-	int _cc = baseMapper.insert(payload);
+	int _cc = baseMapper.insert(entity);
 	if (_cc == 0) {
 		return Response.error(ResponseInfo.CREATE_ERROR);
 	}
@@ -127,13 +120,13 @@ public Response update(Payload<E> payload) {
 
 @Override
 @Transactional
-public Response delete(Payload<E> payload) {
-	E _entity = baseMapper.getById(payload);
+public Response delete(Integer id) {
+	E _entity = baseMapper.getById(id);
 	if (_entity == null) {
 		return Response.error(ResponseInfo.DATA_NOT_EXIST);
 	}
 
-	int _dc = baseMapper.delete(payload);
+	int _dc = baseMapper.delete(id);
 	if (_dc == 0) {
 		return Response.error(ResponseInfo.DELETE_ERROR);
 	}

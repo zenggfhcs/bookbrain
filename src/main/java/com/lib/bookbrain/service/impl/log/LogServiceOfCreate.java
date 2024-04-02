@@ -1,25 +1,23 @@
 package com.lib.bookbrain.service.impl.log;
 
 import com.lib.bookbrain.model.entity.Log;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
-import com.lib.bookbrain.model.filter.LogFilter;
 import com.lib.bookbrain.service.LogService;
 
 public class LogServiceOfCreate implements LogService {
 @Override
-public Response getBy(FilterPayload<Log, LogFilter> payload) {
+public Response list() {
 	return null;
 }
 
 @Override
-public Response create(Payload<Log> payload) {
+public Response create(Log entity) {
 	return null;
 }
 
 @Override
-public Response getById(Payload<Log> payload) {
+public Response getById(Integer id) {
 	return null;
 }
 
@@ -29,7 +27,7 @@ public Response update(Payload<Log> payload) {
 }
 
 @Override
-public Response delete(Payload<Log> payload) {
+public Response delete(Integer id) {
 	return null;
 }
 }

@@ -1,23 +1,18 @@
 package com.lib.bookbrain.controller;
 
-import com.lib.bookbrain.model.entity.TokenBody;
-import com.lib.bookbrain.model.entity.User;
-import com.lib.bookbrain.service.TokenService;
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.lib.bookbrain.model.entity.Publisher;
+import com.lib.bookbrain.service.PublisherService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/test")
-public class TestController {
+public class TestController extends BaseController<Publisher> {
 
-private final TokenService tokenService;
+public final PublisherService publisherService;
 
-@PostMapping("/loginToken")
-public TokenBody testLoginToken(@RequestBody User user) {
-	return null;
+public TestController(PublisherService publisherService) {
+	super(publisherService);
+	this.publisherService = publisherService;
 }
 }

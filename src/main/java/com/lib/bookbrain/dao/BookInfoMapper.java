@@ -1,12 +1,8 @@
 package com.lib.bookbrain.dao;
 
 import com.lib.bookbrain.model.entity.BookInfo;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
-import com.lib.bookbrain.model.filter.BookInfoFilter;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * book info mapper
@@ -14,19 +10,15 @@ import java.util.List;
  * @author yunxia
  */
 @Mapper
-public interface BookInfoMapper extends BaseMapper<BookInfo, BookInfoFilter> {
+public interface BookInfoMapper extends BaseMapper<BookInfo> {
 /* ============================ 继承 ============================ */
 BookInfo getById(Payload<BookInfo> payload);
 
-List<BookInfo> getBy(FilterPayload<BookInfo, BookInfoFilter> payload);
-
-int getCountByFilter(BookInfoFilter filter);
-
 int update(Payload<BookInfo> payload);
 
-int insert(Payload<BookInfo> payload);
+int insert(BookInfo entity);
 
-int delete(Payload<BookInfo> payload);
+int delete(Integer id);
 
 BookInfo getToUpdate(Payload<BookInfo> payload);
 /* ============================ 继承 ============================ */

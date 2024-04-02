@@ -6,10 +6,8 @@ import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BookMapper;
 import com.lib.bookbrain.model.entity.Book;
-import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
-import com.lib.bookbrain.model.filter.BookFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BookService;
 import org.springframework.stereotype.Service;
@@ -22,39 +20,38 @@ public class BookServiceImpl implements BookService {
 
 private final BookMapper bookMapper;
 
-private final BaseServiceImpl<Book, BookFilter> baseService;
+private final BaseServiceImpl<Book> baseService;
 
 public BookServiceImpl(BookMapper bookMapper, SimpleThreadContext<TokenInfo> threadContext) {
 	this.bookMapper = bookMapper;
 	baseService = new BaseServiceImpl<>(threadContext, bookMapper);
 }
 
-@AroundGet
 @Override
-public Response getBy(FilterPayload<Book, BookFilter> payload) {
-	return baseService.getBy(payload);
+public Response list() {
+	return baseService.list();
 }
 
 @Override
-public Response create(Payload<Book> payload) {
-	return baseService.create(payload);
+public Response create(Book entity) {
+	return baseService.create(entity);
 }
 
 @AroundGet
 @Override
-public Response getById(Payload<Book> payload) {
-	return baseService.getById(payload);
+public Response getById(Integer id) {
+	return baseService.getById(id);
 }
 
 @AroundUpdate
 @Override
 public Response update(Payload<Book> payload) {
-	return baseService.getById(payload);
+	return baseService.update(payload);
 }
 
 @AroundDelete
 @Override
-public Response delete(Payload<Book> payload) {
-	return baseService.delete(payload);
+public Response delete(Integer id) {
+	return baseService.delete(id);
 }
 }

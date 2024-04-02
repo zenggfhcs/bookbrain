@@ -6,7 +6,6 @@ import com.lib.bookbrain.model.entity.TokenAccessRecord;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +32,7 @@ private final SimpleThreadContext<TokenInfo> threadContext;
  *
  * @param point service-method
  */
-@Around("@within(com.lib.bookbrain.anno.AroundConduct)")
+//@Around("@within(com.lib.bookbrain.anno.AroundConduct)")
 public Object aroundConduct(ProceedingJoinPoint point) throws Throwable {
 	logTokenUsed(threadContext.get(), (String) point.getArgs()[1]);
 	return point.proceed(point.getArgs());
