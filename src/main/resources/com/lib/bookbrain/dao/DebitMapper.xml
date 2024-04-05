@@ -23,14 +23,14 @@
 	</select>
 	<select id="getById" resultMap="BaseResultMap">
 		select distinct d.`id`,
-		                d.`book_id`,
-		                d.`return_deadline`,
-		                d.`return_date`,
-		                d.`created_by`,
-		                d.`creation_time`,
-		                d.`updated_by`,
-		                d.`last_updated_time`,
-		                d.`revision`
+		d.`book_id`,
+		d.`return_deadline`,
+		d.`return_date`,
+		d.`created_by`,
+		d.`creation_time`,
+		d.`updated_by`,
+		d.`last_updated_time`,
+		d.`revision`
 		from debit d
 		where d.`id` = #{id}
 	</select>
@@ -44,11 +44,11 @@
 	<insert id="insert" parameterType="com.lib.bookbrain.model.entity.Debit" useGeneratedKeys="true"
 	        keyProperty="entity.debitId">
 		insert into debit (`book_id`, `return_deadline`,
-		                   `return_date`, `created_by`, `creation_time`,
-		                   `updated_by`, `last_updated_time`, `revision`)
+		`return_date`, `created_by`, `creation_time`,
+		`updated_by`, `last_updated_time`, `revision`)
 		values (#{book.id}, #{returnDeadline},
-		        #{returnDate}, #{createdBy}, NOW(),
-		        #{updatedBy}, NOW(), #{revision})
+		#{returnDate}, #{createdBy}, NOW(),
+		#{updatedBy}, NOW(), #{revision})
 	</insert>
 
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -70,7 +70,7 @@
 			</if>
 			<if test="1 == 1">
 				d.`last_updated_time` = now(),
-				d.`revision`          = (1 + d.`revision`) % 2147483647,
+				d.`revision` = (1 + d.`revision`) % 2147483647,
 			</if>
 		</set>
 		where d.`id` = #{id}

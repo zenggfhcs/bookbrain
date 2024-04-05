@@ -85,5 +85,4 @@
 		from book b
 		where b.`id` = #{id}
 	</select>
-
 </mapper>

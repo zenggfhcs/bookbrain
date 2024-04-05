@@ -24,7 +24,7 @@ public LogServiceOfSelect(SimpleThreadContext<TokenInfo> threadContext, LogMappe
 
 
 public void Log(Log Log) {
-	Payload<Log> ignorePayload = Payload.generateByEntity(Log);
+	Payload<Log> ignorePayload = Payload.gByEntity(Log);
 	// mapper.insert
 }
 
@@ -34,13 +34,13 @@ public Response list() {
 }
 
 @Override
-public Response create(Log entity) {
+public Response create(Payload<Log> payload) {
 	return null;
 }
 
 @Override
-public Response getById(Integer id) {
-	return baseService.getById(id);
+public Response getById(Payload<Log> payload) {
+	return baseService.getById(payload);
 }
 
 @Override
@@ -49,7 +49,7 @@ public Response update(Payload<Log> payload) {
 }
 
 @Override
-public Response delete(Integer id) {
+public Response delete(Payload<Log> payload) {
 	return null;
 }
 }

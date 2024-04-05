@@ -22,7 +22,6 @@ private static String fill(String data) {
 }
 
 private static String refill(String data) {
-	// todo indexOf -1 异常
 	int _ii = data.indexOf("=");
 
 	return _ii == -1 ?

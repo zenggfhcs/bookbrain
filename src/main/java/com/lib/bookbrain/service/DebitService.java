@@ -7,14 +7,14 @@ import com.lib.bookbrain.model.exchange.Response;
 public interface DebitService extends BaseService<Debit> {
 
 @Override
-Response create(Debit entity);
+Response create(Payload<Debit> payload);
 
 @Override
-Response getById(Integer id);
+Response getById(Payload<Debit> payload);
 
 @Override
 Response update(Payload<Debit> payload);
 
 @Override
-Response delete(Integer id);
+Response delete(Payload<Debit> payload);
 }

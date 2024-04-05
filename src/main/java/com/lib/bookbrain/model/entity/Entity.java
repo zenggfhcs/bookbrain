@@ -1,5 +1,6 @@
 package com.lib.bookbrain.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
  * @author yunxia
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Entity {
 
 /**

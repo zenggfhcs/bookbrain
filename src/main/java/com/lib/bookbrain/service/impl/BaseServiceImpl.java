@@ -60,31 +60,32 @@ public Response list() {
 /**
  * 通过 id 获取实体数据
  *
- * @param id 载体
+ * @param payload 载体
  * @return 统一封装返回结果
  */
 @Override
-public Response getById(Integer id) {
-	E _entity = baseMapper.getById(id);
-	if (_entity == null) {
+public Response getById(Payload<E> payload) {
+	E _e = baseMapper.getById(payload.getId());
+	if (_e == null) {
 		return Response.error(ResponseInfo.DATA_NOT_EXIST);
 	}
 
-	return Response.success(_entity);
+	return Response.success(_e);
 }
 
 @Override
-public Response create(E entity) {
-	if (entity == null) {
+public Response create(Payload<E> payload) {
+	E _e = payload.getEntity();
+	if (_e == null) {
 		return Response.error(ResponseInfo.CREATE_DATA_ERROR);
 	}
 	{
 		TokenInfo _info = threadContext.get();
-		entity.setCreatedBy(_info.getAud());
-		entity.setUpdatedBy(_info.getAud());
+		_e.setCreatedBy(_info.getAud());
+		_e.setUpdatedBy(_info.getAud());
 	}
 
-	int _cc = baseMapper.insert(entity);
+	int _cc = baseMapper.insert(_e);
 	if (_cc == 0) {
 		return Response.error(ResponseInfo.CREATE_ERROR);
 	}
@@ -120,18 +121,18 @@ public Response update(Payload<E> payload) {
 
 @Override
 @Transactional
-public Response delete(Integer id) {
-	E _entity = baseMapper.getById(id);
-	if (_entity == null) {
+public Response delete(Payload<E> payload) {
+	E _e = baseMapper.getById(payload.getId());
+	if (_e == null) {
 		return Response.error(ResponseInfo.DATA_NOT_EXIST);
 	}
 
-	int _dc = baseMapper.delete(id);
+	int _dc = baseMapper.delete(payload.getId());
 	if (_dc == 0) {
 		return Response.error(ResponseInfo.DELETE_ERROR);
 	}
 
-	return Response.success(_entity);
+	return Response.success(_e);
 }
 
 }

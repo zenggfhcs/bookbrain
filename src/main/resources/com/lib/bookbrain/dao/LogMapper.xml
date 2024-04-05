@@ -16,7 +16,9 @@
 	</resultMap>
 	<select id="list" resultMap="BaseResultMap">
 		select *
-		from log;
+		from log l
+		order by l.creation_time desc
+		;
 	</select>
 	<select id="count">
 		select count(*)

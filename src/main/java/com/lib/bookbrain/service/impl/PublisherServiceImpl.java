@@ -34,19 +34,20 @@ public Response list() {
 
 @AroundAdd
 @Override
-public Response create(Publisher entity) {
-	int _cc = publisherMapper.getCountByName(entity.getName());
+public Response create(Payload<Publisher> payload) {
+	Publisher _e = payload.getEntity();
+	int _cc = publisherMapper.getCountByName(_e.getName());
 	if (_cc != 0) {
 		return Response.error(ResponseInfo.PUBLISHER_NAME_REPEAT);
 	}
 
-	return baseService.create(entity);
+	return baseService.create(payload);
 }
 
 @AroundGet
 @Override
-public Response getById(Integer id) {
-	return baseService.getById(id);
+public Response getById(Payload<Publisher> payload) {
+	return baseService.getById(payload);
 }
 
 @AroundUpdate
@@ -63,7 +64,7 @@ public Response update(Payload<Publisher> payload) {
 
 @AroundDelete
 @Override
-public Response delete(Integer id) {
-	return baseService.delete(id);
+public Response delete(Payload<Publisher> payload) {
+	return baseService.delete(payload);
 }
 }

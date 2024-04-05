@@ -7,11 +7,11 @@ import com.lib.bookbrain.model.exchange.Response;
 public interface BaseService<E extends Entity> {
 Response list();
 
-Response create(E entity);
+Response create(Payload<E> payload);
 
-Response getById(Integer id);
+Response getById(Payload<E> payload);
 
 Response update(Payload<E> payload);
 
-Response delete(Integer id);
+Response delete(Payload<E> payload);
 }

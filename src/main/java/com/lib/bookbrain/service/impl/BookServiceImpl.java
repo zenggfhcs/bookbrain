@@ -33,14 +33,14 @@ public Response list() {
 }
 
 @Override
-public Response create(Book entity) {
-	return baseService.create(entity);
+public Response create(Payload<Book> payload) {
+	return baseService.create(payload);
 }
 
 @AroundGet
 @Override
-public Response getById(Integer id) {
-	return baseService.getById(id);
+public Response getById(Payload<Book> payload) {
+	return baseService.getById(payload);
 }
 
 @AroundUpdate
@@ -51,7 +51,7 @@ public Response update(Payload<Book> payload) {
 
 @AroundDelete
 @Override
-public Response delete(Integer id) {
-	return baseService.delete(id);
+public Response delete(Payload<Book> payload) {
+	return baseService.delete(payload);
 }
 }

@@ -65,6 +65,7 @@ public void sendCode(User recipient, String sub) {
 				Map<String, Object> _map = MapFactory.Builder.builder()
 						.fill("code", recipient.getAuthenticationString())
 						.build().map();
+				System.out.println(_map);
 				return gc(TemplateName.RESET, _map);
 			}
 	);
@@ -102,6 +103,7 @@ public void send(String recipientEmail, String sub, Supplier<String> sup) {
 }
 
 private String gLink(String email) {
+	// todo 修改 link
 	return "http://" + baseHost + "/verify?token=" + gRegisterToken(email);
 }
 

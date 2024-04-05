@@ -9,13 +9,13 @@ Response register(Payload<User> payload);
 
 Response login(User entity);
 
-Response create(User entity);
+Response create(Payload<User> payload);
 
-Response getById(Integer id);
+Response getById(Payload<User> payload);
 
 Response update(Payload<User> payload);
 
-Response delete(Integer id);
+Response delete(Payload<User> payload);
 
 Response logout(Payload<User> payload);
 

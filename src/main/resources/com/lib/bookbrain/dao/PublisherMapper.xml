@@ -25,7 +25,7 @@
 	<insert id="insert" parameterType="com.lib.bookbrain.model.exchange.Payload" useGeneratedKeys="true"
 	        keyColumn="entity.id">
 		insert into publisher(`name`, `place`, `remark`, `created_by`, `creation_time`, `updated_by`, `last_updated_time`,
-		                      `revision`)
+		`revision`)
 		values (#{name}, #{place}, #{remark}, #{createdBy}, NOW(), #{updatedBy}, NOW(), 0)
 	</insert>
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -47,11 +47,11 @@
 			</if>
 			<if test="1 == 1">
 				p.`last_updated_time` = NOW(),
-				p.`revision`          = (p.`revision` + 1) % 2147483647
+				p.`revision` = (p.`revision` + 1) % 2147483647
 			</if>
 		</set>
 		where p.`id` = #{id}
-		  and p.`revision` = #{entity.revision};
+		and p.`revision` = #{entity.revision};
 	</update>
 	<delete id="delete">
 		delete
@@ -60,14 +60,14 @@
 	</delete>
 	<select id="getById" resultMap="BaseResultMap">
 		select p.`id`,
-		       p.`name`,
-		       p.`place`,
-		       p.`remark`,
-		       p.`created_by`,
-		       p.`creation_time`,
-		       p.`updated_by`,
-		       p.`last_updated_time`,
-		       p.`revision`
+		p.`name`,
+		p.`place`,
+		p.`remark`,
+		p.`created_by`,
+		p.`creation_time`,
+		p.`updated_by`,
+		p.`last_updated_time`,
+		p.`revision`
 		from publisher p
 		where p.`id` = #{id}
 	</select>

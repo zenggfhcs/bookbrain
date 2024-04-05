@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONReader;
 import com.alibaba.fastjson2.JSONWriter;
 import com.lib.bookbrain.exception.DataStructureException;
+import com.lib.bookbrain.model.entity.User;
 
 /**
  * 对 fastjson 的封装
@@ -43,5 +44,10 @@ public static <T> T parse(String s, Class<T> c) {
 		// todo
 		throw new DataStructureException();
 	}
+}
+
+public static void main(String[] args) {
+	User user = new User();
+	System.out.println(stringify(user));
 }
 }

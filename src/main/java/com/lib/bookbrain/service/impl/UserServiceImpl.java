@@ -80,19 +80,19 @@ public Response resetPassword(User entity) {
 @Transactional
 public Response register(Payload<User> payload) {
 	// 解密
-	User _entity = payload.getEntity();
+	User _e = payload.getEntity();
 	{
-		_entity.setEmail(RSATools.decrypt(_entity.getEmail()));
-		_entity.setAuthenticationString(RSATools.decrypt(_entity.getAuthenticationString()));
+		_e.setEmail(RSATools.decrypt(_e.getEmail()));
+		_e.setAuthenticationString(RSATools.decrypt(_e.getAuthenticationString()));
 	}
 
 	// 判断是不是重复注册
-	if (userMapper.getByEmail(_entity.getEmail()) > 0) {
+	if (userMapper.getByEmail(_e.getEmail()) > 0) {
 		return Response.error(ResponseInfo.THIS_EMAIL_IS_EXIST);
 	}
 
 	// 先发送邮件再插入数据
-	mailService.sendLink(_entity, "注册");
+	mailService.sendLink(_e, "注册");
 
 	{ // 插入数据
 		userMapper.register(payload);
@@ -122,14 +122,14 @@ public Response list() {
 }
 
 @Override
-public Response create(User entity) {
-	return baseService.create(entity);
+public Response create(Payload<User> payload) {
+	return baseService.create(payload);
 }
 
 @AroundGet
 @Override
-public Response getById(Integer id) {
-	return baseService.getById(id);
+public Response getById(Payload<User> payload) {
+	return baseService.getById(payload);
 }
 
 @AroundUpdate
@@ -140,8 +140,8 @@ public Response update(Payload<User> payload) {
 
 @AroundDelete
 @Override
-public Response delete(Integer id) {
-	return baseService.delete(id);
+public Response delete(Payload<User> payload) {
+	return baseService.delete(payload);
 }
 
 

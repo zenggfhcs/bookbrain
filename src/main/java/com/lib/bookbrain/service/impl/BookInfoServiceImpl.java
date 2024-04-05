@@ -8,9 +8,12 @@ import com.lib.bookbrain.dao.BookInfoMapper;
 import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.pojo.BookType;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BookInfoService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author yunxia
@@ -33,14 +36,14 @@ public Response list() {
 }
 
 @Override
-public Response create(BookInfo entity) {
-	return baseService.create(entity);
+public Response create(Payload<BookInfo> payload) {
+	return baseService.create(payload);
 }
 
 @AroundGet
 @Override
-public Response getById(Integer id) {
-	return baseService.getById(id);
+public Response getById(Payload<BookInfo> payload) {
+	return baseService.getById(payload);
 }
 
 @AroundUpdate
@@ -51,8 +54,14 @@ public Response update(Payload<BookInfo> payload) {
 
 @AroundDelete
 @Override
-public Response delete(Integer id) {
-	return baseService.delete(id);
+public Response delete(Payload<BookInfo> payload) {
+	return baseService.delete(payload);
+}
+
+@Override
+public Response getTypeByKeyword(String keyword) {
+	List<BookType> _list = bookInfoMapper.getTypeByKeyword(keyword);
+	return Response.success(_list);
 }
 
 }

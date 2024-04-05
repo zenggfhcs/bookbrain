@@ -7,14 +7,14 @@ import com.lib.bookbrain.model.exchange.Response;
 public interface LogService extends BaseService<Log> {
 
 @Override
-Response create(Log entity);
+Response create(Payload<Log> payload);
 
 @Override
-Response getById(Integer id);
+Response getById(Payload<Log> payload);
 
 @Override
 Response update(Payload<Log> payload);
 
 @Override
-Response delete(Integer id);
+Response delete(Payload<Log> payload);
 }

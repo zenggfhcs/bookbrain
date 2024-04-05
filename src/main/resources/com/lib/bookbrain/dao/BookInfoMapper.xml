@@ -37,27 +37,27 @@
 	<insert id="insert" parameterType="com.lib.bookbrain.model.entity.BookInfo" useGeneratedKeys="true"
 	        keyProperty="id">
 		insert into book_info (`publisher_id`, `isbn`, `cip`, `book_name`,
-		                       `book_type`, `cover`, `author`, `describe`, `publish_date`,
-		                       `keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
-		                       `updated_by`, `last_updated_time`, `revision`)
+		`book_type`, `cover`, `author`, `describe`, `publish_date`,
+		`keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
+		`updated_by`, `last_updated_time`, `revision`)
 		values ( #{publisher.id}
-		       , #{isbn}
-		       , #{cip}
-		       , #{bookName}
-		       , #{bookType}
-		       , #{cover}
-		       , #{author}
-		       , #{describe}
-		       , #{publishDate}
-		       , #{keyword}
-		       , #{lang}
-		       , #{price}
-		       , #{stock}
-		       , #{createdBy}
-		       , NOW()
-		       , #{updatedBy}
-		       , now()
-		       , 0)
+		, #{isbn}
+		, #{cip}
+		, #{bookName}
+		, #{bookType}
+		, #{cover}
+		, #{author}
+		, #{describe}
+		, #{publishDate}
+		, #{keyword}
+		, #{lang}
+		, #{price}
+		, #{stock}
+		, #{createdBy}
+		, NOW()
+		, #{updatedBy}
+		, now()
+		, 0)
 	</insert>
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
 		update book_info bif
@@ -103,11 +103,11 @@
 			</if>
 			<if test="1 == 1">
 				bif.`last_updated_time` = NOW(),
-				bif.`revision`          = (1 + bif.`revision`) % 2147483647,
+				bif.`revision` = (1 + bif.`revision`) % 2147483647,
 			</if>
 		</set>
 		where bif.`id` = #{id}
-		  and bif.`revision` = #{entity.revision}
+		and bif.`revision` = #{entity.revision}
 	</update>
 	<delete id="delete">
 		delete bif
@@ -116,24 +116,24 @@
 	</delete>
 	<select id="getById" resultMap="BaseResultMap">
 		select distinct bif.`id`,
-		                bif.`publisher_id`,
-		                bif.`isbn`,
-		                bif.`cip`,
-		                bif.`book_name`,
-		                bif.`book_type`,
-		                bif.`cover`,
-		                bif.`author`,
-		                bif.`describe`,
-		                bif.`publish_date`,
-		                bif.`keyword`,
-		                bif.`lang`,
-		                bif.`price`,
-		                bif.`stock`,
-		                bif.`created_by`,
-		                bif.`creation_time`,
-		                bif.`updated_by`,
-		                bif.`last_updated_time`,
-		                bif.`revision`
+		bif.`publisher_id`,
+		bif.`isbn`,
+		bif.`cip`,
+		bif.`book_name`,
+		bif.`book_type`,
+		bif.`cover`,
+		bif.`author`,
+		bif.`describe`,
+		bif.`publish_date`,
+		bif.`keyword`,
+		bif.`lang`,
+		bif.`price`,
+		bif.`stock`,
+		bif.`created_by`,
+		bif.`creation_time`,
+		bif.`updated_by`,
+		bif.`last_updated_time`,
+		bif.`revision`
 		from book_info bif
 		where bif.`id` = #{id}
 	</select>
@@ -147,5 +147,12 @@
 		</trim>
 		from book_info bif
 		where bif.`id` = #{id};
+	</select>
+
+	<select id="getTypeByKeyword" resultType="com.lib.bookbrain.model.pojo.BookType">
+		select cn.id, cn.`key`, cn.value
+		from clc_number cn
+		where cn.`key` like concat('%', #{keyword}, '%')
+		limit 50;
 	</select>
 </mapper>

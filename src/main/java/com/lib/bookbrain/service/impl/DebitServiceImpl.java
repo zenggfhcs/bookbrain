@@ -33,14 +33,14 @@ public Response list() {
 }
 
 @Override
-public Response create(Debit entity) {
-	return baseService.create(entity);
+public Response create(Payload<Debit> payload) {
+	return baseService.create(payload);
 }
 
 @AroundGet
 @Override
-public Response getById(Integer id) {
-	return baseService.getById(id);
+public Response getById(Payload<Debit> payload) {
+	return baseService.getById(payload);
 }
 
 @AroundUpdate
@@ -51,7 +51,7 @@ public Response update(Payload<Debit> payload) {
 
 @AroundDelete
 @Override
-public Response delete(Integer id) {
-	return baseService.delete(id);
+public Response delete(Payload<Debit> payload) {
+	return baseService.delete(payload);
 }
 }

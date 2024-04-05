@@ -2,7 +2,6 @@ package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.model.entity.TokenBody;
-import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.pojo.Token;
 import com.lib.bookbrain.model.pojo.TokenInfo;
@@ -46,7 +45,7 @@ private String refreshLongToken(Integer id) {
 }
 
 @Override
-public Response refresh(Payload<TokenBody> payload) {
+public Response refresh() {
 	Integer _id = threadContext.get().getAud();
 	// 默认会刷新 short token
 	boolean _refreshShort = true;

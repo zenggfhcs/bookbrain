@@ -20,25 +20,30 @@ public Response list() {
 
 @GetMapping("/{id}")
 public Response get(@PathVariable Integer id) {
-	return baseService.getById(id);
+	Payload<E> _p = new Payload<>();
+	_p.setId(id);
+	return baseService.getById(_p);
 }
 
 @PostMapping
 public Response create(@RequestBody E entity) {
-	return baseService.create(entity);
+	Payload<E> _p = Payload.gByEntity(entity);
+	return baseService.create(_p);
 }
 
 
 @PatchMapping("/{id}")
 public Response update(@RequestBody E entity, @PathVariable Integer id) {
-	Payload<E> _payload = Payload.generateByEntity(entity);
-	_payload.setId(id);
-	return baseService.update(_payload);
+	Payload<E> _p = Payload.gByEntity(entity);
+	_p.setId(id);
+	return baseService.update(_p);
 }
 
 @DeleteMapping("/{id}")
 public Response delete(@PathVariable Integer id) {
-	return baseService.delete(id);
+	Payload<E> _p = new Payload<>();
+	_p.setId(id);
+	return baseService.delete(_p);
 }
 
 

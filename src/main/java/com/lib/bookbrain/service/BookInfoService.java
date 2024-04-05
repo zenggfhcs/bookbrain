@@ -7,14 +7,16 @@ import com.lib.bookbrain.model.exchange.Response;
 public interface BookInfoService extends BaseService<BookInfo> {
 
 @Override
-Response create(BookInfo entity);
+Response create(Payload<BookInfo> payload);
 
 @Override
-Response getById(Integer id);
+Response getById(Payload<BookInfo> payload);
 
 @Override
 Response update(Payload<BookInfo> payload);
 
 @Override
-Response delete(Integer id);
+Response delete(Payload<BookInfo> payload);
+
+Response getTypeByKeyword(String key);
 }

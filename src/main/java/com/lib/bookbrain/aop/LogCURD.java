@@ -3,7 +3,9 @@ package com.lib.bookbrain.aop;
 import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.LogMapper;
+import com.lib.bookbrain.model.entity.Entity;
 import com.lib.bookbrain.model.entity.Log;
+import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Json;
 import com.lib.bookbrain.utils.Parse;
@@ -80,10 +82,12 @@ private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable 
 		预计参数[id]
 	 */
 	/* ===================== 前 ===================== */
-	//	Payload<Entity> _payload = Payload.getOrNew(point.getArgs()[0]);
-	Log _log = Log.before(generateServiceName(point.getSignature()));
+	Payload<Entity> _p = Payload.getOrNew(point.getArgs()[0]);
+	Log _log = Log.create();
 	{
-		_log.setDataId((Integer) point.getArgs()[0]);
+		_log.setServiceName(generateServiceName(point.getSignature()));
+		_log.setDataId(_p.getId());
+		_log.setInput(Json.stringify(_p));
 		_log.setCreatedBy(threadContext.get().getAud());
 		_log.setType(logType.getValue());
 	}

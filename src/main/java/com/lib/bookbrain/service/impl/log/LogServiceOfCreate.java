@@ -12,12 +12,12 @@ public Response list() {
 }
 
 @Override
-public Response create(Log entity) {
+public Response create(Payload<Log> payload) {
 	return null;
 }
 
 @Override
-public Response getById(Integer id) {
+public Response getById(Payload<Log> payload) {
 	return null;
 }
 
@@ -27,7 +27,7 @@ public Response update(Payload<Log> payload) {
 }
 
 @Override
-public Response delete(Integer id) {
+public Response delete(Payload<Log> payload) {
 	return null;
 }
 }
