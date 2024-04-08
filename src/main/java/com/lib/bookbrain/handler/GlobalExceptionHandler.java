@@ -32,7 +32,7 @@ public Response sqlEx() {
 
 @ExceptionHandler(TokenExpiredException.class)
 public Response tokenExp() {
-	return Response.error(ResponseInfo.TOKEN_EXPIRED);
+	return Response.error(ResponseInfo.LOGIN_EXPIRED);
 }
 
 /**
@@ -42,7 +42,7 @@ public Response tokenExp() {
  */
 @ExceptionHandler(JWTVerificationException.class)
 public Response jwtEx() {
-	return Response.error(ResponseInfo.TOKEN_FAILED);
+	return Response.error(ResponseInfo.LOGIN_EXPIRED);
 }
 
 @ExceptionHandler(BaseException.class)
@@ -50,11 +50,11 @@ public Response ex(BaseException be) {
 	return Response.error(be.getInfo());
 }
 
-//@ExceptionHandler(Exception.class)
-//public Response error(Exception e) {
-//	// todo 用于调试
-////	log.error(e.toString());
-//	e.printStackTrace();
-//	return Response.error(-1, e.getMessage());
-//}
+@ExceptionHandler(Exception.class)
+public Response error(Exception e) {
+	// todo 用于调试
+//	log.error(e.toString());
+	e.printStackTrace();
+	return Response.error(-1, e.getMessage());
+}
 }

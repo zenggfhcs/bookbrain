@@ -31,11 +31,6 @@ private String serviceName;
 /**
  *
  */
-private Integer dataId;
-
-/**
- *
- */
 private String input;
 
 /**
@@ -58,7 +53,6 @@ private Long elapsedTime;
 public static Log create(String serviceName, Payload<Entity> payload) {
 	return Log.builder()
 			.serviceName(serviceName)
-			.dataId(payload.getId())
 			.input(Json.stringify(payload))
 			.output("{}")
 			.elapsedTime(-1L).build();
@@ -67,7 +61,6 @@ public static Log create(String serviceName, Payload<Entity> payload) {
 public static Log create() {
 	return Log.builder()
 			.serviceName("")
-			.dataId(null)
 			.input("{}")
 			.output("{}")
 			.elapsedTime(-1L).build();

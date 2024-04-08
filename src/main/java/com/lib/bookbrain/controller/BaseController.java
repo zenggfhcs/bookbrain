@@ -1,15 +1,17 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.model.entity.Entity;
+import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.BaseFilter;
 import com.lib.bookbrain.service.BaseService;
 import org.springframework.web.bind.annotation.*;
 
-public class BaseController<E extends Entity> {
-private final BaseService<E> baseService;
+public class BaseController<E extends Entity, F extends BaseFilter> {
+private final BaseService<E, F> baseService;
 
-public BaseController(BaseService<E> baseService) {
+public BaseController(BaseService<E, F> baseService) {
 	this.baseService = baseService;
 }
 
@@ -46,5 +48,10 @@ public Response delete(@PathVariable Integer id) {
 	return baseService.delete(_p);
 }
 
+
+@PostMapping("/list:filter")
+public Response filteredList(@RequestBody FilterPayload<E, F> filterPayload) {
+	return baseService.filteredList(filterPayload);
+}
 
 }

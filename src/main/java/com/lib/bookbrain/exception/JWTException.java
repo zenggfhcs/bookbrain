@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component("JWTException")
 public class JWTException extends BaseException {
 {
-	info = ResponseInfo.TOKEN_FAILED;
+	info = ResponseInfo.LOGIN_EXPIRED;
 }
 }

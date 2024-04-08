@@ -79,14 +79,13 @@ public Object logDelete(ProceedingJoinPoint point) throws Throwable {
  */
 private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable {
 	/*
-		预计参数[id]
+		预计参数 [payload]
 	 */
 	/* ===================== 前 ===================== */
 	Payload<Entity> _p = Payload.getOrNew(point.getArgs()[0]);
 	Log _log = Log.create();
 	{
 		_log.setServiceName(generateServiceName(point.getSignature()));
-		_log.setDataId(_p.getId());
 		_log.setInput(Json.stringify(_p));
 		_log.setCreatedBy(threadContext.get().getAud());
 		_log.setType(logType.getValue());
@@ -98,9 +97,9 @@ private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable 
 	Object _res = point.proceed();
 
 	/* ===================== 后 ===================== */
-	long _endTime = System.currentTimeMillis();
-	long _time = _endTime - _startTime;
 	{
+		long _endTime = System.currentTimeMillis();
+		long _time = _endTime - _startTime;
 		_log.setElapsedTime(_time);
 		_log.setOutput(Json.stringify(_res));
 	}

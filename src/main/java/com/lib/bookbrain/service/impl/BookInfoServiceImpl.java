@@ -6,8 +6,10 @@ import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BookInfoMapper;
 import com.lib.bookbrain.model.entity.BookInfo;
+import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.BookInfoFilter;
 import com.lib.bookbrain.model.pojo.BookType;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BookInfoService;
@@ -23,7 +25,7 @@ public class BookInfoServiceImpl implements BookInfoService {
 
 private final BookInfoMapper bookInfoMapper;
 
-private final BaseServiceImpl<BookInfo> baseService;
+private final BaseServiceImpl<BookInfo, BookInfoFilter> baseService;
 
 public BookInfoServiceImpl(BookInfoMapper bookInfoMapper, SimpleThreadContext<TokenInfo> threadContext) {
 	this.bookInfoMapper = bookInfoMapper;
@@ -56,6 +58,11 @@ public Response update(Payload<BookInfo> payload) {
 @Override
 public Response delete(Payload<BookInfo> payload) {
 	return baseService.delete(payload);
+}
+
+@Override
+public Response filteredList(FilterPayload<BookInfo, BookInfoFilter> payload) {
+	return null;
 }
 
 @Override

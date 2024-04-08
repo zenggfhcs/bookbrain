@@ -8,8 +8,10 @@ import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.UserMapper;
 import com.lib.bookbrain.model.entity.TokenBody;
 import com.lib.bookbrain.model.entity.User;
+import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.UserFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.MailService;
 import com.lib.bookbrain.service.TokenService;
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
 private final UserMapper userMapper;
 
-private final BaseServiceImpl<User> baseService;
+private final BaseServiceImpl<User, UserFilter> baseService;
 
 private final MailService mailService;
 
@@ -142,6 +144,11 @@ public Response update(Payload<User> payload) {
 @Override
 public Response delete(Payload<User> payload) {
 	return baseService.delete(payload);
+}
+
+@Override
+public Response filteredList(FilterPayload<User, UserFilter> payload) {
+	return null;
 }
 
 

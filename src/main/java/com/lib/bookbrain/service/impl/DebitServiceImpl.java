@@ -6,8 +6,10 @@ import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.DebitMapper;
 import com.lib.bookbrain.model.entity.Debit;
+import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.DebitFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.DebitService;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class DebitServiceImpl implements DebitService {
 
 private final DebitMapper debitMapper;
 
-private final BaseServiceImpl<Debit> baseService;
+private final BaseServiceImpl<Debit, DebitFilter> baseService;
 
 public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> threadContext) {
 	this.debitMapper = debitMapper;
@@ -53,5 +55,10 @@ public Response update(Payload<Debit> payload) {
 @Override
 public Response delete(Payload<Debit> payload) {
 	return baseService.delete(payload);
+}
+
+@Override
+public Response filteredList(FilterPayload<Debit, DebitFilter> payload) {
+	return null;
 }
 }

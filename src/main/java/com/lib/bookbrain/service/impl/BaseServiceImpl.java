@@ -4,15 +4,15 @@ import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BaseMapper;
 import com.lib.bookbrain.model.entity.Entity;
+import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
+import com.lib.bookbrain.model.filter.BaseFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * BaseService 的实现类
@@ -22,7 +22,7 @@ import java.util.Map;
  *
  * @author yunxia
  */
-public class BaseServiceImpl<E extends Entity> implements BaseService<E> {
+public class BaseServiceImpl<E extends Entity, F extends BaseFilter> implements BaseService<E, F> {
 
 /**
  * 线程共享的 tokenInfo 对象，用于存放操作人信息
@@ -49,12 +49,8 @@ public BaseServiceImpl(SimpleThreadContext<TokenInfo> threadContext, BaseMapper<
 
 @Override
 public Response list() {
-	Map<String, Object> _map = new HashMap<>();
 	List<E> _list = baseMapper.list();
-	int _count = baseMapper.count();
-	_map.put("list", _list);
-	_map.put("total", _count);
-	return Response.success(_map);
+	return Response.success(_list);
 }
 
 /**
@@ -133,6 +129,11 @@ public Response delete(Payload<E> payload) {
 	}
 
 	return Response.success(_e);
+}
+
+@Override
+public Response filteredList(FilterPayload<E, F> payload) {
+	return null;
 }
 
 }

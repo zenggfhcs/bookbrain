@@ -59,7 +59,8 @@ public void sendLink(User recipient, String sub) {
 }
 
 public void sendCode(User recipient, String sub) {
-	send(recipient.getEmail(),
+	send(
+			recipient.getEmail(),
 			sub,
 			() -> {
 				Map<String, Object> _map = MapFactory.Builder.builder()

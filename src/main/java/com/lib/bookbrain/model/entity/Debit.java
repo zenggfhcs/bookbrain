@@ -26,7 +26,7 @@ private Long id;
 /**
  *
  */
-private Book book;
+private BookInfo bookInfo;
 
 /**
  *

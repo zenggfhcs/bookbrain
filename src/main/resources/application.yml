@@ -15,7 +15,7 @@ spring:
     username: 1635276938@qq.com
     password: urklqvvsbpqeefed
     default-encoding: utf-8
-    baseHost: localhost:5173 # diy
+    baseHost: 10.3.105.0:5173 # diy
     properties:
       mail:
         smtp:

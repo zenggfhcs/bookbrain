@@ -5,7 +5,6 @@
 <mapper namespace="com.lib.bookbrain.dao.BookInfoMapper">
 	<resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.BookInfo">
 		<id property="id" column="id" jdbcType="INTEGER"/>
-		<result property="publisher.id" column="publisher_id" jdbcType="INTEGER"/>
 		<result property="isbn" column="isbn" jdbcType="VARCHAR"/>
 		<result property="cip" column="cip" jdbcType="VARCHAR"/>
 		<result property="bookName" column="book_name" jdbcType="VARCHAR"/>
@@ -13,7 +12,10 @@
 		<result property="cover" column="cover" jdbcType="VARCHAR"/>
 		<result property="author" column="author" jdbcType="VARCHAR"/>
 		<result property="describe" column="describe" jdbcType="VARCHAR"/>
-		<result property="publishDate" column="publish_date" jdbcType="DATE"/>
+		<result property="publishedDate" column="published_date" jdbcType="DATE"/>
+		<result property="publisher" column="publisher" jdbcType="VARCHAR"/>
+		<result property="edition" column="edition" jdbcType="VARCHAR"/>
+		<result property="printing" column="printing" jdbcType="VARCHAR"/>
 		<result property="keyword" column="keyword" jdbcType="VARCHAR"/>
 		<result property="lang" column="lang" jdbcType="VARCHAR"/>
 		<result property="price" column="price" jdbcType="DECIMAL"/>
@@ -23,8 +25,6 @@
 		<result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
 		<result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
 		<result property="revision" column="revision" jdbcType="INTEGER"/>
-		<association property="publisher" column="publisher_id" javaType="com.lib.bookbrain.model.entity.Publisher"
-		             select="com.lib.bookbrain.dao.PublisherMapper.getById"/>
 	</resultMap>
 	<select id="list" resultMap="BaseResultMap">
 		select *
@@ -36,19 +36,22 @@
 	</select>
 	<insert id="insert" parameterType="com.lib.bookbrain.model.entity.BookInfo" useGeneratedKeys="true"
 	        keyProperty="id">
-		insert into book_info (`publisher_id`, `isbn`, `cip`, `book_name`,
-		`book_type`, `cover`, `author`, `describe`, `publish_date`,
+		insert into book_info (`isbn`, `cip`, `book_name`,
+		`book_type`, `cover`, `author`, `describe`, `published_date`,
+		`publisher`, `edition`, `printing`,
 		`keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
 		`updated_by`, `last_updated_time`, `revision`)
-		values ( #{publisher.id}
-		, #{isbn}
+		values ( #{isbn}
 		, #{cip}
 		, #{bookName}
 		, #{bookType}
 		, #{cover}
 		, #{author}
 		, #{describe}
-		, #{publishDate}
+		, #{publishedDate}
+		, #{publisher}
+		, #{edition}
+		, #{printing}
 		, #{keyword}
 		, #{lang}
 		, #{price}
@@ -80,8 +83,17 @@
 			<if test="entity.author != null and entity.author != ''">
 				bif.`author` = #{entity.author},
 			</if>
-			<if test="entity.publishDate != null">
-				bif.`publish_date` = #{entity.publishDate},
+			<if test="entity.publishedDate != null">
+				bif.`published_date` = #{entity.publishedDate},
+			</if>
+			<if test="entity.publisher != null and entity.publisher != ''">
+				bif.`publisher` = #{entity.publisher},
+			</if>
+			<if test="entity.edition != null and entity.edition != ''">
+				bif.`edition` = #{entity.edition},
+			</if>
+			<if test="entity.printing != null and entity.printing != ''">
+				bif.`printing` = #{entity.printing},
 			</if>
 			<if test="entity.keyword != null and entity.keyword != ''">
 				bif.`keyword` = #{entity.keyword},
@@ -103,11 +115,11 @@
 			</if>
 			<if test="1 == 1">
 				bif.`last_updated_time` = NOW(),
-				bif.`revision` = (1 + bif.`revision`) % 2147483647,
+				bif.`revision`          = (1 + bif.`revision`) % 2147483647,
 			</if>
 		</set>
 		where bif.`id` = #{id}
-		and bif.`revision` = #{entity.revision}
+		  and bif.`revision` = #{entity.revision}
 	</update>
 	<delete id="delete">
 		delete bif
@@ -116,7 +128,6 @@
 	</delete>
 	<select id="getById" resultMap="BaseResultMap">
 		select distinct bif.`id`,
-		bif.`publisher_id`,
 		bif.`isbn`,
 		bif.`cip`,
 		bif.`book_name`,
@@ -124,7 +135,10 @@
 		bif.`cover`,
 		bif.`author`,
 		bif.`describe`,
-		bif.`publish_date`,
+		bif.`published_date`,
+		bif.`publisher`,
+		bif.`edition`,
+		bif.`printing`,
 		bif.`keyword`,
 		bif.`lang`,
 		bif.`price`,
@@ -152,7 +166,7 @@
 	<select id="getTypeByKeyword" resultType="com.lib.bookbrain.model.pojo.BookType">
 		select cn.id, cn.`key`, cn.value
 		from clc_number cn
-		where cn.`key` like concat('%', #{keyword}, '%')
+		where cn.`key` like concat(#{keyword}, '%')
 		limit 50;
 	</select>
 </mapper>

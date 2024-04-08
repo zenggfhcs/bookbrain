@@ -13,12 +13,6 @@ protected FilterItem<Integer> age;
 
 protected FilterItem<LocalDateTime> lastLoginTime;
 
-public UserFilter() {
-	init();
-}
-
-private void init() {
-}
 
 }
 

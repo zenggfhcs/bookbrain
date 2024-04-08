@@ -19,7 +19,7 @@ public enum ResponseInfo {
 	/**
 	 * token 创建或者解析时异常
 	 */
-	TOKEN_FAILED("TOKEN_FAILED: 请检查您的登录状态，或者重新登录"),
+	TOKEN_FAILED(401, "TOKEN_FAILED: 请检查您的登录状态，或者重新登录"),
 
 	/**
 	 *
@@ -97,10 +97,10 @@ public enum ResponseInfo {
 
 	TEMPLATE_READ_FAILED("读取模板时发生了错误，请联系管理员(1635276938@qq.com)"),
 
-	TOKEN_EXPIRED(606, "登录 ? 过期了..."),
+	LOGIN_EXPIRED(401, "登录过期，请重新登录"),
 
-	LOGIN_EXPIRED(607, "登录过期了..."),
 	TOKEN_RESET(199, "网络波动~~ 请稍后再试..."),
+
 	FILE_UPLOAD_FAILED(601, "文件上传失败，请稍后再试"),
 	;
 

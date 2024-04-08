@@ -25,11 +25,6 @@ public class BookInfo extends Entity {
 private Long id;
 
 /**
- * 出版社
- */
-private Publisher publisher;
-
-/**
  * 书籍 ISBN 号
  */
 private String isbn;
@@ -67,7 +62,13 @@ private String describe;
 /**
  * 出版时间
  */
-private LocalDate publishDate;
+private LocalDate publishedDate;
+
+private String publisher;
+
+private String edition;
+
+private String printing;
 
 /**
  * 关键字

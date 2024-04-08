@@ -2,6 +2,7 @@ package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
 import com.lib.bookbrain.model.entity.Log;
+import com.lib.bookbrain.model.filter.LogFilter;
 import com.lib.bookbrain.service.LogService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/logs")
 @AroundConduct
-public class LogController extends BaseController<Log> {
+public class LogController extends BaseController<Log, LogFilter> {
 
 private final LogService logService;
 

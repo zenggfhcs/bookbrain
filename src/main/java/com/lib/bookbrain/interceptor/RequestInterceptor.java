@@ -46,9 +46,10 @@ public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServl
 		_info = Jwt.decoder(_token);
 	} catch (TokenExpiredException te) {
 		// token 过期的处理
-		response.setStatus(606);
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		throw te;
 	} catch (Exception e) {
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		throw new JWTException();
 	}
 
