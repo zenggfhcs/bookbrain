@@ -62,7 +62,7 @@ public Response delete(Payload<BookInfo> payload) {
 
 @Override
 public Response filteredList(FilterPayload<BookInfo, BookInfoFilter> payload) {
-	return null;
+	return baseService.filteredList(payload);
 }
 
 @Override

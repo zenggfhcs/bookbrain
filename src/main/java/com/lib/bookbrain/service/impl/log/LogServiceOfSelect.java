@@ -24,12 +24,6 @@ public LogServiceOfSelect(SimpleThreadContext<TokenInfo> threadContext, LogMappe
 	baseService = new BaseServiceImpl<>(threadContext, logMapper);
 }
 
-
-public void Log(Log Log) {
-	Payload<Log> ignorePayload = Payload.gByEntity(Log);
-	// mapper.insert
-}
-
 @Override
 public Response list() {
 	return baseService.list();
@@ -57,6 +51,6 @@ public Response delete(Payload<Log> payload) {
 
 @Override
 public Response filteredList(FilterPayload<Log, LogFilter> payload) {
-	return null;
+	return baseService.filteredList(payload);
 }
 }

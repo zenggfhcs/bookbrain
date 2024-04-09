@@ -121,81 +121,6 @@
 		where u.email = #{email}
 		and u.`authentication_string` = MD5(#{authenticationString});
 	</select>
-
-	<select id="getBy" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.FilterPayload">
-		select u.`id`,
-		u.`display_name`,
-		u.`email`,
-		u.`phone_number`,
-		u.`surname`,
-		u.`name`,
-		u.`age`,
-		u.`gender`,
-		u.`created_by`,
-		u.`creation_time`,
-		u.`updated_by`,
-		u.`last_updated_time`,
-		u.`revision`
-		from user u
-		<where>
-			<if test="entity != null">
-				<if test="entity.id != null">
-					u.`id` = #{entity.id}
-				</if>
-				<if test="entity.surname != null and entity.surname != ''">
-					and u.`surname` = #{entity.surname}
-				</if>
-				<if test="entity.name != null and entity.name != ''">
-					and u.`name` = #{entity.name}
-				</if>
-				<if test="entity.email != null and entity.email != ''">
-					and u.`email` = #{entity.email}
-				</if>
-				<if test="entity.phoneNumber != null and entity.phoneNumber != ''">
-					and u.`phone_number` like CONCAT(#{entity.phoneNumber}, '%')
-				</if>
-				<if test="entity.name != null and entity.name != ''">
-					and u.`name` like CONCAT('%', #{entity.name}, '%')
-				</if>
-			</if>
-			<if test="filter != null">
-				<if test="filter.age != null">
-					<if test="filter.age.start != null">
-						and u.`age` >= #{filter.age.start}
-					</if>
-					<if test="filter.age.end != null">
-						and #{filter.age.end} >= u.`age`
-					</if>
-				</if>
-				<if test="filter.creationTime != null">
-					<if test="filter.creationTime.start != null">
-						and u.`creation_time` >= #{filter.creationTime.start}
-					</if>
-					<if test="filter.creationTime.end != null">
-						and #{filter.creationTime.end} >= u.`creation_time`
-					</if>
-				</if>
-				<if test="filter.lastUpdatedTime != null">
-					<if test="filter.lastUpdatedTime.start != null">
-						and u.`last_updated_time` >= #{filter.lastUpdatedTime.start}
-					</if>
-					<if test="filter.lastUpdatedTime.end != null">
-						and #{filter.lastUpdatedTime.end} >= u.`last_updated_time`
-					</if>
-				</if>
-				<if test="filter.lastLoginTime != null">
-					<if test="filter.lastLoginTime.start != null">
-						and u.`last_login_time` >= #{filter.lastLoginTime.start}
-					</if>
-					<if test="filter.lastLoginTime.end != null">
-						and #{filter.lastLoginTime.end} >= u.`last_login_time`
-					</if>
-				</if>
-			</if>
-		</where>
-		limit #{filter.page.start}, #{filter.page.end}
-	</select>
-
 	<select id="getToUpdate" resultMap="BaseResultMap">
 		select *
 		from user
@@ -244,14 +169,74 @@
 		and uc.email_verified = 0;
 	</update>
 
-	<select id="getCountByFilter" resultType="int">
-		select count(*)
-		from user;
-	</select>
-
 	<update id="resetPassword">
 		update user u
 		set u.authentication_string = MD5(#{authenticationString,jdbcType=VARCHAR})
 		where u.email = #{email};
 	</update>
+
+	<select id="filteredList" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.FilterPayload">
+		select u.*
+		from user u
+		inner join user_role ur on u.`id` = ur.`user_id`
+		inner join role r on ur.`role_id` = r.id
+		<where>
+			<if test="entity != null">
+				<if test="entity.surname != null and entity.surname != ''">
+					and u.`surname` like concat(#{entity.surname}, '%')
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					and u.`name` like concat(#{entity.name}, '%')
+				</if>
+				<if test="entity.email != null and entity.email != ''">
+					and (u.`email` = #{entity.email} or u.`email_normal` = #{entity.email})
+				</if>
+				<if test="entity.phoneNumber != null and entity.phoneNumber != ''">
+					and u.`phone_number` = #{entity.phoneNumber}
+				</if>
+				<if test="entity.role != null">
+					<if test="entity.role.name != null and entity.role.name != ''">
+						and r.`name` = #{entity.role.name}
+					</if>
+				</if>
+			</if>
+		</where>
+		<!--		filter-->
+		<trim>
+			<if test="filter != null">
+				<if test="filter.page != null">
+					limit #{filter.page.start}, #{filter.page.end};
+				</if>
+			</if>
+		</trim>
+	</select>
+
+	<select id="getLengthByFilter" resultType="int">
+		select count(*)
+		from user u
+		inner join user_role ur on u.`id` = ur.`user_id`
+		inner join role r on ur.`role_id` = r.id
+		<where>
+			<if test="entity != null">
+				<if test="entity.surname != null and entity.surname != ''">
+					and u.`surname` like concat(#{entity.surname}, '%')
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					and u.`name` like concat(#{entity.name}, '%')
+				</if>
+				<if test="entity.email != null and entity.email != ''">
+					and (u.`email` = #{entity.email} or u.`email_normal` = #{entity.email})
+				</if>
+				<if test="entity.phoneNumber != null and entity.phoneNumber != ''">
+					and u.`phone_number` = #{entity.phoneNumber}
+				</if>
+				<if test="entity.role != null">
+					<if test="entity.role.name != null and entity.role.name != ''">
+						and r.`name` = #{entity.role.name}
+					</if>
+				</if>
+			</if>
+		</where>
+		<!--		filter-->
+	</select>
 </mapper>

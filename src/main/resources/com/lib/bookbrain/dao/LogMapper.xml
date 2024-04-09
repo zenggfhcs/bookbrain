@@ -41,4 +41,26 @@
 		from log l
 		where l.`id` = #{id};
 	</select>
+
+	<select id="filteredList" resultMap="BaseResultMap">
+		select *
+		from log l
+		<where>
+		</where>
+		order by l.`creation_time` desc
+		<trim>
+			<if test="filter != null">
+				<if test="filter.page != null">
+					limit #{filter.page.start}, #{filter.page.end}
+				</if>
+			</if>
+		</trim>
+	</select>
+
+	<select id="getLengthByFilter" resultType="int">
+		select count(*)
+		from log l
+		<where>
+		</where>
+	</select>
 </mapper>

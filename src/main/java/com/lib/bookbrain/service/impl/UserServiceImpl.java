@@ -148,7 +148,7 @@ public Response delete(Payload<User> payload) {
 
 @Override
 public Response filteredList(FilterPayload<User, UserFilter> payload) {
-	return null;
+	return baseService.filteredList(payload);
 }
 
 

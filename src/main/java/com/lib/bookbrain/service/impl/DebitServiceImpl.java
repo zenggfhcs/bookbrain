@@ -59,6 +59,6 @@ public Response delete(Payload<Debit> payload) {
 
 @Override
 public Response filteredList(FilterPayload<Debit, DebitFilter> payload) {
-	return null;
+	return baseService.filteredList(payload);
 }
 }

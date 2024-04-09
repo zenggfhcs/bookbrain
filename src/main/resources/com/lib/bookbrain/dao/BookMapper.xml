@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lib.bookbrain.dao.BookMapper">
+	<resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Book">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="damage_level" jdbcType="TINYINT" property="damageLevel"/>
+		<result column="borrowable" jdbcType="BIT" property="borrowable"/>
+		<result column="created_by" jdbcType="INTEGER" property="createdBy"/>
+		<result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
+		<result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
+		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
+		<result column="revision" jdbcType="INTEGER" property="revision"/>
+		<association column="book_info_id" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
+		             select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
+	</resultMap>
+	<select id="list" resultMap="BaseResultMap">
+		select *
+		from book;
+	</select>
+	<select id="count">
+		select count(*)
+		from book;
+	</select>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+	        parameterType="com.lib.bookbrain.model.entity.Book">
+		insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
+		`last_updated_time`, `revision`)
+		VALUES (#{damageLevel},
+		1,
+		#{bookInfo.id},
+		#{createdBy},
+		now(),
+		#{updatedBy},
+		now(),
+		0);
+	</insert>
+	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		update book b
+		<set>
+			<if test="entity != null">
+				<if test="entity.damageLevel != null">
+					b.`damage_level` = #{entity.damageLevel},
+				</if>
+				<if test="entity.borrowable != null">
+					b.`borrowable` = #{entity.borrowable},
+				</if>
+				<if test="entity.bookInfo.id != null">
+					b.`book_info_id` = #{entity.bookInfo.id},
+				</if>
+				<if test="entity.updatedBy != null">
+					b.`updated_by` = #{entity.updatedBy},
+				</if>
+			</if>
+			<if test="1 == 1">
+				b.`last_updated_time` = now(),
+				b.`revision` = (1 + b.`revision`) % 2147483647,
+			</if>
+		</set>
+		where b.`id` = #{id}
+		and b.`revision` = #{entity.revision}
+	</update>
+	<delete id="delete">
+		delete
+		from book b
+		where b.`id` = #{id}
+	</delete>
+	<select id="getById" resultMap="BaseResultMap">
+		select b.`id`,
+		b.`damage_level`,
+		b.`borrowable`,
+		b.`book_info_id`,
+		b.`created_by`,
+		b.`creation_time`,
+		b.`updated_by`,
+		b.`last_updated_time`,
+		b.`revision`
+		from book b
+		where b.`id` = #{id}
+	</select>
+	<select id="getToUpdate" resultMap="BaseResultMap">
+		select *
+		from book b
+		where b.`id` = #{id}
+	</select>
+
+	<select id="getBookInfoByKeyword" resultType="com.lib.bookbrain.model.entity.BookInfo">
+		select *
+		from book_info bif
+		where bif.id = #{key} || bif.book_name like concat(#{key}, '%')
+		limit 10;
+	</select>
+
+	<select id="filteredList" resultMap="BaseResultMap">
+		select *
+		from book b
+		<where>
+		</where>
+		<trim>
+			<if test="filter != null">
+				<if test="filter.page != null">
+					limit #{filter.page.start}, #{filter.page.end};
+				</if>
+			</if>
+		</trim>
+	</select>
+
+	<select id="getLengthByFilter" resultType="int">
+		select count(*)
+		from book b
+		<where>
+		</where>
+	</select>
+</mapper>

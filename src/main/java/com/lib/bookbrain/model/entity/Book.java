@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 /**
  * @author yunxia
  */
@@ -16,26 +14,26 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Debit extends Entity {
+public class Book extends Entity {
 
 /**
- *
+ * 书籍唯一标识
  */
 private Long id;
 
 /**
- *
+ * 书籍破损级别
  */
-private Book book;
+private Short damageLevel;
 
 /**
- *
+ * 可借的
  */
-private LocalDate returnDeadline;
+private Boolean borrowable;
 
 /**
- *
+ * 书籍出版信息
  */
-private LocalDate returnDate;
+private BookInfo bookInfo;
 
 }

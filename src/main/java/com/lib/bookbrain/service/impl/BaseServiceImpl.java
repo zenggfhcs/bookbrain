@@ -12,7 +12,9 @@ import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * BaseService 的实现类
@@ -34,7 +36,7 @@ protected final SimpleThreadContext<TokenInfo> threadContext;
  * <br>
  * 实际使用时会被他的子接口替换
  */
-protected final BaseMapper<E> baseMapper;
+protected final BaseMapper<E, F> baseMapper;
 
 /**
  * 自动注入
@@ -42,7 +44,7 @@ protected final BaseMapper<E> baseMapper;
  * @param threadContext tokenBody 线程局部变量
  * @param baseMapper    基础数据操作接口
  */
-public BaseServiceImpl(SimpleThreadContext<TokenInfo> threadContext, BaseMapper<E> baseMapper) {
+public BaseServiceImpl(SimpleThreadContext<TokenInfo> threadContext, BaseMapper<E, F> baseMapper) {
 	this.threadContext = threadContext;
 	this.baseMapper = baseMapper;
 }
@@ -133,7 +135,15 @@ public Response delete(Payload<E> payload) {
 
 @Override
 public Response filteredList(FilterPayload<E, F> payload) {
-	return null;
+	Map<String, Object> _map = new HashMap<>();
+	{
+		List<E> _list = baseMapper.filteredList(payload);
+		_map.put("list", _list);
+	}
+	{
+		int _length = baseMapper.getLengthByFilter(payload);
+		_map.put("length", _length);
+	}
+	return Response.success(_map);
 }
-
 }
