@@ -15,7 +15,7 @@ public class Entity {
 /**
  * 创建人
  */
-protected Integer createdBy;
+protected User createdBy;
 
 /**
  * 创建时间
@@ -25,7 +25,7 @@ protected LocalDateTime creationTime;
 /**
  * 最后更新者
  */
-protected Integer updatedBy;
+protected User updatedBy;
 
 /**
  * 最后更新时间

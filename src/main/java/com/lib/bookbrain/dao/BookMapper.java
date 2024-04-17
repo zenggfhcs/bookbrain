@@ -34,4 +34,5 @@ int getLengthByFilter(FilterPayload<Book, BookFilter> payload);
 
 List<BookInfo> getBookInfoByKeyword(String key);
 
+int borrow(Book book);
 }

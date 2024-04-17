@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -65,7 +66,7 @@ private Short gender;
 /**
  * 出生日期
  */
-private LocalDateTime birthday;
+private LocalDate birthday;
 
 /**
  * 最后登录时间

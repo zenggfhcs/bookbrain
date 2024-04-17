@@ -26,4 +26,8 @@ Response filteredList(FilterPayload<Book, BookFilter> payload);
 Response getBookDamageLevelList();
 
 Response getBookInfoByKeyword(String key);
+
+Response borrow(Book book);
+
+Response escheat(Book book);
 }

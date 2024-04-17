@@ -6,6 +6,7 @@ import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BookInfoMapper;
 import com.lib.bookbrain.model.entity.BookInfo;
+import com.lib.bookbrain.model.entity.ClcIndex;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
@@ -15,7 +16,9 @@ import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BookInfoService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yunxia
@@ -69,6 +72,26 @@ public Response filteredList(FilterPayload<BookInfo, BookInfoFilter> payload) {
 public Response getTypeByKeyword(String keyword) {
 	List<BookType> _list = bookInfoMapper.getTypeByKeyword(keyword);
 	return Response.success(_list);
+}
+
+@Override
+public Response getFirstLevelType() {
+	List<ClcIndex> _list = bookInfoMapper.getFirstLevelType();
+	return Response.success(_list);
+}
+
+@Override
+public Response quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload) {
+	List<BookInfo> _list = bookInfoMapper.quickQuery(payload);
+	Map<String, Object> _map = new HashMap<>();
+	_map.put("list", _list);
+	_map.put("length", _list.size());
+	return Response.success(_map);
+}
+
+@Override
+public Response typeQuery(String bookType, List<String> orders) {
+	return null;
 }
 
 }

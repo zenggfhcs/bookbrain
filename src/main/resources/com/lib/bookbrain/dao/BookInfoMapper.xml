@@ -19,13 +19,23 @@
 		<result property="keyword" column="keyword" jdbcType="VARCHAR"/>
 		<result property="lang" column="lang" jdbcType="VARCHAR"/>
 		<result property="price" column="price" jdbcType="DECIMAL"/>
-		<result property="stock" column="stock" jdbcType="INTEGER"/>
-		<result property="createdBy" column="created_by" jdbcType="INTEGER"/>
 		<result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
-		<result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
 		<result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
 		<result property="revision" column="revision" jdbcType="INTEGER"/>
+		<association property="createdBy" column="created_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 	</resultMap>
+	<resultMap id="ClcNResultMap" type="com.lib.bookbrain.model.entity.ClcIndex">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="parent" column="parent" jdbcType="INTEGER"/>
+		<result property="key" column="key" jdbcType="VARCHAR"/>
+		<result property="value" column="value" jdbcType="VARCHAR"/>
+		<collection property="children" column="id" ofType="com.lib.bookbrain.model.entity.ClcIndex"
+		            select="getChildrenByParentId"/>
+	</resultMap>
+
 	<select id="list" resultMap="BaseResultMap">
 		select *
 		from book_info;
@@ -37,30 +47,29 @@
 	<insert id="insert" parameterType="com.lib.bookbrain.model.entity.BookInfo" useGeneratedKeys="true"
 	        keyProperty="id">
 		insert into book_info (`isbn`, `cip`, `book_name`,
-		`book_type`, `cover`, `author`, `describe`, `published_date`,
-		`publisher`, `edition`, `printing`,
-		`keyword`, `lang`, `price`, `stock`, `created_by`, `creation_time`,
-		`updated_by`, `last_updated_time`, `revision`)
+		                       `book_type`, `cover`, `author`, `describe`, `published_date`,
+		                       `publisher`, `edition`, `printing`,
+		                       `keyword`, `lang`, `price`, `created_by`, `creation_time`,
+		                       `updated_by`, `last_updated_time`, `revision`)
 		values ( #{isbn}
-		, #{cip}
-		, #{bookName}
-		, #{bookType}
-		, #{cover}
-		, #{author}
-		, #{describe}
-		, #{publishedDate}
-		, #{publisher}
-		, #{edition}
-		, #{printing}
-		, #{keyword}
-		, #{lang}
-		, #{price}
-		, #{stock}
-		, #{createdBy}
-		, NOW()
-		, #{updatedBy}
-		, now()
-		, 0)
+		       , #{cip}
+		       , #{bookName}
+		       , #{bookType}
+		       , #{cover}
+		       , #{author}
+		       , #{describe}
+		       , #{publishedDate}
+		       , #{publisher}
+		       , #{edition}
+		       , #{printing}
+		       , #{keyword}
+		       , #{lang}
+		       , #{price}
+		       , #{createdBy.id}
+		       , NOW()
+		       , #{updatedBy.id}
+		       , now()
+		       , 0)
 	</insert>
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
 		update book_info bif
@@ -104,9 +113,6 @@
 			<if test="entity.price != null">
 				bif.`price` = #{entity.price},
 			</if>
-			<if test="entity.stock != null">
-				bif.`stock` = #{entity.stock},
-			</if>
 			<if test="entity.updatedBy != null">
 				bif.`updated_by` = #{entity.updatedBy},
 			</if>
@@ -115,11 +121,11 @@
 			</if>
 			<if test="1 == 1">
 				bif.`last_updated_time` = NOW(),
-				bif.`revision` = (1 + bif.`revision`) % 2147483647,
+				bif.`revision`          = (1 + bif.`revision`) % 2147483647,
 			</if>
 		</set>
 		where bif.`id` = #{id}
-		and bif.`revision` = #{entity.revision}
+		  and bif.`revision` = #{entity.revision}
 	</update>
 	<delete id="delete">
 		delete bif
@@ -128,26 +134,25 @@
 	</delete>
 	<select id="getById" resultMap="BaseResultMap">
 		select distinct bif.`id`,
-		bif.`isbn`,
-		bif.`cip`,
-		bif.`book_name`,
-		bif.`book_type`,
-		bif.`cover`,
-		bif.`author`,
-		bif.`describe`,
-		bif.`published_date`,
-		bif.`publisher`,
-		bif.`edition`,
-		bif.`printing`,
-		bif.`keyword`,
-		bif.`lang`,
-		bif.`price`,
-		bif.`stock`,
-		bif.`created_by`,
-		bif.`creation_time`,
-		bif.`updated_by`,
-		bif.`last_updated_time`,
-		bif.`revision`
+		                bif.`isbn`,
+		                bif.`cip`,
+		                bif.`book_name`,
+		                bif.`book_type`,
+		                bif.`cover`,
+		                bif.`author`,
+		                bif.`describe`,
+		                bif.`published_date`,
+		                bif.`publisher`,
+		                bif.`edition`,
+		                bif.`printing`,
+		                bif.`keyword`,
+		                bif.`lang`,
+		                bif.`price`,
+		                bif.`created_by`,
+		                bif.`creation_time`,
+		                bif.`updated_by`,
+		                bif.`last_updated_time`,
+		                bif.`revision`
 		from book_info bif
 		where bif.`id` = #{id}
 	</select>
@@ -164,9 +169,9 @@
 	</select>
 
 	<select id="getTypeByKeyword" resultType="com.lib.bookbrain.model.pojo.BookType">
-		select cn.id, cn.`key`, cn.value
-		from clc_number cn
-		where cn.`key` like concat(#{keyword}, '%')
+		select ci.id, ci.`key`, ci.value
+		from clc_index ci
+		where ci.`key` like concat(#{keyword}, '%')
 		limit 50;
 	</select>
 
@@ -174,6 +179,14 @@
 		select *
 		from book_info bif
 		<where>
+			<if test="entity != null">
+				<if test="entity.bookName != null and entity.bookName != ''">
+					and bif.`book_name` like concat(#{entity.bookName}, '%')
+				</if>
+				<if test="entity.bookType != null and entity.bookType != ''">
+					and bif.`book_type` like concat(#{entity.bookType}, '%')
+				</if>
+			</if>
 		</where>
 		<trim>
 			<if test="filter != null">
@@ -188,6 +201,67 @@
 		select count(*)
 		from book_info bif
 		<where>
+			<if test="entity != null">
+				<if test="entity.bookName != null and entity.bookName != ''">
+					and bif.`book_name` like concat(#{entity.bookName}, '%')
+				</if>
+				<if test="entity.bookType != null and entity.bookType != ''">
+					and bif.`book_type` like concat(#{entity.bookType}, '%')
+				</if>
+			</if>
 		</where>
 	</select>
+
+	<select id="getFirstLevelType" resultMap="ClcNResultMap">
+		select *
+		from clc_index ci
+		where ci.`parent` is null;
+	</select>
+
+	<select id="getChildrenByParentId" resultMap="ClcNResultMap">
+		select *
+		from clc_index ci
+		where ci.`parent` = #{id};
+	</select>
+
+	<select id="quickQuery" resultMap="BaseResultMap">
+		select *
+		from book_info bif
+		<where>
+			<if test="entity != null">
+				<if test="entity.bookName != null">
+					or bif.`book_name` like concat(#{entity.bookName}, '%')
+				</if>
+				<if test="entity.publisher != null">
+					or bif.`publisher` like concat(#{entity.publisher}, '%')
+				</if>
+				<if test="entity.author != null">
+					or bif.`author` like concat('%', #{entity.author}, '%')
+				</if>
+				<if test="entity.bookType != null">
+					or bif.`book_type` like concat(#{entity.bookType}, '%')
+				</if>
+				<if test="entity.keyword != null">
+					or bif.`keyword` like concat('%', #{entity.keyword}, '%')
+				</if>
+				<if test="entity.keyword != null">
+					or bif.`keyword` like concat('%', #{entity.keyword}, '%')
+				</if>
+				<if test="entity.isbn != null">
+					or bif.`isbn` = #{entity.isbn}
+				</if>
+				<if test="entity.cip != null">
+					or bif.`cip` = #{entity.cip}
+				</if>
+			</if>
+		</where>
+		<trim>
+			<if test="filter != null">
+				<if test="filter.page != null">
+					limit #{filter.page.start}, #{filter.page.end};
+				</if>
+			</if>
+		</trim>
+	</select>
+
 </mapper>

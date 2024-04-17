@@ -4,6 +4,7 @@ import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BaseMapper;
 import com.lib.bookbrain.model.entity.Entity;
+import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
@@ -79,8 +80,10 @@ public Response create(Payload<E> payload) {
 	}
 	{
 		TokenInfo _info = threadContext.get();
-		_e.setCreatedBy(_info.getAud());
-		_e.setUpdatedBy(_info.getAud());
+		User _operator = new User();
+		_operator.setId(_info.getAud());
+		_e.setCreatedBy(_operator);
+		_e.setUpdatedBy(_operator);
 	}
 
 	int _cc = baseMapper.insert(_e);
@@ -106,7 +109,9 @@ public Response update(Payload<E> payload) {
 
 	{
 		TokenInfo _info = threadContext.get();
-		_newEntity.setUpdatedBy(_info.getAud());
+		User _operator = new User();
+		_operator.setId(_info.getAud());
+		_newEntity.setUpdatedBy(_operator);
 	}
 
 	int _uc = baseMapper.update(payload);

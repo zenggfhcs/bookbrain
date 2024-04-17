@@ -17,7 +17,8 @@ public class RegisterController {
 private final UserService userService;
 
 @PostMapping
-public Response register(@RequestBody(required = false) Payload<User> payload) {
-	return userService.register(payload);
+public Response register(@RequestBody(required = false) User user) {
+	Payload<User> _payload = Payload.gByEntity(user);
+	return userService.register(_payload);
 }
 }

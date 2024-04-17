@@ -35,6 +35,11 @@ public UserController(UploadService uploadService, VerifyService verifyService, 
 	this.userService = userService;
 }
 
+@GetMapping("/tokenUser")
+public Response tokenUser() {
+	return userService.tokenUser();
+}
+
 @PostMapping("/cover:upload")
 public Response cover(@RequestParam MultipartFile file) {
 	return uploadService.upload(file);
@@ -46,9 +51,9 @@ public Response verify(@RequestBody Payload<TokenBody> payload) {
 }
 
 
-@PostMapping("/password:reset/email:sendCode")
+@PostMapping("/password:reset/email:sendResetLink")
 public Response sendCodeForResetPassword(@RequestBody User entity) {
-	return userService.sendCode(entity);
+	return userService.sendResetLink(entity);
 }
 
 /**

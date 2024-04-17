@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 自定义拦截器
@@ -71,4 +72,11 @@ public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServl
 	return true; // 放行
 }
 
+@Override
+public void postHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, ModelAndView modelAndView) {
+}
+
+@Override
+public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, Exception ex) {
+}
 }

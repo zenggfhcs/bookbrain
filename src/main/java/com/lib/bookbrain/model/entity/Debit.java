@@ -38,4 +38,12 @@ private LocalDate returnDeadline;
  */
 private LocalDate returnDate;
 
+public static Debit generate(Book book, User user) {
+	Debit _d = new Debit();
+	{
+		_d.setBook(book);
+		_d.setCreatedBy(user);
+	}
+	return _d;
+}
 }

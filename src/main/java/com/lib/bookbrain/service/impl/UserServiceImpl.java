@@ -16,10 +16,13 @@ import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.MailService;
 import com.lib.bookbrain.service.TokenService;
 import com.lib.bookbrain.service.UserService;
+import com.lib.bookbrain.utils.Json;
+import com.lib.bookbrain.utils.MapFactory;
 import com.lib.bookbrain.utils.RSATools;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 /**
  * @author yunxia
@@ -35,9 +38,11 @@ private final MailService mailService;
 
 private final TokenService tokenService;
 
-@Autowired
+private final SimpleThreadContext<TokenInfo> threadContext;
+
 public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> threadContext, MailService mailService, TokenService tokenService) {
 	this.userMapper = userMapper;
+	this.threadContext = threadContext;
 	baseService = new BaseServiceImpl<>(threadContext, userMapper);
 	this.mailService = mailService;
 	this.tokenService = tokenService;
@@ -57,12 +62,19 @@ public int checkPermission(Integer id, String url) {
 
 @Override
 public Response sendCode(User entity) {
+	//
+	User _e = userMapper.getByEmail(entity.getEmail());
+	if (_e == null) {
+		return Response.error(ResponseInfo.THE_EMAIL_NOT_EXIST);
+	}
+	// 发送重置链接
 	mailService.sendCode(entity, "重置密码");
 	return Response.success();
 }
 
 @Override
 public Response resetPassword(User entity) {
+	// 拿到信息
 	// 解密
 	{
 		entity.setEmail(RSATools.decrypt(entity.getEmail()));
@@ -79,6 +91,32 @@ public Response resetPassword(User entity) {
 }
 
 @Override
+public Response tokenUser() { // todo 这里只用到了 email
+	Payload<User> _payload = new Payload<>();
+	_payload.setId(threadContext.get().getAud());
+	return getById(_payload);
+}
+
+@Override
+public Response sendResetLink(User entity) {
+	String _email = entity.getEmail();
+	User _u = userMapper.getByEmail(_email);
+	if (_u == null) {
+		return Response.error(ResponseInfo.THE_EMAIL_NOT_EXIST);
+	}
+	String _sub = "重置密码";
+
+	mailService.send(_email, _sub, () -> {
+		Map<String, Object> _map = MapFactory.Builder.builder()
+				.fill("email", _email)
+				.fill("link", RSATools.Reverse.encrypt(Json.stringify(_u)))
+				.build().map();
+		return mailService.gc(MailService.TemplateName.RESET, _map);
+	});
+	return Response.success();
+}
+
+@Override
 @Transactional
 public Response register(Payload<User> payload) {
 	// 解密
@@ -89,7 +127,8 @@ public Response register(Payload<User> payload) {
 	}
 
 	// 判断是不是重复注册
-	if (userMapper.getByEmail(_e.getEmail()) > 0) {
+	User _u = userMapper.getByEmail(_e.getEmail());
+	if (_u == null) {
 		return Response.error(ResponseInfo.THIS_EMAIL_IS_EXIST);
 	}
 
@@ -107,11 +146,15 @@ public Response register(Payload<User> payload) {
 
 @Override
 public Response login(User entity) {
+	// todo 检查用户邮箱是否已经验证
+
+
 	User _user = userMapper.login(entity);
 
 	if (_user == null) {
 		return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED);
 	}
+
 
 	TokenBody _body = tokenService.issue(_user.getId(), true, true);
 

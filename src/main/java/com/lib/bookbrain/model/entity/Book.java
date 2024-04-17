@@ -19,7 +19,7 @@ public class Book extends Entity {
 /**
  * 书籍唯一标识
  */
-private Long id;
+private Integer id;
 
 /**
  * 书籍破损级别

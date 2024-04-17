@@ -5,6 +5,7 @@ import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.LogMapper;
 import com.lib.bookbrain.model.entity.Entity;
 import com.lib.bookbrain.model.entity.Log;
+import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Json;
@@ -87,7 +88,9 @@ private Object log(ProceedingJoinPoint point, LogType logType) throws Throwable 
 	{
 		_log.setServiceName(generateServiceName(point.getSignature()));
 		_log.setInput(Json.stringify(_p));
-		_log.setCreatedBy(threadContext.get().getAud());
+		User _operator = new User();
+		_operator.setId(threadContext.get().getAud());
+		_log.setCreatedBy(_operator);
 		_log.setType(logType.getValue());
 	}
 	logMapper.create(_log);

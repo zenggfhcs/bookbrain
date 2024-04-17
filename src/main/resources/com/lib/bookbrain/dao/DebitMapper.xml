@@ -5,13 +5,15 @@
 		<id column="id" jdbcType="INTEGER" property="id"/>
 		<result column="return_deadline" jdbcType="DATE" property="returnDeadline"/>
 		<result column="return_date" jdbcType="DATE" property="returnDate"/>
-		<result column="created_by" jdbcType="INTEGER" property="createdBy"/>
 		<result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
-		<result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
 		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
 		<result column="revision" jdbcType="INTEGER" property="revision"/>
 		<association property="book" javaType="com.lib.bookbrain.model.entity.Book" column="book_id"
 		             select="com.lib.bookbrain.dao.BookMapper.getById"/>
+		<association property="createdBy" column="created_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 	</resultMap>
 	<select id="list" resultMap="BaseResultMap">
 		select *
@@ -44,11 +46,11 @@
 	<insert id="insert" parameterType="com.lib.bookbrain.model.entity.Debit" useGeneratedKeys="true"
 	        keyProperty="entity.debitId">
 		insert into debit (`book_id`, `return_deadline`,
-		`return_date`, `created_by`, `creation_time`,
-		`updated_by`, `last_updated_time`, `revision`)
-		values (#{book.id}, #{returnDeadline},
-		#{returnDate}, #{createdBy}, NOW(),
-		#{updatedBy}, NOW(), #{revision})
+		                   `return_date`, `created_by`, `creation_time`,
+		                   `updated_by`, `last_updated_time`, `revision`)
+		values (#{book.id}, DATE_ADD(CURDATE(), INTERVAL 30 DAY),
+		        null, #{createdBy.id}, NOW(),
+		        #{updatedBy.id}, NOW(), 0);
 	</insert>
 
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -74,6 +76,16 @@
 			</if>
 		</set>
 		where d.`id` = #{id}
+	</update>
+	<update id="escheat">
+		update debit d
+		set d.`return_date`       = curdate(),
+		    d.`last_updated_time` = now(),
+		    d.`revision`          = (1 + d.`revision`) % 2147483647,
+		    d.`updated_by`        = #{updatedBy.id}
+		where d.`book_id` = #{id}
+		  and d.return_date is null
+		  and d.`revision` = #{revision}
 	</update>
 
 	<select id="getToUpdate" resultMap="BaseResultMap">
@@ -111,5 +123,28 @@
 			<if test="filter != null">
 			</if>
 		</where>
+	</select>
+	<select id="getCountByUserId" resultType="int">
+		select count(*)
+		from debit d
+		where d.`created_by` = #{id}
+		  and d.`return_date` is null;
+	</select>
+	<select id="getExpiredByUserId" resultType="com.lib.bookbrain.model.entity.Debit">
+		select *
+		from debit d
+		where d.`created_by` = #{id}
+		  and d.`return_date` is null
+		  and now() > d.`return_deadline`;
+	</select>
+	<select id="getBookCountByBookIdAndUserId" resultType="int">
+		select (select b.`book_info_id`
+		        from book b
+		        where b.`id` = #{bookId})
+			       in
+			    (select b.`book_info_id`
+			     from debit d
+				          inner join book b on d.`book_id` = b.`id`
+			     where d.`created_by` = #{userId})
 	</select>
 </mapper>

@@ -66,7 +66,6 @@ public void sendCode(User recipient, String sub) {
 				Map<String, Object> _map = MapFactory.Builder.builder()
 						.fill("code", recipient.getAuthenticationString())
 						.build().map();
-				System.out.println(_map);
 				return gc(TemplateName.RESET, _map);
 			}
 	);
@@ -124,7 +123,7 @@ private String gRegisterToken(String email) {
  * @param map      数据表
  * @return 模板字符串
  */
-private String gc(String tempPath, Map<String, Object> map) {
+public String gc(String tempPath, Map<String, Object> map) {
 	try (StringWriter writer = new StringWriter()) {
 		Template template = freemarkerConfig.getTemplate(tempPath);
 		template.process(map, writer);
@@ -141,6 +140,7 @@ public static class TemplateName {
 	public static final String BASE = BASE_URL + "base.ftl";
 	public static final String REGISTER = BASE_URL + "register-confirmed.ftl";
 	public static final String RESET = BASE_URL + "reset-confirmed.ftl";
+	public static final String RESET_PASSWORD = BASE_URL + "reset-password.ftl";
 }
 
 }

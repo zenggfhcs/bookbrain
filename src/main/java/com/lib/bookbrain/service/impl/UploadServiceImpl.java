@@ -1,4 +1,4 @@
-package com.lib.bookbrain.service.impl.log;
+package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.exception.FileUploadException;

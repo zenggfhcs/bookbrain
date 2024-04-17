@@ -40,7 +40,7 @@ int register(Payload<User> payload);
 
 User login(User entity);
 
-int getByEmail(String email);
+User getByEmail(String email);
 
 @Select("select count(*) from user_permission where user_id = #{id} and #{url} regexp url")
 int check(@Param("id") Integer id, @Param("url") String url);

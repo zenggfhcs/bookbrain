@@ -85,9 +85,4 @@ private String lang;
  */
 private Double price;
 
-/**
- * 库存量
- */
-private Integer stock;
-
 }

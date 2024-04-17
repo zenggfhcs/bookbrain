@@ -13,15 +13,17 @@
 		<result property="name" column="name" jdbcType="VARCHAR"/>
 		<result property="age" column="age" jdbcType="TINYINT"/>
 		<result property="gender" column="gender" jdbcType="TINYINT"/>
-		<result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+		<result property="birthday" column="birthday" jdbcType="DATE"/>
 		<result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
-		<result property="createdBy" column="created_by" jdbcType="INTEGER"/>
 		<result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
-		<result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
 		<result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
 		<result property="revision" column="revision" jdbcType="INTEGER"/>
 		<association property="role" javaType="com.lib.bookbrain.model.entity.Role" column="id"
 		             select="getRolesByUserId"/>
+		<association property="createdBy" column="created_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
@@ -49,7 +51,7 @@
 		`created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
 		values (MD5(#{authenticationString}), #{displayName}, #{email},
 		#{phoneNumber}, #{surname},
-		#{name}, #{age}, #{gender}, #{createdBy}, now(), #{updatedBy},
+		#{name}, #{age}, #{gender}, #{createdBy.id}, now(), #{updatedBy.id},
 		now(), 0);
 	</insert>
 
@@ -106,11 +108,23 @@
 		u.`name`,
 		u.`age`,
 		u.`gender`,
+		u.`birthday`,
 		u.`created_by`,
 		u.`creation_time`,
 		u.`updated_by`,
 		u.`last_updated_time`,
 		u.`revision`
+		from user u
+		where u.`id` = #{id};
+	</select>
+
+	<select id="getByOperatorId" resultMap="BaseResultMap">
+		select u.`id`,
+		       u.`display_name`,
+		       u.`email`,
+		       u.`phone_number`,
+		       u.`surname`,
+		       u.`name`
 		from user u
 		where u.`id` = #{id};
 	</select>
@@ -141,11 +155,12 @@
 		values (MD5(#{entity.authenticationString}), #{entity.displayName}, #{entity.email});
 	</insert>
 
-	<select id="getByEmail" resultType="int">
-		select count(*)
-		from user
-		where email = #{email}
-		|| email_normal =
+	<select id="getByEmail" resultType="com.lib.bookbrain.model.entity.User">
+		select u.`email`,
+		u.`revision`
+		from user u
+		where u.`email` = #{email}
+		|| u.`email_normal` =
 		concat(substring_index(substring_index(#{email}, '@', 1), '+', 1),
 		'@',
 		substring_index(#{email}, '@', -1));

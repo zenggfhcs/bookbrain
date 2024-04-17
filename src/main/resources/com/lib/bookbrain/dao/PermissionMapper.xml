@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lib.bookbrain.dao.PermissionMapper">
+	<select id="getById" resultType="com.lib.bookbrain.model.entity.Permission">
+	</select>
+
+	<insert id="insert">
+	</insert>
+
+	<update id="update">
+	</update>
+
+	<delete id="delete">
+	</delete>
+
+	<select id="getToUpdate" resultType="com.lib.bookbrain.model.entity.Permission">
+	</select>
+
+	<select id="filteredList" resultType="com.lib.bookbrain.model.entity.Permission">
+		select *
+		from permission p
+		<where>
+		</where>
+	</select>
+
+	<select id="getLengthByFilter" resultType="int">
+		select count(*)
+		from permission p
+		<where>
+		</where>
+	</select>
+</mapper>

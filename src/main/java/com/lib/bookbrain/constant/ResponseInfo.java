@@ -34,7 +34,7 @@ public enum ResponseInfo {
 	/**
 	 *
 	 */
-	DATA_NOT_EXIST("The data does not exist"),
+	DATA_NOT_EXIST("进行操作数据不存在"),
 
 	/**
 	 *
@@ -102,6 +102,12 @@ public enum ResponseInfo {
 	TOKEN_RESET(199, "网络波动~~ 请稍后再试..."),
 
 	FILE_UPLOAD_FAILED(601, "文件上传失败，请稍后再试"),
+	THE_EMAIL_NOT_EXIST(404, "没有与该邮箱对应的用户"),
+	BORROW_NUM_UPPER_LIMIT(501, "借阅数已达上限，请先归还一部分图书"),
+	HAS_EXPIRED_BORROW(501, "存在逾期借阅，请先归还再借阅"),
+	IS_BORROWED(501, "已经借阅了该图书，不可重复借阅同一本图书"),
+	THE_BOOK_HAS_BEEN_BORROWED(501, "该图书已被借阅，请刷新页面"),
+	ESCHEAT_FAILED(505, "归还失败"),
 	;
 
 private final BaseResponseInfo info;

@@ -7,13 +7,15 @@
 		<id column="id" jdbcType="INTEGER" property="id"/>
 		<result column="damage_level" jdbcType="TINYINT" property="damageLevel"/>
 		<result column="borrowable" jdbcType="BIT" property="borrowable"/>
-		<result column="created_by" jdbcType="INTEGER" property="createdBy"/>
 		<result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
-		<result column="updated_by" jdbcType="INTEGER" property="updatedBy"/>
 		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
 		<result column="revision" jdbcType="INTEGER" property="revision"/>
 		<association column="book_info_id" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
 		             select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
+		<association property="createdBy" column="created_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 	</resultMap>
 	<select id="list" resultMap="BaseResultMap">
 		select *
@@ -27,14 +29,14 @@
 	        parameterType="com.lib.bookbrain.model.entity.Book">
 		insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
 		`last_updated_time`, `revision`)
-		VALUES (#{damageLevel},
-		1,
-		#{bookInfo.id},
-		#{createdBy},
-		now(),
-		#{updatedBy},
-		now(),
-		0);
+		VALUES ( #{damageLevel}
+		, 1
+		, #{bookInfo.id}
+		, #{createdBy.id}
+		, NOW()
+		, #{updatedBy.id}
+		, now()
+		, 0);
 	</insert>
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
 		update book b
@@ -60,6 +62,15 @@
 		</set>
 		where b.`id` = #{id}
 		and b.`revision` = #{entity.revision}
+	</update>
+	<update id="borrow">
+		update book b
+		set b.`borrowable` = 0,
+		    b.`last_updated_time` = now(),
+		    b.`updated_by` = #{updatedBy.id},
+		    b.`revision` = (1 + b.`revision`) % 2147483647
+		where b.`id` = #{id}
+		  and b.`revision` = #{entity.revision}
 	</update>
 	<delete id="delete">
 		delete
