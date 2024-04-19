@@ -6,6 +6,7 @@ import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.utils.Base64Coder;
 import com.lib.bookbrain.utils.Json;
+import com.lib.bookbrain.utils.LogUtils;
 import com.lib.bookbrain.utils.MapFactory;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -53,7 +54,7 @@ public void sendLink(User recipient, String sub) {
 						.fill("email", recipient.getEmail())
 						.fill("link", gLink(recipient.getEmail()))
 						.build().map();
-				return gc(TemplateName.REGISTER, _map);
+				return fillTemplate(TemplateName.REGISTER, _map);
 			}
 	);
 }
@@ -66,7 +67,7 @@ public void sendCode(User recipient, String sub) {
 				Map<String, Object> _map = MapFactory.Builder.builder()
 						.fill("code", recipient.getAuthenticationString())
 						.build().map();
-				return gc(TemplateName.RESET, _map);
+				return fillTemplate(TemplateName.RESET_PASSWORD, _map);
 			}
 	);
 }
@@ -92,12 +93,11 @@ public void send(String recipientEmail, String sub, Supplier<String> sup) {
 					.fill("content", content)
 					.build().map();
 
-			helper.setText(gc(TemplateName.BASE, _map), true);
+			helper.setText(fillTemplate(TemplateName.BASE, _map), true);
 			sender.send(message);
 		}
 	} catch (Exception e) {
-		// e 异常的情况需要记录 todo
-		e.printStackTrace();
+		LogUtils.write(e.getMessage());
 		throw new SendEmailException();
 	}
 }
@@ -123,24 +123,24 @@ private String gRegisterToken(String email) {
  * @param map      数据表
  * @return 模板字符串
  */
-public String gc(String tempPath, Map<String, Object> map) {
+public String fillTemplate(String tempPath, Map<String, Object> map) {
 	try (StringWriter writer = new StringWriter()) {
 		Template template = freemarkerConfig.getTemplate(tempPath);
 		template.process(map, writer);
 		return writer.toString();
 	} catch (IOException | TemplateException e) {
-		// todo
-		e.printStackTrace();
+		LogUtils.write(e.getMessage());
 		throw new TemplateReadException();
 	}
 }
 
-public static class TemplateName {
-	private static final String BASE_URL = "/freemarker/";
-	public static final String BASE = BASE_URL + "base.ftl";
-	public static final String REGISTER = BASE_URL + "register-confirmed.ftl";
-	public static final String RESET = BASE_URL + "reset-confirmed.ftl";
-	public static final String RESET_PASSWORD = BASE_URL + "reset-password.ftl";
-}
 
+public interface TemplateName {
+	String BASE_URL = "/freemarker/";
+	String BASE = BASE_URL + "base.ftl";
+	String REGISTER = BASE_URL + "register-confirmed.ftl";
+	String RESET_PASSWORD = BASE_URL + "reset-confirmed.ftl";
+	String REPAY = BASE_URL + "repay.ftl";
+
+}
 }

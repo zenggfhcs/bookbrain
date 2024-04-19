@@ -1,6 +1,8 @@
 package com.lib.bookbrain.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.lib.bookbrain.model.pojo.TokenInfo;
+import com.lib.bookbrain.utils.Json;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -81,4 +83,17 @@ private static String renderDisplayName() {
 	return "书友" + Long.parseLong(split[split.length - 1], 16);
 }
 
+public static void main(String[] args) {
+	User user = new User();
+	user.setId(1);
+	System.out.println(Json.stringify(user));
+}
+
+public static User fromTokenInfo(TokenInfo info) {
+	User _u = new User();
+	_u.setId(info.getAud());
+	_u.setEmail(info.getEml());
+	_u.setRevision(info.getRev());
+	return _u;
+}
 }

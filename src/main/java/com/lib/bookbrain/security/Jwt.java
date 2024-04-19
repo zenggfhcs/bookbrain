@@ -37,15 +37,33 @@ private static String coder(int id, Algorithm algorithm) {
 	return coder(id, System.currentTimeMillis(), algorithm);
 }
 
-private static String coder(int id, long time, Algorithm algorithm) {
+private static String coder(int id, long lasting, Algorithm algorithm) {
 	long _currentTimeMillis = System.currentTimeMillis();
 	return JWT.create()
 			.withIssuer("sys")
 			.withSubject("valid")
 			.withAudience(String.valueOf(id))
 			.withNotBefore(new Date(_currentTimeMillis))
-			.withExpiresAt(new Date(time + _currentTimeMillis))
+			.withExpiresAt(new Date(lasting + _currentTimeMillis))
 			.withJWTId(UUID.randomUUID().toString())
+			.sign(algorithm);
+}
+
+public static String encoder(TokenInfo tokenInfo, long lasting) {
+	return coder(tokenInfo, lasting, PreDefinedAlgorithm.HMAC);
+}
+
+private static String coder(TokenInfo tokenInfo, long lasting, Algorithm algorithm) {
+	long _currentTimeMillis = System.currentTimeMillis();
+	return JWT.create()
+			.withIssuer(tokenInfo.getIss())
+			.withSubject(tokenInfo.getSub())
+			.withAudience(String.valueOf(tokenInfo.getAud()))
+			.withNotBefore(new Date(_currentTimeMillis))
+			.withExpiresAt(new Date(_currentTimeMillis + lasting))
+			.withJWTId(tokenInfo.getJti())
+			.withClaim("eml", tokenInfo.getEml())
+			.withClaim("rev", tokenInfo.getRev())
 			.sign(algorithm);
 }
 /* === === === === === === === === === === === === ===  === === === === === === === === === === === === === */
@@ -65,6 +83,7 @@ public static TokenInfo decoder(String token) {
 }
 
 public static TokenInfo decoder(String token, Algorithm algorithm) {
+	// todo
 	DecodedJWT deJwt = JWT.require(algorithm)
 			.build()
 			.verify(token); // 解析 jwt

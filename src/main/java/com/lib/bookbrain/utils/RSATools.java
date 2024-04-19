@@ -19,7 +19,7 @@ private static String decrypt(byte[] data) {
 }
 
 public static String decrypt(String dataString) {
-	return decrypt(Base64.getDecoder().decode(dataString.getBytes(StandardCharsets.UTF_8)));
+	return decrypt(dataString.getBytes(StandardCharsets.UTF_8));
 }
 
 
@@ -38,14 +38,16 @@ public static class Reverse {
 	public static String encrypt(String data) {
 		return CryptoHandler.encrypt(data, PreDefinedAlgorithm.Key.RSA_PRIVATE_KEY);
 	}
+
 	public static String decrypt(byte[] data) {
 		return CryptoHandler.decrypt(data, PreDefinedAlgorithm.Key.RSA_PUBLIC_KEY);
 	}
+
 	/**
 	 * 使用公钥解密
 	 */
 	public static String decrypt(String dataString) {
-		return decrypt(Base64.getDecoder().decode(dataString.getBytes(StandardCharsets.UTF_8)));
+		return decrypt(Base64Coder.decode(dataString.getBytes(StandardCharsets.UTF_8)));
 	}
 
 	public static void main(String[] args) {
@@ -57,37 +59,41 @@ public static class Reverse {
 }
 
 
-}
+public static class CryptoHandler {
+	/**
+	 * 加密
+	 */
+	public static String encrypt(String data, Key key) {
+		try {
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.ENCRYPT_MODE, key);
+			return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes()));
+		} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
+		         InvalidKeyException e) {
+			// todo 记录异常情况
+			throw new DataStructureException();
+		}
+	}
 
-class CryptoHandler {
-/**
- * 加密
- */
-public static String encrypt(String data, Key key) {
-	try {
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.ENCRYPT_MODE, key);
-		return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes()));
-	} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
-	         InvalidKeyException e) {
-		// todo 记录异常情况
-		throw new DataStructureException();
+	public static String decrypt(String data, Key key) {
+		return decrypt(data.getBytes(StandardCharsets.UTF_8), key);
+	}
+
+	/**
+	 * 解密
+	 */
+	public static String decrypt(byte[] data, Key key) {
+		try {
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.DECRYPT_MODE, key);
+
+			return new String(cipher.doFinal(data));
+		} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
+		         InvalidKeyException e) {
+			// todo 记录异常情况
+			throw new DataStructureException();
+		}
 	}
 }
-
-/**
- * 解密
- */
-public static String decrypt(byte[] data, Key key) {
-	try {
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.DECRYPT_MODE, key);
-
-		return new String(cipher.doFinal(data));
-	} catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
-	         InvalidKeyException e) {
-		// todo 记录异常情况
-		throw new DataStructureException();
-	}
 }
-}
+

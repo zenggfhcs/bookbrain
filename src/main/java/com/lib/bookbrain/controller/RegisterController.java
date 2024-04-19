@@ -18,7 +18,7 @@ private final UserService userService;
 
 @PostMapping
 public Response register(@RequestBody(required = false) User user) {
-	Payload<User> _payload = Payload.gByEntity(user);
+	Payload<User> _payload = Payload.fromEntity(user);
 	return userService.register(_payload);
 }
 }

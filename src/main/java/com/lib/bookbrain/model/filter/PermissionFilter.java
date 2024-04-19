@@ -1,4 +1,4 @@
 package com.lib.bookbrain.model.filter;
 
-public class PermissionFilter extends BaseFilter{
+public class PermissionFilter extends BaseFilter {
 }

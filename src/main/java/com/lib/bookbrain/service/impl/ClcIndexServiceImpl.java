@@ -13,6 +13,8 @@ import com.lib.bookbrain.service.ClcIndexService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ClcIndexServiceImpl implements ClcIndexService {
@@ -54,5 +56,17 @@ public Response delete(Payload<ClcIndex> payload) {
 @Override
 public Response filteredList(FilterPayload<ClcIndex, ClcIndexFilter> payload) {
 	return baseService.filteredList(payload);
+}
+
+@Override
+public Response firstLevel() {
+	List<ClcIndex> _list = clcIndexMapper.firstLevel();
+	return Response.success(_list);
+}
+
+@Override
+public Response getByKeyword(String key) {
+	List<ClcIndex> _list = clcIndexMapper.getByKeyword(key);
+	return Response.success(_list);
 }
 }

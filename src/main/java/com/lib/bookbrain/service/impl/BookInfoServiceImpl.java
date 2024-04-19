@@ -11,7 +11,6 @@ import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.BookInfoFilter;
-import com.lib.bookbrain.model.pojo.BookType;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BookInfoService;
 import org.springframework.stereotype.Service;
@@ -66,12 +65,6 @@ public Response delete(Payload<BookInfo> payload) {
 @Override
 public Response filteredList(FilterPayload<BookInfo, BookInfoFilter> payload) {
 	return baseService.filteredList(payload);
-}
-
-@Override
-public Response getTypeByKeyword(String keyword) {
-	List<BookType> _list = bookInfoMapper.getTypeByKeyword(keyword);
-	return Response.success(_list);
 }
 
 @Override

@@ -1,9 +1,9 @@
 package com.lib.bookbrain.dao;
 
+import com.lib.bookbrain.model.entity.ClcIndex;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.filter.ClcIndexFilter;
-import com.lib.bookbrain.model.entity.ClcIndex;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -25,4 +25,8 @@ List<ClcIndex> filteredList(FilterPayload<ClcIndex, ClcIndexFilter> payload);
 
 int getLengthByFilter(FilterPayload<ClcIndex, ClcIndexFilter> payload);
 /* ============================ 继承 ============================ */
+
+List<ClcIndex> firstLevel();
+
+List<ClcIndex> getByKeyword(String key);
 }

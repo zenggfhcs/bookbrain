@@ -1,7 +1,5 @@
 package com.lib.bookbrain.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +17,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 @EnableAsync
 public class ExecutorConfiguration {
-
-private static final Logger logger = LoggerFactory.getLogger(ExecutorConfiguration.class);
 
 @Value("${async.executor.thread.core_pool_size}")
 private int corePoolSize;

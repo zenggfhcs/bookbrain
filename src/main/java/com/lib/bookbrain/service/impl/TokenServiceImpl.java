@@ -2,6 +2,8 @@ package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.model.entity.TokenBody;
+import com.lib.bookbrain.model.entity.User;
+import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.pojo.Token;
 import com.lib.bookbrain.model.pojo.TokenInfo;
@@ -20,9 +22,10 @@ private final long LONG_TOKEN_VALIDITY_TIME;
 
 private final SimpleThreadContext<TokenInfo> threadContext;
 
-public TokenServiceImpl(@Value("${token.validityTime.short}") Long _short, @Value("${token.validityTime.long}") Long _long, SimpleThreadContext<TokenInfo> threadContext) {
-	SHORT_TOKEN_VALIDITY_TIME = _short;
-	LONG_TOKEN_VALIDITY_TIME = _long;
+public TokenServiceImpl(@Value("${token.validityTime.short}") Long shortTime, @Value("${token.validityTime.long}") Long longTime, SimpleThreadContext<TokenInfo> threadContext) {
+
+	SHORT_TOKEN_VALIDITY_TIME = shortTime;
+	LONG_TOKEN_VALIDITY_TIME = longTime;
 	this.threadContext = threadContext;
 }
 
@@ -72,4 +75,23 @@ public TokenBody issue(Integer id, boolean refreshShort, boolean refreshLong) {
 
 	return _body;
 }
+
+@Override
+public String issue(TokenInfo tokenInfo) {
+	return Jwt.encoder(tokenInfo, SHORT_TOKEN_VALIDITY_TIME);
+}
+
+@Override
+public Response verify(Payload<TokenBody> payload) {
+	String _token = payload.getEntity().getToken();
+	TokenInfo _info = Jwt.decoder(_token);
+	User _u = User.fromTokenInfo(_info);
+	return Response.success(_u);
+}
+
+@Override
+public TokenInfo verify(String token) {
+	return Jwt.decoder(token);
+}
+
 }

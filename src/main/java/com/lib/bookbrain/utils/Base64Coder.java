@@ -67,7 +67,12 @@ public static String decode(String data) {
 }
 
 public static byte[] decode(byte[] data) {
-	return Base64.getDecoder().decode(data);
+	try {
+		return Base64.getDecoder().decode(data);
+	} catch (Exception e) {
+		e.printStackTrace();
+		throw new DataStructureException();
+	}
 }
 
 public static void main(String[] args) {

@@ -48,7 +48,7 @@ public static Payload<Entity> getOrNew(Object objPayload) {
  * @param <E> AuditInfo
  * @return 封装了实体的载体对象
  */
-public static <E extends Entity> Payload<E> gByEntity(E e) {
+public static <E extends Entity> Payload<E> fromEntity(E e) {
 	Payload<E> _p = new Payload<>();
 	_p.setEntity(e);
 	return _p;

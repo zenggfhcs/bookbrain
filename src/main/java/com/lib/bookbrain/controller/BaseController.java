@@ -29,14 +29,14 @@ public Response get(@PathVariable Integer id) {
 
 @PostMapping
 public Response create(@RequestBody E entity) {
-	Payload<E> _p = Payload.gByEntity(entity);
+	Payload<E> _p = Payload.fromEntity(entity);
 	return baseService.create(_p);
 }
 
 
 @PatchMapping("/{id}")
 public Response update(@RequestBody E entity, @PathVariable Integer id) {
-	Payload<E> _p = Payload.gByEntity(entity);
+	Payload<E> _p = Payload.fromEntity(entity);
 	_p.setId(id);
 	return baseService.update(_p);
 }

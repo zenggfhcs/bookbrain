@@ -8,7 +8,6 @@ import com.lib.bookbrain.model.filter.BookInfoFilter;
 import java.util.List;
 
 public interface BookInfoService extends BaseService<BookInfo, BookInfoFilter> {
-Response getTypeByKeyword(String key);
 
 Response getFirstLevelType();
 

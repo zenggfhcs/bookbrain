@@ -157,13 +157,15 @@
 
 	<select id="getByEmail" resultType="com.lib.bookbrain.model.entity.User">
 		select u.`email`,
-		u.`revision`
+		       u.`revision`,
+		       now() as creation_time
 		from user u
 		where u.`email` = #{email}
-		|| u.`email_normal` =
-		concat(substring_index(substring_index(#{email}, '@', 1), '+', 1),
-		'@',
-		substring_index(#{email}, '@', -1));
+			      || u.`email_normal` =
+			         concat(substring_index(substring_index(#{email}, '@', 1), '+', 1),
+			                '@',
+			                substring_index(#{email}, '@', -1))
+		limit 1;
 	</select>
 
 	<insert id="addUserRole">
@@ -186,8 +188,11 @@
 
 	<update id="resetPassword">
 		update user u
-		set u.authentication_string = MD5(#{authenticationString,jdbcType=VARCHAR})
-		where u.email = #{email};
+		set u.`authentication_string` = MD5(#{authenticationString,jdbcType=VARCHAR}),
+		    u.`last_updated_time`     = now(),
+		    u.`revision`              = (FLOOR(RAND() * 100) + 7 + u.`revision`) % 2147483647
+		where u.`email` = #{email}
+		  and u.`revision` = #{revision};
 	</update>
 
 	<select id="filteredList" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.FilterPayload">

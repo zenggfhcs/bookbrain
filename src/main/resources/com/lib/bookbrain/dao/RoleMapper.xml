@@ -2,15 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.RoleMapper">
 	<select id="getById" resultType="com.lib.bookbrain.model.entity.Role">
+		select *
+		from role r
+		where r.`id` = #{id};
 	</select>
 
 	<insert id="insert">
+		insert into role(name, created_by, creation_time, updated_by, last_updated_time, revision, remark)
+		values (#{name}, #{createdBy.id}, now(), #{updatedBy.id}, now(), 0, #{remark})
 	</insert>
 
 	<update id="update">
 	</update>
 
 	<delete id="delete">
+		delete
+		from role
+		where `id` = #{id}
 	</delete>
 
 	<select id="getToUpdate" resultType="com.lib.bookbrain.model.entity.Role">
@@ -22,6 +30,13 @@
 		<where>
 
 		</where>
+		<trim>
+			<if test="filter != null">
+				<if test="filter.page != null">
+					limit #{filter.page.start}, #{filter.page.end};
+				</if>
+			</if>
+		</trim>
 	</select>
 
 	<select id="getLengthByFilter" resultType="int">
@@ -30,5 +45,11 @@
 		<where>
 
 		</where>
+	</select>
+	<select id="getByUserId" resultType="com.lib.bookbrain.model.entity.Role">
+		select r.*
+		from user_role ur
+			     inner join role r on ur.`role_id` = r.`id`
+		where ur.`user_id` = #{id}
 	</select>
 </mapper>

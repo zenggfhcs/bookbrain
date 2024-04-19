@@ -12,11 +12,11 @@ public enum State {
 	/**
 	 * 关
 	 */
-	DISABLE(Value.i00),
+	DISABLE(0),
 	/**
 	 * 开
 	 */
-	ENABLE(Value.i01),
+	ENABLE(1),
 	;
 
 private final Integer value;

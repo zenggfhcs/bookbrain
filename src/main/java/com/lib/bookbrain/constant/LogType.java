@@ -12,6 +12,7 @@ public enum LogType {
 	R("select"),
 
 	D("delete"),
+
 	;
 
 private final String value;

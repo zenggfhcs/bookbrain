@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface RoleMapper extends BaseMapper<Role, RoleFilter>{
+public interface RoleMapper extends BaseMapper<Role, RoleFilter> {
 /* ============================ 继承 ============================ */
 Role getById(Payload<Role> payload);
 
@@ -24,6 +24,8 @@ Role getToUpdate(Payload<Role> payload);
 List<Role> filteredList(FilterPayload<Role, RoleFilter> payload);
 
 int getLengthByFilter(FilterPayload<Role, RoleFilter> payload);
+
+Role getByUserId(Integer userId);
 /* ============================ 继承 ============================ */
 
 }

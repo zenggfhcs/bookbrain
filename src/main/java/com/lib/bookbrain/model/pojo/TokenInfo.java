@@ -1,5 +1,6 @@
 package com.lib.bookbrain.model.pojo;
 
+import com.lib.bookbrain.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,4 +38,22 @@ private Long exp;
  * 编号
  */
 private String jti;
+
+/**
+ * 邮箱
+ */
+private String eml;
+
+/**
+ * 版本号
+ */
+private Integer rev;
+
+public static TokenInfo fromUser(User user) {
+	TokenInfo _info = new TokenInfo();
+	_info.setAud(user.getId());
+	_info.setEml(user.getEmail());
+	_info.setRev(user.getRevision());
+	return _info;
+}
 }

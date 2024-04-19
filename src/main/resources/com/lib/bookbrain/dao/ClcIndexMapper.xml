@@ -31,4 +31,17 @@
 
 		</where>
 	</select>
+	<select id="firstLevel" resultType="com.lib.bookbrain.model.entity.ClcIndex">
+		select *
+		from clc_index ci
+		where ci.`parent` is null;
+	</select>
+
+
+	<select id="getByKeyword" resultType="com.lib.bookbrain.model.entity.ClcIndex">
+		select ci.id, ci.`key`, ci.value
+		from clc_index ci
+		where ci.`key` like concat(#{keyword}, '%')
+		limit 50;
+	</select>
 </mapper>

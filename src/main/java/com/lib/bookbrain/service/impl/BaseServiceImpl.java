@@ -79,6 +79,7 @@ public Response create(Payload<E> payload) {
 		return Response.error(ResponseInfo.CREATE_DATA_ERROR);
 	}
 	{
+		// todo 检查内容
 		TokenInfo _info = threadContext.get();
 		User _operator = new User();
 		_operator.setId(_info.getAud());

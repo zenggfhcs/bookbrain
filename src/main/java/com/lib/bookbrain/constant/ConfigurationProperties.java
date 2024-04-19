@@ -5,7 +5,10 @@ String[] REQUEST_INTERCEPTOR_EXCLUDE = {
 		"/users:login",
 		"/users:register",
 		"/",
-		"/users/password:reset/email:sendResetLink"
+		"/users/password:reset/email:sendResetLink",
+		"/token:verify",
+		"/token:refresh",
+		"/users/password:reset",
 };
 
 }

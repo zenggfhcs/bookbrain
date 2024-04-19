@@ -31,11 +31,6 @@ public BookInfoController(BookInfoService bookInfoService, UploadService uploadS
 	this.uploadService = uploadService;
 }
 
-@GetMapping("/bookType/{key}")
-public Response bookType(@PathVariable String key) {
-	return bookInfoService.getTypeByKeyword(key);
-}
-
 @PostMapping("/cover:upload")
 public Response cover(@RequestParam MultipartFile file) {
 	return uploadService.upload(file);

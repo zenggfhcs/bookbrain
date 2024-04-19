@@ -1,19 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.PermissionMapper">
-	<select id="getById" resultType="com.lib.bookbrain.model.entity.Permission">
+	<resultMap id="baseResultMap" type="com.lib.bookbrain.model.entity.Permission">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="remark" property="remark" jdbcType="DATE"/>
+		<result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
+		<result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
+		<result property="revision" column="revision" jdbcType="INTEGER"/>
+		<association property="createdBy" column="created_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+	</resultMap>
+	<select id="getById" resultMap="baseResultMap">
+		select *
+		from permission p
+		where p.`id` = #{id}
 	</select>
 
 	<insert id="insert">
+		insert into permission(name, url, created_by, creation_time, updated_by, last_updated_time, revision, remark)
+		values (#{name}, #{url}, #{createdBy.id}, now(), #{updatedBy.id}, now(), 0, #{remark})
 	</insert>
 
-	<update id="update">
+	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
+		update permission p
+		<set>
+			<if test="entity != null">
+				<if test="entity.name != null and entity.name != ''">
+					p.`name` = #{entity.name},
+				</if>
+				<if test="entity.url != null and entity.url != ''">
+					p.`url` = #{entity.url},
+				</if>
+				<if test="entity.remark != null and entity.remark != ''">
+					p.`remark` = #{entity.remark},
+				</if>
+				<if test="entity.updatedBy != null">
+					p.`updated_by` = #{entity.updatedBy.id},
+				</if>
+			</if>
+			<if test="1 == 1">
+				p.`last_updated_time` = now(),
+				p.`revision` = (1 + p.`revision`) % 2147483647,
+			</if>
+		</set>
+		<where>
+			<if test="1 == 1">
+				p.`id` = #{id}
+				and p.`revision` = #{entity.revision}
+			</if>
+		</where>
 	</update>
 
 	<delete id="delete">
+		delete
+		from permission
+		where id = #{id}
 	</delete>
 
-	<select id="getToUpdate" resultType="com.lib.bookbrain.model.entity.Permission">
+	<select id="getToUpdate" parameterType="com.lib.bookbrain.model.exchange.Payload" resultMap="baseResultMap">
+		select
+		<trim suffixOverrides=",">
+			<if test="entity != null">
+				<if test="entity.name != null and entity.name != ''">
+					p.`name`,
+				</if>
+				<if test="entity.url != null and entity.url != ''">
+					p.`url`,
+				</if>
+				<if test="entity.remark != null and entity.remark != ''">
+					p.`remark`,
+				</if>
+			</if>
+		</trim>
+		from permission p
+		where p.`id` = #{id}
 	</select>
 
 	<select id="filteredList" resultType="com.lib.bookbrain.model.entity.Permission">
@@ -21,6 +85,13 @@
 		from permission p
 		<where>
 		</where>
+		<trim>
+			<if test="filter != null">
+				<if test="filter.page != null">
+					limit #{filter.page.start}, #{filter.page.end};
+				</if>
+			</if>
+		</trim>
 	</select>
 
 	<select id="getLengthByFilter" resultType="int">

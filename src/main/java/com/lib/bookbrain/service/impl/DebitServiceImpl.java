@@ -12,7 +12,11 @@ import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.DebitFilter;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.DebitService;
+import com.lib.bookbrain.service.MailService;
+import com.lib.bookbrain.utils.MapFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * @author yunxia
@@ -24,8 +28,11 @@ private final DebitMapper debitMapper;
 
 private final BaseServiceImpl<Debit, DebitFilter> baseService;
 
-public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> threadContext) {
+private final MailService mailService;
+
+public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> threadContext, MailService mailService) {
 	this.debitMapper = debitMapper;
+	this.mailService = mailService;
 	baseService = new BaseServiceImpl<>(threadContext, debitMapper);
 }
 
@@ -60,5 +67,22 @@ public Response delete(Payload<Debit> payload) {
 @Override
 public Response filteredList(FilterPayload<Debit, DebitFilter> payload) {
 	return baseService.filteredList(payload);
+}
+
+@Override
+public Response repay(Payload<Debit> payload) {
+	repay(payload.getEntity());
+	return Response.success();
+}
+
+void repay(Debit debit) {
+	String sub = "借阅到期";
+	String _eml = debit.getCreatedBy().getEmail();
+	mailService.send(_eml, sub, () -> {
+		Map<String, Object> _map = MapFactory.Builder.builder()
+				.fill("debit", debit)
+				.build().map();
+		return mailService.fillTemplate(MailService.TemplateName.REPAY, _map);
+	});
 }
 }

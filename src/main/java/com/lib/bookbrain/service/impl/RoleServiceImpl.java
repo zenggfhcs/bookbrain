@@ -19,10 +19,14 @@ private final RoleMapper roleMapper;
 
 private final BaseService<Role, RoleFilter> baseService;
 
+private final SimpleThreadContext<TokenInfo> threadContext;
+
 public RoleServiceImpl(SimpleThreadContext<TokenInfo> threadContext, RoleMapper roleMapper) {
+	this.threadContext = threadContext;
 	this.roleMapper = roleMapper;
 	baseService = new BaseServiceImpl<>(threadContext, roleMapper);
 }
+
 @Override
 public Response list() {
 	return baseService.list();
@@ -52,4 +56,12 @@ public Response delete(Payload<Role> payload) {
 public Response filteredList(FilterPayload<Role, RoleFilter> payload) {
 	return baseService.filteredList(payload);
 }
+
+@Override
+public Response tokenRole() {
+	TokenInfo _tokenInfo = threadContext.get();
+	Role _r = roleMapper.getByUserId(_tokenInfo.getAud());
+	return Response.success(_r);
+}
+
 }
