@@ -6,10 +6,7 @@ import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.DebitFilter;
 import com.lib.bookbrain.service.DebitService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Debit controller
@@ -27,10 +24,15 @@ public DebitController(DebitService debitService) {
 	this.debitService = debitService;
 }
 
-@PostMapping("/{id}:repay")
+@PostMapping("/{id}/repay")
 public Response repay(@RequestBody Debit debit) {
 	Payload<Debit> _payload = Payload.fromEntity(debit);
 	return debitService.repay(_payload);
+}
+
+@GetMapping("/todayDebitCount")
+public Response getTodayDebitCount() {
+	return debitService.getTodayDebitCount();
 }
 
 }

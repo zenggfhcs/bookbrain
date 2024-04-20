@@ -58,5 +58,7 @@ void addUserCondition(Payload<User> payload);
 void verifyEmail(String email);
 
 int resetPassword(User entity);
+
+User getByOperatorId(Integer id);
 /* ============================ 拓展 ============================ */
 }

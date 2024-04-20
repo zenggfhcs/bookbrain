@@ -136,4 +136,10 @@ public Response escheat(Book book) {
 	}
 	return Response.success();
 }
+
+@Override
+public Response getByBookInfoId(Integer id) {
+	List<Book> _list = bookMapper.getByBookInfoId(id);
+	return Response.success(_list);
+}
 }

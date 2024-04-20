@@ -75,6 +75,12 @@ public Response repay(Payload<Debit> payload) {
 	return Response.success();
 }
 
+@Override
+public Response getTodayDebitCount() {
+	int _dc = debitMapper.getTodayDebitCount();
+	return Response.success(_dc);
+}
+
 void repay(Debit debit) {
 	String sub = "借阅到期";
 	String _eml = debit.getCreatedBy().getEmail();

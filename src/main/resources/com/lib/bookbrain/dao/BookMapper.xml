@@ -10,8 +10,8 @@
 		<result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
 		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
 		<result column="revision" jdbcType="INTEGER" property="revision"/>
-		<association column="book_info_id" property="bookInfo" javaType="com.lib.bookbrain.model.entity.BookInfo"
-		             select="com.lib.bookbrain.dao.BookInfoMapper.getById"/>
+		<association property="bookInfo" column="book_info_id" javaType="com.lib.bookbrain.model.entity.BookInfo"
+		             select="com.lib.bookbrain.dao.BookInfoMapper.getInfoById"/>
 		<association property="createdBy" column="created_by" javaType="com.lib.bookbrain.model.entity.User"
 		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
@@ -28,15 +28,15 @@
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
 	        parameterType="com.lib.bookbrain.model.entity.Book">
 		insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
-		`last_updated_time`, `revision`)
+		                  `last_updated_time`, `revision`)
 		VALUES ( #{damageLevel}
-		, 1
-		, #{bookInfo.id}
-		, #{createdBy.id}
-		, NOW()
-		, #{updatedBy.id}
-		, now()
-		, 0);
+		       , 1
+		       , #{bookInfo.id}
+		       , #{createdBy.id}
+		       , NOW()
+		       , #{updatedBy.id}
+		       , now()
+		       , 0);
 	</insert>
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
 		update book b
@@ -65,28 +65,28 @@
 	</update>
 	<update id="borrow">
 		update book b
-		set b.`borrowable` = 0,
+		set b.`borrowable`        = 0,
 		    b.`last_updated_time` = now(),
-		    b.`updated_by` = #{updatedBy.id},
-		    b.`revision` = (1 + b.`revision`) % 2147483647
+		    b.`updated_by`        = #{updatedBy.id},
+		    b.`revision`          = (1 + b.`revision`) % 2147483647
 		where b.`id` = #{id}
 		  and b.`revision` = #{entity.revision}
 	</update>
 	<delete id="delete">
-		delete
+		delete b
 		from book b
 		where b.`id` = #{id}
 	</delete>
 	<select id="getById" resultMap="BaseResultMap">
 		select b.`id`,
-		b.`damage_level`,
-		b.`borrowable`,
-		b.`book_info_id`,
-		b.`created_by`,
-		b.`creation_time`,
-		b.`updated_by`,
-		b.`last_updated_time`,
-		b.`revision`
+		       b.`damage_level`,
+		       b.`borrowable`,
+		       b.`book_info_id`,
+		       b.`created_by`,
+		       b.`creation_time`,
+		       b.`updated_by`,
+		       b.`last_updated_time`,
+		       b.`revision`
 		from book b
 		where b.`id` = #{id}
 	</select>
@@ -122,5 +122,19 @@
 		from book b
 		<where>
 		</where>
+	</select>
+	<select id="getDebitBookById" resultMap="BaseResultMap">
+		select b.`id`,
+		       b.`book_info_id`,
+		       b.`damage_level`,
+		       b.`borrowable`,
+		       b.`revision`
+		from book b
+		where b.`id` = #{id}
+	</select>
+	<select id="getByBookInfoId" resultType="com.lib.bookbrain.model.entity.Book">
+		select *
+		from book b
+		where b.`book_info_id` = #{id};
 	</select>
 </mapper>

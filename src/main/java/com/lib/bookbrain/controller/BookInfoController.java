@@ -36,7 +36,7 @@ public Response cover(@RequestParam MultipartFile file) {
 	return uploadService.upload(file);
 }
 
-@GetMapping("/bookType/firstLevel")
+@PostMapping("/bookType:firstLevel")
 public Response firstLevelType() {
 	return bookInfoService.getFirstLevelType();
 }
@@ -46,9 +46,14 @@ public Response quickQuery(@RequestBody FilterPayload<BookInfo, BookInfoFilter> 
 	return bookInfoService.quickQuery(payload);
 }
 
-@GetMapping("/bookType{bookType}")
+@GetMapping("/bookType/{bookType}")
 public Response typeQuery(@PathVariable String bookType, @RequestParam List<String> orders) {
 	return bookInfoService.typeQuery(bookType, orders);
+}
+
+@GetMapping("/keyword/{key}")
+public Response getByKeyword(@PathVariable String key) {
+	return bookInfoService.getByKeyword(key);
 }
 
 }

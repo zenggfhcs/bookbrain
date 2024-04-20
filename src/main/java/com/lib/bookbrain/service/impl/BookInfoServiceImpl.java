@@ -87,4 +87,10 @@ public Response typeQuery(String bookType, List<String> orders) {
 	return null;
 }
 
+@Override
+public Response getByKeyword(String key) {
+	List<BookInfo> _list = bookInfoMapper.getByKeyword(key);
+	return Response.success(_list);
+}
+
 }

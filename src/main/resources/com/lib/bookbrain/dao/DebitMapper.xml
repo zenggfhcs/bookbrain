@@ -9,7 +9,7 @@
 		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
 		<result column="revision" jdbcType="INTEGER" property="revision"/>
 		<association property="book" javaType="com.lib.bookbrain.model.entity.Book" column="book_id"
-		             select="com.lib.bookbrain.dao.BookMapper.getById"/>
+		             select="com.lib.bookbrain.dao.BookMapper.getDebitBookById"/>
 		<association property="createdBy" column="created_by" javaType="com.lib.bookbrain.model.entity.User"
 		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
@@ -25,14 +25,12 @@
 	</select>
 	<select id="getById" resultMap="BaseResultMap">
 		select distinct d.`id`,
-		d.`book_id`,
-		d.`return_deadline`,
-		d.`return_date`,
-		d.`created_by`,
-		d.`creation_time`,
-		d.`updated_by`,
-		d.`last_updated_time`,
-		d.`revision`
+		                d.`book_id`,
+		                d.`return_deadline`,
+		                d.`return_date`,
+		                d.`created_by`,
+		                d.`creation_time`,
+		                d.`revision`
 		from debit d
 		where d.`id` = #{id}
 	</select>
@@ -146,5 +144,17 @@
 			     from debit d
 				          inner join book b on d.`book_id` = b.`id`
 			     where d.`created_by` = #{userId})
+	</select>
+	<select id="getTodayDebitCount" resultType="java.lang.Integer">
+		select count(*)
+		from debit d
+		where date(d.`creation_time`) = current_date
+	</select>
+	<select id="getTodayDebitReturnCount" resultType="java.lang.Integer">
+		select count(*)
+		from debit d
+		where d.`return_date` is not null
+		  and date(d.`return_date`) = current_date
+		  and date(d.`last_updated_time`) = current_date
 	</select>
 </mapper>

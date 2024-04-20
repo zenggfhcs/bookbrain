@@ -30,4 +30,6 @@ Response getBookInfoByKeyword(String key);
 Response borrow(Book book);
 
 Response escheat(Book book);
+
+Response getByBookInfoId(Integer id);
 }

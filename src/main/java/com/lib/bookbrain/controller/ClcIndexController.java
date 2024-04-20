@@ -25,7 +25,7 @@ public Response firstLevel() {
 	return clcIndexService.firstLevel();
 }
 
-@GetMapping("/{key}")
+@GetMapping("/{key}:startWith")
 public Response bookType(@PathVariable String key) {
 	return clcIndexService.getByKeyword(key);
 }

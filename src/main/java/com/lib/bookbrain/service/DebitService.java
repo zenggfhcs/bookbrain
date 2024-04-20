@@ -7,4 +7,6 @@ import com.lib.bookbrain.model.filter.DebitFilter;
 
 public interface DebitService extends BaseService<Debit, DebitFilter> {
 Response repay(Payload<Debit> payload);
+
+Response getTodayDebitCount();
 }

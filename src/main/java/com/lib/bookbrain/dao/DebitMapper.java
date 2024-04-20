@@ -38,4 +38,8 @@ List<Debit> getExpiredByUserId(Integer userId);
 int getBookCountByBookIdAndUserId(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
 
 int escheat(Book book);
+
+int getTodayDebitCount();
+
+int getTodayDebitReturnCount();
 }

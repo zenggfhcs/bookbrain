@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.PermissionMapper">
-	<resultMap id="baseResultMap" type="com.lib.bookbrain.model.entity.Permission">
+	<resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Permission">
 		<id column="id" property="id" jdbcType="INTEGER"/>
 		<result column="name" property="name" jdbcType="VARCHAR"/>
 		<result column="url" property="url" jdbcType="VARCHAR"/>
@@ -14,7 +14,7 @@
 		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
 		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 	</resultMap>
-	<select id="getById" resultMap="baseResultMap">
+	<select id="getById" resultMap="BaseResultMap">
 		select *
 		from permission p
 		where p.`id` = #{id}
@@ -61,7 +61,7 @@
 		where id = #{id}
 	</delete>
 
-	<select id="getToUpdate" parameterType="com.lib.bookbrain.model.exchange.Payload" resultMap="baseResultMap">
+	<select id="getToUpdate" parameterType="com.lib.bookbrain.model.exchange.Payload" resultMap="BaseResultMap">
 		select
 		<trim suffixOverrides=",">
 			<if test="entity != null">

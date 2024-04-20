@@ -32,9 +32,9 @@ public Response getBookDamageLevelList() {
 	return bookService.getBookDamageLevelList();
 }
 
-@GetMapping("/bookInfo/{key}")
-public Response getBookInfoByKeyword(@PathVariable String key) {
-	return bookService.getBookInfoByKeyword(key);
+@GetMapping("/bookInfoId/{id}")
+public Response getByBookInfoId(@PathVariable Integer id) {
+	return bookService.getByBookInfoId(id);
 }
 
 }

@@ -15,4 +15,5 @@ Response quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload);
 
 Response typeQuery(String bookType, List<String> orders);
 
+Response getByKeyword(String key);
 }

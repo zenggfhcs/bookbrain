@@ -38,4 +38,8 @@ List<BookType> getTypeByKeyword(String keyword);
 List<ClcIndex> getFirstLevelType();
 
 List<BookInfo> quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload);
+
+BookInfo getInfoById(Integer id);
+
+List<BookInfo> getByKeyword(String keyword);
 }

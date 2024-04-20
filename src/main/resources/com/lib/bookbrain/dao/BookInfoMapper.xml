@@ -121,11 +121,11 @@
 			</if>
 			<if test="1 == 1">
 				bif.`last_updated_time` = NOW(),
-				bif.`revision`          = (1 + bif.`revision`) % 2147483647,
+				bif.`revision` = (1 + bif.`revision`) % 2147483647,
 			</if>
 		</set>
 		where bif.`id` = #{id}
-		  and bif.`revision` = #{entity.revision}
+		and bif.`revision` = #{entity.revision}
 	</update>
 	<delete id="delete">
 		delete bif
@@ -263,5 +263,30 @@
 			</if>
 		</trim>
 	</select>
+	<select id="getInfoById" resultMap="BaseResultMap">
+		select distinct bif.`id`,
+		                bif.`isbn`,
+		                bif.`cip`,
+		                bif.`book_name`,
+		                bif.`book_type`,
+		                bif.`cover`,
+		                bif.`author`,
+		                bif.`describe`,
+		                bif.`published_date`,
+		                bif.`publisher`,
+		                bif.`edition`,
+		                bif.`printing`,
+		                bif.`keyword`,
+		                bif.`lang`,
+		                bif.`price`
+		from book_info bif
+		where bif.`id` = #{id}
+	</select>
 
+	<select id="getByKeyword" resultMap="BaseResultMap">
+		select *
+		from book_info bif
+		where bif.`id` = #{keyword}
+			or bif.`book_name` like concat('%', #{keyword}, '%');
+	</select>
 </mapper>
