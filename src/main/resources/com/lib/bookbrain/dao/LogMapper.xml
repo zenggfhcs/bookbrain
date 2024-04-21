@@ -27,13 +27,13 @@
 	<insert id="create" keyProperty="id" keyColumn="id"
 	        useGeneratedKeys="true" parameterType="com.lib.bookbrain.model.entity.Log">
 		insert into log(`type`, `service_name`, `input`, `output`, `elapsed_time`, `creation_time`,
-		`created_by`)
+		                `created_by`)
 		values (#{type}, #{serviceName}, #{input}, #{output}, #{elapsedTime}, now(), #{createdBy.id})
 	</insert>
 	<update id="alter" parameterType="com.lib.bookbrain.model.entity.Log">
 		update log l
 		set l.`elapsed_time` = #{elapsedTime},
-		l.`output`=#{output}
+		    l.`output`=#{output}
 		where l.`id` = #{id}
 	</update>
 

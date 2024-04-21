@@ -39,4 +39,6 @@ int borrow(Book book);
 Book getDebitBookById(Integer id);
 
 List<Book> getByBookInfoId(Integer id);
+
+List<Book> getBorrowableBookListByBookInfoId(Integer id);
 }

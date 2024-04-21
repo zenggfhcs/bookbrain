@@ -42,7 +42,7 @@
 	</delete>
 
 	<insert id="insert" parameterType="com.lib.bookbrain.model.entity.Debit" useGeneratedKeys="true"
-	        keyProperty="entity.debitId">
+	        keyProperty="id">
 		insert into debit (`book_id`, `return_deadline`,
 		                   `return_date`, `created_by`, `creation_time`,
 		                   `updated_by`, `last_updated_time`, `revision`)
@@ -75,13 +75,16 @@
 		</set>
 		where d.`id` = #{id}
 	</update>
-	<update id="escheat">
-		update debit d
-		set d.`return_date`       = curdate(),
+
+	<update id="restore">
+		update debit d, book b
+		set b.`borrowable`        = 1,
+		    d.`return_date`       = curdate(),
 		    d.`last_updated_time` = now(),
 		    d.`revision`          = (1 + d.`revision`) % 2147483647,
 		    d.`updated_by`        = #{updatedBy.id}
-		where d.`book_id` = #{id}
+		where d.`id` = #{id}
+		  and d.`book_id` = b.`id`
 		  and d.return_date is null
 		  and d.`revision` = #{revision}
 	</update>
@@ -156,5 +159,41 @@
 		where d.`return_date` is not null
 		  and date(d.`return_date`) = current_date
 		  and date(d.`last_updated_time`) = current_date
+	</select>
+	<select id="getCurrentDebitCountByUser" resultType="java.lang.Integer">
+		select count(*)
+		from debit d
+		where d.`created_by` = #{id}
+		  and d.`return_date` is null;
+	</select>
+	<select id="getCurrentExpiredDebitCountByUser" resultType="java.lang.Integer">
+		select count(*)
+		from debit d
+		where d.`created_by` = #{id}
+		  and d.`return_date` is null
+		  and now() > d.`return_deadline`
+		limit 1;
+	</select>
+	<select id="getCurrentDebitHasTheBookInfoByUserId" parameterType="com.lib.bookbrain.model.exchange.Payload"
+	        resultType="java.lang.Boolean">
+		select (
+			       #{bookInfoId}
+				       in
+			       (select distinct b.`book_info_id`
+			        from debit d
+				             inner join book b on d.`book_id` = b.`id`
+			        where d.`created_by` = #{userId}
+				       and d.`return_date` is null)
+			       );
+	</select>
+	<select id="getCurrentUnreturnedByUser" resultMap="BaseResultMap">
+		select d.`id`,
+		       d.`book_id`,
+		       d.`return_deadline`,
+		       d.`creation_time`,
+		       d.`revision`
+		from debit d
+		where d.`created_by` = #{id}
+		  and d.`return_date` is null
 	</select>
 </mapper>

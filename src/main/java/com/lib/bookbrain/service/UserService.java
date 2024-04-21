@@ -16,9 +16,11 @@ int checkPermission(Integer id, String url);
 
 Response sendCode(User entity);
 
-Response resetPassword(User entity);
+Response resetPasswordByForgot(User entity);
 
 Response tokenUser();
 
 Response sendResetLink(User entity);
+
+Response resetPasswordByUpdate(User user);
 }

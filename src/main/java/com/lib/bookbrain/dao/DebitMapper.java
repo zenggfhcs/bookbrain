@@ -1,7 +1,7 @@
 package com.lib.bookbrain.dao;
 
-import com.lib.bookbrain.model.entity.Book;
 import com.lib.bookbrain.model.entity.Debit;
+import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.filter.DebitFilter;
@@ -37,9 +37,17 @@ List<Debit> getExpiredByUserId(Integer userId);
 
 int getBookCountByBookIdAndUserId(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
 
-int escheat(Book book);
-
 int getTodayDebitCount();
 
 int getTodayDebitReturnCount();
+
+int getCurrentDebitCountByUser(User operator);
+
+int getCurrentExpiredDebitCountByUser(User operator);
+
+boolean getCurrentDebitHasTheBookInfoByUserId(@Param("bookInfoId") Integer bookInfoId, @Param("userId") Integer userId);
+
+int restore(Debit debit);
+
+List<Debit> getCurrentUnreturnedByUser(User operator);
 }

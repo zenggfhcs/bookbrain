@@ -35,4 +35,15 @@ public Response getTodayDebitCount() {
 	return debitService.getTodayDebitCount();
 }
 
+@PostMapping("/{id}/restore")
+public Response restore(@RequestBody Debit debit, @PathVariable Integer id) {
+	Payload<Debit> _payload = Payload.fromEntity(debit);
+	_payload.setId(id);
+	return debitService.restore(_payload);
+}
+
+@GetMapping("/currentUnreturned")
+public Response tokenUserDebits() {
+	return debitService.currentUnreturned();
+}
 }

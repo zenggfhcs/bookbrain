@@ -61,9 +61,14 @@ public Response sendCodeForResetPassword(@RequestBody User entity) {
  *
  * @return 重置结果
  */
-@PostMapping("/password:reset")
-public Response resetPassword(@RequestBody User entity) {
-	return userService.resetPassword(entity);
+@PostMapping("/password:resetByForgot")
+public Response resetPasswordByForgot(@RequestBody User user) {
+	return userService.resetPasswordByForgot(user);
+}
+
+@PostMapping("/password:resetByUpdate")
+public Response resetPasswordByUpdate(@RequestBody User user) {
+	return userService.resetPasswordByUpdate(user);
 }
 
 /**

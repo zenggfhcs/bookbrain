@@ -7,8 +7,7 @@ String[] REQUEST_INTERCEPTOR_EXCLUDE = {
 		"/users:register",
 		"/users/password:reset/email:sendResetLink",
 		"/token:verify",
-		"/token:refresh",
-		"/users/password:reset",
+		"/users/password:resetByForgot",
 };
 
 }

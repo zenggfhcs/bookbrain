@@ -14,7 +14,7 @@ public enum ResponseInfo {
 	/**
 	 * 登录失败提示信息：用户名或者密码错误
 	 */
-	ID_OR_PASSWORD_FAILED("Username or password error"),
+	ID_OR_PASSWORD_FAILED("用户名或者密码错误"),
 
 	/**
 	 * token 创建或者解析时异常
@@ -111,7 +111,7 @@ public enum ResponseInfo {
 
 	IS_BORROWED(501, "已经借阅了该图书，不可重复借阅同一本图书"),
 
-	THE_BOOK_HAS_BEEN_BORROWED(501, "该图书已被借阅，请刷新页面"),
+	THIS_BOOK_CANNOT_BE_BORROWED(501, "该图书没有可借阅的馆藏，请刷新页面"),
 
 	ESCHEAT_FAILED(505, "归还失败"),
 

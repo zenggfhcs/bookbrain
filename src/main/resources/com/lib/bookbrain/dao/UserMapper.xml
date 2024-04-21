@@ -39,7 +39,7 @@
 	<select id="getRolesByUserId" parameterType="Integer" resultType="com.lib.bookbrain.model.entity.Role">
 		select r.`id`, r.`name`
 		from user_role ur
-		inner join role r on ur.`role_id` = r.`id`
+			     inner join role r on ur.`role_id` = r.`id`
 		where ur.`user_id` = #{id}
 		limit 1;
 	</select>
@@ -47,12 +47,12 @@
 	<insert id="insert" useGeneratedKeys="true" keyProperty="entity.id"
 	        parameterType="com.lib.bookbrain.model.exchange.Payload">
 		insert into user(`authentication_string`, `display_name`, `email`, `phone_number`,
-		`surname`, `name`, `age`, `gender`,
-		`created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
+		                 `surname`, `name`, `age`, `gender`,
+		                 `created_by`, `creation_time`, `updated_by`, `last_updated_time`, `revision`)
 		values (MD5(#{authenticationString}), #{displayName}, #{email},
-		#{phoneNumber}, #{surname},
-		#{name}, #{age}, #{gender}, #{createdBy.id}, now(), #{updatedBy.id},
-		now(), 0);
+		        #{phoneNumber}, #{surname},
+		        #{name}, #{age}, #{gender}, #{createdBy.id}, now(), #{updatedBy.id},
+		        now(), 0);
 	</insert>
 
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -101,19 +101,15 @@
 
 	<select id="getById" resultMap="BaseResultMap">
 		select u.`id`,
-		u.`display_name`,
-		u.`email`,
-		u.`phone_number`,
-		u.`surname`,
-		u.`name`,
-		u.`age`,
-		u.`gender`,
-		u.`birthday`,
-		u.`created_by`,
-		u.`creation_time`,
-		u.`updated_by`,
-		u.`last_updated_time`,
-		u.`revision`
+		       u.`display_name`,
+		       u.`email`,
+		       u.`phone_number`,
+		       u.`surname`,
+		       u.`name`,
+		       u.`age`,
+		       u.`gender`,
+		       u.`birthday`,
+		       u.`revision`
 		from user u
 		where u.`id` = #{id};
 	</select>
@@ -130,10 +126,10 @@
 	</select>
 	<select id="login" resultMap="BaseResultMap" parameterType="com.lib.bookbrain.model.exchange.Payload">
 		select u.`id`,
-		u.email
+		       u.email
 		from user u
 		where u.email = #{email}
-		and u.`authentication_string` = MD5(#{authenticationString});
+		  and u.`authentication_string` = MD5(#{authenticationString});
 	</select>
 	<select id="getToUpdate" resultMap="BaseResultMap">
 		select *
@@ -141,12 +137,12 @@
 	</select>
 	<select id="getByToken" resultMap="BaseResultMap">
 		select u.`id`,
-		u.`display_name`
+		       u.`display_name`
 		from user u,
-		token_access_record t
+		     token_access_record t
 		where t.token = #{token}
-		and u.id = t.id
-		and t.`used_time` > SUBDATE(NOW(), 7)
+		  and u.id = t.id
+		  and t.`used_time` > SUBDATE(NOW(), 7)
 	</select>
 
 	<insert id="register" useGeneratedKeys="true" keyProperty="entity.id"
@@ -182,8 +178,8 @@
 		update user_condition uc, user u
 		set uc.email_verified = 1
 		where u.email = #{email}
-		and u.id = uc.user_id
-		and uc.email_verified = 0;
+		  and u.id = uc.user_id
+		  and uc.email_verified = 0;
 	</update>
 
 	<update id="resetPassword">

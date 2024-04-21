@@ -9,4 +9,8 @@ public interface DebitService extends BaseService<Debit, DebitFilter> {
 Response repay(Payload<Debit> payload);
 
 Response getTodayDebitCount();
+
+Response restore(Payload<Debit> payload);
+
+Response currentUnreturned();
 }

@@ -111,29 +111,15 @@ public Response borrow(Book book) {
 	// 借一下看看
 	int _uc = bookMapper.borrow(book);
 	if (_uc == 0) {
-		return Response.error(ResponseInfo.THE_BOOK_HAS_BEEN_BORROWED);
+		return Response.error(ResponseInfo.THIS_BOOK_CANNOT_BE_BORROWED);
 	}
 
-	Debit debit = Debit.generate(book, _u);
+	Debit debit = Debit.fromBookAndBorrower(book, _u);
 	int _ic = debitMapper.insert(debit);
 	if (_ic == 0) {
 		return Response.error(ResponseInfo.ERROR);
 	}
 
-	return Response.success();
-}
-
-@Override
-public Response escheat(Book book) {
-	Integer userId = threadContext.get().getAud();
-	User _u = new User();
-	_u.setId(userId);
-	book.setUpdatedBy(_u);
-
-	int _rc = debitMapper.escheat(book);
-	if (_rc == 0) {
-		return Response.error(ResponseInfo.ESCHEAT_FAILED);
-	}
 	return Response.success();
 }
 

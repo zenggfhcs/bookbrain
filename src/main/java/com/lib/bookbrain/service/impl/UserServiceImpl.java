@@ -22,11 +22,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author yunxia
  */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 private final UserMapper userMapper;
@@ -73,16 +75,45 @@ public Response sendCode(User entity) {
 }
 
 @Override
-public Response resetPassword(User user) {
-	// 拿到信息
+public Response resetPasswordByForgot(User user) {
 	// 解密
-	{
-		TokenInfo _info = tokenService.verify(user.getRemark());
-		user.setEmail(RSATools.decrypt(user.getEmail()));
-		String _password = RSATools.decrypt(user.getAuthenticationString());
-		user.setAuthenticationString(_password);
+	TokenInfo _info = tokenService.verify(user.getRemark());
+	String _email = RSATools.decrypt(user.getEmail());
+	if (!_info.getEml().equals(_email)) {
+		return Response.error(ResponseInfo.ERROR);
+	}
+	user.setEmail(_email);
+	String _password = RSATools.decrypt(user.getAuthenticationString());
+	user.setAuthenticationString(_password);
+
+	return resetPassword(user);
+}
+
+@Override
+public Response resetPasswordByUpdate(User user) {
+
+	String _email = RSATools.decrypt(user.getEmail());
+	user.setEmail(_email);
+	User _operator = userMapper.getByOperatorId(threadContext.get().getAud());
+	if (!_email.equals(_operator.getEmail())) {
+		return Response.error(ResponseInfo.ERROR);
 	}
 
+	String _oldString = RSATools.decrypt(user.getAuthenticationString());
+	user.setAuthenticationString(_oldString);
+	User _emailUser = userMapper.login(user);
+	if (Objects.isNull(_emailUser)) {
+		return Response.error(ResponseInfo.ID_OR_PASSWORD_FAILED);
+	}
+
+	String _newString = RSATools.decrypt(user.getRemark());
+	user.setAuthenticationString(_newString);
+	user.setRemark(null);
+
+	return resetPassword(user);
+}
+
+public Response resetPassword(User user) {
 	int _uc = userMapper.resetPassword(user);
 
 	if (_uc != 1) {
@@ -94,7 +125,9 @@ public Response resetPassword(User user) {
 
 @Override
 public Response tokenUser() { // todo 这里只用到了 email
-	Payload<User> _payload = new Payload<>();
+	Integer _userId = threadContext.get().getAud();
+	User _operator = userMapper.getById(_userId);
+	Payload<User> _payload = Payload.fromEntity(_operator);
 	_payload.setId(threadContext.get().getAud());
 	return getById(_payload);
 }
