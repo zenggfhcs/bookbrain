@@ -29,4 +29,6 @@ int getLengthByFilter(FilterPayload<ClcIndex, ClcIndexFilter> payload);
 List<ClcIndex> firstLevel();
 
 List<ClcIndex> getByKeyword(String key);
+
+List<ClcIndex> getByParent(Integer parent);
 }

@@ -29,4 +29,9 @@ public Response firstLevel() {
 public Response bookType(@PathVariable String key) {
 	return clcIndexService.getByKeyword(key);
 }
+
+@GetMapping("/parent/{parent}")
+public Response getByParent(@PathVariable Integer parent) {
+	return clcIndexService.getByParent(parent);
+}
 }

@@ -10,6 +10,7 @@ import com.lib.bookbrain.model.entity.TokenAccessRecord;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.security.Jwt;
 import com.lib.bookbrain.service.UserService;
+import com.lib.bookbrain.utils.LogUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -51,6 +52,7 @@ public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServl
 		throw te;
 	} catch (Exception e) {
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		LogUtils.log(e.getMessage());
 		throw new JWTException();
 	}
 

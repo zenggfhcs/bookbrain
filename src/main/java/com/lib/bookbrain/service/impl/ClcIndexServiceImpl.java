@@ -69,4 +69,10 @@ public Response getByKeyword(String key) {
 	List<ClcIndex> _list = clcIndexMapper.getByKeyword(key);
 	return Response.success(_list);
 }
+
+@Override
+public Response getByParent(Integer parent) {
+	List<ClcIndex> _list = clcIndexMapper.getByParent(parent);
+	return Response.success(_list);
+}
 }

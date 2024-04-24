@@ -97,7 +97,7 @@ public void send(String recipientEmail, String sub, Supplier<String> sup) {
 			sender.send(message);
 		}
 	} catch (Exception e) {
-		LogUtils.write(e.getMessage());
+		LogUtils.log(e.getMessage());
 		throw new SendEmailException();
 	}
 }
@@ -129,7 +129,7 @@ public String fillTemplate(String tempPath, Map<String, Object> map) {
 		template.process(map, writer);
 		return writer.toString();
 	} catch (IOException | TemplateException e) {
-		LogUtils.write(e.getMessage());
+		LogUtils.log(e.getMessage());
 		throw new TemplateReadException();
 	}
 }

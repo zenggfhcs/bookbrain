@@ -8,7 +8,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class LogUtils {
-public static void write(String content) {
+
+private static final String INTERVAL = "=".repeat(20);
+
+public static void log(String content) {
 	LocalDate nowDate = LocalDate.now();
 	LocalTime nowTime = LocalTime.now();
 	Path path = Path.of(
@@ -20,17 +23,17 @@ public static void write(String content) {
 		if (!Files.exists(parent)) {
 			Files.createDirectories(parent);
 		}
-		Files.write(path, (content + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+		Files.write(path, (nowDate + " " + nowTime + "\n" + INTERVAL + "\n" + content + "\n" + INTERVAL + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 	} catch (IOException e) {
 		throw new RuntimeException(e);
 	}
 }
 
-public static void write(RuntimeException re) {
+public static void log(RuntimeException re) {
 
 }
 
 public static void main(String[] args) {
-	write("This is a log1");
+	log("This is a log1");
 }
 }

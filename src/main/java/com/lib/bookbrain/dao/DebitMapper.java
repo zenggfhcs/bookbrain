@@ -1,10 +1,13 @@
 package com.lib.bookbrain.dao;
 
+import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.filter.DebitFilter;
+import com.lib.bookbrain.model.pojo.RankingsBody;
+import com.lib.bookbrain.model.pojo.RankingsItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -50,4 +53,6 @@ boolean getCurrentDebitHasTheBookInfoByUserId(@Param("bookInfoId") Integer bookI
 int restore(Debit debit);
 
 List<Debit> getCurrentUnreturnedByUser(User operator);
+
+List<RankingsItem<BookInfo>> bookDebitRankings(RankingsBody body);
 }

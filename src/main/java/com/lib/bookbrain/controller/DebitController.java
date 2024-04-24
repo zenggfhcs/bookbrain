@@ -5,6 +5,7 @@ import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.DebitFilter;
+import com.lib.bookbrain.model.pojo.RankingsBody;
 import com.lib.bookbrain.service.DebitService;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +46,10 @@ public Response restore(@RequestBody Debit debit, @PathVariable Integer id) {
 @GetMapping("/currentUnreturned")
 public Response tokenUserDebits() {
 	return debitService.currentUnreturned();
+}
+
+@PostMapping("/bookDebitRankings")
+public Response bookDebitRankings(@RequestBody RankingsBody body) {
+	return debitService.bookDebitRankings(body);
 }
 }

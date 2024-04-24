@@ -8,4 +8,6 @@ public interface ClcIndexService extends BaseService<ClcIndex, ClcIndexFilter> {
 Response firstLevel();
 
 Response getByKeyword(String key);
+
+Response getByParent(Integer parent);
 }

@@ -6,12 +6,15 @@ import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.DebitMapper;
+import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.DebitFilter;
+import com.lib.bookbrain.model.pojo.RankingsBody;
+import com.lib.bookbrain.model.pojo.RankingsItem;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.DebitService;
 import com.lib.bookbrain.service.MailService;
@@ -110,6 +113,12 @@ public Response currentUnreturned() {
 
 	List<Debit> _list = debitMapper.getCurrentUnreturnedByUser(_operator);
 
+	return Response.success(_list);
+}
+
+@Override
+public Response bookDebitRankings(RankingsBody body) {
+	List<RankingsItem<BookInfo>> _list = debitMapper.bookDebitRankings(body);
 	return Response.success(_list);
 }
 

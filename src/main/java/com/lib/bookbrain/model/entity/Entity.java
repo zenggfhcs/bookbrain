@@ -21,7 +21,7 @@ protected User createdBy;
 /**
  * 创建时间
  */
-@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 protected LocalDateTime creationTime;
 
 /**
@@ -32,7 +32,7 @@ protected User updatedBy;
 /**
  * 最后更新时间
  */
-@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 protected LocalDateTime lastUpdatedTime;
 
 /**

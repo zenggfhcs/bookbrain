@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lib.bookbrain.dao.ClcIndexMapper">
+	<resultMap id="ClcNResultMap" type="com.lib.bookbrain.model.entity.ClcIndex">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="parent" column="parent" jdbcType="INTEGER"/>
+		<result property="key" column="key" jdbcType="VARCHAR"/>
+		<result property="value" column="value" jdbcType="VARCHAR"/>
+		<collection property="children" column="id" ofType="com.lib.bookbrain.model.entity.ClcIndex"
+		            select="getChildrenByParentId"/>
+	</resultMap>
+	<select id="getChildrenByParentId" resultMap="ClcNResultMap">
+		select *
+		from clc_index ci
+		where ci.`parent` = #{id};
+	</select>
+
 	<select id="getById" resultType="com.lib.bookbrain.model.entity.ClcIndex">
 	</select>
 
@@ -34,7 +48,7 @@
 	<select id="firstLevel" resultType="com.lib.bookbrain.model.entity.ClcIndex">
 		select *
 		from clc_index ci
-		where ci.`parent` is null;
+		where ci.`parent` = 0;
 	</select>
 
 
@@ -43,5 +57,11 @@
 		from clc_index ci
 		where ci.`key` like concat(#{keyword}, '%')
 		limit 50;
+	</select>
+
+	<select id="getByParent" resultType="com.lib.bookbrain.model.entity.ClcIndex">
+		select *
+		from clc_index ci
+		where ci.`parent` = #{parent}
 	</select>
 </mapper>
