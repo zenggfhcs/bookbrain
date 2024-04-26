@@ -42,6 +42,8 @@ User login(User entity);
 
 User getByEmail(String email);
 
+User getById(Integer id);
+
 @Select("select count(*) from user_permission where user_id = #{id} and #{url} regexp url")
 int check(@Param("id") Integer id, @Param("url") String url);
 

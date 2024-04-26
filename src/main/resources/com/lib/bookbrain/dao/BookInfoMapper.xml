@@ -114,7 +114,7 @@
 				bif.`price` = #{entity.price},
 			</if>
 			<if test="entity.updatedBy != null">
-				bif.`updated_by` = #{entity.updatedBy},
+				bif.`updated_by` = #{entity.updatedBy.id},
 			</if>
 			<if test="entity.describe != null">
 				bif.`describe` = #{entity.describe},
@@ -160,12 +160,54 @@
 	<select id="getToUpdate" resultMap="BaseResultMap">
 		select
 		<trim suffixOverrides=",">
-			<if test="entity.author != null">
+			<if test="entity.cover != null and entity.cover != ''">
+				bif.`cover`,
+			</if>
+			<if test="entity.isbn != null and entity.isbn != ''">
+				bif.`isbn`,
+			</if>
+			<if test="entity.cip != null and entity.cip != ''">
+				bif.`cip`,
+			</if>
+			<if test="entity.bookName != null and entity.bookName != ''">
+				bif.`bookName`,
+			</if>
+			<if test="entity.author != null and entity.author != ''">
 				bif.`author`,
+			</if>
+			<if test="entity.bookType != null and entity.bookType != ''">
+				bif.`bookType`,
+			</if>
+			<if test="entity.keyword != null and entity.keyword != ''">
+				bif.`keyword`,
+			</if>
+			<if test="entity.lang != null and entity.lang != ''">
+				bif.`lang`,
+			</if>
+			<if test="entity.price != null and entity.price != ''">
+				bif.`price`,
+			</if>
+			<if test="entity.publisher != null and entity.publisher != ''">
+				bif.`publisher`,
+			</if>
+			<if test="entity.publishedDate != null">
+				bif.`published_date`,
+			</if>
+			<if test="entity.edition != null and entity.edition != ''">
+				bif.`edition`,
+			</if>
+			<if test="entity.printing != null and entity.printing != ''">
+				bif.`printing`,
+			</if>
+			<if test="entity.describe != null and entity.describe != ''">
+				bif.`describe`,
+			</if>
+			<if test="entity.remark != null and entity.remark != ''">
+				bif.`remark`,
 			</if>
 		</trim>
 		from book_info bif
-		where bif.`id` = #{id};
+		where bif.`id` = #{id} and bif.`revision` = #{entity.revision};
 	</select>
 
 	<select id="getTypeByKeyword" resultType="com.lib.bookbrain.model.pojo.BookType">

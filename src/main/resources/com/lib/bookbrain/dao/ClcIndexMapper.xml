@@ -16,15 +16,23 @@
 	</select>
 
 	<select id="getById" resultType="com.lib.bookbrain.model.entity.ClcIndex">
+		select *
+		from clc_index ci
+		where ci.`id` = #{id};
 	</select>
 
 	<insert id="insert">
+		insert into clc_index(parent, `key`, value)
+		VALUES (#{parent}, #{key}, #{value});
 	</insert>
 
 	<update id="update">
 	</update>
 
 	<delete id="delete">
+		delete ci
+		from clc_index ci
+		where ci.`id` = #{id}
 	</delete>
 
 	<select id="getToUpdate" resultType="com.lib.bookbrain.model.entity.ClcIndex">

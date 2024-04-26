@@ -144,4 +144,11 @@
 		where b.`book_info_id` = #{id}
 		  and b.`borrowable` = 1;
 	</select>
+	<select id="collectionInfo" resultType="com.lib.bookbrain.model.pojo.CollectionInfo">
+		select cif.collect_count,
+		       cif.collect_type,
+		       ci.value type_name
+		from collection_info cif
+			     inner join clc_index ci on cif.collect_type = ci.`key`
+	</select>
 </mapper>

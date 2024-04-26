@@ -37,4 +37,8 @@ public Response getByBookInfoId(@PathVariable Integer id) {
 	return bookService.getByBookInfoId(id);
 }
 
+@GetMapping("/collectionInfo")
+public Response collectionInfo() {
+	return bookService.collectionInfo();
+}
 }

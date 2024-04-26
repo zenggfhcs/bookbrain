@@ -46,7 +46,12 @@
 	<select id="filteredList" resultMap="BaseResultMap">
 		select *
 		from log l
-		<where>
+		<where> <!-- todo 添加条件 -->
+			<if test="entity != null">
+				<if test="entity.type != null and entity.type != ''">
+					and l.`type` = #{entity.type}
+				</if>
+			</if>
 		</where>
 		order by l.`creation_time` desc
 		<trim>
@@ -62,6 +67,11 @@
 		select count(*)
 		from log l
 		<where>
+			<if test="entity != null">
+				<if test="entity.type != null and entity.type != ''">
+					and l.`type` = #{entity.type}
+				</if>
+			</if>
 		</where>
 	</select>
 </mapper>

@@ -13,6 +13,7 @@ import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.BookFilter;
+import com.lib.bookbrain.model.pojo.CollectionInfo;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.service.BookService;
 import org.springframework.stereotype.Service;
@@ -126,6 +127,12 @@ public Response borrow(Book book) {
 @Override
 public Response getByBookInfoId(Integer id) {
 	List<Book> _list = bookMapper.getByBookInfoId(id);
+	return Response.success(_list);
+}
+
+@Override
+public Response collectionInfo() {
+	List<CollectionInfo> _list = bookMapper.collectionInfo();
 	return Response.success(_list);
 }
 }

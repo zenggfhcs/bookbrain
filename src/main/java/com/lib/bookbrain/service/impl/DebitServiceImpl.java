@@ -122,6 +122,12 @@ public Response bookDebitRankings(RankingsBody body) {
 	return Response.success(_list);
 }
 
+@Override
+public Response readerDebitRankings(RankingsBody body) {
+	List<RankingsItem<User>> _list = debitMapper.readerDebitRankings(body);
+	return Response.success(_list);
+}
+
 void repay(Debit debit) {
 	String sub = "借阅到期";
 	String _eml = debit.getCreatedBy().getEmail();

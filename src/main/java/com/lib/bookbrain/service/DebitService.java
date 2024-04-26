@@ -16,4 +16,6 @@ Response restore(Payload<Debit> payload);
 Response currentUnreturned();
 
 Response bookDebitRankings(RankingsBody body);
+
+Response readerDebitRankings(RankingsBody body);
 }

@@ -15,10 +15,15 @@
 		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
 		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 	</resultMap>
-	<resultMap id="BookRankingResultMap" type="com.lib.bookbrain.model.pojo.RankingsItem">
+	<resultMap id="BookInfoRankingResultMap" type="com.lib.bookbrain.model.pojo.RankingsItem">
 		<result column="debit_count" property="count" jdbcType="INTEGER"/>
 		<association property="target" javaType="com.lib.bookbrain.model.entity.BookInfo" column="book_info_id"
 		             select="com.lib.bookbrain.dao.BookInfoMapper.getInfoById"/>
+	</resultMap>
+	<resultMap id="ReaderRankingResultMap" type="com.lib.bookbrain.model.pojo.RankingsItem">
+		<result column="debit_count" property="count" jdbcType="INTEGER"/>
+		<association property="target" javaType="com.lib.bookbrain.model.entity.User" column="user_id"
+		             select="com.lib.bookbrain.dao.UserMapper.getById"/>
 	</resultMap>
 	<select id="list" resultMap="BaseResultMap">
 		select *
@@ -201,13 +206,13 @@
 		where d.`created_by` = #{id}
 		  and d.`return_date` is null
 	</select>
-	<select id="bookDebitRankings" resultMap="BookRankingResultMap">
+	<select id="bookDebitRankings" resultMap="BookInfoRankingResultMap">
 		select count(d_bif.`book_info_id`) debit_count,
 		d_bif.`book_info_id`
-		from debit_book_info d_bif
+		from debit_info d_bif
 		<where>
 			<if test="type != null and type != ''">
-				and d_bif.`type` like concat(#{type},'%')
+				and d_bif.`type` = #{type}
 			</if>
 			<if test="year != null">
 				and year(d_bif.`debit_time`) = #{year}
@@ -217,6 +222,32 @@
 			</if>
 		</where>
 		group by d_bif.`book_info_id`
+		order by debit_count desc
+		<trim>
+			<if test="size != null">
+				limit #{size}
+			</if>
+			<if test="size == null">
+				limit 10
+			</if>
+		</trim>
+	</select>
+	<select id="readerDebitRankings" resultMap="ReaderRankingResultMap">
+		select count(d_bif.`book_info_id`) debit_count,
+		d_bif.`user_id`
+		from debit_info d_bif
+		<where>
+			<if test="type != null and type != ''">
+				and d_bif.`type` = #{type}
+			</if>
+			<if test="year != null">
+				and year(d_bif.`debit_time`) = #{year}
+			</if>
+			<if test="month != null">
+				and month(d_bif.`debit_time`) = #{month}
+			</if>
+		</where>
+		group by d_bif.`user_id`
 		order by debit_count desc
 		<trim>
 			<if test="size != null">

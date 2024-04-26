@@ -55,4 +55,6 @@ int restore(Debit debit);
 List<Debit> getCurrentUnreturnedByUser(User operator);
 
 List<RankingsItem<BookInfo>> bookDebitRankings(RankingsBody body);
+
+List<RankingsItem<User>> readerDebitRankings(RankingsBody body);
 }

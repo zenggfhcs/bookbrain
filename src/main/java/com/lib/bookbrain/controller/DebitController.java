@@ -52,4 +52,9 @@ public Response tokenUserDebits() {
 public Response bookDebitRankings(@RequestBody RankingsBody body) {
 	return debitService.bookDebitRankings(body);
 }
+
+@PostMapping("/readerDebitRankings")
+public Response readerDebitRankings(@RequestBody RankingsBody body) {
+	return debitService.readerDebitRankings(body);
+}
 }

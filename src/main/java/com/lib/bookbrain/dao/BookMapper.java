@@ -5,6 +5,7 @@ import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.filter.BookFilter;
+import com.lib.bookbrain.model.pojo.CollectionInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -41,4 +42,6 @@ Book getDebitBookById(Integer id);
 List<Book> getByBookInfoId(Integer id);
 
 List<Book> getBorrowableBookListByBookInfoId(Integer id);
+
+List<CollectionInfo> collectionInfo();
 }
