@@ -1,5 +1,6 @@
 package com.lib.bookbrain.service.impl;
 
+import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.ClcIndexMapper;
 import com.lib.bookbrain.model.entity.ClcIndex;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,6 +37,17 @@ public Response list() {
 
 @Override
 public Response create(Payload<ClcIndex> payload) {
+	ClcIndex _clcIndex = payload.getEntity();
+	// todo 查一下是否重复
+	ClcIndex _keyCi = clcIndexMapper.getByKey(_clcIndex.getKey());
+	if (Optional.ofNullable(_keyCi).isPresent()) {
+		return Response.error(ResponseInfo.KEY_REPEAT);
+	}
+	// todo 查一下是否属于这个分类
+	int _startWithCount = clcIndexMapper.parentStartWith(_clcIndex);
+	if (_startWithCount == 0) {
+		return Response.error(ResponseInfo.PARENT_FAILED);
+	}
 	return baseService.create(payload);
 }
 
@@ -45,11 +58,22 @@ public Response getById(Payload<ClcIndex> payload) {
 
 @Override
 public Response update(Payload<ClcIndex> payload) {
+	ClcIndex _clcIndex = payload.getEntity();
+	// todo 查一下是否重复
+	ClcIndex _keyCi = clcIndexMapper.getByKey(_clcIndex.getKey());
+	if (Optional.ofNullable(_keyCi).isPresent()) {
+		return Response.error(ResponseInfo.KEY_REPEAT);
+	}
 	return baseService.update(payload);
 }
 
 @Override
 public Response delete(Payload<ClcIndex> payload) {
+	// todo 检查是否存在子项，存在则删除失败
+	List<ClcIndex> _byParent = clcIndexMapper.getByParent(payload.getId());
+	if (!_byParent.isEmpty()) {
+		return Response.error(ResponseInfo.THERE_ARE_UNDELETED_SUB_KEYS);
+	}
 	return baseService.delete(payload);
 }
 

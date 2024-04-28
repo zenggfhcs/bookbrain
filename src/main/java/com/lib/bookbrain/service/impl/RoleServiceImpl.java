@@ -1,5 +1,6 @@
 package com.lib.bookbrain.service.impl;
 
+import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.RoleMapper;
 import com.lib.bookbrain.model.entity.Role;
@@ -62,6 +63,24 @@ public Response tokenRole() {
 	TokenInfo _tokenInfo = threadContext.get();
 	Role _r = roleMapper.getByUserId(_tokenInfo.getAud());
 	return Response.success(_r);
+}
+
+@Override
+public Response addPermission(Payload<Role> payload) {
+	int _addResultCount = roleMapper.addPermission(payload.getEntity());
+	if (_addResultCount == 0) {
+		return Response.error(ResponseInfo.ERROR);
+	}
+	return Response.success();
+}
+
+@Override
+public Response removePermission(Payload<Role> payload) {
+	int _addResultCount = roleMapper.removePermission(payload.getEntity());
+	if (_addResultCount == 0) {
+		return Response.error(ResponseInfo.ERROR);
+	}
+	return Response.success();
 }
 
 }

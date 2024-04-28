@@ -26,6 +26,10 @@ List<Role> filteredList(FilterPayload<Role, RoleFilter> payload);
 int getLengthByFilter(FilterPayload<Role, RoleFilter> payload);
 
 Role getByUserId(Integer userId);
+
+int addPermission(Role entity);
+
+int removePermission(Role entity);
 /* ============================ 继承 ============================ */
 
 }

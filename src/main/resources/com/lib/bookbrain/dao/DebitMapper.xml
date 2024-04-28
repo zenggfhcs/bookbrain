@@ -4,7 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.Debit">
 		<id column="id" jdbcType="INTEGER" property="id"/>
 		<result column="return_deadline" jdbcType="DATE" property="returnDeadline"/>
-		<result column="return_date" jdbcType="DATE" property="returnDate"/>
+		<result column="return_time" jdbcType="TIME" property="returnTime"/>
 		<result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
 		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
 		<result column="revision" jdbcType="INTEGER" property="revision"/>
@@ -37,7 +37,7 @@
 		select distinct d.`id`,
 		                d.`book_id`,
 		                d.`return_deadline`,
-		                d.`return_date`,
+		                d.`return_time`,
 		                d.`created_by`,
 		                d.`creation_time`,
 		                d.`revision`
@@ -54,11 +54,15 @@
 	<insert id="insert" parameterType="com.lib.bookbrain.model.entity.Debit" useGeneratedKeys="true"
 	        keyProperty="id">
 		insert into debit (`book_id`, `return_deadline`,
-		                   `return_date`, `created_by`, `creation_time`,
+		                   `return_time`, `created_by`, `creation_time`,
 		                   `updated_by`, `last_updated_time`, `revision`)
-		values (#{book.id}, DATE_ADD(CURDATE(), INTERVAL 30 DAY),
+		values (#{book.id}, DATE_ADD(current_date, INTERVAL 30 DAY),
 		        null, #{createdBy.id}, NOW(),
 		        #{updatedBy.id}, NOW(), 0);
+	</insert>
+	<insert id="remind" useGeneratedKeys="true">
+		insert into reminder(debit_id, created_by, creation_time, updated_by, last_updated_time, revision, remark)
+		VALUES (#{id}, #{createdBy.id}, now(), #{updatedBy.id}, now(), 0, '')
 	</insert>
 
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -71,8 +75,8 @@
 				<if test="entity.returnDeadline != null">
 					d.`return_deadline` = #{entity.returnDeadline,jdbcType=DATE},
 				</if>
-				<if test="entity.returnDate != null">
-					d.`return_date` = #{entity.returnDate,jdbcType=DATE},
+				<if test="entity.returnTime != null">
+					d.`return_time` = #{entity.returnTime,jdbcType=DATE},
 				</if>
 				<if test="entity.updatedBy != null">
 					d.`updated_by` = #{entity.updatedBy,jdbcType=INTEGER},
@@ -89,13 +93,13 @@
 	<update id="restore">
 		update debit d, book b
 		set b.`borrowable`        = 1,
-		    d.`return_date`       = curdate(),
+		    d.`return_time`       = current_time,
 		    d.`last_updated_time` = now(),
 		    d.`revision`          = (1 + d.`revision`) % 2147483647,
 		    d.`updated_by`        = #{updatedBy.id}
 		where d.`id` = #{id}
 		  and d.`book_id` = b.`id`
-		  and d.return_date is null
+		  and d.return_time is null
 		  and d.`revision` = #{revision}
 	</update>
 
@@ -112,9 +116,30 @@
 			<if test="entity != null">
 			</if>
 			<if test="filter != null">
+				<if test="filter.state != null">
+					<if test="filter.state.start == 1">
+						and d.`return_time` is not null
+					</if>
+					<if test="filter.state.start == 0">
+						and (d.`return_time` is null and CURRENT_DATE > DATE_ADD(d.`return_deadline`, INTERVAL -3 DAY))
+					</if>
+					<if test="filter.state.start == -1">
+						and (d.`return_time` is null and CURRENT_DATE > d.`return_deadline`)
+					</if>
+				</if>
+				<if test="filter.creationTime != null">
+					<if test="filter.creationTime.start != null and filter.creationTime.end != null">
+						and d.`creation_time` between #{filter.creationTime.start} and #{filter.creationTime.end}
+					</if>
+				</if>
+				<if test="filter.returnTime != null">
+					<if test="filter.returnTime.start != null and filter.returnTime.end != null">
+						and d.`return_time` between #{filter.returnTime.start} and #{filter.returnTime.end}
+					</if>
+				</if>
 			</if>
 		</where>
-
+		order by d.last_updated_time desc , d.creation_time desc
 		<trim>
 			<if test="filter != null">
 				<if test="filter.page != null">
@@ -122,6 +147,7 @@
 				</if>
 			</if>
 		</trim>
+
 	</select>
 
 	<select id="getLengthByFilter" resultType="int">
@@ -139,13 +165,13 @@
 		select count(*)
 		from debit d
 		where d.`created_by` = #{id}
-		  and d.`return_date` is null;
+		  and d.`return_time` is null;
 	</select>
 	<select id="getExpiredByUserId" resultType="com.lib.bookbrain.model.entity.Debit">
 		select *
 		from debit d
 		where d.`created_by` = #{id}
-		  and d.`return_date` is null
+		  and d.`return_time` is null
 		  and now() > d.`return_deadline`;
 	</select>
 	<select id="getBookCountByBookIdAndUserId" resultType="int">
@@ -166,21 +192,21 @@
 	<select id="getTodayDebitReturnCount" resultType="java.lang.Integer">
 		select count(*)
 		from debit d
-		where d.`return_date` is not null
-		  and date(d.`return_date`) = current_date
+		where d.`return_time` is not null
+		  and date(d.`return_time`) = current_date
 		  and date(d.`last_updated_time`) = current_date
 	</select>
 	<select id="getCurrentDebitCountByUser" resultType="java.lang.Integer">
 		select count(*)
 		from debit d
 		where d.`created_by` = #{id}
-		  and d.`return_date` is null;
+		  and d.`return_time` is null;
 	</select>
 	<select id="getCurrentExpiredDebitCountByUser" resultType="java.lang.Integer">
 		select count(*)
 		from debit d
 		where d.`created_by` = #{id}
-		  and d.`return_date` is null
+		  and d.`return_time` is null
 		  and now() > d.`return_deadline`
 		limit 1;
 	</select>
@@ -193,7 +219,7 @@
 			        from debit d
 				             inner join book b on d.`book_id` = b.`id`
 			        where d.`created_by` = #{userId}
-				       and d.`return_date` is null)
+				       and d.`return_time` is null)
 			       );
 	</select>
 	<select id="getCurrentUnreturnedByUser" resultMap="BaseResultMap">
@@ -204,7 +230,7 @@
 		       d.`revision`
 		from debit d
 		where d.`created_by` = #{id}
-		  and d.`return_date` is null
+		  and d.`return_time` is null
 	</select>
 	<select id="bookDebitRankings" resultMap="BookInfoRankingResultMap">
 		select count(d_bif.`book_info_id`) debit_count,
@@ -257,5 +283,10 @@
 				limit 10
 			</if>
 		</trim>
+	</select>
+	<select id="getTodayRestoreCount" resultType="java.lang.Integer">
+		select count(*)
+		from debit d
+		where d.return_time = current_date;
 	</select>
 </mapper>

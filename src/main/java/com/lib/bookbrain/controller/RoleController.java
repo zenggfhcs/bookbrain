@@ -1,12 +1,11 @@
 package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.model.entity.Role;
+import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.RoleFilter;
 import com.lib.bookbrain.service.RoleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/roles")
@@ -21,5 +20,18 @@ public RoleController(RoleService roleService) {
 @GetMapping("/tokenRole")
 public Response tokenRole() {
 	return roleService.tokenRole();
+}
+
+@PostMapping("/addPermission")
+public Response addPermission(@RequestBody Role role) {
+	Payload<Role> _payload = Payload.fromEntity(role);
+	return roleService.addPermission(_payload);
+}
+
+
+@PostMapping("/removePermission")
+public Response removePermission(@RequestBody Role role) {
+	Payload<Role> _payload = Payload.fromEntity(role);
+	return roleService.removePermission(_payload);
 }
 }

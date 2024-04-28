@@ -7,7 +7,7 @@ import com.lib.bookbrain.model.filter.DebitFilter;
 import com.lib.bookbrain.model.pojo.RankingsBody;
 
 public interface DebitService extends BaseService<Debit, DebitFilter> {
-Response repay(Payload<Debit> payload);
+Response remind(Payload<Debit> payload);
 
 Response getTodayDebitCount();
 
@@ -18,4 +18,6 @@ Response currentUnreturned();
 Response bookDebitRankings(RankingsBody body);
 
 Response readerDebitRankings(RankingsBody body);
+
+Response getTodayRestoreCount();
 }

@@ -78,15 +78,32 @@ public Response filteredList(FilterPayload<Debit, DebitFilter> payload) {
 }
 
 @Override
-public Response repay(Payload<Debit> payload) {
-	repay(payload.getEntity());
+public Response remind(Payload<Debit> payload) {
+	Integer _userId = threadContext.get().getAud();
+	User _operator = new User();
+	_operator.setId(_userId);
+
+	Debit _debit = payload.getEntity();
+	_debit.setUpdatedBy(_operator);
+	_debit.setCreatedBy(_operator);
+
+	int _remindCount = debitMapper.remind(_debit);
+	if (_remindCount == 0) {
+		return Response.error(ResponseInfo.ERROR);
+	}
 	return Response.success();
 }
 
 @Override
 public Response getTodayDebitCount() {
-	int _dc = debitMapper.getTodayDebitCount();
-	return Response.success(_dc);
+	int _todayDebitCount = debitMapper.getTodayDebitCount();
+	return Response.success(_todayDebitCount);
+}
+
+@Override
+public Response getTodayRestoreCount() {
+	int _todayRestoreCount = debitMapper.getTodayRestoreCount();
+	return Response.success(_todayRestoreCount);
 }
 
 @Override
@@ -128,7 +145,7 @@ public Response readerDebitRankings(RankingsBody body) {
 	return Response.success(_list);
 }
 
-void repay(Debit debit) {
+void remind(Debit debit) {
 	String sub = "借阅到期";
 	String _eml = debit.getCreatedBy().getEmail();
 	mailService.send(_eml, sub, () -> {

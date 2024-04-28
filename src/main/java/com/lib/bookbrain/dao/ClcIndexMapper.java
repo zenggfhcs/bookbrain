@@ -31,4 +31,8 @@ List<ClcIndex> firstLevel();
 List<ClcIndex> getByKeyword(String key);
 
 List<ClcIndex> getByParent(Integer parent);
+
+ClcIndex getByKey(String key);
+
+int parentStartWith(ClcIndex clcIndex);
 }

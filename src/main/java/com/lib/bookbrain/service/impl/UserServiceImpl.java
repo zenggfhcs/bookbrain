@@ -113,6 +113,18 @@ public Response resetPasswordByUpdate(User user) {
 	return resetPassword(user);
 }
 
+@Override
+public Response todayActiveUserCount() {
+	int _todayActiveUserCount = userMapper.todayActiveUserCount();
+	return Response.success(_todayActiveUserCount);
+}
+
+@Override
+public Response todayNewUserCount() {
+	int _todayNewUserCount = userMapper.todayNewUserCount();
+	return Response.success(_todayNewUserCount);
+}
+
 public Response resetPassword(User user) {
 	int _uc = userMapper.resetPassword(user);
 

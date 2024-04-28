@@ -62,5 +62,9 @@ void verifyEmail(String email);
 int resetPassword(User entity);
 
 User getByOperatorId(Integer id);
+
+int todayActiveUserCount();
+
+int todayNewUserCount();
 /* ============================ 拓展 ============================ */
 }

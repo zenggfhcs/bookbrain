@@ -35,6 +35,16 @@ public UserController(UploadService uploadService, VerifyService verifyService, 
 	this.userService = userService;
 }
 
+@GetMapping("/todayActiveUserCount")
+public Response todayActiveUserCount() {
+	return userService.todayActiveUserCount();
+}
+
+@GetMapping("/todayNewUserCount")
+public Response todayNewUserCount() {
+	return userService.todayNewUserCount();
+}
+
 @GetMapping("/tokenUser")
 public Response tokenUser() {
 	return userService.tokenUser();

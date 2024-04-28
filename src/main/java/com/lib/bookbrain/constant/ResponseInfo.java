@@ -116,6 +116,10 @@ public enum ResponseInfo {
 	ESCHEAT_FAILED(505, "归还失败"),
 
 	TOKEN_INVALID(501, "token 无效"),
+
+	KEY_REPEAT(501, "键重复"),
+	PARENT_FAILED(501, "父分类与当前分类前缀不符"),
+	THERE_ARE_UNDELETED_SUB_KEYS(501, "存在未删除的子项"), PERMISSION_NAME_REPEAT(501, "权限名称重复"),
 	;
 
 private final BaseResponseInfo info;

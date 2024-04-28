@@ -15,13 +15,26 @@
 		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 	</resultMap>
 	<select id="getById" resultMap="BaseResultMap">
-		select *
+		select p.id,
+		       p.name,
+		       p.url,
+		       p.revision,
+		       p.remark
 		from permission p
 		where p.`id` = #{id}
 	</select>
+	<select id="list" resultMap="BaseResultMap">
+		select p.id,
+		       p.name,
+		       p.url,
+		       p.revision,
+		       p.remark
+		from permission p
+	</select>
 
 	<insert id="insert">
-		insert into permission(name, url, created_by, creation_time, updated_by, last_updated_time, revision, remark)
+		insert into permission(name, url, created_by, creation_time, updated_by, last_updated_time, revision, remark
+		                      )
 		values (#{name}, #{url}, #{createdBy.id}, now(), #{updatedBy.id}, now(), 0, #{remark})
 	</insert>
 
@@ -57,7 +70,7 @@
 
 	<delete id="delete">
 		delete
-		from permission
+		from permission p
 		where id = #{id}
 	</delete>
 
@@ -99,5 +112,18 @@
 		from permission p
 		<where>
 		</where>
+	</select>
+	<select id="isExistByName" resultType="java.lang.Integer">
+		select count(*)
+		from permission p
+		where p.`name` = #{name}
+	</select>
+	<select id="getByUserId" resultType="com.lib.bookbrain.model.entity.Permission">
+		select up.`permission_id` id,
+		       up.`name`,
+		       up.`url`,
+		       up.remark
+		from user_permission up
+		where user_id = #{id}
 	</select>
 </mapper>

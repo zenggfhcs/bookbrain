@@ -6,27 +6,53 @@
 		<result property="parent" column="parent" jdbcType="INTEGER"/>
 		<result property="key" column="key" jdbcType="VARCHAR"/>
 		<result property="value" column="value" jdbcType="VARCHAR"/>
+		<result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
+		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
+		<result column="revision" jdbcType="INTEGER" property="revision"/>
+		<association property="createdBy" column="created_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 		<collection property="children" column="id" ofType="com.lib.bookbrain.model.entity.ClcIndex"
 		            select="getChildrenByParentId"/>
 	</resultMap>
 	<select id="getChildrenByParentId" resultMap="ClcNResultMap">
-		select *
+		select ci.`id`, ci.`parent`, ci.`key`, ci.`value`, ci.`revision`
 		from clc_index ci
 		where ci.`parent` = #{id};
 	</select>
 
 	<select id="getById" resultType="com.lib.bookbrain.model.entity.ClcIndex">
-		select *
+		select ci.`id`, ci.`parent`, ci.`key`, ci.`value`, ci.`revision`
 		from clc_index ci
 		where ci.`id` = #{id};
 	</select>
 
 	<insert id="insert">
-		insert into clc_index(parent, `key`, value)
-		VALUES (#{parent}, #{key}, #{value});
+		insert into clc_index(parent, `key`, value, creation_time, created_by, last_updated_time, updated_by, revision,
+		                      remark)
+		VALUES (#{parent}, #{key}, #{value}, now(), #{createdBy.id}, now(), #{updatedBy.id}, 0, '');
 	</insert>
 
 	<update id="update">
+		update clc_index ci
+		<set>
+			<if test="entity.parent != null">
+				ci.`parent` = #{entity.parent},
+			</if>
+			<if test="entity.key != null and entity.key != ''">
+				ci.`key` = #{entity.key},
+			</if>
+			<if test="entity.value != null and entity.value != ''">
+				ci.`value` = #{entity.value},
+			</if>
+			<if test="1 == 1">
+				ci.`last_updated_time` = NOW(),
+				ci.`revision` = (FLOOR(RAND() * 100) + 1 + ci.`revision`) % 2147483647,
+			</if>
+		</set>
+		where ci.`id` = #{id}
+		and ci.`revision` = #{entity.revision}
 	</update>
 
 	<delete id="delete">
@@ -36,6 +62,21 @@
 	</delete>
 
 	<select id="getToUpdate" resultType="com.lib.bookbrain.model.entity.ClcIndex">
+		select
+		<trim suffixOverrides=",">
+			<if test="entity.parent != null">
+				ci.`parent`,
+			</if>
+			<if test="entity.key != null and entity.key != ''">
+				ci.`key`,
+			</if>
+			<if test="entity.value != null and entity.value != ''">
+				ci.`value`,
+			</if>
+		</trim>
+		from clc_index ci
+		where ci.`id` = #{id}
+		and ci.`revision` = #{entity.revision}
 	</select>
 
 	<select id="filteredList" resultType="com.lib.bookbrain.model.entity.ClcIndex">
@@ -71,5 +112,18 @@
 		select *
 		from clc_index ci
 		where ci.`parent` = #{parent}
+	</select>
+	<select id="getByKey" resultType="com.lib.bookbrain.model.entity.ClcIndex">
+		select ci.id
+		from clc_index ci
+		where ci.`key` = #{key};
+	</select>
+	<select id="parentStartWith" resultType="java.lang.Integer">
+		select count(*)
+		from clc_index ci
+		where #{parent} = 0
+			      ||
+			   (ci.`id` = #{parent}
+				   and #{key} like concat(ci.`key`, '%'));
 	</select>
 </mapper>

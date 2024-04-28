@@ -255,4 +255,14 @@
 		</where>
 		<!--		filter-->
 	</select>
+	<select id="todayActiveUserCount" resultType="java.lang.Integer">
+		select count(distinct tar.user_id)
+		from token_access_record tar
+		where date(tar.used_time) = current_date;
+	</select>
+	<select id="todayNewUserCount" resultType="java.lang.Integer">
+		select count(distinct u.id)
+		from user u
+		where date(u.creation_time) = current_date;
+	</select>
 </mapper>

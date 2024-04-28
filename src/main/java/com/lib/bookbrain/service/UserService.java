@@ -23,4 +23,8 @@ Response tokenUser();
 Response sendResetLink(User entity);
 
 Response resetPasswordByUpdate(User user);
+
+Response todayActiveUserCount();
+
+Response todayNewUserCount();
 }

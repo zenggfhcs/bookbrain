@@ -25,15 +25,20 @@ public DebitController(DebitService debitService) {
 	this.debitService = debitService;
 }
 
-@PostMapping("/{id}/repay")
-public Response repay(@RequestBody Debit debit) {
+@PostMapping("/{id}/remind")
+public Response remind(@RequestBody Debit debit) {
 	Payload<Debit> _payload = Payload.fromEntity(debit);
-	return debitService.repay(_payload);
+	return debitService.remind(_payload);
 }
 
 @GetMapping("/todayDebitCount")
 public Response getTodayDebitCount() {
 	return debitService.getTodayDebitCount();
+}
+
+@GetMapping("/getTodayRestoreCount")
+public Response getTodayRestoreCount() {
+	return debitService.getTodayRestoreCount();
 }
 
 @PostMapping("/{id}/restore")

@@ -13,6 +13,8 @@ public interface PermissionMapper extends BaseMapper<Permission, PermissionFilte
 /* ============================ 继承 ============================ */
 Permission getById(Payload<Permission> payload);
 
+List<Permission> list();
+
 int insert(Permission entity);
 
 int update(Payload<Permission> payload);
@@ -24,5 +26,9 @@ Permission getToUpdate(Payload<Permission> payload);
 List<Permission> filteredList(FilterPayload<Permission, PermissionFilter> payload);
 
 int getLengthByFilter(FilterPayload<Permission, PermissionFilter> payload);
+
+int isExistByName(String name);
+
+List<Permission> getByUserId(Integer operatorId);
 /* ============================ 继承 ============================ */
 }

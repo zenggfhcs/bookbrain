@@ -57,4 +57,8 @@ List<Debit> getCurrentUnreturnedByUser(User operator);
 List<RankingsItem<BookInfo>> bookDebitRankings(RankingsBody body);
 
 List<RankingsItem<User>> readerDebitRankings(RankingsBody body);
+
+int remind(Debit debit);
+
+int getTodayRestoreCount();
 }
