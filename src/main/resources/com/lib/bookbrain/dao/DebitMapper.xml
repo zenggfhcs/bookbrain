@@ -210,17 +210,16 @@
 		  and now() > d.`return_deadline`
 		limit 1;
 	</select>
-	<select id="getCurrentDebitHasTheBookInfoByUserId" parameterType="com.lib.bookbrain.model.exchange.Payload"
-	        resultType="java.lang.Boolean">
-		select (
-			       #{bookInfoId}
-				       in
-			       (select distinct b.`book_info_id`
-			        from debit d
-				             inner join book b on d.`book_id` = b.`id`
-			        where d.`created_by` = #{userId}
-				       and d.`return_time` is null)
-			       );
+	<select id="getCurrentDebitTheBookInfoCountByUserId" parameterType="com.lib.bookbrain.model.exchange.Payload"
+	        resultType="java.lang.Integer">
+		select #{bookInfoId}
+			       in
+			    (select distinct b.`book_info_id`
+			     from debit d
+				          inner join book b on d.`book_id` = b.`id`
+			     where d.`created_by` = #{userId}
+				    and d.`return_time` is null)
+		;
 	</select>
 	<select id="getCurrentUnreturnedByUser" resultMap="BaseResultMap">
 		select d.`id`,

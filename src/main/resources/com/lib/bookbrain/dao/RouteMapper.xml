@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lib.bookbrain.dao.RouteMapper">
+	<resultMap id="BaseResultMap" type="com.lib.bookbrain.model.entity.RouteItem">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+		<result property="group" column="group" jdbcType="VARCHAR"/>
+		<result property="key" column="key" jdbcType="VARCHAR"/>
+		<result property="label" column="label" jdbcType="VARCHAR"/>
+		<result property="toName" column="to_name" jdbcType="VARCHAR"/>
+		<result property="iconName" column="icon_name" jdbcType="VARCHAR"/>
+		<result property="creationTime" column="creation_time" jdbcType="TIMESTAMP"/>
+		<result property="lastUpdatedTime" column="last_updated_time" jdbcType="TIMESTAMP"/>
+		<result property="revision" column="revision" jdbcType="INTEGER"/>
+		<association property="createdBy" column="created_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
+		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+		<collection property="children" column="id" ofType="com.lib.bookbrain.model.entity.RouteItem"
+		            select="getChildrenByParentId"/>
+	</resultMap>
+	<select id="getChildrenByParentId" resultMap="BaseResultMap">
+		select r.id,
+		       r.`group`,
+		       r.`key`,
+		       r.label,
+		       r.to_name,
+		       r.icon_name,
+		       r.`revision`
+		from route r
+		where r.`parent_id` = #{id}
+	</select>
+	<select id="list" resultType="com.lib.bookbrain.model.entity.RouteItem">
+		select r.id,
+		       r.`group`,
+		       r.`key`,
+		       r.label,
+		       r.to_name,
+		       r.icon_name,
+		       r.`revision`
+		from route r;
+	</select>
+	<select id="getByParentId" resultMap="BaseResultMap">
+	</select>
+	<select id="getById" resultMap="BaseResultMap">
+		select r.`id`,
+		       r.`key`,
+		       r.`label`
+		from route r
+		where r.`id` = #{parent_id}
+	</select>
+
+	<insert id="insert">
+		insert into route (parent_id, `group`, `key`, label, to_name, icon_name)
+		values (#{parentId}, #{group}, #{key}, #{label}, #{toName}, #{iconName});
+	</insert>
+
+	<update id="update">
+		update route r
+		<set>
+			<if test="entity.key != null and entity.key != ''">
+				r.`key` = #{entity.key},
+			</if>
+			<if test="entity.label != null and entity.label != ''">
+				r.`label` = #{entity.label},
+			</if>
+			<if test="entity.toName != null and entity.toName != ''">
+				r.`to_name` = #{entity.toName},
+			</if>
+			<if test="entity.iconName != null and entity.iconName != ''">
+				r.`icon_name` = #{entity.iconName},
+			</if>
+		</set>
+		where r.id = #{id} and r.revision = #{entity.revision}
+	</update>
+
+	<delete id="delete">
+		delete r
+		from route r
+		where r.`id` = #{id}
+	</delete>
+	<delete id="removePermission">
+	</delete>
+
+	<select id="getToUpdate" resultMap="BaseResultMap">
+		select
+		<trim suffixOverrides=",">
+			<if test="entity.key != null and entity.key != ''">
+				r.`key`,
+			</if>
+			<if test="entity.label != null and entity.label != ''">
+				r.`label`,
+			</if>
+			<if test="entity.toName != null and entity.toName != ''">
+				r.`to_name`,
+			</if>
+			<if test="entity.iconName != null and entity.iconName != ''">
+				r.`icon_name`,
+			</if>
+		</trim>
+		from route r
+		where r.id = #{id}
+	</select>
+
+	<select id="filteredList" resultMap="BaseResultMap">
+	</select>
+
+	<select id="getLengthByFilter" resultType="int">
+	</select>
+
+	<select id="getFirstLevel" resultMap="BaseResultMap">
+		select r.id,
+		       r.`group`,
+		       r.`key`,
+		       r.label,
+		       r.to_name,
+		       r.icon_name,
+		       r.`revision`
+		from route r
+		where r.`parent_id` = 0
+		order by r.`group` desc;
+	</select>
+</mapper>

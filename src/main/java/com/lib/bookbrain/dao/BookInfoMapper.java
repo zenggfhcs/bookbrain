@@ -1,11 +1,9 @@
 package com.lib.bookbrain.dao;
 
 import com.lib.bookbrain.model.entity.BookInfo;
-import com.lib.bookbrain.model.entity.ClcIndex;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.filter.BookInfoFilter;
-import com.lib.bookbrain.model.pojo.BookType;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -32,10 +30,6 @@ List<BookInfo> filteredList(FilterPayload<BookInfo, BookInfoFilter> payload);
 
 int getLengthByFilter(FilterPayload<BookInfo, BookInfoFilter> payload);
 /* ============================ 继承 ============================ */
-
-List<BookType> getTypeByKeyword(String keyword);
-
-List<ClcIndex> getFirstLevelType();
 
 List<BookInfo> quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload);
 

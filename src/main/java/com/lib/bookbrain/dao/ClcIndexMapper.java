@@ -13,6 +13,8 @@ public interface ClcIndexMapper extends BaseMapper<ClcIndex, ClcIndexFilter> {
 /* ============================ 继承 ============================ */
 ClcIndex getById(Payload<ClcIndex> payload);
 
+List<ClcIndex> list();
+
 int insert(ClcIndex entity);
 
 int update(Payload<ClcIndex> payload);

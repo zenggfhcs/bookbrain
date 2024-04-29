@@ -48,7 +48,7 @@ int getCurrentDebitCountByUser(User operator);
 
 int getCurrentExpiredDebitCountByUser(User operator);
 
-boolean getCurrentDebitHasTheBookInfoByUserId(@Param("bookInfoId") Integer bookInfoId, @Param("userId") Integer userId);
+int getCurrentDebitTheBookInfoCountByUserId(@Param("bookInfoId") Integer bookInfoId, @Param("userId") Integer userId);
 
 int restore(Debit debit);
 

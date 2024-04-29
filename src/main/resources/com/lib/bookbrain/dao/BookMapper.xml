@@ -7,6 +7,7 @@
 		<id column="id" jdbcType="INTEGER" property="id"/>
 		<result column="damage_level" jdbcType="TINYINT" property="damageLevel"/>
 		<result column="borrowable" jdbcType="BIT" property="borrowable"/>
+		<result column="lib_index" property="libIndex" jdbcType="VARCHAR"/>
 		<result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
 		<result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime"/>
 		<result column="revision" jdbcType="INTEGER" property="revision"/>
@@ -16,7 +17,16 @@
 		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 		<association property="updatedBy" column="updated_by" javaType="com.lib.bookbrain.model.entity.User"
 		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
+		<association property="currentDebit" column="id" javaType="com.lib.bookbrain.model.entity.Debit"
+		             select="getBookCurrentDebit"/>
 	</resultMap>
+	<select id="getBookCurrentDebit" resultType="com.lib.bookbrain.model.entity.Debit">
+		select *
+		from debit d
+		where d.`book_id` = #{id}
+		order by d.`creation_time`
+		limit 1;
+	</select>
 	<select id="list" resultMap="BaseResultMap">
 		select *
 		from book;
@@ -27,11 +37,13 @@
 	</select>
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
 	        parameterType="com.lib.bookbrain.model.entity.Book">
-		insert into book (`damage_level`, `borrowable`, `book_info_id`, `created_by`, `creation_time`, `updated_by`,
+		insert into book (`damage_level`, `borrowable`, `book_info_id`, `lib_index`, `created_by`, `creation_time`,
+		                  `updated_by`,
 		                  `last_updated_time`, `revision`)
 		VALUES ( #{damageLevel}
 		       , 1
 		       , #{bookInfo.id}
+		       , #{libIndex}
 		       , #{createdBy.id}
 		       , NOW()
 		       , #{updatedBy.id}
@@ -82,10 +94,7 @@
 		       b.`damage_level`,
 		       b.`borrowable`,
 		       b.`book_info_id`,
-		       b.`created_by`,
-		       b.`creation_time`,
-		       b.`updated_by`,
-		       b.`last_updated_time`,
+		       b.`lib_index`,
 		       b.`revision`
 		from book b
 		where b.`id` = #{id}
@@ -125,15 +134,19 @@
 	</select>
 	<select id="getDebitBookById" resultMap="BaseResultMap">
 		select b.`id`,
-		       b.`book_info_id`,
 		       b.`damage_level`,
 		       b.`borrowable`,
+		       b.`lib_index`,
 		       b.`revision`
 		from book b
 		where b.`id` = #{id}
 	</select>
-	<select id="getByBookInfoId" resultType="com.lib.bookbrain.model.entity.Book">
-		select *
+	<select id="getByBookInfoId" resultMap="BaseResultMap">
+		select b.`id`,
+		       b.`damage_level`,
+		       b.`borrowable`,
+		       b.`lib_index`,
+		       b.`revision`
 		from book b
 		where b.`book_info_id` = #{id};
 	</select>

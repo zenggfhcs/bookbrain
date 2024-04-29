@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author yunxia
@@ -178,7 +179,7 @@ public Response register(Payload<User> payload) {
 
 	// 判断是不是重复注册
 	User _ou = userMapper.getByEmail(_u.getEmail());
-	if (_ou == null) {
+	if (Optional.ofNullable(_ou).isPresent()) {
 		return Response.error(ResponseInfo.THIS_EMAIL_IS_EXIST);
 	}
 

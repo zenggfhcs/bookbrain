@@ -13,6 +13,8 @@
 		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 		<collection property="permissions" column="id" ofType="com.lib.bookbrain.model.entity.Permission"
 		            select="getPermissionByRoleId"/>
+		<collection property="routeItems" column="id" ofType="com.lib.bookbrain.model.entity.RouteItem"
+		            select="getRouteByRoleId"/>
 	</resultMap>
 	<select id="getPermissionByRoleId" resultType="com.lib.bookbrain.model.entity.Permission">
 		select p.id,
@@ -22,6 +24,12 @@
 		from role_permission rp
 			     inner join permission p on rp.permission_id = p.id
 		where rp.role_id = #{id}
+	</select>
+	<select id="getRouteByRoleId" resultType="com.lib.bookbrain.model.entity.RouteItem">
+		select r.*
+		from role_route rr
+			     inner join route r on rr.`route_id` = r.`id`
+		where rr.`role_id` = #{id}
 	</select>
 	<select id="getById" resultMap="BaseResultMap">
 		select r.name, r.id, r.remark, r.revision

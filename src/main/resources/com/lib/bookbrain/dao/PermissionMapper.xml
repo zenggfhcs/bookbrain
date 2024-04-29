@@ -33,8 +33,7 @@
 	</select>
 
 	<insert id="insert">
-		insert into permission(name, url, created_by, creation_time, updated_by, last_updated_time, revision, remark
-		                      )
+		insert into permission(name, url, created_by, creation_time, updated_by, last_updated_time, revision, remark)
 		values (#{name}, #{url}, #{createdBy.id}, now(), #{updatedBy.id}, now(), 0, #{remark})
 	</insert>
 

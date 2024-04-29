@@ -36,4 +36,11 @@ private Boolean borrowable;
  */
 private BookInfo bookInfo;
 
+/**
+ * 书籍索引号
+ */
+private String libIndex;
+
+private Debit currentDebit;
+
 }

@@ -8,7 +8,10 @@ import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BookInfoMapper;
 import com.lib.bookbrain.dao.BookMapper;
 import com.lib.bookbrain.dao.DebitMapper;
-import com.lib.bookbrain.model.entity.*;
+import com.lib.bookbrain.model.entity.Book;
+import com.lib.bookbrain.model.entity.BookInfo;
+import com.lib.bookbrain.model.entity.Debit;
+import com.lib.bookbrain.model.entity.User;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
@@ -80,12 +83,6 @@ public Response filteredList(FilterPayload<BookInfo, BookInfoFilter> payload) {
 }
 
 @Override
-public Response getFirstLevelType() {
-	List<ClcIndex> _list = bookInfoMapper.getFirstLevelType();
-	return Response.success(_list);
-}
-
-@Override
 public Response quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload) {
 	List<BookInfo> _list = bookInfoMapper.quickQuery(payload);
 	Map<String, Object> _map = new HashMap<>();
@@ -121,8 +118,8 @@ public Response borrow(Payload<BookInfo> payload) {
 		return Response.error(ResponseInfo.HAS_EXPIRED_BORROW);
 	}
 
-	boolean _currentDebitHasThis = debitMapper.getCurrentDebitHasTheBookInfoByUserId(payload.getId(), _userId);
-	if (_currentDebitHasThis) {// 当前已借阅该图书
+	int _currentDebitTheBookInfoCount = debitMapper.getCurrentDebitTheBookInfoCountByUserId(payload.getId(), _userId);
+	if (_currentDebitTheBookInfoCount > 0) {// 当前已借阅该图书
 		return Response.error(ResponseInfo.IS_BORROWED);
 	}
 

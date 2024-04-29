@@ -37,11 +37,6 @@ public Response cover(@RequestParam MultipartFile file) {
 	return uploadService.upload(file);
 }
 
-@PostMapping("/bookType:firstLevel")
-public Response firstLevelType() {
-	return bookInfoService.getFirstLevelType();
-}
-
 @PostMapping("/list:quick-query")
 public Response quickQuery(@RequestBody FilterPayload<BookInfo, BookInfoFilter> payload) {
 	return bookInfoService.quickQuery(payload);

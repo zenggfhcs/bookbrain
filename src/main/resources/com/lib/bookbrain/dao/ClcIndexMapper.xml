@@ -17,13 +17,30 @@
 		            select="getChildrenByParentId"/>
 	</resultMap>
 	<select id="getChildrenByParentId" resultMap="ClcNResultMap">
-		select ci.`id`, ci.`parent`, ci.`key`, ci.`value`, ci.`revision`
+		select ci.`id`
+			  , ci.`parent`
+			  , ci.`key`
+			  , ci.`value`
+			  , ci.`revision`
 		from clc_index ci
 		where ci.`parent` = #{id};
 	</select>
+	<select id="list" resultMap="ClcNResultMap">
+		select ci.`id`
+			  , ci.`parent`
+			  , ci.`key`
+			  , ci.`value`
+			  , ci.`revision`
+		from clc_index ci
+		where ci.`parent` = 0;
+	</select>
 
 	<select id="getById" resultType="com.lib.bookbrain.model.entity.ClcIndex">
-		select ci.`id`, ci.`parent`, ci.`key`, ci.`value`, ci.`revision`
+		select ci.`id`
+			  , ci.`parent`
+			  , ci.`key`
+			  , ci.`value`
+			  , ci.`revision`
 		from clc_index ci
 		where ci.`id` = #{id};
 	</select>
@@ -95,7 +112,11 @@
 		</where>
 	</select>
 	<select id="firstLevel" resultType="com.lib.bookbrain.model.entity.ClcIndex">
-		select *
+		select ci.`id`
+			  , ci.`parent`
+			  , ci.`key`
+			  , ci.`value`
+			  , ci.`revision`
 		from clc_index ci
 		where ci.`parent` = 0;
 	</select>

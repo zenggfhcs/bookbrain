@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface BookInfoService extends BaseService<BookInfo, BookInfoFilter> {
 
-Response getFirstLevelType();
-
 Response quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload);
 
 Response typeQuery(String bookType, List<String> orders);
