@@ -45,6 +45,10 @@
 		insert into role_permission(role_id, permission_id)
 		VALUES (#{id}, #{remark})
 	</insert>
+	<insert id="addRoute">
+		insert into role_route(role_id, route_id)
+		VALUES (#{id}, #{remark})
+	</insert>
 
 	<update id="update">
 	</update>
@@ -59,6 +63,12 @@
 		from role_permission rp
 		where rp.role_id = #{id}
 		  and rp.permission_id = #{remark}
+	</delete>
+	<delete id="removeRoute">
+		delete rr
+		from role_route rr
+		where rr.role_id = #{id}
+		  and rr.route_id = #{remark}
 	</delete>
 
 	<select id="getToUpdate" resultType="com.lib.bookbrain.model.entity.Role">

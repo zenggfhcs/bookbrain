@@ -48,6 +48,8 @@ public static <T> T parse(String s, Class<T> c) {
 
 public static void main(String[] args) {
 	User user = new User();
-	System.out.println(stringify(user));
+	user.setName("");
+	Object o = user;
+	System.out.println(stringify(o));
 }
 }

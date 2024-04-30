@@ -66,5 +66,7 @@ User getByOperatorId(Integer id);
 int todayActiveUserCount();
 
 int todayNewUserCount();
+
+int updateRole(User user);
 /* ============================ 拓展 ============================ */
 }

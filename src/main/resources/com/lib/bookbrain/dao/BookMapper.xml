@@ -134,6 +134,7 @@
 	</select>
 	<select id="getDebitBookById" resultMap="BaseResultMap">
 		select b.`id`,
+		       b.`book_info_id`,
 		       b.`damage_level`,
 		       b.`borrowable`,
 		       b.`lib_index`,

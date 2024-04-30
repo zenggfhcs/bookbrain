@@ -1,5 +1,7 @@
 package com.lib.bookbrain.service.impl;
 
+import com.lib.bookbrain.anno.AroundLog;
+import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.dao.UserMapper;
 import com.lib.bookbrain.model.entity.TokenBody;
 import com.lib.bookbrain.model.exchange.Payload;
@@ -18,6 +20,7 @@ public class VerifyServiceImpl implements VerifyService {
 private final UserMapper userMapper;
 
 @Override
+@AroundLog(value = "token 验证", type = LogType.U)
 public Response verify(Payload<TokenBody> payload) {
 	String _token = payload.getEntity().getToken();
 

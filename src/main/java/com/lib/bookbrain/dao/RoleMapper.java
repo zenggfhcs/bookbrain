@@ -30,6 +30,10 @@ Role getByUserId(Integer userId);
 int addPermission(Role entity);
 
 int removePermission(Role entity);
+
+int addRoute(Role entity);
+
+int removeRoute(Role entity);
 /* ============================ 继承 ============================ */
 
 }

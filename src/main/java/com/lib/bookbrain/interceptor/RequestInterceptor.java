@@ -3,9 +3,9 @@ package com.lib.bookbrain.interceptor;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.lib.bookbrain.constant.Header;
 import com.lib.bookbrain.context.SimpleThreadContext;
+import com.lib.bookbrain.dao.PermissionMapper;
 import com.lib.bookbrain.dao.TokenAccessRecordMapper;
 import com.lib.bookbrain.exception.JWTException;
-import com.lib.bookbrain.exception.PermissionMissException;
 import com.lib.bookbrain.model.entity.TokenAccessRecord;
 import com.lib.bookbrain.model.pojo.TokenInfo;
 import com.lib.bookbrain.security.Jwt;
@@ -32,6 +32,8 @@ private final UserService userService;
 
 private final TokenAccessRecordMapper tokenMapper;
 
+private final PermissionMapper permissionMapper;
+
 /**
  * 拦截后，1：获取请求头里面的 token；2.解析 token；3.权限检查
  *
@@ -56,11 +58,23 @@ public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServl
 		throw new JWTException();
 	}
 
-	String _url = request.getRequestURI();
-	System.out.println(request.getMethod() + _url);
-	if (userService.checkPermission(_info.getAud(), _url) == 0) {
-		throw new PermissionMissException();
-	}
+	String _url = request.getMethod() + request.getRequestURI();
+//	if (userService.checkPermission(_info.getAud(), _url) == 0) {
+////		Permission _permission = new Permission();
+////		_permission.setName(UUID.randomUUID().toString());
+////		String[] _urlPorts = _url.split("/");
+////		if (_urlPorts.length > 0 && isNumeric(_urlPorts[_urlPorts.length - 1])) {
+////			StringBuilder _temp = new StringBuilder();
+////			for (int i = 0; i < _urlPorts.length - 1; i++) {
+////				_temp.append(_urlPorts[i]).append("/");
+////			}
+////			_temp.append("[0-9]+");
+////			_url = _temp.toString();
+////		}
+////		_permission.setUrl(_url);
+////		permissionMapper.insert(_permission);
+//		throw new PermissionMissException();
+//	}
 
 	// 记录操作者
 	threadContext.set(_info);

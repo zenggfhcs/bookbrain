@@ -10,7 +10,7 @@ Response register(Payload<User> payload);
 
 Response login(User entity);
 
-Response logout(Payload<User> payload);
+Response logout();
 
 int checkPermission(Integer id, String url);
 
@@ -27,4 +27,6 @@ Response resetPasswordByUpdate(User user);
 Response todayActiveUserCount();
 
 Response todayNewUserCount();
+
+Response updateRole(User user);
 }

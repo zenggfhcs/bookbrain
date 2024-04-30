@@ -23,7 +23,8 @@
 			  , ci.`value`
 			  , ci.`revision`
 		from clc_index ci
-		where ci.`parent` = #{id};
+		where ci.`parent` = #{id}
+		order by ci.`key`;
 	</select>
 	<select id="list" resultMap="ClcNResultMap">
 		select ci.`id`
@@ -32,7 +33,8 @@
 			  , ci.`value`
 			  , ci.`revision`
 		from clc_index ci
-		where ci.`parent` = 0;
+		where ci.`parent` = 0
+		order by ci.`key`;
 	</select>
 
 	<select id="getById" resultType="com.lib.bookbrain.model.entity.ClcIndex">

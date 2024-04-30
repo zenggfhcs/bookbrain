@@ -34,7 +34,7 @@
 
 	<insert id="insert">
 		insert into permission(name, url, created_by, creation_time, updated_by, last_updated_time, revision, remark)
-		values (#{name}, #{url}, #{createdBy.id}, now(), #{updatedBy.id}, now(), 0, #{remark})
+		values (#{name}, #{url}, 1, now(), 1, now(), 0, '')
 	</insert>
 
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -68,9 +68,9 @@
 	</update>
 
 	<delete id="delete">
-		delete
+		delete p
 		from permission p
-		where id = #{id}
+		where p.`id` = #{id}
 	</delete>
 
 	<select id="getToUpdate" parameterType="com.lib.bookbrain.model.exchange.Payload" resultMap="BaseResultMap">

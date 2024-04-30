@@ -34,4 +34,16 @@ public Response removePermission(@RequestBody Role role) {
 	Payload<Role> _payload = Payload.fromEntity(role);
 	return roleService.removePermission(_payload);
 }
+
+@PostMapping("/addRoute")
+public Response addRoute(@RequestBody Role role) {
+	Payload<Role> _payload = Payload.fromEntity(role);
+	return roleService.addRoute(_payload);
+}
+
+@PostMapping("/removeRoute")
+public Response removeRoute(@RequestBody Role role) {
+	Payload<Role> _payload = Payload.fromEntity(role);
+	return roleService.removeRoute(_payload);
+}
 }

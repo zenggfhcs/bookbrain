@@ -22,6 +22,7 @@
 	<select id="getChildrenByParentId" resultMap="BaseResultMap">
 		select r.id,
 		       r.`group`,
+		       r.`order`,
 		       r.`key`,
 		       r.label,
 		       r.to_name,
@@ -29,16 +30,19 @@
 		       r.`revision`
 		from route r
 		where r.`parent_id` = #{id}
+		order by r.`order`;
 	</select>
 	<select id="list" resultType="com.lib.bookbrain.model.entity.RouteItem">
 		select r.id,
 		       r.`group`,
+		       r.`order`,
 		       r.`key`,
 		       r.label,
 		       r.to_name,
 		       r.icon_name,
 		       r.`revision`
-		from route r;
+		from route r
+		order by r.`group`, r.`order`;
 	</select>
 	<select id="getByParentId" resultMap="BaseResultMap">
 	</select>
@@ -70,6 +74,9 @@
 			<if test="entity.iconName != null and entity.iconName != ''">
 				r.`icon_name` = #{entity.iconName},
 			</if>
+			<if test="entity.order != null">
+				r.`order` = #{entity.order},
+			</if>
 		</set>
 		where r.id = #{id} and r.revision = #{entity.revision}
 	</update>
@@ -91,11 +98,14 @@
 			<if test="entity.label != null and entity.label != ''">
 				r.`label`,
 			</if>
-			<if test="entity.toName != null and entity.toName != ''">
+			<if test="entity.toName != null">
 				r.`to_name`,
 			</if>
 			<if test="entity.iconName != null and entity.iconName != ''">
 				r.`icon_name`,
+			</if>
+			<if test="entity.order != null">
+				r.`order`,
 			</if>
 		</trim>
 		from route r
@@ -111,6 +121,7 @@
 	<select id="getFirstLevel" resultMap="BaseResultMap">
 		select r.id,
 		       r.`group`,
+		       r.`order`,
 		       r.`key`,
 		       r.label,
 		       r.to_name,
@@ -118,6 +129,21 @@
 		       r.`revision`
 		from route r
 		where r.`parent_id` = 0
-		order by r.`group` desc;
+		order by r.`group` desc, r.`order`;
+	</select>
+	<select id="getByGroup" resultMap="BaseResultMap">
+		select r.id,
+		       r.`group`,
+		       r.`order`,
+		       r.`key`,
+		       r.label,
+		       r.to_name,
+		       r.icon_name
+		from user_route ur
+			     inner join route r on ur.route_id = r.id
+		where ur.`user_id` = #{userId}
+		  and r.`group` = #{group}
+		  and r.`parent_id` = 0
+		order by r.`order`;
 	</select>
 </mapper>

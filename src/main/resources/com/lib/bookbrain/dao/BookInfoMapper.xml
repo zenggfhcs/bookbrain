@@ -230,6 +230,9 @@
 				<if test="entity.bookName != null and entity.bookName != ''">
 					and bif.`book_name` like concat(#{entity.bookName}, '%')
 				</if>
+				<if test="entity.bookType != null and entity.bookType != ''">
+					and bif.`book_type` like concat(#{entity.bookType}, '%')
+				</if>
 			</if>
 		</where>
 		<trim>

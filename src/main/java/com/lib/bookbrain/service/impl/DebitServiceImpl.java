@@ -2,7 +2,9 @@ package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.anno.AroundDelete;
 import com.lib.bookbrain.anno.AroundGet;
+import com.lib.bookbrain.anno.AroundLog;
 import com.lib.bookbrain.anno.AroundUpdate;
+import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.DebitMapper;
@@ -45,39 +47,46 @@ public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> 
 }
 
 @Override
+@AroundLog(value = "获取借阅列表", type = LogType.R)
 public Response list() {
 	return baseService.list();
 }
 
 @Override
+@AroundLog(value = "创建借阅记录", type = LogType.C)
 public Response create(Payload<Debit> payload) {
 	return baseService.create(payload);
 }
 
 @AroundGet
 @Override
+@AroundLog(value = "查询单一借阅记录", type = LogType.R)
 public Response getById(Payload<Debit> payload) {
 	return baseService.getById(payload);
 }
 
 @AroundUpdate
 @Override
+@AroundLog(value = "更新借阅", type = LogType.U)
 public Response update(Payload<Debit> payload) {
 	return baseService.update(payload);
 }
 
 @AroundDelete
 @Override
+@AroundLog(value = "删除借阅记录", type = LogType.D)
 public Response delete(Payload<Debit> payload) {
 	return baseService.delete(payload);
 }
 
 @Override
+@AroundLog(value = "查询借阅列表(过滤)", type = LogType.R)
 public Response filteredList(FilterPayload<Debit, DebitFilter> payload) {
 	return baseService.filteredList(payload);
 }
 
 @Override
+@AroundLog(value = "催还", type = LogType.C)
 public Response remind(Payload<Debit> payload) {
 	Integer _userId = threadContext.get().getAud();
 	User _operator = new User();
@@ -95,18 +104,21 @@ public Response remind(Payload<Debit> payload) {
 }
 
 @Override
+@AroundLog(value = "查询今日借阅数", type = LogType.R)
 public Response getTodayDebitCount() {
 	int _todayDebitCount = debitMapper.getTodayDebitCount();
 	return Response.success(_todayDebitCount);
 }
 
 @Override
+@AroundLog(value = "查询今日归还数", type = LogType.R)
 public Response getTodayRestoreCount() {
 	int _todayRestoreCount = debitMapper.getTodayRestoreCount();
 	return Response.success(_todayRestoreCount);
 }
 
 @Override
+@AroundLog(value = "归还", type = LogType.U)
 public Response restore(Payload<Debit> payload) {
 	Integer _userId = threadContext.get().getAud();
 	User _operator = new User();
@@ -123,6 +135,7 @@ public Response restore(Payload<Debit> payload) {
 }
 
 @Override
+@AroundLog(value = "当前未归还借阅列表", type = LogType.R)
 public Response currentUnreturned() {
 	Integer _userId = threadContext.get().getAud();
 	User _operator = new User();
@@ -134,12 +147,14 @@ public Response currentUnreturned() {
 }
 
 @Override
+@AroundLog(value = "书籍借阅排行榜", type = LogType.R)
 public Response bookDebitRankings(RankingsBody body) {
 	List<RankingsItem<BookInfo>> _list = debitMapper.bookDebitRankings(body);
 	return Response.success(_list);
 }
 
 @Override
+@AroundLog(value = "用户借阅排行榜", type = LogType.R)
 public Response readerDebitRankings(RankingsBody body) {
 	List<RankingsItem<User>> _list = debitMapper.readerDebitRankings(body);
 	return Response.success(_list);

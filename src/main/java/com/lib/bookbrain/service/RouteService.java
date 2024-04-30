@@ -6,4 +6,6 @@ import com.lib.bookbrain.model.filter.BaseFilter;
 
 public interface RouteService extends BaseService<RouteItem, BaseFilter> {
 Response getFirstLevel();
+
+Response getByGroup(String group);
 }

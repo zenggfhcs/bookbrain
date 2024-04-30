@@ -11,4 +11,8 @@ Response tokenRole();
 Response addPermission(Payload<Role> payload);
 
 Response removePermission(Payload<Role> payload);
+
+Response addRoute(Payload<Role> payload);
+
+Response removeRoute(Payload<Role> payload);
 }

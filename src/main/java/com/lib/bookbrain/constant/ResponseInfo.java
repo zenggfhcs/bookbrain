@@ -64,7 +64,7 @@ public enum ResponseInfo {
 	/**
 	 *
 	 */
-	MISS_PERMISSION("You don't have enough permission to do this"),
+	MISS_PERMISSION("没有足够的权限去完成该操作"),
 
 	/**
 	 *

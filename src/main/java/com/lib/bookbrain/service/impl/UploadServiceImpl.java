@@ -1,5 +1,7 @@
 package com.lib.bookbrain.service.impl;
 
+import com.lib.bookbrain.anno.AroundLog;
+import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.exception.FileUploadException;
 import com.lib.bookbrain.model.exchange.Response;
@@ -21,6 +23,7 @@ public class UploadServiceImpl implements UploadService {
 private final String BASE_URL = "http://10.3.105.0/public/";
 
 @Override
+@AroundLog(value = "上传文件", type = LogType.C)
 public Response upload(MultipartFile file) {
 	if (file.isEmpty()) {
 		return Response.error(ResponseInfo.FILE_NOT_EXIST);

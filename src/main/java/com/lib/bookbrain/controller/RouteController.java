@@ -5,6 +5,7 @@ import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.BaseFilter;
 import com.lib.bookbrain.service.RouteService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +22,10 @@ public RouteController(RouteService routeService) {
 @GetMapping("/firstLevel")
 public Response getFirstLevel() {
 	return routeService.getFirstLevel();
+}
+
+@GetMapping("/group/{group}")
+public Response getByGroup(@PathVariable String group) {
+	return routeService.getByGroup(group);
 }
 }

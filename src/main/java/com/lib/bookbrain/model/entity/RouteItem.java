@@ -14,6 +14,8 @@ private Integer parentId;
 
 private String group;
 
+private Integer order;
+
 private String key;
 
 private String label;

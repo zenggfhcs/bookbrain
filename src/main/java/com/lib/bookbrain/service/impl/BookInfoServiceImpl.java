@@ -1,8 +1,9 @@
 package com.lib.bookbrain.service.impl;
 
 import com.lib.bookbrain.anno.AroundDelete;
-import com.lib.bookbrain.anno.AroundGet;
+import com.lib.bookbrain.anno.AroundLog;
 import com.lib.bookbrain.anno.AroundUpdate;
+import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BookInfoMapper;
@@ -50,39 +51,45 @@ public BookInfoServiceImpl(BookInfoMapper bookInfoMapper, SimpleThreadContext<To
 }
 
 @Override
+@AroundLog(value = "查询书籍信息列表", type = LogType.R)
 public Response list() {
 	return baseService.list();
 }
 
 @Override
+@AroundLog(value = "创建书籍信息", type = LogType.C)
 public Response create(Payload<BookInfo> payload) {
 	return baseService.create(payload);
 }
 
-@AroundGet
 @Override
+@AroundLog(value = "查询单一书籍信息", type = LogType.R)
 public Response getById(Payload<BookInfo> payload) {
 	return baseService.getById(payload);
 }
 
 @AroundUpdate
 @Override
+@AroundLog(value = "更新书籍信息", type = LogType.U)
 public Response update(Payload<BookInfo> payload) {
 	return baseService.update(payload);
 }
 
 @AroundDelete
 @Override
+@AroundLog(value = "删除书籍", type = LogType.D)
 public Response delete(Payload<BookInfo> payload) {
 	return baseService.delete(payload);
 }
 
 @Override
+@AroundLog(value = "查询书籍信息列表(过滤)", type = LogType.R)
 public Response filteredList(FilterPayload<BookInfo, BookInfoFilter> payload) {
 	return baseService.filteredList(payload);
 }
 
 @Override
+@AroundLog(value = "书籍检索-快速", type = LogType.R)
 public Response quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload) {
 	List<BookInfo> _list = bookInfoMapper.quickQuery(payload);
 	Map<String, Object> _map = new HashMap<>();
@@ -92,17 +99,20 @@ public Response quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload) {
 }
 
 @Override
+@AroundLog(value = "书籍检索-分类", type = LogType.R)
 public Response typeQuery(String bookType, List<String> orders) {
 	return null;
 }
 
 @Override
+@AroundLog(value = "书籍检索-关键字", type = LogType.R)
 public Response getByKeyword(String key) {
 	List<BookInfo> _list = bookInfoMapper.getByKeyword(key);
 	return Response.success(_list);
 }
 
 @Override
+@AroundLog(value = "借阅", type = LogType.U)
 public Response borrow(Payload<BookInfo> payload) {
 	Integer _userId = threadContext.get().getAud();
 	User _operator = new User();

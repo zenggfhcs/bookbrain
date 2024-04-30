@@ -15,7 +15,12 @@
 		             select="com.lib.bookbrain.dao.UserMapper.getByOperatorId"/>
 	</resultMap>
 	<select id="list" resultMap="BaseResultMap">
-		select *
+		select l.`id`,
+		       l.`type`,
+		       l.`service_name`,
+		       l.`elapsed_time`,
+		       l.`created_by`,
+		       l.`creation_time`
 		from log l
 		order by l.creation_time desc
 		;
@@ -44,7 +49,12 @@
 	</select>
 
 	<select id="filteredList" resultMap="BaseResultMap">
-		select *
+		select l.`id`,
+		l.`type`,
+		l.`service_name`,
+		l.`elapsed_time`,
+		l.`created_by`,
+		l.`creation_time`
 		from log l
 		<where> <!-- todo 添加条件 -->
 			<if test="entity != null">

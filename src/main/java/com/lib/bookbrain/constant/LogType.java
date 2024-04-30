@@ -1,23 +1,9 @@
 package com.lib.bookbrain.constant;
 
-import lombok.Getter;
+public interface LogType {
+String C = "create";
+String U = "update";
+String R = "select";
+String D = "delete";
 
-@Getter
-public enum LogType {
-
-	C("create"),
-
-	U("update"),
-
-	R("select"),
-
-	D("delete"),
-
-	;
-
-private final String value;
-
-LogType(String value) {
-	this.value = value;
-}
 }

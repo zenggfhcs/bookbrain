@@ -1,8 +1,7 @@
 package com.lib.bookbrain.service.impl;
 
-import com.lib.bookbrain.anno.AroundDelete;
-import com.lib.bookbrain.anno.AroundGet;
-import com.lib.bookbrain.anno.AroundUpdate;
+import com.lib.bookbrain.anno.AroundLog;
+import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.UserMapper;
@@ -53,7 +52,8 @@ public UserServiceImpl(UserMapper userMapper, SimpleThreadContext<TokenInfo> thr
 
 
 @Override
-public Response logout(Payload<User> payload) {
+@AroundLog(value = "退出登录", type = LogType.U)
+public Response logout() {
 	// todo 退出登录逻辑，清除 token
 	return Response.success();
 }
@@ -64,6 +64,7 @@ public int checkPermission(Integer id, String url) {
 }
 
 @Override
+@AroundLog(value = "发送邮件", type = LogType.R)
 public Response sendCode(User entity) {
 	//
 	User _e = userMapper.getByEmail(entity.getEmail());
@@ -76,6 +77,7 @@ public Response sendCode(User entity) {
 }
 
 @Override
+@AroundLog(value = "重置密码-忘记密码", type = LogType.U)
 public Response resetPasswordByForgot(User user) {
 	// 解密
 	TokenInfo _info = tokenService.verify(user.getRemark());
@@ -91,6 +93,7 @@ public Response resetPasswordByForgot(User user) {
 }
 
 @Override
+@AroundLog(value = "重置密码", type = LogType.U)
 public Response resetPasswordByUpdate(User user) {
 
 	String _email = RSATools.decrypt(user.getEmail());
@@ -115,15 +118,30 @@ public Response resetPasswordByUpdate(User user) {
 }
 
 @Override
+@AroundLog(value = "获取今日活跃用户数", type = LogType.R)
 public Response todayActiveUserCount() {
 	int _todayActiveUserCount = userMapper.todayActiveUserCount();
 	return Response.success(_todayActiveUserCount);
 }
 
 @Override
+@AroundLog(value = "获取今日注册用户数", type = LogType.R)
 public Response todayNewUserCount() {
 	int _todayNewUserCount = userMapper.todayNewUserCount();
 	return Response.success(_todayNewUserCount);
+}
+
+@Override
+@AroundLog(value = "修改用户角色", type = LogType.U)
+public Response updateRole(User user) {
+	// todo 检查操作者权限，只能授予不高于自己的权限
+	int _uc = userMapper.updateRole(user);
+
+	if (_uc != 1) {
+		return Response.error(ResponseInfo.ERROR);
+	}
+
+	return Response.success();
 }
 
 public Response resetPassword(User user) {
@@ -137,7 +155,9 @@ public Response resetPassword(User user) {
 }
 
 @Override
-public Response tokenUser() { // todo 这里只用到了 email
+@AroundLog(value = "获取token用户", type = LogType.R)
+public Response tokenUser() {
+	// todo 这里只用到了 email
 	Integer _userId = threadContext.get().getAud();
 	User _operator = userMapper.getById(_userId);
 	Payload<User> _payload = Payload.fromEntity(_operator);
@@ -146,6 +166,7 @@ public Response tokenUser() { // todo 这里只用到了 email
 }
 
 @Override
+@AroundLog(value = "发送重置链接", type = LogType.R)
 public Response sendResetLink(User user) {
 	String _email = user.getEmail();
 	User _u = userMapper.getByEmail(_email);
@@ -212,34 +233,37 @@ public Response login(User user) {
 }
 
 @Override
+@AroundLog(value = "获取用户列表", type = LogType.R)
 public Response list() {
 	return baseService.list();
 }
 
 @Override
+@AroundLog(value = "创建用户", type = LogType.C)
 public Response create(Payload<User> payload) {
 	return baseService.create(payload);
 }
 
-@AroundGet
 @Override
+@AroundLog(value = "获取单一用户", type = LogType.R)
 public Response getById(Payload<User> payload) {
 	return baseService.getById(payload);
 }
 
-@AroundUpdate
 @Override
+@AroundLog(value = "更新用户", type = LogType.U)
 public Response update(Payload<User> payload) {
 	return baseService.update(payload);
 }
 
-@AroundDelete
 @Override
+@AroundLog(value = "删除用户", type = LogType.D)
 public Response delete(Payload<User> payload) {
 	return baseService.delete(payload);
 }
 
 @Override
+@AroundLog(value = "获取用户列表(过滤)", type = LogType.R)
 public Response filteredList(FilterPayload<User, UserFilter> payload) {
 	return baseService.filteredList(payload);
 }

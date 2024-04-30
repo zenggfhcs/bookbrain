@@ -91,4 +91,9 @@ public Response resetUserName() {
 	return Response.success();
 }
 
+
+@PostMapping("/updateRole")
+public Response updateRole(@RequestBody User user) {
+	return userService.updateRole(user);
+}
 }
