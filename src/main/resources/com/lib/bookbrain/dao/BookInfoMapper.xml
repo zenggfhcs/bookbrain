@@ -233,6 +233,15 @@
 				<if test="entity.bookType != null and entity.bookType != ''">
 					and bif.`book_type` like concat(#{entity.bookType}, '%')
 				</if>
+				<if test="entity.publisher != null and entity.publisher != ''">
+				    and bif.`publisher` like concat(#{entity.publisher}, '%')
+				</if>
+				<if test="entity.author != null and entity.author != ''">
+					and bif.`author` like concat('%', #{entity.author}, '%')
+				</if>
+				<if test="entity.keyword != null and entity.keyword != ''">
+					and bif.`keyword` like concat('%', #{entity.keyword}, '%')
+				</if>
 			</if>
 		</where>
 		<trim>
