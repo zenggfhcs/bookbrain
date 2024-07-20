@@ -288,4 +288,26 @@
 		from debit d
 		where d.return_time = current_date;
 	</select>
+	<select id="remindedList" resultMap="BaseResultMap">
+		select d.`id`,
+		       d.`book_id`,
+		       d.`return_deadline`,
+		       d.`creation_time`,
+		       d.`revision`
+		from debit d inner join reminder r on d.id = r.debit_id
+		where d.created_by = #{entity.createdBy.id}
+		limit 10;
+	</select>
+	<select id="remindedCount" resultType="java.lang.Integer">
+		select count(*)
+		from debit d inner join reminder r on d.id = r.debit_id
+		where d.created_by = #{entity.createdBy.id}
+	</select>
+	<select id="getUserTheBookCurrentDebit" resultType="java.lang.Integer">
+		select count(*)
+		from debit d
+		where d.book_id = #{book.id}
+		  and d.created_by = #{createdBy.id}
+		  and d.return_time is null;
+	</select>
 </mapper>

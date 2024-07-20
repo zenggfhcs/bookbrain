@@ -2,13 +2,11 @@ package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
 import com.lib.bookbrain.model.entity.Book;
+import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.BookFilter;
 import com.lib.bookbrain.service.BookService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Book controller
@@ -27,6 +25,11 @@ public BookController(BookService bookService) {
 	this.bookService = bookService;
 }
 
+@GetMapping("/keyword:{keyword}/list")
+public Response getListByKeyword(@PathVariable String keyword) {
+	return bookService.getListByKeyword(keyword);
+}
+
 @GetMapping("/damageLevels")
 public Response getBookDamageLevelList() {
 	return bookService.getBookDamageLevelList();
@@ -40,5 +43,15 @@ public Response getByBookInfoId(@PathVariable Integer id) {
 @GetMapping("/collectionInfo")
 public Response collectionInfo() {
 	return bookService.collectionInfo();
+}
+
+@PostMapping("/borrow")
+public Response borrow(@RequestBody Debit debit) {
+	return bookService.borrow(debit);
+}
+
+@PostMapping("/{id}/restore")
+public Response restore(@RequestBody Book book) {
+	return bookService.restore(book);
 }
 }

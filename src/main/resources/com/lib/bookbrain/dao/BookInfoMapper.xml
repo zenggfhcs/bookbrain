@@ -105,7 +105,7 @@
 			<if test="entity.price != null">
 				bif.`price` = #{entity.price},
 			</if>
-			<if test="entity.remark != null and entity.remark != ''">
+			<if test="entity.remark != null">
 				bif.`remark` = #{entity.remark},
 			</if>
 			<if test="entity.describe != null">
@@ -194,7 +194,7 @@
 			<if test="entity.describe != null and entity.describe != ''">
 				bif.`describe`,
 			</if>
-			<if test="entity.remark != null and entity.remark != ''">
+			<if test="entity.remark != null">
 				bif.`remark`,
 			</if>
 		</trim>
@@ -228,7 +228,7 @@
 					and bif.`cip` = #{entity.cip}
 				</if>
 				<if test="entity.bookName != null and entity.bookName != ''">
-					and bif.`book_name` like concat(#{entity.bookName}, '%')
+					and lower(bif.`book_name`) like concat(lower(#{entity.bookName}), '%')
 				</if>
 				<if test="entity.bookType != null and entity.bookType != ''">
 					and bif.`book_type` like concat(#{entity.bookType}, '%')
@@ -274,22 +274,19 @@
 		from book_info bif
 		<where>
 			<if test="entity != null">
-				<if test="entity.bookName != null">
-					or bif.`book_name` like concat(#{entity.bookName}, '%')
+				<if test="entity.bookName != null and entity.bookName != ''">
+					or lower(bif.`book_name`) like concat(lower(#{entity.bookName}), '%')
 				</if>
-				<if test="entity.publisher != null">
+				<if test="entity.publisher != null and entity.publisher != ''">
 					or bif.`publisher` like concat(#{entity.publisher}, '%')
 				</if>
-				<if test="entity.author != null">
+				<if test="entity.author != null and entity.author != ''">
 					or bif.`author` like concat('%', #{entity.author}, '%')
 				</if>
-				<if test="entity.bookType != null">
+				<if test="entity.bookType != null and entity.bookType != ''">
 					or bif.`book_type` like concat(#{entity.bookType}, '%')
 				</if>
-				<if test="entity.keyword != null">
-					or bif.`keyword` like concat('%', #{entity.keyword}, '%')
-				</if>
-				<if test="entity.keyword != null">
+				<if test="entity.keyword != null and entity.keyword != ''">
 					or bif.`keyword` like concat('%', #{entity.keyword}, '%')
 				</if>
 				<if test="entity.isbn != null">
@@ -333,5 +330,34 @@
 		from book_info bif
 		where bif.`id` = #{keyword}
 			or bif.`book_name` like concat('%', #{keyword}, '%');
+	</select>
+	<select id="quickQueryCount" resultType="java.lang.Integer">
+		select count(*)
+		from book_info bif
+		<where>
+			<if test="entity != null">
+				<if test="entity.bookName != null and entity.bookName != ''">
+					or lower(bif.`book_name`) like concat(lower(#{entity.bookName}), '%')
+				</if>
+				<if test="entity.publisher != null and entity.publisher != ''">
+					or bif.`publisher` like concat(#{entity.publisher}, '%')
+				</if>
+				<if test="entity.author != null and entity.author != ''">
+					or bif.`author` like concat('%', #{entity.author}, '%')
+				</if>
+				<if test="entity.bookType != null and entity.bookType != ''">
+					or bif.`book_type` like concat(#{entity.bookType}, '%')
+				</if>
+				<if test="entity.keyword != null and entity.keyword != ''">
+					or bif.`keyword` like concat('%', #{entity.keyword}, '%')
+				</if>
+				<if test="entity.isbn != null">
+					or bif.`isbn` = #{entity.isbn}
+				</if>
+				<if test="entity.cip != null">
+					or bif.`cip` = #{entity.cip}
+				</if>
+			</if>
+		</where>
 	</select>
 </mapper>

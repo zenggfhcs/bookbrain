@@ -20,6 +20,7 @@ import com.lib.bookbrain.utils.RSATools;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -142,6 +143,12 @@ public Response updateRole(User user) {
 	}
 
 	return Response.success();
+}
+
+@Override
+public Response getListByKeyword(String keyword) {
+	List<User> _list = userMapper.getListByKeyword(keyword);
+	return Response.success(_list);
 }
 
 public Response resetPassword(User user) {

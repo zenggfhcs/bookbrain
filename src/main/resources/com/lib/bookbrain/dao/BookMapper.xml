@@ -84,6 +84,18 @@
 		where b.`id` = #{id}
 		  and b.`revision` = #{revision}
 	</update>
+	<update id="restore">
+		update debit d, book b
+		set b.`borrowable`        = 1,
+		    d.`return_time`       = current_time,
+		    d.`last_updated_time` = now(),
+		    d.`revision`          = (1 + d.`revision`) % 2147483647,
+		    d.`updated_by`        = #{updatedBy.id}
+		where d.`book_id` = #{id}
+		  and d.`book_id` = b.`id`
+		  and d.return_time is null
+		  and b.`revision` = #{revision}
+	</update>
 	<delete id="delete">
 		delete b
 		from book b
@@ -164,5 +176,29 @@
 		       ci.value type_name
 		from collection_info cif
 			     inner join clc_index ci on cif.collect_type = ci.`key`
+	</select>
+	<select id="getDebitListByKeyword" resultMap="BaseResultMap" >
+		select distinct b.id, b.book_info_id, b.revision
+		from book b
+			     inner join book_info bif on b.book_info_id = bif.id
+		where b.id like concat(lower(#{keyword}), '%')
+		  and (select count(*) from debit d where d.book_id = b.id and d.return_time is null) = 0
+		order by bif.book_name
+		# 			or lower(bif.book_name) like concat(lower(#{keyword}), '%')
+# 			or lower(bif.isbn) like concat(lower(#{keyword}), '%')
+# 			or lower(bif.cip) like concat(lower(#{keyword}), '%')
+		limit 5;
+	</select>
+	<select id="getRestoreListByKeyword" resultMap="BaseResultMap" >
+		select distinct b.id, b.book_info_id, b.revision
+		from book b
+			     inner join book_info bif on b.book_info_id = bif.id
+			     inner join debit d on d.book_id = b.id
+		where b.id like concat(lower(#{keyword}), '%')
+		  and d.return_time is null
+		# 			or lower(bif.book_name) like concat(lower(#{keyword}), '%')
+# 			or lower(bif.isbn) like concat(lower(#{keyword}), '%')
+# 			or lower(bif.cip) like concat(lower(#{keyword}), '%')
+		limit 5;
 	</select>
 </mapper>

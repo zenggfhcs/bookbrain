@@ -96,4 +96,9 @@ public Response resetUserName() {
 public Response updateRole(@RequestBody User user) {
 	return userService.updateRole(user);
 }
+
+@GetMapping("/keyword:{keyword}/list")
+public Response getListByKeyword(@PathVariable String keyword) {
+	return userService.getListByKeyword(keyword);
+}
 }

@@ -61,7 +61,7 @@ public static Log create(String serviceName, Payload<Entity> payload) {
 public static Log create() {
 	return Log.builder()
 			.serviceName("")
-			.input("{}")
+			.input("[]")
 			.output("{}")
 			.elapsedTime(-1L).build();
 }

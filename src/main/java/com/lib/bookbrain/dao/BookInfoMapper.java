@@ -36,4 +36,6 @@ List<BookInfo> quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload);
 BookInfo getInfoById(Integer id);
 
 List<BookInfo> getByKeyword(String keyword);
+
+int quickQueryCount(FilterPayload<BookInfo, BookInfoFilter> payload);
 }

@@ -29,4 +29,6 @@ Response todayActiveUserCount();
 Response todayNewUserCount();
 
 Response updateRole(User user);
+
+Response getListByKeyword(String keyword);
 }

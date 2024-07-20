@@ -9,6 +9,7 @@ import com.lib.bookbrain.context.SimpleThreadContext;
 import com.lib.bookbrain.dao.BookInfoMapper;
 import com.lib.bookbrain.dao.BookMapper;
 import com.lib.bookbrain.dao.DebitMapper;
+import com.lib.bookbrain.exception.BaseException;
 import com.lib.bookbrain.model.entity.Book;
 import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.model.entity.Debit;
@@ -91,10 +92,15 @@ public Response filteredList(FilterPayload<BookInfo, BookInfoFilter> payload) {
 @Override
 @AroundLog(value = "书籍检索-快速", type = LogType.R)
 public Response quickQuery(FilterPayload<BookInfo, BookInfoFilter> payload) {
-	List<BookInfo> _list = bookInfoMapper.quickQuery(payload);
 	Map<String, Object> _map = new HashMap<>();
-	_map.put("list", _list);
-	_map.put("length", _list.size());
+	{
+		List<BookInfo> _list = bookInfoMapper.quickQuery(payload);
+		_map.put("list", _list);
+	}
+	{
+		int _length = bookInfoMapper.quickQueryCount(payload);
+		_map.put("length", _length);
+	}
 	return Response.success(_map);
 }
 
@@ -109,57 +115,6 @@ public Response typeQuery(String bookType, List<String> orders) {
 public Response getByKeyword(String key) {
 	List<BookInfo> _list = bookInfoMapper.getByKeyword(key);
 	return Response.success(_list);
-}
-
-@Override
-@AroundLog(value = "借阅", type = LogType.U)
-public Response borrow(Payload<BookInfo> payload) {
-	Integer _userId = threadContext.get().getAud();
-	User _operator = new User();
-	_operator.setId(_userId);
-
-	int _currentDebitCount = debitMapper.getCurrentDebitCountByUser(_operator);
-	if (_currentDebitCount >= 10) {// 借阅数已达上限 todo 添加到配置文件中
-		return Response.error(ResponseInfo.BORROW_NUM_UPPER_LIMIT);
-	}
-
-	int _currentExpiredDebitCount = debitMapper.getCurrentExpiredDebitCountByUser(_operator);
-	if (_currentExpiredDebitCount > 0) {// 存在逾期未还
-		return Response.error(ResponseInfo.HAS_EXPIRED_BORROW);
-	}
-
-	int _currentDebitTheBookInfoCount = debitMapper.getCurrentDebitTheBookInfoCountByUserId(payload.getId(), _userId);
-	if (_currentDebitTheBookInfoCount > 0) {// 当前已借阅该图书
-		return Response.error(ResponseInfo.IS_BORROWED);
-	}
-
-	// 查询图书信息的馆藏
-	List<Book> _borrowableBookList = bookMapper.getBorrowableBookListByBookInfoId(payload.getId());
-
-	// 对查询出来的列表循环借阅
-	int i = 0;
-	for (; i < _borrowableBookList.size(); i++) {
-		Book _book = _borrowableBookList.get(i);
-		_book.setUpdatedBy(_operator);
-		int _debitResult = bookMapper.borrow(_book);
-		if (_debitResult > 0) {
-			break;
-		}
-	}
-
-	// 借阅失败
-	if (_borrowableBookList.isEmpty() || i >= _borrowableBookList.size()) {
-		return Response.error(ResponseInfo.THIS_BOOK_CANNOT_BE_BORROWED);
-	}
-
-	Book _book = _borrowableBookList.get(i);
-	Debit debit = Debit.fromBookAndBorrower(_book, _operator);
-	int _insertCount = debitMapper.insert(debit);
-	if (_insertCount == 0) {
-		return Response.error(ResponseInfo.ERROR);
-	}
-
-	return Response.success();
 }
 
 }

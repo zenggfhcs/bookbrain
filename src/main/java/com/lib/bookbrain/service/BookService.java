@@ -1,6 +1,7 @@
 package com.lib.bookbrain.service;
 
 import com.lib.bookbrain.model.entity.Book;
+import com.lib.bookbrain.model.entity.Debit;
 import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
@@ -28,4 +29,10 @@ Response getBookDamageLevelList();
 Response getByBookInfoId(Integer id);
 
 Response collectionInfo();
+
+Response getListByKeyword(String keyword);
+
+Response borrow(Debit debit);
+
+Response restore(Book book);
 }

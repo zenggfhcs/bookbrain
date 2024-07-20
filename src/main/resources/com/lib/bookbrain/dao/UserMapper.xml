@@ -59,20 +59,23 @@
 		update user u
 		<set>
 			<if test="entity != null">
-				<if test="entity.authenticationString != null and entity.authenticationString != ''">
-					u.`authentication_string` = MD5(#{entity.authenticationString}),
-				</if>
 				<if test="entity.displayName != null and entity.displayName != ''">
 					u.`display_name` = #{entity.displayName},
 				</if>
 				<if test="entity.email != null and entity.email != ''">
 					u.`email` = #{entity.email},
 				</if>
-				<if test="entity.surname != null">
+				<if test="entity.surname != null and entity.surname != ''">
 					u.`surname` = #{entity.surname},
 				</if>
-				<if test="entity.name != null">
+				<if test="entity.name != null and entity.name != ''">
 					u.`name` = #{entity.name},
+				</if>
+				<if test="entity.email != null and entity.email != ''">
+					u.`email` = #{entity.email},
+				</if>
+				<if test="entity.phoneNumber != null and entity.phoneNumber != ''">
+					u.`phone_number` = #{entity.phoneNumber},
 				</if>
 				<if test="entity.age != null">
 					u.`age` = #{entity.age},
@@ -81,7 +84,7 @@
 					u.`gender` = #{entity.gender},
 				</if>
 				<if test="entity.updatedBy != null">
-					u.`updated_by` = #{entity.updatedBy},
+					u.`updated_by` = #{entity.updatedBy.id},
 				</if>
 			</if>
 			<if test="1 == 1">
@@ -132,8 +135,34 @@
 		  and u.`authentication_string` = MD5(#{authenticationString});
 	</select>
 	<select id="getToUpdate" resultMap="BaseResultMap">
-		select *
-		from user
+		select
+		<trim suffixOverrides=",">
+			<if test="entity != null">
+				<if test="entity.displayName != null and entity.displayName != ''">
+					u.`display_name`,
+				</if>
+				<if test="entity.email != null and entity.email != ''">
+					u.`email`,
+				</if>
+				<if test="entity.surname != null and entity.surname != ''">
+					u.`surname`,
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					u.`name`,
+				</if>
+				<if test="entity.email != null and entity.email != ''">
+					u.`email`,
+				</if>
+				<if test="entity.phoneNumber != null and entity.phoneNumber != ''">
+					u.`phone_number`,
+				</if>
+				<if test="entity.gender != null">
+					u.`gender`,
+				</if>
+			</if>
+		</trim>
+		from user u
+		where u.`id` = #{id}
 	</select>
 	<select id="getByToken" resultMap="BaseResultMap">
 		select u.`id`,
@@ -278,5 +307,14 @@
 		select count(distinct u.id)
 		from user u
 		where date(u.creation_time) = current_date;
+	</select>
+	<select id="getListByKeyword" resultType="com.lib.bookbrain.model.entity.User">
+		select u.id, u.display_name, u.surname, u.name, u.email, u.phone_number
+		from user u
+		where lower(u.display_name) like concat(lower(#{keyword}), '%')
+			or lower(concat(u.surname, u.name)) like concat(lower(#{keyword}), '%')
+			or lower(u.email) like concat(lower(#{keyword}), '%')
+			or lower(u.phone_number) like concat(lower(#{keyword}), '%')
+		limit 5;
 	</select>
 </mapper>

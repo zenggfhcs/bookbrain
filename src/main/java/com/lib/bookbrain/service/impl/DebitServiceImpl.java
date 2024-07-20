@@ -7,6 +7,7 @@ import com.lib.bookbrain.anno.AroundUpdate;
 import com.lib.bookbrain.constant.LogType;
 import com.lib.bookbrain.constant.ResponseInfo;
 import com.lib.bookbrain.context.SimpleThreadContext;
+import com.lib.bookbrain.dao.BookMapper;
 import com.lib.bookbrain.dao.DebitMapper;
 import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.model.entity.Debit;
@@ -23,6 +24,7 @@ import com.lib.bookbrain.service.MailService;
 import com.lib.bookbrain.utils.MapFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +41,7 @@ private final BaseServiceImpl<Debit, DebitFilter> baseService;
 
 private final MailService mailService;
 
-public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> threadContext, MailService mailService) {
+public DebitServiceImpl(DebitMapper debitMapper, SimpleThreadContext<TokenInfo> threadContext, BookMapper bookMapper, MailService mailService) {
 	this.threadContext = threadContext;
 	this.debitMapper = debitMapper;
 	this.mailService = mailService;
@@ -96,6 +98,8 @@ public Response remind(Payload<Debit> payload) {
 	_debit.setUpdatedBy(_operator);
 	_debit.setCreatedBy(_operator);
 
+	remind(_debit);
+
 	int _remindCount = debitMapper.remind(_debit);
 	if (_remindCount == 0) {
 		return Response.error(ResponseInfo.ERROR);
@@ -115,6 +119,21 @@ public Response getTodayDebitCount() {
 public Response getTodayRestoreCount() {
 	int _todayRestoreCount = debitMapper.getTodayRestoreCount();
 	return Response.success(_todayRestoreCount);
+}
+
+@Override
+public Response remindedList(FilterPayload<Debit, DebitFilter> payload) {
+	Integer _userId = threadContext.get().getAud();
+	User _operator = new User();
+	_operator.setId(_userId);
+	payload.getEntity().setCreatedBy(_operator);
+
+	HashMap<String, Object> _map = new HashMap<>();
+	List<Debit> _list = debitMapper.remindedList(payload);
+	_map.put("list", _list);
+	int _count = debitMapper.remindedCount(payload);
+	_map.put("count", _count);
+	return Response.success(_map);
 }
 
 @Override

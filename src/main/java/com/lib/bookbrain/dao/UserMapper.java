@@ -17,6 +17,7 @@ import java.util.List;
 @Component
 @Mapper
 public interface UserMapper extends BaseMapper<User, UserFilter> {
+
 /* ============================ 继承 ============================ */
 int insert(User entity);
 
@@ -68,5 +69,7 @@ int todayActiveUserCount();
 int todayNewUserCount();
 
 int updateRole(User user);
+
+List<User> getListByKeyword(String keyword);
 /* ============================ 拓展 ============================ */
 }

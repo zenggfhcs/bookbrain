@@ -44,4 +44,10 @@ List<Book> getByBookInfoId(Integer id);
 List<Book> getBorrowableBookListByBookInfoId(Integer id);
 
 List<CollectionInfo> collectionInfo();
+
+List<Book> getDebitListByKeyword(String keyword);
+
+List<Book> getRestoreListByKeyword(String keyword);
+
+int restore(Book book);
 }

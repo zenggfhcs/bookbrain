@@ -3,7 +3,6 @@ package com.lib.bookbrain.controller;
 import com.lib.bookbrain.anno.AroundConduct;
 import com.lib.bookbrain.model.entity.BookInfo;
 import com.lib.bookbrain.model.exchange.FilterPayload;
-import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.BookInfoFilter;
 import com.lib.bookbrain.service.BookInfoService;
@@ -40,13 +39,6 @@ public Response cover(@RequestParam MultipartFile file) {
 @PostMapping("/list:quick-query")
 public Response quickQuery(@RequestBody FilterPayload<BookInfo, BookInfoFilter> payload) {
 	return bookInfoService.quickQuery(payload);
-}
-
-@PostMapping("/{id}/borrow")
-public Response borrow(@PathVariable Integer id) {
-	Payload<BookInfo> _payload = Payload.fromEntity(null);
-	_payload.setId(id);
-	return bookInfoService.borrow(_payload);
 }
 
 

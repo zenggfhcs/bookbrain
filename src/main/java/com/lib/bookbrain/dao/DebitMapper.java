@@ -48,7 +48,7 @@ int getCurrentDebitCountByUser(User operator);
 
 int getCurrentExpiredDebitCountByUser(User operator);
 
-int getCurrentDebitTheBookInfoCountByUserId(@Param("bookInfoId") Integer bookInfoId, @Param("userId") Integer userId);
+int getCurrentDebitTheBookInfoCountByUserId(@Param("bookInfoId") Long bookInfoId, @Param("userId") Integer userId);
 
 int restore(Debit debit);
 
@@ -61,4 +61,10 @@ List<RankingsItem<User>> readerDebitRankings(RankingsBody body);
 int remind(Debit debit);
 
 int getTodayRestoreCount();
+
+List<Debit> remindedList(FilterPayload<Debit, DebitFilter> payload);
+
+int remindedCount(FilterPayload<Debit, DebitFilter> payload);
+
+int getUserTheBookCurrentDebit(Debit debit);
 }

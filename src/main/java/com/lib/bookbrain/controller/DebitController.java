@@ -2,6 +2,7 @@ package com.lib.bookbrain.controller;
 
 import com.lib.bookbrain.anno.AroundConduct;
 import com.lib.bookbrain.model.entity.Debit;
+import com.lib.bookbrain.model.exchange.FilterPayload;
 import com.lib.bookbrain.model.exchange.Payload;
 import com.lib.bookbrain.model.exchange.Response;
 import com.lib.bookbrain.model.filter.DebitFilter;
@@ -49,7 +50,7 @@ public Response restore(@RequestBody Debit debit, @PathVariable Integer id) {
 }
 
 @GetMapping("/currentUnreturned")
-public Response tokenUserDebits() {
+public Response currentUnreturned() {
 	return debitService.currentUnreturned();
 }
 
@@ -62,4 +63,10 @@ public Response bookDebitRankings(@RequestBody RankingsBody body) {
 public Response readerDebitRankings(@RequestBody RankingsBody body) {
 	return debitService.readerDebitRankings(body);
 }
+
+@PostMapping("/remindedList")
+public Response remindedList(@RequestBody FilterPayload<Debit, DebitFilter> payload) {
+	return debitService.remindedList(payload);
+}
+
 }

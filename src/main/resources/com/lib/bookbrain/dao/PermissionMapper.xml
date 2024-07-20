@@ -34,7 +34,7 @@
 
 	<insert id="insert">
 		insert into permission(name, url, created_by, creation_time, updated_by, last_updated_time, revision, remark)
-		values (#{name}, #{url}, 1, now(), 1, now(), 0, '')
+		values (#{name}, #{url}, 1, now(), 1, now(), 0, #{remark})
 	</insert>
 
 	<update id="update" parameterType="com.lib.bookbrain.model.exchange.Payload">
@@ -93,10 +93,17 @@
 	</select>
 
 	<select id="filteredList" resultType="com.lib.bookbrain.model.entity.Permission">
-		select *
+		select p.`id`
+		     , p.`name`
+		     , p.`url`
+		     , p.`creation_time`
+		     , p.`last_updated_time`
+		     , p.`revision`
+		     , p.`remark`
 		from permission p
 		<where>
 		</where>
+		order by p.`last_updated_time`
 		<trim>
 			<if test="filter != null">
 				<if test="filter.page != null">
